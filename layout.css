@@ -1,0 +1,152 @@
+/* Layout primitives: containers, grids, sections, header/footer scaffolding */
+
+.container {
+  width: min(var(--container), calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(10px);
+  background: linear-gradient(340deg, #264f5d 0%, #0a001a 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .9rem 0;
+  gap: 1rem;
+  border-bottom: 2px solid rgb(255 255 255 / 8%);
+}
+
+
+.nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+
+.nav a:not(.btn) {
+  position: relative;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: .95rem;
+  transition: color 220ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+
+.nav a:not(.btn)::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0%;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 260ms cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+
+.nav a:not(.btn):hover {
+  color: var(--accent);
+}
+
+
+.nav a:not(.btn):hover::after {
+  width: 100%;
+}
+
+
+.nav a.btn {
+  color: var(--text);
+}
+
+
+.nav a.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(124, 92, 255, 0.35);
+  color: var(--text);
+}
+
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: .45rem .65rem;
+}
+
+
+.section {
+  padding: 8px 0 16px;
+}
+
+
+.section-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+
+.section-head h2 {
+  margin: 0;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  letter-spacing: -.01em;
+}
+
+
+.section-foot {
+  margin-top: 1rem;
+}
+
+
+.grid {
+  display: grid;
+  gap: 1rem;
+}
+
+
+.grid.two {
+  grid-template-columns: 1fr 1fr;
+}
+
+
+.grid.three {
+  grid-template-columns: repeat(3, 1fr);
+  gap: .75rem;
+}
+
+
+.footer-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+
+.footer-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  color: var(--muted);
+}
+
+
+.grid.three {
+  grid-template-columns: repeat(3, 1fr);
+  gap: .75rem;
+}

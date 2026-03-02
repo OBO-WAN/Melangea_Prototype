@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mélange à Deux — Prototype</title>
+    <meta
+      name="description"
+      content="Music / events / projects homepage prototype."
+    />
+
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" href="assets/favicon.svg" sizes="any">
+
+    <link rel="stylesheet" href="./styles.css" />
+
+
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#">
+          <img
+            src="./assets/IMG/LOGO/admin-ajaxLogoMa2-grau.png"
+            alt="Mélange à Deux Logo"
+            class="brand-logo"
+          />
+        </a>
+
+        <nav class="nav">
+          <a href="#music">Musik</a>
+          <a href="#shows">Auftritte</a>
+          <a href="#projects">Projekte</a>
+          <a href="#videos">Videos</a>
+          <a href="#blog">Blog</a>
+          <a class="btn btn-small" href="#shop">Shop</a>
+        </nav>
+
+        <button
+          class="nav-toggle"
+          aria-label="Menü öffnen"
+          aria-expanded="false"
+        >
+          ☰
+        </button>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- Hero -->
+
+      <section class="hero">
+        <div class="container hero-grid">
+          <!-- Background video (desktop) -->
+          <div class="hero-video" aria-hidden="true">
+            <video autoplay muted loop playsinline preload="none">
+              <source
+                src="./assets/MP4/background_video.mp4"
+                type="video/mp4"
+              />
+            </video>
+          </div>
+
+          <!-- Background image slider (fallback / mobile) -->
+          <div class="hero-bg" aria-hidden="true">
+            <span class="bg bg1"></span>
+            <span class="bg bg2"></span>
+            <span class="bg bg3"></span>
+          </div>
+
+          <div class="hero-copy">
+            <p class="eyebrow">Oboe & Akkordeon</p>
+            <h1>Mélange à Deux</h1>
+            <p class="lead">
+              Konzertformate von Duo bis Quartett, Programme für Bühne &
+              Familie, dazu neue Releases, Videos und Termine.
+            </p>
+            <div class="hero-actions">
+              <a class="btn" href="#music">Jetzt hören</a>
+              <a class="btn btn-ghost" href="#shows">Nächste Auftritte</a>
+            </div>
+
+            <div class="hero-stats">
+              <div class="stat">
+                <div class="stat-num">5</div>
+                <div class="stat-label">Projektformate</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">∞</div>
+                <div class="stat-label">Genres & Ideen</div>
+              </div>
+              <div class="stat">
+                <div class="stat-num">Live</div>
+                <div class="stat-label">Shows & Tour</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-card card">
+            <div class="card-head">
+              <h3>Featured Track</h3>
+              <span class="pill">Neu</span>
+            </div>
+
+            <audio id="featuredAudio" controls preload="none">
+              <source
+                src="./assets/MP3/01-Danse-des-Epis.mp3"
+                type="audio/mp3"
+              />
+              Dein Browser unterstützt Audio nicht.
+            </audio>
+
+            <div class="track-meta">
+              <div>
+                <div class="muted">Titel</div>
+                <div class="strong" id="featuredTitle">—</div>
+              </div>
+              <div>
+                <div class="muted">Dauer</div>
+                <div class="strong" id="featuredDuration">—</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Music / Playlist -->
+      <section id="music" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Unsere Musik</h2>
+            <!-- <p class="muted">
+              Playlist-Prototyp (klick → spielt im Featured Player).
+            </p> -->
+          </div>
+
+          <div class="grid two">
+            <div class="card">
+              <div class="card-head">
+                <h3>Playlist</h3>
+                <span class="muted small" id="trackCount">0 Tracks</span>
+              </div>
+
+              <ol class="tracklist" id="trackList" aria-label="Trackliste">
+                <!-- injected by app.js -->
+              </ol>
+            </div>
+
+            <div class="card">
+              <div class="card-head">
+                <h3>Hör-Links</h3>
+              </div>
+              <div class="link-grid">
+                <a class="tile" href="#" aria-disabled="true">
+                  <div class="tile-icon spotify">
+                    <!-- Spotify SVG -->
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                      <path
+                        d="M12 0C5.37 0 0 5.37 0 12s5.37 12 12 12
+        12-5.37 12-12S18.63 0 12 0zm5.5 17.3c-.2.3-.6.4-.9.2
+        -2.5-1.5-5.7-1.8-9.5-.9-.3.1-.7-.1-.8-.5-.1-.3.1-.7.5-.8
+        4.1-1 7.7-.7 10.4 1 .3.2.4.6.3.9zm1.3-2.9c-.3.4-.8.6-1.2.3
+        -2.8-1.7-7.1-2.2-10.4-1.1-.4.1-.9-.1-1-.6-.1-.4.1-.9.6-1
+        3.7-1.2 8.5-.6 11.7 1.3.4.2.5.8.3 1.1zm.1-3c-3.4-2-9-2.2-12.3-1.2
+        -.5.2-1-.1-1.2-.6-.2-.5.1-1 .6-1.2 3.8-1.1 10-1 13.8 1.3.5.3.6.9.3 1.4
+        -.3.5-.9.6-1.2.3z"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <div class="tile-title">Spotify</div>
+                    <div class="muted small">Link später</div>
+                  </div>
+                </a>
+
+                <a class="tile" href="#" aria-disabled="true">
+                  <div class="tile-icon apple"></div>
+                  <div>
+                    <div class="tile-title">Apple Music</div>
+                    <div class="muted small">Link später</div>
+                  </div>
+                </a>
+
+                <a class="tile" href="#" aria-disabled="true">
+                  <div class="tile-icon youtube">▶</div>
+                  <div>
+                    <div class="tile-title">YouTube Music</div>
+                    <div class="muted small">Link später</div>
+                  </div>
+                </a>
+
+                <a class="tile" href="#" aria-disabled="true">
+                  <div class="tile-icon bandcamp">B</div>
+                  <div>
+                    <div class="tile-title">Bandcamp</div>
+                    <div class="muted small">Link später</div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Team -->
+      <section class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Unser Team</h2>
+            <!-- <p class="muted">Kartenlayout – später dynamisch aus WP.</p> -->
+          </div>
+
+          <div class="grid three">
+            <article class="card person">
+              <div class="avatar" aria-hidden="true">👤</div>
+              <h3>Name 1</h3>
+              <p class="muted">Oboe</p>
+              <div class="person-links">
+                <a href="#">Instagram</a><a href="#">Website</a>
+              </div>
+            </article>
+
+            <article class="card person">
+              <div class="avatar" aria-hidden="true">👤</div>
+              <h3>Name 2</h3>
+              <p class="muted">Akkordeon</p>
+              <div class="person-links">
+                <a href="#">Instagram</a><a href="#">Website</a>
+              </div>
+            </article>
+
+            <article class="card person">
+              <div class="avatar" aria-hidden="true">👤</div>
+              <h3>Management</h3>
+              <p class="muted">Booking</p>
+              <div class="person-links">
+                <a href="#">E-Mail</a><a href="#">Presse</a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shows / Events -->
+      <section id="shows" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Nächste Auftritte</h2>
+            <!-- <p class="muted">
+              Eventliste – später aus Events Plugin oder “Shows” CPT.
+            </p> -->
+          </div>
+
+          <div class="card">
+            <ul class="eventlist">
+              <li class="event">
+                <div class="event-date">
+                  <div class="event-day">12</div>
+                  <div class="event-month">Apr</div>
+                </div>
+                <div class="event-body">
+                  <div class="strong">Konzert — Venue Name</div>
+                  <div class="muted small">Berlin • 19:30</div>
+                </div>
+                <div class="event-actions">
+                  <a class="btn btn-small btn-ghost" href="#">Details</a>
+                  <a class="btn btn-small" href="#">Tickets</a>
+                </div>
+              </li>
+
+              <li class="event">
+                <div class="event-date">
+                  <div class="event-day">04</div>
+                  <div class="event-month">Mai</div>
+                </div>
+                <div class="event-body">
+                  <div class="strong">Familienkonzert</div>
+                  <div class="muted small">Potsdam • 16:00</div>
+                </div>
+                <div class="event-actions">
+                  <a class="btn btn-small btn-ghost" href="#">Details</a>
+                  <a class="btn btn-small" href="#">Tickets</a>
+                </div>
+              </li>
+            </ul>
+
+            <div class="card-footer">
+              <a class="btn btn-ghost" href="#">Alle Auftritte ansehen →</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Projects -->
+      <section id="projects" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Projekte</h2>
+            <!-- <p class="muted">
+              Kachelgrid – später “Projects” CPT + Elementor Loop Grid.
+            </p> -->
+          </div>
+
+          <div class="grid three">
+            <a class="card project" href="#">
+              <div class="thumb" aria-hidden="true"></div>
+              <h3>Duo</h3>
+              <p class="muted small">Kammermusik & Crossover</p>
+            </a>
+
+            <a class="card project" href="#">
+              <div class="thumb" aria-hidden="true"></div>
+              <h3>Trio</h3>
+              <p class="muted small">Gast + neue Farben</p>
+            </a>
+
+            <a class="card project" href="#">
+              <div class="thumb" aria-hidden="true"></div>
+              <h3>Quartett</h3>
+              <p class="muted small">Größerer Sound</p>
+            </a>
+
+            <a class="card project" href="#">
+              <div class="thumb" aria-hidden="true"></div>
+              <h3>Show</h3>
+              <p class="muted small">Bühne, Licht, Story</p>
+            </a>
+
+            <a class="card project" href="#">
+              <div class="thumb" aria-hidden="true"></div>
+              <h3>Kinderkonzert</h3>
+              <p class="muted small">Mitmachen & Staunen</p>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Videos -->
+      <section id="videos" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Videos</h2>
+            <!-- <p class="muted">Später YouTube/Vimeo dynamisch.</p> -->
+          </div>
+
+          <div class="grid three">
+            <div class="card video">
+              <div class="video-embed">
+                <iframe
+                  title="Video 1"
+                  src="https://www.youtube-nocookie.com/embed/JDRfZDNSr8o?rel=0&modestbranding=1&playsinline=1"
+                  allow="
+                    accelerometer;
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    gyroscope;
+                    picture-in-picture;
+                  "
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="muted small">Video Titel 1</div>
+            </div>
+
+            <div class="card video">
+              <div class="video-embed">
+                <iframe
+                  title="Video 2"
+                  src="https://www.youtube-nocookie.com/embed/FXFr5nbusVI?rel=0&modestbranding=1&playsinline=1"
+                  allow="
+                    accelerometer;
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    gyroscope;
+                    picture-in-picture;
+                  "
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="muted small">Video Titel 2</div>
+            </div>
+
+            <div class="card video">
+              <div class="video-embed">
+                <iframe
+                  title="Video 3"
+                  src="https://www.youtube-nocookie.com/embed/qyVGaWTaV2w?rel=0&modestbranding=1&playsinline=1"
+                  allow="
+                    accelerometer;
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    gyroscope;
+                    picture-in-picture;
+                  "
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="muted small">Video Titel 3</div>
+            </div>
+          </div>
+
+          <div class="section-foot">
+            <a class="btn btn-ghost" href="#">Weitere Videos →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Blog -->
+      <section id="blog" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Neuigkeiten</h2>
+            <!-- <p class="muted">Später: WP Posts (News/Video/Audio Kategorien).</p> -->
+          </div>
+
+          <div class="grid three">
+            <article class="card post">
+              <div class="thumb" aria-hidden="true"></div>
+              <div class="pill">News</div>
+              <h3>Post Titel 1</h3>
+              <!-- <p class="muted small">Kurzer Teasertext für den Beitrag…</p> -->
+            </article>
+
+            <article class="card post">
+              <div class="thumb" aria-hidden="true"></div>
+              <div class="pill">Foto</div>
+              <h3>Post Titel 2</h3>
+              <!-- <p class="muted small">Kurzer Teasertext für den Beitrag…</p> -->
+            </article>
+
+            <article class="card post">
+              <div class="thumb" aria-hidden="true"></div>
+              <div class="pill">Video</div>
+              <h3>Post Titel 3</h3>
+              <p class="muted small">Kurzer Teasertext für den Beitrag…</p>
+            </article>
+          </div>
+
+          <div class="section-foot">
+            <a class="btn btn-ghost" href="#">Alle Beiträge →</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Shop CTA -->
+      <section id="shop" class="section">
+        <div class="container">
+          <div class="cta card">
+            <div>
+              <h2>Aktuelle CD / Shop</h2>
+              <!-- <p class="muted">
+                Später WooCommerce: Produktkarte, Preis, “In den Warenkorb”.
+              </p> -->
+            </div>
+            <div class="cta-actions">
+              <a class="btn" href="#">Jetzt bestellen</a>
+              <a class="btn btn-ghost" href="#">Mehr erfahren</a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="strong">Mélange à Deux</div>
+          <p class="muted small">
+            Alle Rechte vorbehalten. <br />
+          </p>
+        </div>
+
+        <div class="footer-links">
+          <a href="#">Impressum</a>
+          <a href="#">Datenschutz</a>
+          <a href="#">Kontakt</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

@@ -510,42 +510,59 @@ h1 {
 /* LOGO */
 
 .brand {
-  position: relative;
+  position: relative;   
   display: inline-flex;
+  align-items: center;
   overflow: hidden;
+  opacity: 0;
+  transform: translateY(-6px);
+  clip-path: inset(0 100% 0 0);
+  animation: brandReveal 900ms cubic-bezier(.16,.84,.44,1) forwards;
+  animation-delay: 120ms;
 }
 
-/* .brand::after {
+@keyframes brandReveal {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+.brand::after {
   content: "";
   position: absolute;
-  inset: -20% -40%;
+  inset: -35% -60%;
   pointer-events: none;
-  background: linear-gradient(90deg,
-      transparent 40%,
-      rgba(179, 170, 170, 0.44) 50%,
-      transparent 60%);
-  transform: translateX(-80%) skewX(-18deg);
+  background: linear-gradient(
+    110deg,
+    transparent 42%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 58%
+  );
+  transform: translateX(-85%) skewX(-18deg);
   mix-blend-mode: screen;
-  opacity: 0.22;
-  animation: waveLeftToRight 8.8s ease-in-out infinite;
+  opacity: 0;
+
+  animation: brandShine 900ms ease forwards;
+  animation-delay: 380ms;
 }
 
-@keyframes waveLeftToRight {
-  0% {
-    transform: translateX(-80%) skewX(-18deg);
-    opacity: 0.10;
-  }
+@keyframes brandShine {
+  0%   { transform: translateX(-85%) skewX(-18deg); opacity: 0; }
+  25%  { opacity: 0.18; }
+  100% { transform: translateX(85%)  skewX(-18deg); opacity: 0; }
+}
 
-  45% {
-    opacity: 0.22;
+@media (prefers-reduced-motion: reduce) {
+  .brand,
+  .brand::after {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
   }
-
-  100% {
-    transform: translateX(80%) skewX(-18deg);
-    opacity: 0.10;
-  }
-} */
-
+}
 
 .brand-logo {
   height: 64px;

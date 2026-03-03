@@ -510,14 +510,66 @@ h1 {
 /* LOGO */
 
 .brand {
-  display: flex;
-  align-items: center;
+  position: relative;
+  display: inline-flex;
+  overflow: hidden;
 }
+
+/* .brand::after {
+  content: "";
+  position: absolute;
+  inset: -20% -40%;
+  pointer-events: none;
+  background: linear-gradient(90deg,
+      transparent 40%,
+      rgba(179, 170, 170, 0.44) 50%,
+      transparent 60%);
+  transform: translateX(-80%) skewX(-18deg);
+  mix-blend-mode: screen;
+  opacity: 0.22;
+  animation: waveLeftToRight 8.8s ease-in-out infinite;
+}
+
+@keyframes waveLeftToRight {
+  0% {
+    transform: translateX(-80%) skewX(-18deg);
+    opacity: 0.10;
+  }
+
+  45% {
+    opacity: 0.22;
+  }
+
+  100% {
+    transform: translateX(80%) skewX(-18deg);
+    opacity: 0.10;
+  }
+} */
+
 
 .brand-logo {
   height: 64px;
   width: auto;
   display: block;
+  transform-origin: left center;
+  will-change: transform;
+  animation: logoWave 4.2s cubic-bezier(.45,.05,.55,.95) infinite;
+}
+
+@keyframes logoWave {
+  0%   { transform: perspective(900px) rotateY(0deg) skewY(0deg); }
+  15%  { transform: perspective(900px) rotateY(-2deg) skewY(-0.2deg); }
+  35%  { transform: perspective(900px) rotateY(5deg) skewY(0.6deg); }
+  55%  { transform: perspective(900px) rotateY(-4deg) skewY(-0.4deg); }
+  75%  { transform: perspective(900px) rotateY(2deg) skewY(0.2deg); }
+  100% { transform: perspective(900px) rotateY(0deg) skewY(0deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-logo,
+  .brand::after {
+    animation: none !important;
+  }
 }
 
 /* -------------------------------------------------

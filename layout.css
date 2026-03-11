@@ -2,7 +2,7 @@
 
 .container {
   width: min(var(--container), calc(100% - 2rem));
-  margin-inline: auto;
+  margin: auto;
 }
 
 
@@ -89,13 +89,14 @@
 
 .section {
   padding: 8px 0 16px;
+  margin: 100px 0px 70px 0px;
 }
 
 
 .section-head {
   display: flex;
   align-items: flex-end;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 1rem;
   margin-bottom: 1rem;
 }
@@ -150,3 +151,5 @@
   grid-template-columns: repeat(3, 1fr);
   gap: .75rem;
 }
+
+

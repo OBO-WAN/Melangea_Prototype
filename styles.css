@@ -87,14 +87,80 @@ a:hover {
   letter-spacing: .2px;
 }
 
-
 .hero {
-  padding: 2.2rem 0 1.2rem;
+  padding: 2.2rem 0 8.2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0,0,0,0) 40%,
+    rgba(0,0,0,.35) 100%
+  );
+
+  pointer-events:none;
+  z-index:1;
+}
+
+.hero::after{
+  content:"";
+  position:absolute;
+  left:0;
+  bottom:0;
+  width:100%;
+  height:180px;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(21,31,72,0) 0%,
+    rgba(21,31,72,.6) 60%,
+    #151f48 100%
+  );
+
+  pointer-events:none;
+  z-index:1;
+}
+
+.hero-divider {
+  position: absolute;
+  bottom: -1px;
+  left: -5%;
+  width: 110%;
+  height: 120px;
+  background: radial-gradient(120% 100px at 50% -20px,
+      transparent 60%,
+      #0c1435 61%);
+
+  pointer-events: none;
+  z-index: 3;
+}
+
+.hero-divider::before {
+  content: "";
+  position: absolute;
+  top: 95px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+
+  background: linear-gradient(90deg,
+      #ff0057,
+      #ff2e9f,
+      #ff0057);
+
+  filter: blur(3.5px);
+  opacity: 1.2;
 }
 
 .hero-grid {
   position: relative;
-  z-index: 0;
+  z-index: 2;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1.15fr .85fr;
@@ -252,7 +318,7 @@ h1 {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: .5rem;
+  gap: 1.5rem;
 }
 
 .track {
@@ -442,8 +508,8 @@ h1 {
 }
 
 .hero-video video {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   object-fit: cover;
 }
 
@@ -456,7 +522,7 @@ h1 {
 
 .hero-copy,
 .hero-card {
-  width: 90%;
+  width: 80%;
   position: relative;
   z-index: 2;
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -510,14 +576,14 @@ h1 {
 /* LOGO */
 
 .brand {
-  position: relative;   
+  position: relative;
   display: inline-flex;
   align-items: center;
   overflow: hidden;
   opacity: 0;
   transform: translateY(-6px);
   clip-path: inset(0 100% 0 0);
-  animation: brandReveal 900ms cubic-bezier(.16,.84,.44,1) forwards;
+  animation: brandReveal 900ms cubic-bezier(.16, .84, .44, 1) forwards;
   animation-delay: 120ms;
 }
 
@@ -534,12 +600,10 @@ h1 {
   position: absolute;
   inset: -35% -60%;
   pointer-events: none;
-  background: linear-gradient(
-    110deg,
-    transparent 42%,
-    rgba(255, 255, 255, 0.22) 50%,
-    transparent 58%
-  );
+  background: linear-gradient(110deg,
+      transparent 42%,
+      rgba(255, 255, 255, 0.22) 50%,
+      transparent 58%);
   transform: translateX(-85%) skewX(-18deg);
   mix-blend-mode: screen;
   opacity: 0;
@@ -549,12 +613,23 @@ h1 {
 }
 
 @keyframes brandShine {
-  0%   { transform: translateX(-85%) skewX(-18deg); opacity: 0; }
-  25%  { opacity: 0.18; }
-  100% { transform: translateX(85%)  skewX(-18deg); opacity: 0; }
+  0% {
+    transform: translateX(-85%) skewX(-18deg);
+    opacity: 0;
+  }
+
+  25% {
+    opacity: 0.18;
+  }
+
+  100% {
+    transform: translateX(85%) skewX(-18deg);
+    opacity: 0;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .brand,
   .brand::after {
     animation: none !important;
@@ -570,19 +645,37 @@ h1 {
   display: block;
   transform-origin: left center;
   will-change: transform;
-  animation: logoWave 4.2s cubic-bezier(.45,.05,.55,.95) infinite;
+  animation: logoWave 4.2s cubic-bezier(.45, .05, .55, .95) infinite;
 }
 
 @keyframes logoWave {
-  0%   { transform: perspective(900px) rotateY(0deg) skewY(0deg); }
-  15%  { transform: perspective(900px) rotateY(-2deg) skewY(-0.2deg); }
-  35%  { transform: perspective(900px) rotateY(5deg) skewY(0.6deg); }
-  55%  { transform: perspective(900px) rotateY(-4deg) skewY(-0.4deg); }
-  75%  { transform: perspective(900px) rotateY(2deg) skewY(0.2deg); }
-  100% { transform: perspective(900px) rotateY(0deg) skewY(0deg); }
+  0% {
+    transform: perspective(900px) rotateY(0deg) skewY(0deg);
+  }
+
+  15% {
+    transform: perspective(900px) rotateY(-2deg) skewY(-0.2deg);
+  }
+
+  35% {
+    transform: perspective(900px) rotateY(5deg) skewY(0.6deg);
+  }
+
+  55% {
+    transform: perspective(900px) rotateY(-4deg) skewY(-0.4deg);
+  }
+
+  75% {
+    transform: perspective(900px) rotateY(2deg) skewY(0.2deg);
+  }
+
+  100% {
+    transform: perspective(900px) rotateY(0deg) skewY(0deg);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .brand-logo,
   .brand::after {
     animation: none !important;
@@ -590,7 +683,7 @@ h1 {
 }
 
 /* -------------------------------------------------
-   HERO (consolidated: removes redundant hero-copy rules)
+   HERO SECTION (VIDEO BACKGROUND, OVERLAY, AND COPY STYLING)
 -------------------------------------------------- */
 
 /* Ensure content is above the hero overlay */

@@ -243,7 +243,7 @@ h1 {
 .card-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   gap: .75rem;
   margin-bottom: .9rem;
 }
@@ -293,6 +293,18 @@ h1 {
   letter-spacing: .42em;
 }
 
+.btn-youtube{
+  background:#FF0000;
+  border-color:#FF0000;
+  color:#fff;
+}
+
+.btn-youtube:hover{
+  background:#e0002c;
+  border-color:#e0002c;
+  color: #000;
+}
+
 .btn-small {
   padding: .5rem .8rem;
   font-size: .9rem;
@@ -331,16 +343,24 @@ h1 {
 }
 
 .track button {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
   background: transparent;
   border: 1px solid var(--border);
   color: var(--text);
-  border-radius: 999px;
-  padding: .4rem .6rem;
+  border-radius: 8px;
+  padding: .45rem .9rem;
+  font-size: .95rem;
   cursor: pointer;
+  will-change: transform;
+  transition: transform .18s ease, box-shadow .18s ease;
 }
 
 .track button:hover {
   color: var(--accent2);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, .35);
 }
 
 .track .meta {

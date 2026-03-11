@@ -90,6 +90,7 @@
 .section {
   padding: 8px 0 16px;
   margin: 100px 0px 70px 0px;
+  /* min-height: 100vh; */
 }
 
 
@@ -119,13 +120,13 @@
 
 
 .grid {
-  display: grid;
+  display: flow;
   gap: 1rem;
 }
 
 
 .grid.two {
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 8fr 1fr;
 }
 
 

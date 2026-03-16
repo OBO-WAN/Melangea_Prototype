@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="./styles.css" />
   <link rel="stylesheet" href="./layout.css" />
   <link rel="stylesheet" href="./mobile.css" />
+  <link rel="stylesheet" href="./overlay.css" />
+
 </head>
 
 <body>
@@ -157,57 +159,67 @@
 
           <article class="card person">
             <div class="avatar">
-              <img src="assets/IMG/portrait/uli.webp" alt="Ulrike Albeseder – Oboe" width="140" height="140"
+              <img src="assets/IMG/portrait/uli.webp" alt="Ulrike Albeseder – Oboe" width="240" height="240"
                 loading="lazy">
             </div>
 
-            <h3>Ulrike Albeseder</h3>
-            <p class="muted">Oboe</p>
+            <h3 class="person-name">Ulrike Albeseder</h3>
+            <p class="person-role">Oboe & Blockflöte</p>
 
             <div class="person-links">
-              <a href="#" target="_blank" rel="noopener">Bio</a>
+              <button class="person-bio-btn" data-player="Ulrike">
+                Bio
+              </button>
             </div>
           </article>
 
 
           <article class="card person">
             <div class="avatar">
-              <img src="assets/IMG/portrait/Uwe.webp" alt="Uwe Hanewald – Akkordeon" width="140" height="140" loading="lazy">
-            </div>
-
-            <h3>Uwe Hanewald</h3>
-            <p class="muted">Akkordeon</p>
-
-            <div class="person-links">
-              <a href="#" target="_blank" rel="noopener">Bio</a>
-            </div>
-          </article>
-
-
-          <article class="card person">
-            <div class="avatar">
-              <img src="assets/team/management.webp" alt="Wolfgang Mayé – Akkordeon" width="140" height="140"
+              <img src="assets/IMG/portrait/Uwe.webp" alt="Uwe Hanewald – Akkordeon" width="240" height="240"
                 loading="lazy">
             </div>
 
-            <h3>Wolfgang Mayé</h3>
-            <p class="muted">Kontrabaß</p>
+            <h3 class="person-name">Uwe Hanewald</h3>
+            <p class="person-role">Akkordeon</p>
 
             <div class="person-links">
-              <a href="#" target="_blank" rel="noopener">Bio</a>
+              <button class="person-bio-btn" data-player="Uwe">
+                Bio
+              </button>
+            </div>
+          </article>
+
+
+          <article class="card person">
+            <div class="avatar">
+              <img src="assets/IMG/portrait/Wolli.webp" alt="Wolfgang Mayé – Akkordeon" width="240" height="240"
+                loading="lazy">
+            </div>
+
+            <h3 class="person-name">Wolfgang Mayé</h3>
+            <p class="person-role">Kontrabaß</p>
+
+            <div class="person-links">
+              <button class="person-bio-btn" data-player="Maye">
+                Bio
+              </button>
             </div>
           </article>
 
           <article class="card person">
             <div class="avatar">
-              <img src="assets/team/player4.webp" alt="Player 4 – Instrument" width="140" height="140" loading="lazy">
+              <img src="assets/IMG/portrait/wolfgang-disch.webp" alt="Player 4 – Instrument" width="240" height="240"
+                loading="lazy">
             </div>
 
-            <h3>Wolfgang Disch</h3>
-            <p class="muted">Schlagzeug/Percussion</p>
+            <h3 class="person-name">Wolfgang Disch</h3>
+            <p class="person-role">Schlagzeug/Percussion</p>
 
             <div class="person-links">
-              <a href="#" target="_blank" rel="noopener">Bio</a>
+              <button class="person-bio-btn" data-player="Disch">
+                Bio
+              </button>
             </div>
           </article>
 
@@ -445,7 +457,29 @@
     </div>
   </footer>
 
-  <script src="./app.js"></script>
+  <!-- Overlays -->
+
+  <div class="bio-overlay" id="bioOverlay" aria-hidden="true">
+    <div class="bio-overlay__backdrop" data-close-overlay></div>
+
+    <div class="bio-modal" role="dialog" aria-modal="true" aria-labelledby="bioTitle">
+      <button class="bio-modal__close" type="button" aria-label="Schließen" data-close-overlay>
+        ✕
+      </button>
+
+      <div class="bio-modal__content">
+        <h3 class="bio-modal__title" id="bioTitle">Name</h3>
+        <p class="bio-modal__role" id="bioRole">Instrument</p>
+        <div class="bio-modal__text" id="bioText">
+          <p>Biografie folgt.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="./JS/objects.js"></script>
+  <script src="./JS/app.js"></script>
+
 </body>
 
 </html>

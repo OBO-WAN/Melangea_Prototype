@@ -287,7 +287,7 @@ h1 {
 }
 
 .btn-ghost {
-  background: transparent;
+  background: #656a83;
   border: 1px solid var(--border);
   color: var(--text);
   padding: .6rem 1.2rem;
@@ -423,6 +423,50 @@ h1 {
   gap: .35rem;
 }
 
+.person-name {
+  margin: .4rem 0 .2rem;
+  font-size: 1.80rem;
+  font-weight: lighter;
+  letter-spacing: .04em;
+  color: var(--text);
+  text-wrap: balance;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.person-role {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: .05em;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.person-bio-btn {
+  background: #7b89d1;
+  color: #08121f;
+  border: none;
+  border-radius: 999px;
+  padding: .55rem 1.2rem;
+  font-size: .95rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(46, 229, 157, .35);
+  text-transform: uppercase;
+  transition:
+    transform .15s ease,
+    box-shadow .15s ease,
+    filter .15s ease;
+}
+
+.person-bio-btn:hover {
+  background: var(--text);
+  transform: translateY(-2px);
+  filter: brightness(1.05);
+  box-shadow: 0 8px 20px rgba(46, 229, 157, .45);
+}
+
 .avatar {
   width: 240px;
   height: 240px;
@@ -441,7 +485,7 @@ h1 {
 }
 
 .person:hover .avatar {
-  transform: translateY(-2px);
+  /* transform: translateY(-2px); */
   box-shadow: 0 8px 18px rgba(0, 0, 0, .35);
 }
 

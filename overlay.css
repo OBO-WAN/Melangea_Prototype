@@ -1,0 +1,72 @@
+.bio-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: none;
+}
+
+.bio-overlay.is-open {
+  display: block;
+}
+
+.bio-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 8, 18, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.bio-modal {
+  position: relative;
+  z-index: 1;
+  width: min(680px, calc(100% - 2rem));
+  margin: 8vh auto 0;
+  padding: 2rem;
+  border: 1px solid var(--border);
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(17, 21, 38, .96), rgba(15, 19, 34, .92));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .45);
+}
+
+.bio-modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.bio-modal__close:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  transform: scale(1.08);
+  box-shadow: 0 6px 16px rgba(124,92,255,.45);
+}
+
+.bio-modal__title {
+  margin: 0 0 .35rem;
+  font-size: 2rem;
+  font-family: "Cormorant Garamond", serif;
+  letter-spacing: .04em;
+}
+
+.bio-modal__role {
+  margin: 0 0 1.25rem;
+  color: var(--accent2);
+  font-weight: 700;
+  letter-spacing: .05em;
+}
+
+.bio-modal__text p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.75;
+  white-space: break-spaces;
+}

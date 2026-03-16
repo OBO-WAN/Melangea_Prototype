@@ -93,4 +93,44 @@ if (toggle && nav) {
   });
 }
 
+// Bio-Overlay Functions
 
+const bioOverlay = document.getElementById("bioOverlay");
+const bioTitle = document.getElementById("bioTitle");
+const bioRole = document.getElementById("bioRole");
+const bioText = document.getElementById("bioText");
+
+function openBio(playerKey) {
+  const player = playerBios[playerKey];
+  if (!player) return;
+
+  bioTitle.textContent = player.name;
+  bioRole.textContent = player.role;
+  bioText.innerHTML = player.text;
+
+  bioOverlay.classList.add("is-open");
+  bioOverlay.setAttribute("aria-hidden", "false");
+  document.body.style.overflow = "hidden";
+}
+
+function closeBio() {
+  bioOverlay.classList.remove("is-open");
+  bioOverlay.setAttribute("aria-hidden", "true");
+  document.body.style.overflow = "";
+}
+
+document.querySelectorAll(".person-bio-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    openBio(btn.dataset.player);
+  });
+});
+
+document.querySelectorAll("[data-close-overlay]").forEach((el) => {
+  el.addEventListener("click", closeBio);
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape") {
+    closeBio();
+  }
+});

@@ -1,8 +1,23 @@
 // Minimal JS: playlist -> plays in featured player + mobile nav toggle
 const tracks = [
-  { title: "Jeu des Nuages", subtitle: "Live Session", duration: "3:42", src: "assets/MP3/02-Jeu-des-Nuages.mp3" },
-  { title: "Valse des Oiseaux", subtitle: "Studio Cut", duration: "4:10", src: "assets/MP3/03-Valse-des-Oiseaux.mp3" },
-  { title: "Cogene", subtitle: "Acoustic", duration: "3:15", src: "assets/MP3/09-Cogene.mp3" }
+  {
+    title: "Jeu des Nuages",
+    subtitle: "Live Session",
+    duration: "3:42",
+    src: "assets/MP3/02-Jeu-des-Nuages.mp3",
+  },
+  {
+    title: "Valse des Oiseaux",
+    subtitle: "Studio Cut",
+    duration: "4:10",
+    src: "assets/MP3/03-Valse-des-Oiseaux.mp3",
+  },
+  {
+    title: "Cogene",
+    subtitle: "Acoustic",
+    duration: "3:15",
+    src: "assets/MP3/09-Cogene.mp3",
+  },
 ];
 
 const featuredAudio = document.getElementById("featuredAudio");
@@ -58,7 +73,7 @@ function renderTracks() {
       featuredAudio.play().catch(() => {});
 
       // Reset all buttons
-      document.querySelectorAll(".track button").forEach(b => {
+      document.querySelectorAll(".track button").forEach((b) => {
         b.textContent = "▶︎ Play";
       });
 
@@ -99,6 +114,7 @@ const bioOverlay = document.getElementById("bioOverlay");
 const bioTitle = document.getElementById("bioTitle");
 const bioRole = document.getElementById("bioRole");
 const bioText = document.getElementById("bioText");
+const bioDownload = document.getElementById("bioDownload");
 
 function openBio(playerKey) {
   const player = playerBios[playerKey];
@@ -107,6 +123,9 @@ function openBio(playerKey) {
   bioTitle.textContent = player.name;
   bioRole.textContent = player.role;
   bioText.innerHTML = player.text;
+
+  bioDownload.href = player.pdf || "#";
+  bioDownload.style.display = player.pdf ? "inline-flex" : "none";
 
   bioOverlay.classList.add("is-open");
   bioOverlay.setAttribute("aria-hidden", "false");

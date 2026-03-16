@@ -181,7 +181,7 @@ a:hover {
 /* Grain/noise (tiny but important) */
 .eyebrow {
   margin: 0 0 .6rem;
-  color: var(--accent2);
+  color: #d7cdff;
   font-weight: 700;
   letter-spacing: .12em;
   text-transform: uppercase;

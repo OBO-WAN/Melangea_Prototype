@@ -11,7 +11,7 @@
   --radius: 22px;
   --radius-lg: 24px;
 
-  --container: 1120px;
+  --container: 1240px;
   --shadow: 0 12px 35px rgba(0, 0, 0, .35);
 }
 
@@ -250,6 +250,10 @@ h1 {
   font-size: 1.05rem;
 }
 
+.grid.team .card {
+  max-width: 320px;
+}
+
 .pill {
   display: inline-flex;
   align-items: center;
@@ -309,6 +313,7 @@ h1 {
 
 .muted {
   color: var(--muted);
+  margin: 0;
 }
 
 .small {
@@ -354,8 +359,8 @@ h1 {
   border: 1px solid var(--border);
   color: var(--text);
   border-radius: 8px;
-  padding: .45rem .9rem;
-  font-size: .95rem;
+  padding: .6rem 1.2rem;
+  font-size: 1rem;
   cursor: pointer;
   will-change: transform;
   transition: transform .18s ease, box-shadow .18s ease;
@@ -419,9 +424,9 @@ h1 {
 }
 
 .avatar {
-  width: 120px;
-  height: 120px;
-  border-radius: 22px;
+  width: 240px;
+  height: 240px;
+  border-radius: 32px;
   overflow: hidden;
   border: 1px solid var(--border);
   margin-bottom: .6rem;
@@ -429,7 +434,7 @@ h1 {
 }
 
 .avatar img {
-  width: 100%;
+  width: 101%;
   height: 100%;
   object-fit: cover;
   display: block;

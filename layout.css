@@ -133,6 +133,17 @@
   gap: .75rem;
 }
 
+.grid.four {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.75rem;
+}
+
+.grid.team {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
 .footer-grid {
   display: flex;
   align-items: center;
@@ -153,5 +164,3 @@
   grid-template-columns: repeat(3, 1fr);
   gap: .75rem;
 }
-
-

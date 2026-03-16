@@ -1,7 +1,7 @@
 /* Responsive styles extracted from styles.css */
 
 @media (max-width: 980px) {
-.hero-grid {
+  .hero-grid {
     grid-template-columns: 1fr;
     justify-items: center;
   }
@@ -14,7 +14,7 @@
 }
 
 @media (max-width: 680px) {
-.nav {
+  .nav {
     display: none;
   }
 
@@ -28,7 +28,12 @@
     grid-template-columns: 1fr;
   }
 
-  .grid.three {
+  .grid.three,
+  .grid.four {
+    grid-template-columns: 1fr;
+  }
+
+  .grid.team {
     grid-template-columns: 1fr;
   }
 
@@ -49,11 +54,11 @@
     align-items: flex-start;
   }
 
-.brand-logo {
+  .brand-logo {
     height: 64px;
   }
 
-.hero-copy {
+  .hero-copy {
     padding: 1.15rem;
   }
 }

@@ -99,7 +99,7 @@
   align-items: flex-end;
   justify-content: center;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 
@@ -112,29 +112,26 @@
   letter-spacing: .4em;
 }
 
-
 .section-foot {
   margin-top: 2rem;
   text-align: center;
 }
 
-
 .grid {
-  display: flow;
+  display: grid;
   gap: 1rem;
+  margin-top: 12px;
 }
-
 
 .grid.two {
-  grid-template-columns: 8fr 1fr;
+  grid-template-columns: 1fr;
+  justify-items: center;
 }
-
 
 .grid.three {
   grid-template-columns: repeat(3, 1fr);
   gap: .75rem;
 }
-
 
 .footer-grid {
   display: flex;

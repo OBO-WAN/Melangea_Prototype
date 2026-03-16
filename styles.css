@@ -62,10 +62,6 @@ a:hover {
   outline: 2px solid var(--accent2);
 }
 
-
-
-
-
 .brand {
   display: flex;
   align-items: center;
@@ -244,7 +240,7 @@ h1 {
 .card-head {
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
   gap: .75rem;
   margin-bottom: .9rem;
 }
@@ -294,15 +290,15 @@ h1 {
   letter-spacing: .42em;
 }
 
-.btn-youtube{
-  background:#FF0000;
-  border-color:#FF0000;
-  color:#fff;
+.btn-youtube {
+  background: #FF0000;
+  border-color: #FF0000;
+  color: #fff;
 }
 
-.btn-youtube:hover{
-  background:#e0002c;
-  border-color:#e0002c;
+.btn-youtube:hover {
+  background: #e0002c;
+  border-color: #e0002c;
   color: #000;
 }
 
@@ -338,16 +334,16 @@ h1 {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: .75rem .8rem;
+  padding: 1.1rem 6.2rem;
   border-radius: 16px;
   border: 1px solid var(--border);
   background: rgba(11, 13, 18, .35);
   counter-increment: track;
 }
 
-.track .title::before{
+.track .title::before {
   content: counter(track) ". ";
-  opacity:.6;
+  opacity: .6;
 }
 
 .track button {
@@ -378,12 +374,14 @@ h1 {
 }
 
 .track .title {
+  font-size: 1.15rem;
   font-weight: 750;
 }
 
 .track .sub {
   color: var(--muted);
-  font-size: .85rem;
+  font-size: .95rem;
+
 }
 
 .track-meta {
@@ -415,18 +413,31 @@ h1 {
 .person {
   display: flex;
   flex-direction: column;
-  gap: .4rem;
+  align-items: center;
+  text-align: center;
+  gap: .35rem;
 }
 
 .avatar {
-  width: 52px;
-  height: 52px;
-  border-radius: 18px;
-  background: rgba(124, 92, 255, .18);
-  display: grid;
-  place-items: center;
+  width: 120px;
+  height: 120px;
+  border-radius: 22px;
+  overflow: hidden;
   border: 1px solid var(--border);
-  margin-bottom: .35rem;
+  margin-bottom: .6rem;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.person:hover .avatar {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .35);
 }
 
 .person-links {

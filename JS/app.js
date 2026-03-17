@@ -1,4 +1,5 @@
 // Minimal JS: playlist -> plays in featured player + mobile nav toggle
+
 const tracks = [
   {
     title: "Jeu des Nuages",
@@ -153,3 +154,21 @@ document.addEventListener("keydown", (e) => {
     closeBio();
   }
 });
+
+
+// Scroll Progress Bar
+
+function updateScrollProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+    document.documentElement.style.setProperty(
+      "--scroll-progress",
+      `${progress}%`
+    );
+  }
+
+  window.addEventListener("scroll", updateScrollProgress, { passive: true });
+  window.addEventListener("load", updateScrollProgress);
+  window.addEventListener("resize", updateScrollProgress);

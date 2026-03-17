@@ -9,9 +9,21 @@
   position: sticky;
   top: 0;
   z-index: 50;
+  overflow: hidden;
   backdrop-filter: blur(10px);
   background: linear-gradient(340deg, #264f5d 0%, #0a001a 100%);
-  border-bottom: 3.8px solid #7c5cff;
+  /* border-bottom: 3.8px solid #7c5cff; */
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3.8px;
+  width: var(--scroll-progress, 0%);
+  background: #7c5cff;
+  transition: width 0.08s linear;
 }
 
 .header-inner {

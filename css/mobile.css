@@ -1,64 +1,316 @@
-/* Responsive styles extracted from styles.css */
+/* =========================================
+   Responsive layout
+   Desktop-first overrides
+========================================= */
 
-@media (max-width: 980px) {
-  .hero-grid {
-    grid-template-columns: 1fr;
-    justify-items: center;
+/* ---------- Large desktop down / small laptop ---------- */
+@media (max-width: 1200px) {
+  .container {
+    width: min(var(--container), calc(100% - 1.5rem));
   }
 
-  .hero-copy,
-  .hero-card {
-    width: min(90%, 720px);
-    margin-inline: auto;
+  .header-inner {
+    gap: 1.25rem;
+    padding: 1.1rem 0;
+  }
+
+  .nav {
+    gap: 1.15rem;
+  }
+
+  .nav a:not(.btn) {
+    font-size: 1.1rem;
+  }
+
+  .hero {
+    padding: 1rem;
+  }
+
+  .hero-stage {
+    width: min(1100px, 100%);
+    aspect-ratio: 16 / 10;
+    border-radius: 28px;
+  }
+
+  .grid.team {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+  }
+
+  .grid.three {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .section {
+    margin: 80px 0 56px;
+  }
+
+  .section-head h2 {
+    font-size: 1.8rem;
+    letter-spacing: 0.24em;
   }
 }
 
-@media (max-width: 680px) {
+/* ---------- Nav collapse ---------- */
+@media (max-width: 980px) {
   .nav {
     display: none;
   }
 
   .nav-toggle {
     display: inline-flex;
-    border-color: brown;
-    border-width: 2px;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    margin-right: 0.5rem;
+    font-size: 1.0rem;
+    line-height: 1;
+    background: transparent;
+    border: 2px solid var(--accent);
+    border-radius: 12px;
   }
 
-  .grid.two {
-    grid-template-columns: 1fr;
+  .nav-toggle:hover {
+    background: rgba(124, 92, 255, 0.1);
+    transform: scale(1.05);
   }
 
+  .nav-toggle:active {
+    transform: scale(0.96);
+  }
+
+  .header-inner {
+    position: relative;
+  }
+
+  .hero {
+    padding: 1rem;
+    min-height: auto;
+  }
+
+  .hero-stage {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 24px;
+  }
+}
+
+/* ---------- Tablet ---------- */
+@media (max-width: 900px) {
+  .container {
+    width: min(var(--container), calc(100% - 1.25rem));
+  }
+
+  .header-inner {
+    padding: 0.95rem 0;
+  }
+
+  .brand-logo {
+    height: 72px;
+  }
+
+  .track {
+    padding: 1rem 1.25rem;
+  }
+
+  .grid.team .card {
+    max-width: 300px;
+  }
+
+  .avatar {
+    width: 220px;
+    height: 220px;
+  }
+
+  .person-name {
+    font-size: 1.55rem;
+  }
+
+  .person-role {
+    font-size: 1.2rem;
+  }
+
+  .section {
+    margin: 64px 0 48px;
+  }
+
+  .section-head {
+    margin-bottom: 1.5rem;
+  }
+
+  .section-head h2 {
+    font-size: 1.6rem;
+    letter-spacing: 0.18em;
+    text-align: center;
+  }
+
+  .cta {
+    padding: 1.25rem;
+  }
+}
+
+/* ---------- Mobile ---------- */
+@media (max-width: 680px) {
+  .container {
+    width: min(var(--container), calc(100% - 1rem));
+  }
+
+  .header-inner {
+    padding: 0.85rem 0.5rem;
+  }
+
+  .brand-logo {
+    height: 56px;
+  }
+
+  .hero {
+    padding: 0.75rem;
+    min-height: auto;
+  }
+
+  .hero-stage {
+    aspect-ratio: 4 / 5;
+    border-radius: 20px;
+  }
+
+  .grid.two,
   .grid.three,
-  .grid.four {
+  .grid.four,
+  .grid.team {
     grid-template-columns: 1fr;
   }
 
   .grid.team {
+    gap: 1rem;
+  }
+
+  .grid.team .card {
+    max-width: 100%;
+  }
+
+  .avatar {
+    width: min(100%, 240px);
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+
+  .person-name {
+    font-size: 1.45rem;
+  }
+
+  .person-role {
+    font-size: 1.1rem;
+  }
+
+  .track {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.95rem 1rem;
+    gap: 0.75rem;
+  }
+
+  .track button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .track .title {
+    font-size: 1.02rem;
+  }
+
+  .track-meta {
     grid-template-columns: 1fr;
   }
 
   .event {
     grid-template-columns: 70px 1fr;
+    align-items: start;
   }
 
   .event-actions {
     grid-column: 1 / -1;
   }
 
-  .footer-grid {
-    flex-direction: column;
+  .event-actions .btn {
+    flex: 1 1 auto;
+  }
+
+  .section {
+    margin: 52px 0 40px;
+    padding: 6px 0 12px;
+  }
+
+  .section-head {
+    margin-bottom: 1.25rem;
+  }
+
+  .section-head h2 {
+    font-size: 1.35rem;
+    letter-spacing: 0.12em;
+    line-height: 1.2;
+  }
+
+  .card {
+    padding: 1rem;
   }
 
   .cta {
     flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+
+  .cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta-actions .btn,
+  .cta-actions .btn-ghost {
+    width: 100%;
+  }
+
+  .footer-grid {
+    flex-direction: column;
     align-items: flex-start;
   }
 
+  .footer-links {
+    gap: 0.75rem;
+  }
+}
+
+/* ---------- Small phones ---------- */
+@media (max-width: 420px) {
   .brand-logo {
-    height: 64px;
+    height: 48px;
   }
 
-  .hero-copy {
-    padding: 1.15rem;
+  .hero {
+    padding: 0.5rem;
+  }
+
+  .hero-stage {
+    border-radius: 16px;
+  }
+
+  .person-name {
+    font-size: 1.3rem;
+  }
+
+  .person-role {
+    font-size: 1rem;
+  }
+
+  .btn,
+  .btn-ghost,
+  .btn-small,
+  .person-bio-btn {
+    font-size: 0.9rem;
+  }
+
+  .card {
+    padding: 0.9rem;
   }
 }

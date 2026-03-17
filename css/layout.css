@@ -8,11 +8,11 @@
 .site-header {
   position: sticky;
   top: 0;
+  margin-bottom: 0;
   z-index: 50;
-  overflow: hidden;
+  overflow: visible;
   backdrop-filter: blur(10px);
-  background: linear-gradient(340deg, #264f5d 0%, #0a001a 100%);
-  /* border-bottom: 3.8px solid #7c5cff; */
+  background: linear-gradient(340deg, #1c7fa1 0%, #10002b 100%);
 }
 
 .site-header::after {
@@ -22,7 +22,7 @@
   bottom: 0;
   height: 3.8px;
   width: var(--scroll-progress, 0%);
-  background: #7c5cff;
+  background: #0089f3;
   transition: width 0.08s linear;
 }
 
@@ -30,7 +30,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: .9rem 0;
+  padding: 2rem 0;
   gap: 1rem;
 }
 
@@ -38,6 +38,7 @@
   display: flex;
   gap: 2rem;
   align-items: center;
+  margin-right: 1.15rem;
 }
 
 .nav a:not(.btn) {
@@ -137,8 +138,7 @@
 }
 
 .grid.team {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  /* gap: 2rem; */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   justify-items: center;
 }
 

@@ -1,4 +1,35 @@
-// Minimal JS: playlist -> plays in featured player + mobile nav toggle
+// =====================================================
+// Mélange à Deux — app.js
+// Safe, modular, and resilient to missing DOM elements
+// =====================================================
+
+document.addEventListener("DOMContentLoaded", () => {
+  initPlaylist();
+  initMobileNav();
+  initBioOverlay();
+  initScrollProgress();
+  initHeroSlider();
+});
+
+// -----------------------------------------------------
+// Shared helpers
+// -----------------------------------------------------
+
+function qs(selector, scope = document) {
+  return scope.querySelector(selector);
+}
+
+function qsa(selector, scope = document) {
+  return Array.from(scope.querySelectorAll(selector));
+}
+
+function isMobileViewport() {
+  return window.matchMedia("(max-width: 980px)").matches;
+}
+
+// -----------------------------------------------------
+// Playlist / audio
+// -----------------------------------------------------
 
 const tracks = [
   {
@@ -21,146 +52,305 @@ const tracks = [
   },
 ];
 
-const featuredAudio = document.getElementById("featuredAudio");
-const featuredTitle = document.getElementById("featuredTitle");
-const featuredDuration = document.getElementById("featuredDuration");
-const trackList = document.getElementById("trackList");
-const trackCount = document.getElementById("trackCount");
+function initPlaylist() {
+  const featuredAudio = document.getElementById("featuredAudio");
+  const featuredTitle = document.getElementById("featuredTitle");
+  const featuredDuration = document.getElementById("featuredDuration");
+  const trackList = document.getElementById("trackList");
+  const trackCount = document.getElementById("trackCount");
 
-function setFeatured(track) {
-  featuredTitle.textContent = track.title;
-  featuredDuration.textContent = track.duration;
-  if (track.src) {
-    featuredAudio.src = track.src;
-  } else {
-    featuredAudio.removeAttribute("src");
-    featuredAudio.load();
+  if (!trackList || !trackCount) return;
+
+  const hasFeaturedPlayer =
+    !!featuredAudio && !!featuredTitle && !!featuredDuration;
+
+  function setFeatured(track) {
+    if (!hasFeaturedPlayer) return;
+
+    featuredTitle.textContent = track.title;
+    featuredDuration.textContent = track.duration;
+
+    if (track.src) {
+      featuredAudio.src = track.src;
+    } else {
+      featuredAudio.removeAttribute("src");
+      featuredAudio.load();
+    }
   }
-}
 
-function renderTracks() {
-  trackCount.textContent = `${tracks.length} Tracks`;
-  trackList.innerHTML = "";
+  function resetTrackButtons() {
+    qsa(".track button", trackList).forEach((button) => {
+      button.textContent = hasFeaturedPlayer ? "▶︎ Play" : "Audio folgt";
+      button.disabled = !hasFeaturedPlayer;
+    });
+  }
 
-  tracks.forEach((t, idx) => {
-    const li = document.createElement("li");
-    li.className = "track";
+  function renderTracks() {
+    trackCount.textContent = `${tracks.length} Tracks`;
+    trackList.innerHTML = "";
 
-    li.innerHTML = `
-      <div class="meta">
-        <div class="title">${t.title}</div>
-        <div class="sub">${t.subtitle} • ${t.duration}</div>
-      </div>
-      <button type="button" data-idx="${idx}">
-        ▶︎ Play
-      </button>
-    `;
+    tracks.forEach((track) => {
+      const li = document.createElement("li");
+      li.className = "track";
 
-    const btn = li.querySelector("button");
+      li.innerHTML = `
+        <div class="meta">
+          <div class="title">${track.title}</div>
+          <div class="sub">${track.subtitle} • ${track.duration}</div>
+        </div>
+        <button type="button" ${hasFeaturedPlayer ? "" : "disabled"}>
+          ${hasFeaturedPlayer ? "▶︎ Play" : "Audio folgt"}
+        </button>
+      `;
 
-    btn.addEventListener("click", () => {
-      const isCurrent = featuredAudio.src.includes(t.src);
-      const isPlaying = !featuredAudio.paused;
+      const button = li.querySelector("button");
 
-      // If clicking the same track while playing → pause
-      if (isCurrent && isPlaying) {
-        featuredAudio.pause();
-        btn.textContent = "▶︎ Play";
-        return;
+      if (hasFeaturedPlayer) {
+        button.addEventListener("click", async () => {
+          const currentSrc = featuredAudio.getAttribute("src") || "";
+          const isCurrent = currentSrc.includes(track.src);
+          const isPlaying = !featuredAudio.paused;
+
+          if (isCurrent && isPlaying) {
+            featuredAudio.pause();
+            button.textContent = "▶︎ Play";
+            return;
+          }
+
+          setFeatured(track);
+          resetTrackButtons();
+
+          try {
+            await featuredAudio.play();
+            button.textContent = "⏸ Pause";
+          } catch (error) {
+            console.error("Audio playback failed:", error);
+            button.textContent = "▶︎ Play";
+          }
+        });
       }
 
-      // Otherwise load & play selected track
-      setFeatured(t);
-      featuredAudio.play().catch(() => {});
-
-      // Reset all buttons
-      document.querySelectorAll(".track button").forEach((b) => {
-        b.textContent = "▶︎ Play";
-      });
-
-      btn.textContent = "⏸ Pause";
+      trackList.appendChild(li);
     });
+  }
 
-    trackList.appendChild(li);
-  });
+  if (hasFeaturedPlayer) {
+    setFeatured(tracks[0] || { title: "—", duration: "—", src: "" });
+
+    featuredAudio.addEventListener("ended", resetTrackButtons);
+    featuredAudio.addEventListener("pause", () => {
+      if (featuredAudio.ended) return;
+      qsa(".track button", trackList).forEach((button) => {
+        if (button.textContent.includes("Pause")) {
+          button.textContent = "▶︎ Play";
+        }
+      });
+    });
+  }
+
+  renderTracks();
 }
 
-// Init
-renderTracks();
-setFeatured(tracks[0] || { title: "—", duration: "—", src: "" });
+// -----------------------------------------------------
+// Mobile nav
+// -----------------------------------------------------
 
-// Mobile nav toggle (simple demo)
-const toggle = document.querySelector(".nav-toggle");
-const nav = document.querySelector(".nav");
+function initMobileNav() {
+  const toggle = qs(".nav-toggle");
+  const nav = qs(".nav");
+  const headerInner = qs(".header-inner");
 
-if (toggle && nav) {
-  toggle.addEventListener("click", () => {
-    const open = nav.style.display === "flex";
-    nav.style.display = open ? "none" : "flex";
+  if (!toggle || !nav || !headerInner) return;
+
+  function openMenu() {
+    nav.style.display = "flex";
     nav.style.flexDirection = "column";
     nav.style.position = "absolute";
     nav.style.right = "1rem";
-    nav.style.top = "64px";
+    nav.style.top = "calc(100% + 0.5rem)";
     nav.style.padding = "1rem";
-    nav.style.background = "rgba(17,21,38,.95)";
-    nav.style.border = "1px solid rgba(255,255,255,.08)";
+    nav.style.background = "rgba(17, 21, 38, 0.95)";
+    nav.style.border = "1px solid rgba(255, 255, 255, 0.08)";
     nav.style.borderRadius = "16px";
-    toggle.setAttribute("aria-expanded", String(!open));
-  });
-}
+    nav.style.gap = "1rem";
+    nav.style.minWidth = "220px";
+    nav.style.boxShadow = "0 12px 30px rgba(0, 0, 0, 0.35)";
+    nav.style.zIndex = "300";
 
-// Bio-Overlay Functions
+    headerInner.style.position = "relative";
 
-const bioOverlay = document.getElementById("bioOverlay");
-const bioTitle = document.getElementById("bioTitle");
-const bioRole = document.getElementById("bioRole");
-const bioText = document.getElementById("bioText");
-const bioDownload = document.getElementById("bioDownload");
-
-function openBio(playerKey) {
-  const player = playerBios[playerKey];
-  if (!player) return;
-
-  bioTitle.textContent = player.name;
-  bioRole.textContent = player.role;
-  bioText.innerHTML = player.text;
-
-  bioDownload.href = player.pdf || "#";
-  bioDownload.style.display = player.pdf ? "inline-flex" : "none";
-
-  bioOverlay.classList.add("is-open");
-  bioOverlay.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-}
-
-function closeBio() {
-  bioOverlay.classList.remove("is-open");
-  bioOverlay.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-}
-
-document.querySelectorAll(".person-bio-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    openBio(btn.dataset.player);
-  });
-});
-
-document.querySelectorAll("[data-close-overlay]").forEach((el) => {
-  el.addEventListener("click", closeBio);
-});
-
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") {
-    closeBio();
+    toggle.setAttribute("aria-expanded", "true");
+    toggle.setAttribute("aria-label", "Menü schließen");
   }
-});
 
+  function closeMenu() {
+    if (isMobileViewport()) {
+      nav.style.display = "none";
+      nav.style.flexDirection = "";
+      nav.style.position = "";
+      nav.style.right = "";
+      nav.style.top = "";
+      nav.style.padding = "";
+      nav.style.background = "";
+      nav.style.border = "";
+      nav.style.borderRadius = "";
+      nav.style.gap = "";
+      nav.style.minWidth = "";
+      nav.style.boxShadow = "";
+      nav.style.zIndex = "";
+    } else {
+      nav.style.display = "";
+      nav.style.flexDirection = "";
+      nav.style.position = "";
+      nav.style.right = "";
+      nav.style.top = "";
+      nav.style.padding = "";
+      nav.style.background = "";
+      nav.style.border = "";
+      nav.style.borderRadius = "";
+      nav.style.gap = "";
+      nav.style.minWidth = "";
+      nav.style.boxShadow = "";
+      nav.style.zIndex = "";
+    }
 
-// Scroll Progress Bar
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.setAttribute("aria-label", "Menü öffnen");
+  }
 
-function updateScrollProgress() {
+  function toggleMenu() {
+    const isOpen = toggle.getAttribute("aria-expanded") === "true";
+    if (isOpen) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  }
+
+  toggle.addEventListener("click", (event) => {
+    event.stopPropagation();
+    if (!isMobileViewport()) return;
+    toggleMenu();
+  });
+
+  nav.addEventListener("click", (event) => {
+    event.stopPropagation();
+  });
+
+  document.addEventListener("click", () => {
+    if (isMobileViewport() && toggle.getAttribute("aria-expanded") === "true") {
+      closeMenu();
+    }
+  });
+
+  qsa("a", nav).forEach((link) => {
+    link.addEventListener("click", () => {
+      if (isMobileViewport()) {
+        closeMenu();
+      }
+    });
+  });
+
+  window.addEventListener("resize", () => {
+    if (!isMobileViewport()) {
+      closeMenu();
+    } else if (toggle.getAttribute("aria-expanded") !== "true") {
+      nav.style.display = "none";
+    }
+  });
+
+  closeMenu();
+}
+
+// -----------------------------------------------------
+// Bio overlay
+// -----------------------------------------------------
+
+function initBioOverlay() {
+  const bioOverlay = document.getElementById("bioOverlay");
+  const bioTitle = document.getElementById("bioTitle");
+  const bioRole = document.getElementById("bioRole");
+  const bioText = document.getElementById("bioText");
+  const bioDownload = document.getElementById("bioDownload");
+  const bioButtons = qsa(".person-bio-btn");
+  const closeButtons = qsa("[data-close-overlay]");
+
+  if (
+    !bioOverlay ||
+    !bioTitle ||
+    !bioRole ||
+    !bioText ||
+    !bioDownload ||
+    bioButtons.length === 0
+  ) {
+    return;
+  }
+
+  const bios =
+    typeof window.playerBios !== "undefined"
+      ? window.playerBios
+      : typeof playerBios !== "undefined"
+      ? playerBios
+      : null;
+
+  if (!bios) {
+    console.warn("playerBios is not available.");
+    return;
+  }
+
+  function openBio(playerKey) {
+    const player = bios[playerKey];
+    if (!player) return;
+
+    bioTitle.textContent = player.name || "—";
+    bioRole.textContent = player.role || "";
+    bioText.innerHTML = player.text || "<p>Biografie folgt.</p>";
+
+    if (player.pdf) {
+      bioDownload.href = player.pdf;
+      bioDownload.style.display = "inline-flex";
+    } else {
+      bioDownload.href = "#";
+      bioDownload.style.display = "none";
+    }
+
+    bioOverlay.classList.add("is-open");
+    bioOverlay.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeBio() {
+    bioOverlay.classList.remove("is-open");
+    bioOverlay.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
+  }
+
+  bioButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      openBio(button.dataset.player);
+    });
+  });
+
+  closeButtons.forEach((element) => {
+    element.addEventListener("click", closeBio);
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && bioOverlay.classList.contains("is-open")) {
+      closeBio();
+    }
+  });
+}
+
+// -----------------------------------------------------
+// Scroll progress bar
+// -----------------------------------------------------
+
+function initScrollProgress() {
+  function updateScrollProgress() {
     const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const docHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
     const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
 
     document.documentElement.style.setProperty(
@@ -169,6 +359,29 @@ function updateScrollProgress() {
     );
   }
 
+  updateScrollProgress();
+
   window.addEventListener("scroll", updateScrollProgress, { passive: true });
-  window.addEventListener("load", updateScrollProgress);
   window.addEventListener("resize", updateScrollProgress);
+  window.addEventListener("load", updateScrollProgress);
+}
+
+// Hero Slider
+
+function initHeroSlider() {
+  const slides = document.querySelectorAll(".hero-slide");
+  if (!slides.length) return;
+
+  let current = 0;
+
+  function showSlide(index) {
+    slides.forEach((slide, i) => {
+      slide.classList.toggle("is-active", i === index);
+    });
+  }
+
+  setInterval(() => {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  }, 5000);
+}

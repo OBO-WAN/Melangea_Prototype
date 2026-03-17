@@ -31,12 +31,12 @@
 
       <nav class="nav">
         <a href="#music">Musik</a>
-        <a href="#booking">Buchen</a>
         <a href="#shows">Auftritte</a>
         <a href="#projects">Projekte</a>
         <a href="#videos">Videos</a>
         <a href="#blog">Blog</a>
-        <a class="btn btn-small" href="#shop">Shop</a>
+        <a href="#contact">Kontakt</a>
+        <a class="btn btn-small" href="#booking">Buchen</a>
       </nav>
 
       <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false">
@@ -48,76 +48,23 @@
   <main id="main">
     <!-- Hero -->
 
+
     <section class="hero">
-      <div class="container hero-grid">
-        <!-- Background video (desktop) -->
-        <div class="hero-video" aria-hidden="true">
-          <video autoplay muted loop playsinline preload="metadata">
-            <source src="./assets/MP4/background_video.mp4" type="video/mp4" />
-          </video>
-        </div>
-
-        <!-- Background image slider (fallback / mobile) -->
-        <div class="hero-bg" aria-hidden="true">
-          <span class="bg bg1"></span>
-          <span class="bg bg2"></span>
-          <span class="bg bg3"></span>
-        </div>
-
-        <div class="hero-copy">
-          <p class="eyebrow">Oboe & Akkordeon</p>
-          <h1>Mélange à Deux</h1>
-          <p class="lead">
-            Konzertformate von Duo bis Quartett, Programme für Bühne &
-            Familie, dazu neue Releases, Videos und Termine.
-          </p>
-          <div class="hero-actions">
-            <a class="btn" href="#music">Jetzt hören</a>
-            <a class="btn btn-ghost" href="#shows">Nächste Auftritte</a>
+      <div class="hero-stage">
+        <div class="hero-slider" aria-label="Mélange à Deux Bildslider">
+          <div class="hero-slide is-active">
+            <img src="./assets/IMG/background/hero_image.webp" alt="Mélange à Deux Ensemble" />
           </div>
 
-          <div class="hero-stats">
-            <div class="stat">
-              <div class="stat-num">5</div>
-              <div class="stat-label">Projekte</div>
-            </div>
-            <div class="stat">
-              <div class="stat-num">∞</div>
-              <div class="stat-label">Genres & Ideen</div>
-            </div>
-            <div class="stat">
-              <div class="stat-num">Live</div>
-              <div class="stat-label">Shows & Tour</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="hero-card card">
-          <div class="card-head">
-            <h3>Featured Track</h3>
-            <span class="pill">Neu</span>
+          <div class="hero-slide">
+            <img src="./assets/IMG/background/duo_landscape.webp" alt="Mélange à Deux Duo" />
           </div>
 
-          <audio id="featuredAudio" controls preload="none">
-            <source src="./assets/MP3/01-Danse-des-Epis.mp3" type="audio/mp3" />
-            Dein Browser unterstützt Audio nicht.
-          </audio>
-
-          <div class="track-meta">
-            <div>
-              <div class="muted">Titel</div>
-              <div class="strong" id="featuredTitle">—</div>
-            </div>
-            <div>
-              <div class="muted">Dauer</div>
-              <div class="strong" id="featuredDuration">—</div>
-            </div>
+          <div class="hero-slide">
+            <img src="./assets/IMG/background/trio_landscape.webp" alt="Mélange à Deux Trio live" />
           </div>
         </div>
       </div>
-      <div class="hero-divider"></div>
-
-
     </section>
 
 

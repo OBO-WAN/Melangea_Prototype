@@ -86,12 +86,20 @@ a:hover {
 
 .hero {
   position: relative;
-  min-height: 100svh;
+  min-height: 90svh;
   width: 100%;
   overflow: hidden;
   display: grid;
   place-items: center;
   padding: 0 0.75rem 0.75rem;
+}
+
+@media (max-width: 1024px) {
+  .hero {
+    place-items: start center;
+    padding-top: 0.75rem;
+    min-height: 50svh;
+  }
 }
 
 .hero-stage {
@@ -105,6 +113,12 @@ a:hover {
     0 8px 24px rgba(0, 0, 0, 0.22);
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(10, 14, 28, 0.5);
+}
+
+@media (max-width: 1024px) {
+  .hero-stage {
+    aspect-ratio: 16 / 10;
+  }
 }
 
 .hero-slider {

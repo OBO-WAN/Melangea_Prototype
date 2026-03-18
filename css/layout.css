@@ -88,6 +88,13 @@
   padding: .45rem .65rem;
 }
 
+.nav .btn-small {
+  font-family: "Cormorant Garamond", serif;
+  letter-spacing: 0.01em;
+  font-weight: bolder;
+  font-size: 1.2rem;
+}
+
 .section {
   padding: 8px 0 16px;
   margin: 100px 0px 70px 0px;

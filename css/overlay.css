@@ -1,12 +1,18 @@
+/* =========================================
+   Overlay / bio modal
+========================================= */
+
 .bio-overlay {
   position: fixed;
   inset: 0;
   z-index: 200;
   display: none;
+  place-items: center;
+  padding: 1rem;
 }
 
 .bio-overlay.is-open {
-  display: block;
+  display: grid;
 }
 
 .bio-overlay__backdrop {
@@ -20,13 +26,12 @@
   position: relative;
   z-index: 1;
   width: min(680px, calc(100% - 2rem));
-  margin: auto;
+  margin: 0;
   padding: 2rem;
   border: 1px solid var(--border);
   border-radius: 28px;
-  background:
-    linear-gradient(180deg, rgba(17, 21, 38, .96), rgba(15, 19, 34, .92));
-  box-shadow: 0 24px 80px rgba(0, 0, 0, .45);
+  background: linear-gradient(180deg, rgba(17, 21, 38, 0.96), rgba(15, 19, 34, 0.92));
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
 }
 
 .bio-modal__close {
@@ -37,7 +42,7 @@
   height: 42px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  background: rgba(255, 255, 255, .06);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text);
   cursor: pointer;
 }
@@ -47,27 +52,27 @@
   border-color: var(--accent);
   color: #fff;
   transform: scale(1.08);
-  box-shadow: 0 6px 16px rgba(124, 92, 255, .45);
+  box-shadow: 0 6px 16px rgba(124, 92, 255, 0.45);
 }
 
 .bio-modal__title {
-  margin: 0 0 .35rem;
+  margin: 0 0 0.35rem;
   font-size: 2rem;
   font-family: "Cormorant Garamond", serif;
-  letter-spacing: .04em;
+  letter-spacing: 0.04em;
 }
 
 .bio-modal__role {
   margin: 0 0 1.25rem;
   color: var(--accent2);
   font-weight: 700;
-  letter-spacing: .05em;
+  letter-spacing: 0.05em;
 }
 
 .bio-modal__text {
   max-height: 75vh;
   overflow-y: auto;
-  padding-right: .6rem;
+  padding-right: 0.6rem;
   scrollbar-width: thin;
 }
 
@@ -78,44 +83,44 @@
   white-space: break-spaces;
 }
 
-/* For Chromium Browsers  */
-
 .bio-modal__text::-webkit-scrollbar {
   width: 6px;
 }
 
 .bio-modal__text::-webkit-scrollbar-thumb {
-  background: var(--accent);
   border-radius: 999px;
+  background: var(--accent);
 }
-
-/* PDF Button */
 
 .bio-download {
   display: inline-flex;
   align-items: center;
-  gap: .45rem;
-
+  gap: 0.45rem;
   margin-top: 1.2rem;
-  padding: .55rem 1rem;
-
+  padding: 0.55rem 1rem;
   border: 1px solid var(--border);
   border-radius: 999px;
-
+  background: rgba(255, 255, 255, 0.03);
   color: var(--accent2);
-  font-size: .9rem;
+  font-size: 0.9rem;
   font-weight: 600;
-
-  background: rgba(255,255,255,.03);
   text-decoration: none;
-
-  transition: transform .15s ease,
-              border-color .15s ease,
-              background .15s ease;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
 }
 
 .bio-download:hover {
   transform: translateY(-1px);
   border-color: var(--accent2);
-  background: rgba(46,229,157,.12);
+  background: rgba(46, 229, 157, 0.12);
+}
+
+@media (max-width: 680px) {
+  .bio-modal {
+    padding: 1.4rem;
+    border-radius: 22px;
+  }
+
+  .bio-modal__title {
+    font-size: 1.65rem;
+  }
 }

@@ -12,8 +12,9 @@
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="icon" href="assets/favicon.svg" sizes="any" />
 
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/mobile.css" />
   <link rel="stylesheet" href="css/overlay.css" />
 
@@ -29,18 +30,23 @@
         <img src="./assets/IMG/LOGO/logo_et_amis.png" alt="Mélange à Deux Logo" class="brand-logo" />
       </a>
 
-      <nav class="nav">
-        <a href="#über uns">Über uns</a>
-        <a href="#konzerte">Konzerte</a>
-        <a href="#programme">Programme</a>
-        <a href="#media">Medien</a>
-        <a href="#booking">Buchen</a>
-        <a href="#news">News</a>
-      </nav>
+      <div class="nav-wrap">
+        <input type="checkbox" id="nav-toggle" class="nav-checkbox" />
 
-      <button class="nav-toggle" aria-label="Menü öffnen" aria-expanded="false">
-        ☰
-      </button>
+        <label for="nav-toggle" class="nav-toggle">
+          <span class="nav-toggle__icon" aria-hidden="true">☰</span>
+          <span class="sr-only">Menü öffnen</span>
+        </label>
+
+        <nav class="nav" aria-label="Hauptnavigation">
+          <a href="#about">Über uns</a>
+          <a href="#shows">Konzerte</a>
+          <a href="#projects">Programme</a>
+          <a href="#videos">Medien</a>
+          <a href="#shop">Buchen</a>
+          <a href="#blog">News</a>
+        </nav>
+      </div>
     </div>
   </header>
 
@@ -92,7 +98,7 @@
     </section>
 
     <!-- Team -->
-    <section class="section">
+    <section id="about" class="section">
       <div class="container">
         <div class="section-head">
           <h2>Unser Team</h2>

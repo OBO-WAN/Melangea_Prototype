@@ -54,8 +54,35 @@
 
 /* ---------- Nav collapse ---------- */
 @media (max-width: 980px) {
+  .header-inner {
+    position: relative;
+  }
+
+  .nav-wrap {
+    margin-left: auto;
+  }
+
   .nav {
     display: none;
+    position: absolute;
+    right: 0;
+    top: calc(100% + 0.5rem);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    min-width: 220px;
+    padding: 1rem;
+    margin-right: 0;
+    background: rgba(17, 21, 38, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+    z-index: 300;
+  }
+
+  .nav a,
+  .nav a.btn {
+    width: 100%;
   }
 
   .nav-toggle {
@@ -63,8 +90,8 @@
     align-items: center;
     justify-content: center;
     padding: 1rem;
-    margin-right: 0.5rem;
-    font-size: 1.0rem;
+    margin-right: 0;
+    font-size: 1rem;
     line-height: 1;
     background: transparent;
     border: 2px solid var(--accent);
@@ -80,8 +107,8 @@
     transform: scale(0.96);
   }
 
-  .header-inner {
-    position: relative;
+  .nav-checkbox:checked + .nav-toggle + .nav {
+    display: flex;
   }
 
   .hero {

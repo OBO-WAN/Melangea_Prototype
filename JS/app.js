@@ -1,11 +1,7 @@
-// =====================================================
-// Mélange à Deux — app.js
-// Safe, modular, and resilient to missing DOM elements
-// =====================================================
+
 
 document.addEventListener("DOMContentLoaded", () => {
   initPlaylist();
-  initMobileNav();
   initBioOverlay();
   initScrollProgress();
   initHeroSlider();
@@ -21,10 +17,6 @@ function qs(selector, scope = document) {
 
 function qsa(selector, scope = document) {
   return Array.from(scope.querySelectorAll(selector));
-}
-
-function isMobileViewport() {
-  return window.matchMedia("(max-width: 980px)").matches;
 }
 
 // -----------------------------------------------------
@@ -151,116 +143,6 @@ function initPlaylist() {
   renderTracks();
 }
 
-// -----------------------------------------------------
-// Mobile nav
-// -----------------------------------------------------
-
-function initMobileNav() {
-  const toggle = qs(".nav-toggle");
-  const nav = qs(".nav");
-  const headerInner = qs(".header-inner");
-
-  if (!toggle || !nav || !headerInner) return;
-
-  function openMenu() {
-    nav.style.display = "flex";
-    nav.style.flexDirection = "column";
-    nav.style.position = "absolute";
-    nav.style.right = "1rem";
-    nav.style.top = "calc(100% + 0.5rem)";
-    nav.style.padding = "1rem";
-    nav.style.background = "rgba(17, 21, 38, 0.95)";
-    nav.style.border = "1px solid rgba(255, 255, 255, 0.08)";
-    nav.style.borderRadius = "16px";
-    nav.style.gap = "1rem";
-    nav.style.minWidth = "220px";
-    nav.style.boxShadow = "0 12px 30px rgba(0, 0, 0, 0.35)";
-    nav.style.zIndex = "300";
-
-    headerInner.style.position = "relative";
-
-    toggle.setAttribute("aria-expanded", "true");
-    toggle.setAttribute("aria-label", "Menü schließen");
-  }
-
-  function closeMenu() {
-    if (isMobileViewport()) {
-      nav.style.display = "none";
-      nav.style.flexDirection = "";
-      nav.style.position = "";
-      nav.style.right = "";
-      nav.style.top = "";
-      nav.style.padding = "";
-      nav.style.background = "";
-      nav.style.border = "";
-      nav.style.borderRadius = "";
-      nav.style.gap = "";
-      nav.style.minWidth = "";
-      nav.style.boxShadow = "";
-      nav.style.zIndex = "";
-    } else {
-      nav.style.display = "";
-      nav.style.flexDirection = "";
-      nav.style.position = "";
-      nav.style.right = "";
-      nav.style.top = "";
-      nav.style.padding = "";
-      nav.style.background = "";
-      nav.style.border = "";
-      nav.style.borderRadius = "";
-      nav.style.gap = "";
-      nav.style.minWidth = "";
-      nav.style.boxShadow = "";
-      nav.style.zIndex = "";
-    }
-
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.setAttribute("aria-label", "Menü öffnen");
-  }
-
-  function toggleMenu() {
-    const isOpen = toggle.getAttribute("aria-expanded") === "true";
-    if (isOpen) {
-      closeMenu();
-    } else {
-      openMenu();
-    }
-  }
-
-  toggle.addEventListener("click", (event) => {
-    event.stopPropagation();
-    if (!isMobileViewport()) return;
-    toggleMenu();
-  });
-
-  nav.addEventListener("click", (event) => {
-    event.stopPropagation();
-  });
-
-  document.addEventListener("click", () => {
-    if (isMobileViewport() && toggle.getAttribute("aria-expanded") === "true") {
-      closeMenu();
-    }
-  });
-
-  qsa("a", nav).forEach((link) => {
-    link.addEventListener("click", () => {
-      if (isMobileViewport()) {
-        closeMenu();
-      }
-    });
-  });
-
-  window.addEventListener("resize", () => {
-    if (!isMobileViewport()) {
-      closeMenu();
-    } else if (toggle.getAttribute("aria-expanded") !== "true") {
-      nav.style.display = "none";
-    }
-  });
-
-  closeMenu();
-}
 
 // -----------------------------------------------------
 // Bio overlay

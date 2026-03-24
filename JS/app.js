@@ -1,10 +1,9 @@
-
-
 document.addEventListener("DOMContentLoaded", () => {
   initPlaylist();
   initBioOverlay();
   initScrollProgress();
   initHeroSlider();
+  initMobileNavClose();
 });
 
 // -----------------------------------------------------
@@ -143,6 +142,34 @@ function initPlaylist() {
   renderTracks();
 }
 
+// -----------------------------------------------------
+// Nav mobile
+// -----------------------------------------------------
+
+function initMobileNavClose() {
+  const navWrap = document.querySelector(".nav-wrap");
+  const navToggle = document.getElementById("nav-toggle");
+  const navLinks = document.querySelectorAll(".nav a");
+
+  if (!navWrap || !navToggle) return;
+
+  document.addEventListener("click", (event) => {
+    const clickedInsideNav = navWrap.contains(event.target);
+    const isMobile = window.innerWidth <= 980;
+
+    if (isMobile && !clickedInsideNav) {
+      navToggle.checked = false;
+    }
+  });
+
+  navLinks.forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.innerWidth <= 980) {
+        navToggle.checked = false;
+      }
+    });
+  });
+}
 
 // -----------------------------------------------------
 // Bio overlay
@@ -172,8 +199,8 @@ function initBioOverlay() {
     typeof window.playerBios !== "undefined"
       ? window.playerBios
       : typeof playerBios !== "undefined"
-      ? playerBios
-      : null;
+        ? playerBios
+        : null;
 
   if (!bios) {
     console.warn("playerBios is not available.");
@@ -237,7 +264,7 @@ function initScrollProgress() {
 
     document.documentElement.style.setProperty(
       "--scroll-progress",
-      `${progress}%`
+      `${progress}%`,
     );
   }
 

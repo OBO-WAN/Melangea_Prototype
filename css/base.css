@@ -199,8 +199,6 @@ h1 {
   height: 88px;
   width: auto;
   transform-origin: left center;
-  will-change: transform;
-  animation: logoWave 4.2s cubic-bezier(.45, .05, .55, .95) infinite;
 }
 
 .card {
@@ -259,31 +257,6 @@ h1 {
   }
 }
 
-@keyframes logoWave {
-  0% {
-    transform: perspective(900px) rotateY(0deg) skewY(0deg);
-  }
-
-  15% {
-    transform: perspective(900px) rotateY(-2deg) skewY(-0.2deg);
-  }
-
-  35% {
-    transform: perspective(900px) rotateY(5deg) skewY(0.6deg);
-  }
-
-  55% {
-    transform: perspective(900px) rotateY(-4deg) skewY(-0.4deg);
-  }
-
-  75% {
-    transform: perspective(900px) rotateY(2deg) skewY(0.2deg);
-  }
-
-  100% {
-    transform: perspective(900px) rotateY(0deg) skewY(0deg);
-  }
-}
 
 @media (prefers-reduced-motion: reduce) {
 

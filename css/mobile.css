@@ -130,6 +130,20 @@
     aspect-ratio: 4 / 3;
     border-radius: 24px;
   }
+
+  .brand {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .brand-logo {
+    display: block;
+    width: clamp(220px, 42vw, 320px);
+    max-width: 100%;
+    height: auto;
+    max-height: 88px;
+    object-fit: contain;
+  }
 }
 
 /* ---------- Tablet ---------- */
@@ -197,7 +211,8 @@
   }
 
   .brand-logo {
-    height: 56px;
+    width: clamp(180px, 52vw, 260px);
+    max-height: 76px;
   }
 
   .hero {
@@ -320,7 +335,8 @@
 /* ---------- Small phones ---------- */
 @media (max-width: 420px) {
   .brand-logo {
-    height: 48px;
+    width: clamp(150px, 56vw, 220px);
+    max-height: 64px;
   }
 
   .hero {

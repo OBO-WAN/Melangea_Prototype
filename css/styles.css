@@ -2,21 +2,23 @@
 
 .hero {
   position: relative;
-  min-height: 90svh;
+  min-height: auto;
   width: 100%;
   overflow: hidden;
   display: grid;
-  place-items: center;
-  padding: 0 0.75rem 0.75rem;
+  place-items: start center;
+  padding: 0.5rem 0.75rem 0.75rem;
 }
 
 .hero-stage {
   position: relative;
   width: min(1240px, 100%);
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 21 / 9;
   border-radius: 32px;
   overflow: hidden;
-  box-shadow: 0 28px 14px rgba(0, 0, 0, 0.42), 0 8px 24px rgba(0, 0, 0, 0.22);
+  box-shadow:
+    0 28px 14px rgba(0, 0, 0, 0.42),
+    0 8px 24px rgba(0, 0, 0, 0.22);
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(10, 14, 28, 0.5);
 }

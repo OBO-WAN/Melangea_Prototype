@@ -1,9 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-  initPlaylist();
-  initBioOverlay();
-  initScrollProgress();
-  initHeroSlider();
-  initMobileNavClose();
+  [
+    initPlaylist,
+    initBioOverlay,
+    initScrollProgress,
+    initHeroSlider,
+    initMobileNav,
+  ].forEach((init) => {
+    try {
+      init();
+    } catch (error) {
+      console.error(`Failed to initialize ${init.name}:`, error);
+    }
+  });
 });
 
 // -----------------------------------------------------
@@ -44,16 +52,18 @@ const tracks = [
 ];
 
 function initPlaylist() {
-  const featuredAudio = document.getElementById("featuredAudio");
-  const featuredTitle = document.getElementById("featuredTitle");
-  const featuredDuration = document.getElementById("featuredDuration");
-  const trackList = document.getElementById("trackList");
-  const trackCount = document.getElementById("trackCount");
+  const featuredAudio = qs("#featuredAudio");
+  const featuredTitle = qs("#featuredTitle");
+  const featuredDuration = qs("#featuredDuration");
+  const trackList = qs("#trackList");
+  const trackCount = qs("#trackCount");
 
   if (!trackList || !trackCount) return;
 
   const hasFeaturedPlayer =
-    !!featuredAudio && !!featuredTitle && !!featuredDuration;
+    Boolean(featuredAudio) &&
+    Boolean(featuredTitle) &&
+    Boolean(featuredDuration);
 
   function setFeatured(track) {
     if (!hasFeaturedPlayer) return;
@@ -73,6 +83,7 @@ function initPlaylist() {
     qsa(".track button", trackList).forEach((button) => {
       button.textContent = hasFeaturedPlayer ? "▶︎ Play" : "Audio folgt";
       button.disabled = !hasFeaturedPlayer;
+      button.setAttribute("aria-pressed", "false");
     });
   }
 
@@ -89,22 +100,28 @@ function initPlaylist() {
           <div class="title">${track.title}</div>
           <div class="sub">${track.subtitle} • ${track.duration}</div>
         </div>
-        <button type="button" ${hasFeaturedPlayer ? "" : "disabled"}>
+        <button
+          type="button"
+          ${hasFeaturedPlayer ? "" : "disabled"}
+          aria-pressed="false"
+        >
           ${hasFeaturedPlayer ? "▶︎ Play" : "Audio folgt"}
         </button>
       `;
 
-      const button = li.querySelector("button");
+      const button = qs("button", li);
 
-      if (hasFeaturedPlayer) {
+      if (hasFeaturedPlayer && button) {
         button.addEventListener("click", async () => {
-          const currentSrc = featuredAudio.getAttribute("src") || "";
+          const currentSrc =
+            featuredAudio.currentSrc || featuredAudio.getAttribute("src") || "";
           const isCurrent = currentSrc.includes(track.src);
           const isPlaying = !featuredAudio.paused;
 
           if (isCurrent && isPlaying) {
             featuredAudio.pause();
             button.textContent = "▶︎ Play";
+            button.setAttribute("aria-pressed", "false");
             return;
           }
 
@@ -114,9 +131,11 @@ function initPlaylist() {
           try {
             await featuredAudio.play();
             button.textContent = "⏸ Pause";
+            button.setAttribute("aria-pressed", "true");
           } catch (error) {
             console.error("Audio playback failed:", error);
             button.textContent = "▶︎ Play";
+            button.setAttribute("aria-pressed", "false");
           }
         });
       }
@@ -131,9 +150,11 @@ function initPlaylist() {
     featuredAudio.addEventListener("ended", resetTrackButtons);
     featuredAudio.addEventListener("pause", () => {
       if (featuredAudio.ended) return;
+
       qsa(".track button", trackList).forEach((button) => {
         if (button.textContent.includes("Pause")) {
           button.textContent = "▶︎ Play";
+          button.setAttribute("aria-pressed", "false");
         }
       });
     });
@@ -146,28 +167,50 @@ function initPlaylist() {
 // Nav mobile
 // -----------------------------------------------------
 
-function initMobileNavClose() {
-  const navWrap = document.querySelector(".nav-wrap");
-  const navToggle = document.getElementById("nav-toggle");
-  const navLinks = document.querySelectorAll(".nav a");
+function initMobileNav() {
+  const navWrap = qs(".nav-wrap");
+  const navToggle = qs("#nav-toggle");
+  const navLinks = qsa(".nav a");
 
   if (!navWrap || !navToggle) return;
 
-  document.addEventListener("click", (event) => {
-    const clickedInsideNav = navWrap.contains(event.target);
-    const isMobile = window.innerWidth <= 980;
+  const mobileBreakpoint = 980;
 
-    if (isMobile && !clickedInsideNav) {
-      navToggle.checked = false;
+  function isMobileView() {
+    return window.innerWidth <= mobileBreakpoint;
+  }
+
+  function closeNav() {
+    navToggle.checked = false;
+  }
+
+  document.addEventListener("click", (event) => {
+    if (!isMobileView()) return;
+
+    const clickedInsideNav = navWrap.contains(event.target);
+    if (!clickedInsideNav) {
+      closeNav();
     }
   });
 
   navLinks.forEach((link) => {
     link.addEventListener("click", () => {
-      if (window.innerWidth <= 980) {
-        navToggle.checked = false;
+      if (isMobileView()) {
+        closeNav();
       }
     });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeNav();
+    }
+  });
+
+  window.addEventListener("resize", () => {
+    if (!isMobileView()) {
+      closeNav();
+    }
   });
 }
 
@@ -176,11 +219,11 @@ function initMobileNavClose() {
 // -----------------------------------------------------
 
 function initBioOverlay() {
-  const bioOverlay = document.getElementById("bioOverlay");
-  const bioTitle = document.getElementById("bioTitle");
-  const bioRole = document.getElementById("bioRole");
-  const bioText = document.getElementById("bioText");
-  const bioDownload = document.getElementById("bioDownload");
+  const bioOverlay = qs("#bioOverlay");
+  const bioTitle = qs("#bioTitle");
+  const bioRole = qs("#bioRole");
+  const bioText = qs("#bioText");
+  const bioDownload = qs("#bioDownload");
   const bioButtons = qsa(".person-bio-btn");
   const closeButtons = qsa("[data-close-overlay]");
 
@@ -207,10 +250,13 @@ function initBioOverlay() {
     return;
   }
 
-  function openBio(playerKey) {
+  let lastTrigger = null;
+
+  function openBio(playerKey, trigger = null) {
     const player = bios[playerKey];
     if (!player) return;
 
+    lastTrigger = trigger;
     bioTitle.textContent = player.name || "—";
     bioRole.textContent = player.role || "";
     bioText.innerHTML = player.text || "<p>Biografie folgt.</p>";
@@ -232,16 +278,26 @@ function initBioOverlay() {
     bioOverlay.classList.remove("is-open");
     bioOverlay.setAttribute("aria-hidden", "true");
     document.body.style.overflow = "";
+
+    if (lastTrigger) {
+      lastTrigger.focus();
+    }
   }
 
   bioButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      openBio(button.dataset.player);
+      openBio(button.dataset.player, button);
     });
   });
 
   closeButtons.forEach((element) => {
     element.addEventListener("click", closeBio);
+  });
+
+  bioOverlay.addEventListener("click", (event) => {
+    if (event.target === bioOverlay) {
+      closeBio();
+    }
   });
 
   document.addEventListener("keydown", (event) => {
@@ -264,7 +320,7 @@ function initScrollProgress() {
 
     document.documentElement.style.setProperty(
       "--scroll-progress",
-      `${progress}%`,
+      `${progress}%`
     );
   }
 
@@ -275,22 +331,69 @@ function initScrollProgress() {
   window.addEventListener("load", updateScrollProgress);
 }
 
-// Hero Slider
+// -----------------------------------------------------
+// Hero slider
+// -----------------------------------------------------
 
 function initHeroSlider() {
-  const slides = document.querySelectorAll(".hero-slide");
-  if (!slides.length) return;
+  const slides = qsa(".hero-slide");
+  if (slides.length <= 1) return;
 
-  let current = 0;
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const intervalMs = 5000;
+  let current = slides.findIndex((slide) =>
+    slide.classList.contains("is-active")
+  );
+  let sliderTimer = null;
+
+  if (current < 0) current = 0;
 
   function showSlide(index) {
     slides.forEach((slide, i) => {
-      slide.classList.toggle("is-active", i === index);
+      const isActive = i === index;
+      slide.classList.toggle("is-active", isActive);
+      slide.setAttribute("aria-hidden", String(!isActive));
     });
   }
 
-  setInterval(() => {
+  function nextSlide() {
     current = (current + 1) % slides.length;
     showSlide(current);
-  }, 5000);
+  }
+
+  function stopSlider() {
+    if (!sliderTimer) return;
+    window.clearInterval(sliderTimer);
+    sliderTimer = null;
+  }
+
+  function startSlider() {
+    if (reducedMotion.matches || sliderTimer) return;
+    sliderTimer = window.setInterval(nextSlide, intervalMs);
+  }
+
+  showSlide(current);
+  startSlider();
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      stopSlider();
+    } else {
+      startSlider();
+    }
+  });
+
+  const motionListener = () => {
+    if (reducedMotion.matches) {
+      stopSlider();
+    } else {
+      startSlider();
+    }
+  };
+
+  if (typeof reducedMotion.addEventListener === "function") {
+    reducedMotion.addEventListener("change", motionListener);
+  } else if (typeof reducedMotion.addListener === "function") {
+    reducedMotion.addListener(motionListener);
+  }
 }

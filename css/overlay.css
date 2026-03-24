@@ -1,18 +1,25 @@
 /* =========================================
    Overlay / bio modal
+   Clean, self-contained, responsive
 ========================================= */
 
 .bio-overlay {
   position: fixed;
   inset: 0;
   z-index: 200;
-  display: none;
+  display: grid;
   place-items: center;
   padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 .bio-overlay.is-open {
-  display: grid;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
 .bio-overlay__backdrop {
@@ -26,18 +33,32 @@
   position: relative;
   z-index: 1;
   width: min(680px, calc(100% - 2rem));
+  max-height: min(86dvh, 900px);
   margin: 0;
   padding: 2rem;
+  overflow: hidden;
   border: 1px solid var(--border);
   border-radius: 28px;
-  background: linear-gradient(180deg, rgba(17, 21, 38, 0.96), rgba(15, 19, 34, 0.92));
+  background: linear-gradient(
+    180deg,
+    rgba(17, 21, 38, 0.96),
+    rgba(15, 19, 34, 0.92)
+  );
   box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+  transform: translateY(10px) scale(0.985);
+  transition: transform 0.2s ease;
+}
+
+.bio-overlay.is-open .bio-modal {
+  transform: translateY(0) scale(1);
 }
 
 .bio-modal__close {
   position: absolute;
   top: 1rem;
   right: 1rem;
+  display: inline-grid;
+  place-items: center;
   width: 42px;
   height: 42px;
   border: 1px solid var(--border);
@@ -45,6 +66,11 @@
   background: rgba(255, 255, 255, 0.06);
   color: var(--text);
   cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .bio-modal__close:hover {
@@ -55,11 +81,18 @@
   box-shadow: 0 6px 16px rgba(124, 92, 255, 0.45);
 }
 
+.bio-modal__close:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
+
 .bio-modal__title {
   margin: 0 0 0.35rem;
+  padding-right: 3rem;
   font-size: 2rem;
   font-family: "Cormorant Garamond", serif;
   letter-spacing: 0.04em;
+  line-height: 1.1;
 }
 
 .bio-modal__role {
@@ -70,17 +103,23 @@
 }
 
 .bio-modal__text {
-  max-height: 75vh;
+  max-height: min(68dvh, 620px);
   overflow-y: auto;
   padding-right: 0.6rem;
   scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .bio-modal__text p {
   margin: 0;
   color: var(--text);
-  line-height: 1.95;
+  line-height: 1.9;
   white-space: break-spaces;
+}
+
+.bio-modal__text > * + * {
+  margin-top: 1rem;
 }
 
 .bio-modal__text::-webkit-scrollbar {
@@ -105,7 +144,11 @@
   font-size: 0.9rem;
   font-weight: 600;
   text-decoration: none;
-  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .bio-download:hover {
@@ -114,13 +157,70 @@
   background: rgba(46, 229, 157, 0.12);
 }
 
+.bio-download:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
+
 @media (max-width: 680px) {
+  .bio-overlay {
+    padding: 0.75rem;
+  }
+
   .bio-modal {
+    width: min(100%, calc(100% - 1rem));
+    max-height: 88dvh;
     padding: 1.4rem;
     border-radius: 22px;
   }
 
   .bio-modal__title {
     font-size: 1.65rem;
+    padding-right: 2.75rem;
+  }
+
+  .bio-modal__role {
+    margin-bottom: 1rem;
+  }
+
+  .bio-modal__text {
+    max-height: 62dvh;
+    padding-right: 0.35rem;
+  }
+
+  .bio-modal__close {
+    top: 0.85rem;
+    right: 0.85rem;
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 420px) {
+  .bio-modal {
+    padding: 1.1rem;
+    border-radius: 18px;
+  }
+
+  .bio-modal__title {
+    font-size: 1.4rem;
+  }
+
+  .bio-modal__role {
+    font-size: 0.95rem;
+  }
+
+  .bio-download {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bio-overlay,
+  .bio-modal,
+  .bio-modal__close,
+  .bio-download {
+    transition: none;
   }
 }

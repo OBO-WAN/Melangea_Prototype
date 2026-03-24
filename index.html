@@ -1,438 +1,451 @@
 <!doctype html>
 <html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mélange à Deux — Prototype</title>
+    <meta
+      name="description"
+      content="Music / events / projects homepage prototype."
+    />
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Mélange à Deux — Prototype</title>
-  <meta name="description" content="Music / events / projects homepage prototype." />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap"
+      rel="stylesheet"
+    />
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+    <link rel="icon" href="assets/favicon.svg" sizes="any" />
 
-  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-  <link rel="icon" href="assets/favicon.svg" sizes="any" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/layout.css" />
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/mobile.css" />
+    <link rel="stylesheet" href="css/overlay.css" />
+  </head>
 
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/layout.css" />
-  <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/mobile.css" />
-  <link rel="stylesheet" href="css/overlay.css" />
+  <body>
+    <a class="skip-link" href="#main">Zum Inhalt springen</a>
 
-</head>
+    <!-- Header -->
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="#">
+          <img
+            src="./assets/IMG/LOGO/logo_et_amis.png"
+            alt="Mélange à Deux Logo"
+            class="brand-logo"
+          />
+        </a>
 
-<body>
-  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+        <div class="nav-wrap">
+          <input type="checkbox" id="nav-toggle" class="nav-checkbox" />
 
-  <!-- Header -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <a class="brand" href="#">
-        <img src="./assets/IMG/LOGO/logo_et_amis.png" alt="Mélange à Deux Logo" class="brand-logo" />
-      </a>
+          <label for="nav-toggle" class="nav-toggle">
+            <span class="nav-toggle__icon" aria-hidden="true">☰</span>
+            <span class="sr-only">Menü öffnen</span>
+          </label>
 
-      <div class="nav-wrap">
-        <input type="checkbox" id="nav-toggle" class="nav-checkbox" />
-
-        <label for="nav-toggle" class="nav-toggle">
-          <span class="nav-toggle__icon" aria-hidden="true">☰</span>
-          <span class="sr-only">Menü öffnen</span>
-        </label>
-
-        <nav class="nav" aria-label="Hauptnavigation">
-          <a href="#about">Über uns</a>
-          <a href="#shows">Konzerte</a>
-          <a href="#projects">Programme</a>
-          <a href="#videos">Medien</a>
-          <a href="#shop">Buchen</a>
-          <a href="#blog">News</a>
-        </nav>
-      </div>
-    </div>
-  </header>
-
-  <main id="main">
-    <!-- Hero -->
-
-
-    <section class="hero">
-      <div class="hero-stage">
-        <div class="hero-slider" aria-label="Mélange à Deux Bildslider">
-          <div class="hero-slide is-active">
-            <img src="./assets/IMG/background/melange_et_amis_mit_Überschrift.png" alt="Mélange à Deux et amis" />
-          </div>
-
-          <div class="hero-slide">
-            <img src="./assets/IMG/background/duo_landscape_rotated_cropped.webp" alt="Mélange à Deux Duo" />
-          </div>
-
-          <div class="hero-slide">
-            <img src="./assets/IMG/background/trio_landscape.png" alt="Mélange à Deux Trio live" />
-          </div>
+          <nav class="nav" aria-label="Hauptnavigation">
+            <a href="#about">Über uns</a>
+            <a href="#shows">Konzerte</a>
+            <a href="#projects">Programme</a>
+            <a href="#videos">Medien</a>
+            <a href="#shop">Buchen</a>
+            <a href="#presse">News</a>
+          </nav>
         </div>
       </div>
-    </section>
+    </header>
 
-
-    <!-- Music / Playlist -->
-    <section id="music" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Unsere Musik</h2>
-
-        </div>
-
-        <div class="grid two">
-          <div class="card">
-            <div class="card-head">
-              <h3>Playlist</h3>
-              <span class="muted small" id="trackCount">0 Tracks</span>
+    <main id="main">
+      <!-- Hero -->
+      <section class="hero">
+        <div class="hero-stage">
+          <div class="hero-slider" aria-label="Mélange à Deux Bildslider">
+            <div
+              class="hero-slide is-active"
+              style="--fx: 50%; --fy: 50%; --fx-mobile: 50%; --fy-mobile: 50%"
+            >
+              <img
+                src="./assets/IMG/background/melange_et_amis_mit_Überschrift.png"
+                alt="Mélange à Deux et amis"
+              />
             </div>
 
-            <ol class="tracklist" id="trackList" aria-label="Trackliste">
-              <!-- injected by app.js -->
-            </ol>
+            <div
+              class="hero-slide"
+              style="--fx: 62%; --fy: 50%; --fx-mobile: 54%; --fy-mobile: 50%"
+            >
+              <img
+                src="./assets/IMG/background/duo_landscape_rotated_cropped.webp"
+                alt="Mélange à Deux Duo"
+              />
+            </div>
+
+            <div
+              class="hero-slide"
+              style="--fx: 50%; --fy: 38%; --fx-mobile: 50%; --fy-mobile: 42%"
+            >
+              <img
+                src="./assets/IMG/background/trio_landscape.png"
+                alt="Mélange à Deux Trio live"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Team -->
+      <section id="about" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Wer wir sind</h2>
+            <!-- <p class="muted">Kartenlayout – später dynamisch aus WP.</p> -->
           </div>
 
+          <div class="grid team">
+            <article class="card person">
+              <div class="avatar">
+                <img
+                  src="assets/IMG/portrait/uli.webp"
+                  alt="Ulrike Albeseder – Oboe"
+                  width="240"
+                  height="240"
+                  loading="lazy"
+                />
+              </div>
+
+              <h3 class="person-name">Ulrike Albeseder</h3>
+              <p class="person-role">Oboe & Blockflöte</p>
+
+              <div class="person-links">
+                <button class="person-bio-btn" data-player="Ulrike">Bio</button>
+              </div>
+            </article>
+
+            <article class="card person">
+              <div class="avatar">
+                <img
+                  src="assets/IMG/portrait/Uwe.webp"
+                  alt="Uwe Hanewald – Akkordeon"
+                  width="240"
+                  height="240"
+                  loading="lazy"
+                />
+              </div>
+
+              <h3 class="person-name">Uwe Hanewald</h3>
+              <p class="person-role">Akkordeon</p>
+
+              <div class="person-links">
+                <button class="person-bio-btn" data-player="Uwe">Bio</button>
+              </div>
+            </article>
+
+            <article class="card person">
+              <div class="avatar">
+                <img
+                  src="assets/IMG/portrait/Wolli.webp"
+                  alt="Wolfgang Mayé – Akkordeon"
+                  width="240"
+                  height="240"
+                  loading="lazy"
+                />
+              </div>
+
+              <h3 class="person-name">Wolfgang Mayé</h3>
+              <p class="person-role">Kontrabaß</p>
+
+              <div class="person-links">
+                <button class="person-bio-btn" data-player="Maye">Bio</button>
+              </div>
+            </article>
+
+            <article class="card person">
+              <div class="avatar">
+                <img
+                  src="assets/IMG/portrait/wolfgang-disch.webp"
+                  alt="Player 4 – Instrument"
+                  width="240"
+                  height="240"
+                  loading="lazy"
+                />
+              </div>
+
+              <h3 class="person-name">Wolfgang Disch</h3>
+              <p class="person-role">Schlagzeug/Percussion</p>
+
+              <div class="person-links">
+                <button class="person-bio-btn" data-player="Disch">Bio</button>
+              </div>
+            </article>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Team -->
-    <section id="about" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Unser Team</h2>
-          <!-- <p class="muted">Kartenlayout – später dynamisch aus WP.</p> -->
-        </div>
-
-        <div class="grid team">
-
-          <article class="card person">
-            <div class="avatar">
-              <img src="assets/IMG/portrait/uli.webp" alt="Ulrike Albeseder – Oboe" width="240" height="240"
-                loading="lazy">
-            </div>
-
-            <h3 class="person-name">Ulrike Albeseder</h3>
-            <p class="person-role">Oboe, Blockflöte & Moderation</p>
-
-            <div class="person-links">
-              <button class="person-bio-btn" data-player="Ulrike">
-                Bio
-              </button>
-            </div>
-          </article>
-
-
-          <article class="card person">
-            <div class="avatar">
-              <img src="assets/IMG/portrait/Uwe.webp" alt="Uwe Hanewald – Akkordeon" width="240" height="240"
-                loading="lazy">
-            </div>
-
-            <h3 class="person-name">Uwe Hanewald</h3>
-            <p class="person-role">Akkordeon, Arrangements & Vocals</p>
-
-            <div class="person-links">
-              <button class="person-bio-btn" data-player="Uwe">
-                Bio
-              </button>
-            </div>
-          </article>
-
-
-          <article class="card person">
-            <div class="avatar">
-              <img src="assets/IMG/portrait/Wolli.webp" alt="Wolfgang Mayé – Akkordeon" width="240" height="240"
-                loading="lazy">
-            </div>
-
-            <h3 class="person-name">Wolfgang Mayé</h3>
-            <p class="person-role">Kontrabaß</p>
-
-            <div class="person-links">
-              <button class="person-bio-btn" data-player="Maye">
-                Bio
-              </button>
-            </div>
-          </article>
-
-          <article class="card person">
-            <div class="avatar">
-              <img src="assets/IMG/portrait/wolfgang-disch.webp" alt="Player 4 – Instrument" width="240" height="240"
-                loading="lazy">
-            </div>
-
-            <h3 class="person-name">Wolfgang Disch</h3>
-            <p class="person-role">Schlagzeug/Percussion</p>
-
-            <div class="person-links">
-              <button class="person-bio-btn" data-player="Disch">
-                Bio
-              </button>
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- Shows / Events -->
-    <section id="shows" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Nächste Auftritte</h2>
-          <!-- <p class="muted">
+      <!-- Shows / Events -->
+      <section id="shows" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Nächste Auftritte</h2>
+            <!-- <p class="muted">
               Eventliste – später aus Events Plugin oder “Shows” CPT.
             </p> -->
-        </div>
+          </div>
 
-        <div class="card">
-          <ul class="eventlist">
-            <li class="event">
-              <div class="event-date">
-                <div class="event-day">12</div>
-                <div class="event-month">Apr</div>
-              </div>
-              <div class="event-body">
-                <div class="strong">Konzert — Venue Name</div>
-                <div class="muted small">Berlin • 19:30</div>
-              </div>
-              <div class="event-actions">
-                <a class="btn btn-small btn-ghost" href="#">Details</a>
-                <a class="btn btn-small" href="#">Tickets</a>
-              </div>
-            </li>
+          <div class="card">
+            <ul class="eventlist">
+              <li class="event">
+                <div class="event-date">
+                  <div class="event-day">12</div>
+                  <div class="event-month">Apr</div>
+                </div>
+                <div class="event-body">
+                  <div class="strong">Konzert — Venue Name</div>
+                  <div class="muted small">Berlin • 19:30</div>
+                </div>
+                <div class="event-actions">
+                  <a class="btn btn-small btn-ghost" href="#">Details</a>
+                  <a class="btn btn-small" href="#">Tickets</a>
+                </div>
+              </li>
 
-            <li class="event">
-              <div class="event-date">
-                <div class="event-day">04</div>
-                <div class="event-month">Mai</div>
-              </div>
-              <div class="event-body">
-                <div class="strong">Familienkonzert</div>
-                <div class="muted small">Potsdam • 16:00</div>
-              </div>
-              <div class="event-actions">
-                <a class="btn btn-small btn-ghost" href="#">Details</a>
-                <a class="btn btn-small" href="#">Tickets</a>
-              </div>
-            </li>
-          </ul>
+              <li class="event">
+                <div class="event-date">
+                  <div class="event-day">04</div>
+                  <div class="event-month">Mai</div>
+                </div>
+                <div class="event-body">
+                  <div class="strong">Familienkonzert</div>
+                  <div class="muted small">Potsdam • 16:00</div>
+                </div>
+                <div class="event-actions">
+                  <a class="btn btn-small btn-ghost" href="#">Details</a>
+                  <a class="btn btn-small" href="#">Tickets</a>
+                </div>
+              </li>
+            </ul>
 
-          <div class="card-footer">
-            <a class="btn btn-ghost" href="#">Alle Auftritte ansehen →</a>
+            <div class="card-footer">
+              <a class="btn btn-ghost" href="#">Alle Auftritte ansehen →</a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Projects -->
-    <section id="projects" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Projekte</h2>
-          <!-- <p class="muted">
-              Kachelgrid – später “Projects” CPT + Elementor Loop Grid.
-            </p> -->
+      <!-- Music / Playlist -->
+      <section id="music" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Unsere Musik</h2>
+          </div>
+
+          <div class="grid two">
+            <div class="card">
+              <div class="card-head">
+                <h3>Playlist</h3>
+                <span class="muted small" id="trackCount">0 Tracks</span>
+              </div>
+
+              <ol class="tracklist" id="trackList" aria-label="Trackliste">
+                <!-- injected by app.js -->
+              </ol>
+            </div>
+          </div>
         </div>
+      </section>
 
-        <div class="grid three">
-          <a class="card project" href="#">
-            <div class="thumb" style="background-image: url('assets/IMG/background/duo_landscape.webp');"></div>
-            <h3>Duo</h3>
-            <p class="muted small">Kammermusik & Crossover</p>
-          </a>
+      <!-- Videos -->
+      <section id="videos" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Videos</h2>
+            <!-- <p class="muted">Später YouTube/Vimeo dynamisch.</p> -->
+          </div>
 
-          <a class="card project" href="#">
-            <div class="thumb" aria-hidden="true"></div>
-            <h3>Trio</h3>
-            <p class="muted small">Gast + neue Farben</p>
-          </a>
-
-          <a class="card project" href="#">
-            <div class="thumb" aria-hidden="true"></div>
-            <h3>Quartett</h3>
-            <p class="muted small">Größerer Sound</p>
-          </a>
-
-          <a class="card project" href="#">
-            <div class="thumb" aria-hidden="true"></div>
-            <h3>Show</h3>
-            <p class="muted small">Bühne, Licht, Story</p>
-          </a>
-
-          <a class="card project" href="#">
-            <div class="thumb" aria-hidden="true"></div>
-            <h3>Kinderkonzert</h3>
-            <p class="muted small">Mitmachen & Staunen</p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Videos -->
-    <section id="videos" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Videos</h2>
-          <!-- <p class="muted">Später YouTube/Vimeo dynamisch.</p> -->
-        </div>
-
-        <div class="grid three">
-          <div class="card video">
-            <div class="video-embed">
-              <iframe title="Video 1"
-                src="https://www.youtube-nocookie.com/embed/JDRfZDNSr8o?rel=0&modestbranding=1&playsinline=1" allow="
+          <div class="grid three">
+            <div class="card video">
+              <div class="video-embed">
+                <iframe
+                  title="Video 1"
+                  src="https://www.youtube-nocookie.com/embed/JDRfZDNSr8o?rel=0&modestbranding=1&playsinline=1"
+                  allow="
                     accelerometer;
                     autoplay;
                     clipboard-write;
                     encrypted-media;
                     gyroscope;
                     picture-in-picture;
-                  " allowfullscreen></iframe>
+                  "
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="muted small">Mélange à Deux Show-Projekt-Live</div>
             </div>
-            <div class="muted small">Mélange à Deux Show-Projekt-Live</div>
-          </div>
 
-          <div class="card video">
-            <div class="video-embed">
-              <iframe title="Video 2"
-                src="https://www.youtube-nocookie.com/embed/FXFr5nbusVI?rel=0&modestbranding=1&playsinline=1" allow="
+            <div class="card video">
+              <div class="video-embed">
+                <iframe
+                  title="Video 2"
+                  src="https://www.youtube-nocookie.com/embed/FXFr5nbusVI?rel=0&modestbranding=1&playsinline=1"
+                  allow="
                     accelerometer;
                     autoplay;
                     clipboard-write;
                     encrypted-media;
                     gyroscope;
                     picture-in-picture;
-                  " allowfullscreen></iframe>
+                  "
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="muted small">
+                Mélange à Deux & Amis -open air live-
+              </div>
             </div>
-            <div class="muted small">Mélange à Deux & Amis -open air live-</div>
-          </div>
 
-          <div class="card video">
-            <div class="video-embed">
-              <iframe title="Video 3"
-                src="https://www.youtube-nocookie.com/embed/qyVGaWTaV2w?rel=0&modestbranding=1&playsinline=1" allow="
+            <div class="card video">
+              <div class="video-embed">
+                <iframe
+                  title="Video 3"
+                  src="https://www.youtube-nocookie.com/embed/qyVGaWTaV2w?rel=0&modestbranding=1&playsinline=1"
+                  allow="
                     accelerometer;
                     autoplay;
                     clipboard-write;
                     encrypted-media;
                     gyroscope;
                     picture-in-picture;
-                  " allowfullscreen></iframe>
+                  "
+                  allowfullscreen
+                ></iframe>
+              </div>
+              <div class="muted small">
+                Gabriel´s Oboe - Mélange à Deux & Amis
+              </div>
             </div>
-            <div class="muted small">Gabriel´s Oboe - Mélange à Deux & Amis</div>
+          </div>
+
+          <div class="section-foot">
+            <a
+              class="btn btn-ghost btn-youtube"
+              href="https://www.youtube.com/@MelangeaDeux"
+              target="_blank"
+              rel="noopener"
+            >
+              ▶ YouTube
+            </a>
           </div>
         </div>
+      </section>
 
-        <div class="section-foot">
-          <a class="btn btn-ghost btn-youtube" href="https://www.youtube.com/@MelangeaDeux" target="_blank"
-            rel="noopener">
-            ▶ YouTube
-          </a>
+      <!-- Presse/News -->
+      <section id="presse" class="section">
+        <div class="container">
+          <div class="section-head">
+            <h2>Presse / News</h2>
+            <!-- <p class="muted">Später: WP Posts (News/Video/Audio Kategorien).</p> -->
+          </div>
+
+          <div class="grid three">
+            <article class="card post">
+              <div class="thumb" aria-hidden="true"></div>
+              <div class="pill">News</div>
+              <h3>Post Titel 1</h3>
+              <!-- <p class="muted small">Kurzer Teasertext für den Beitrag…</p> -->
+            </article>
+
+            <article class="card post">
+              <div class="thumb" aria-hidden="true"></div>
+              <div class="pill">Foto</div>
+              <h3>Post Titel 2</h3>
+              <!-- <p class="muted small">Kurzer Teasertext für den Beitrag…</p> -->
+            </article>
+
+            <article class="card post">
+              <div class="thumb" aria-hidden="true"></div>
+              <div class="pill">Video</div>
+              <h3>Post Titel 3</h3>
+              <p class="muted small">Kurzer Teasertext für den Beitrag…</p>
+            </article>
+          </div>
+
+          <div class="section-foot">
+            <a class="btn btn-ghost" href="#">Alle Beiträge →</a>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Blog -->
-    <section id="blog" class="section">
-      <div class="container">
-        <div class="section-head">
-          <h2>Neuigkeiten</h2>
-          <!-- <p class="muted">Später: WP Posts (News/Video/Audio Kategorien).</p> -->
-        </div>
-
-        <div class="grid three">
-          <article class="card post">
-            <div class="thumb" aria-hidden="true"></div>
-            <div class="pill">News</div>
-            <h3>Post Titel 1</h3>
-            <!-- <p class="muted small">Kurzer Teasertext für den Beitrag…</p> -->
-          </article>
-
-          <article class="card post">
-            <div class="thumb" aria-hidden="true"></div>
-            <div class="pill">Foto</div>
-            <h3>Post Titel 2</h3>
-            <!-- <p class="muted small">Kurzer Teasertext für den Beitrag…</p> -->
-          </article>
-
-          <article class="card post">
-            <div class="thumb" aria-hidden="true"></div>
-            <div class="pill">Video</div>
-            <h3>Post Titel 3</h3>
-            <p class="muted small">Kurzer Teasertext für den Beitrag…</p>
-          </article>
-        </div>
-
-        <div class="section-foot">
-          <a class="btn btn-ghost" href="#">Alle Beiträge →</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Shop CTA -->
-    <section id="shop" class="section">
-      <div class="container">
-        <div class="cta card">
-          <div>
-            <h2>Aktuelle CD / Shop</h2>
-            <!-- <p class="muted">
+      <!-- Shop CTA -->
+      <section id="shop" class="section">
+        <div class="container">
+          <div class="cta card">
+            <div>
+              <h2>Aktuelle CD / Shop</h2>
+              <!-- <p class="muted">
                 Später WooCommerce: Produktkarte, Preis, “In den Warenkorb”.
               </p> -->
-          </div>
-          <div class="cta-actions">
-            <a class="btn" href="#">Jetzt bestellen</a>
-            <a class="btn btn-ghost" href="#">Mehr erfahren</a>
+            </div>
+            <div class="cta-actions">
+              <a class="btn" href="#">Jetzt bestellen</a>
+              <a class="btn btn-ghost" href="#">Mehr erfahren</a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
-  </main>
+      </section>
+    </main>
 
-  <!-- Footer -->
-  <footer class="site-footer">
-    <div class="container footer-grid">
-      <div>
-        <div class="strong">Mélange à Deux</div>
-        <p class="muted small">Alle Rechte vorbehalten. <br /></p>
-      </div>
-
-      <div class="footer-links">
-        <a href="#">Impressum</a>
-        <a href="#">Datenschutz</a>
-        <a href="#">Kontakt</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Overlays -->
-
-  <div class="bio-overlay" id="bioOverlay" aria-hidden="true">
-    <div class="bio-overlay__backdrop" data-close-overlay></div>
-
-    <div class="bio-modal" role="dialog" aria-modal="true" aria-labelledby="bioTitle">
-      <button class="bio-modal__close" type="button" aria-label="Schließen" data-close-overlay>
-        ✕
-      </button>
-
-      <div class="bio-modal__content">
-        <h3 class="bio-modal__title" id="bioTitle">Name</h3>
-        <p class="bio-modal__role" id="bioRole">Instrument</p>
-        <div class="bio-modal__text" id="bioText">
-          <p>Biografie folgt.</p>
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <div class="strong">Mélange à Deux</div>
+          <p class="muted small">Alle Rechte vorbehalten. <br /></p>
         </div>
-        <a class="bio-download" id="bioDownload" href="#" download>
-          ⬇ PDF herunterladen
-        </a>
+
+        <div class="footer-links">
+          <a href="#">Impressum</a>
+          <a href="#">Datenschutz</a>
+          <a href="#">Kontakt</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Overlays -->
+
+    <div class="bio-overlay" id="bioOverlay" aria-hidden="true">
+      <div class="bio-overlay__backdrop" data-close-overlay></div>
+
+      <div
+        class="bio-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="bioTitle"
+      >
+        <button
+          class="bio-modal__close"
+          type="button"
+          aria-label="Schließen"
+          data-close-overlay
+        >
+          ✕
+        </button>
+
+        <div class="bio-modal__content">
+          <h3 class="bio-modal__title" id="bioTitle">Name</h3>
+          <p class="bio-modal__role" id="bioRole">Instrument</p>
+          <div class="bio-modal__text" id="bioText">
+            <p>Biografie folgt.</p>
+          </div>
+          <a class="bio-download" id="bioDownload" href="#" download>
+            ⬇ PDF herunterladen
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <script src="./JS/objects.js"></script>
-  <script src="./JS/app.js"></script>
-
-</body>
-
+    <script src="./JS/objects.js"></script>
+    <script src="./JS/app.js"></script>
+  </body>
 </html>

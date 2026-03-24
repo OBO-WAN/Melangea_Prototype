@@ -5,6 +5,8 @@
 ========================================= */
 
 :root {
+  color-scheme: dark;
+
   --bg: linear-gradient(135deg, #15366f 0%, #151f48 100%);
   --surface: #111526;
   --surface2: #0f1322;
@@ -19,6 +21,7 @@
 
   --container: 1240px;
   --shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
+  --focus-ring: 2px solid var(--accent2);
 }
 
 *,
@@ -33,9 +36,13 @@ html {
 
 body {
   margin: 0;
+  min-width: 320px;
   font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
   line-height: 1.55;
   color: var(--text);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   background:
     radial-gradient(1200px 600px at 20% -10%, rgba(124, 92, 255, 0.25), transparent 60%),
     radial-gradient(900px 500px at 80% 10%, rgba(46, 229, 157, 0.15), transparent 55%),
@@ -51,9 +58,17 @@ a:hover {
   color: var(--accent2);
 }
 
-img {
-  max-width: 100%;
+img,
+picture,
+svg,
+video,
+canvas {
   display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
 }
 
 button,
@@ -61,6 +76,11 @@ input,
 textarea,
 select {
   font: inherit;
+  color: inherit;
+}
+
+textarea {
+  resize: vertical;
 }
 
 h1,
@@ -68,12 +88,18 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+p {
   margin-top: 0;
 }
 
 h1 {
   margin: 0;
+}
+
+:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
 }
 
 .skip-link {
@@ -83,6 +109,7 @@ h1 {
   width: 1px;
   height: 1px;
   overflow: hidden;
+  z-index: 100;
 }
 
 .skip-link:focus {
@@ -93,7 +120,7 @@ h1 {
   padding: 0.6rem 1rem;
   background: var(--surface);
   border-radius: 999px;
-  outline: 2px solid var(--accent2);
+  outline: var(--focus-ring);
 }
 
 .btn {
@@ -124,12 +151,6 @@ h1 {
   filter: brightness(1.04);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
   color: #08121f;
-}
-
-.btn:focus-visible,
-.person-bio-btn:focus-visible {
-  outline: 2px solid var(--accent2);
-  outline-offset: 2px;
 }
 
 .btn-ghost {
@@ -257,19 +278,6 @@ h1 {
   }
 }
 
-
-@media (prefers-reduced-motion: reduce) {
-
-  .brand,
-  .brand::after,
-  .brand-logo {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-    clip-path: none !important;
-  }
-}
-
 /* helpers */
 
 .sr-only {
@@ -282,4 +290,34 @@ h1 {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+@media (max-width: 680px) {
+  .brand-logo {
+    height: 72px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .brand,
+  .brand::after,
+  .brand-logo {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
+  }
 }

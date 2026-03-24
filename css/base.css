@@ -83,7 +83,12 @@ textarea {
   resize: vertical;
 }
 
-h1,
+h1{
+  padding: 32px;
+  font-family: "Cormorant Garamond" serif;
+}
+
+
 h2,
 h3,
 h4,

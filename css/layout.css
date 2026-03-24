@@ -240,6 +240,7 @@
     backdrop-filter: blur(18px);
     box-shadow: 0 18px 38px rgba(0, 0, 0, 0.32);
     opacity: 0;
+    z-index: 1;
     visibility: hidden;
     pointer-events: none;
     transform: translateY(-8px);

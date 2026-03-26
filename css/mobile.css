@@ -146,3 +146,35 @@
     padding: 0.9rem;
   }
 }
+
+/* Hero title */
+
+@media (max-width: 820px) {
+  .hero-copy {
+    width: min(100%, calc(100% - 1.5rem));
+    margin: 1.5rem auto 0;
+    padding: 0 0.5rem;
+  }
+
+  .hero-title {
+    gap: 0.2rem 0.65rem;
+    font-size: clamp(2rem, 7vw, 3.15rem);
+    line-height: 1.08;
+  }
+
+  .hero-title span {
+    white-space: normal;
+  }
+
+  .hero-title span:not(:last-child)::after {
+    content: "";
+    margin: 0;
+  }
+
+  .hero-subtitle {
+    max-width: 38rem;
+    margin-top: 0.85rem;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+}

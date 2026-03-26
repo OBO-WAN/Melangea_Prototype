@@ -22,6 +22,9 @@
   --container: 1240px;
   --shadow: 0 12px 35px rgba(0, 0, 0, 0.35);
   --focus-ring: 2px solid var(--accent2);
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif;
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
 }
 
 *,
@@ -37,7 +40,7 @@ html {
 body {
   margin: 0;
   min-width: 320px;
-  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+  font-family: var(--font-sans);
   line-height: 1.55;
   color: var(--text);
   text-rendering: optimizeLegibility;
@@ -83,23 +86,23 @@ textarea {
   resize: vertical;
 }
 
-h1{
-  padding: 32px;
-  font-family: "Cormorant Garamond" serif;
-}
-
-
+h1,
 h2,
 h3,
 h4,
 h5,
-h6,
+h6 {
+  margin: 0;
+}
+
 p {
   margin-top: 0;
 }
 
-h1 {
-  margin: 0;
+h1,
+h2,
+h3 {
+  text-wrap: balance;
 }
 
 :focus-visible {

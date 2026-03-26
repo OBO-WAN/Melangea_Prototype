@@ -125,7 +125,7 @@
 }
 
 .section {
-  margin: 100px 0 70px;
+  margin: 40px 0 40px;
   padding: 8px 0 16px;
 }
 
@@ -151,6 +151,16 @@
 .section-foot {
   margin-top: 2rem;
   text-align: center;
+}
+
+.section[id] {
+  scroll-margin-top: 9rem;
+}
+
+@media (max-width: 1024px) {
+  .section[id] {
+    scroll-margin-top: 7rem;
+  }
 }
 
 .grid {
@@ -199,7 +209,7 @@
   }
 
   .section {
-    margin: 88px 0 64px;
+    margin: 36px 0 64px;
   }
 
   .grid.three {
@@ -272,7 +282,7 @@
   }
 
   .section {
-    margin: 80px 0 56px;
+    margin: 36px 0 56px;
   }
 
   .section-head h2 {
@@ -292,7 +302,7 @@
   }
 
   .section {
-    margin: 72px 0 48px;
+    margin: 44px 0 44px;
     padding: 4px 0 12px;
   }
 

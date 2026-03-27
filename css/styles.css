@@ -105,6 +105,25 @@
   border-left: 1px solid rgba(255, 255, 255, 0.16);
 }
 
+.hero-title span:nth-child(3) {
+  color: #f4e7ba;
+  letter-spacing: 0.03em;
+}
+
+.hero-title span:nth-child(3)::after {
+  content: "";
+  display: block;
+  width: 5.25rem;
+  height: 1px;
+  margin-top: 0.55rem;
+  background: linear-gradient(
+    90deg,
+    rgba(244, 231, 186, 0),
+    rgba(244, 231, 186, 0.82),
+    rgba(244, 231, 186, 0)
+  );
+}
+
 .hero-subtitle {
   width: min(52rem, 100%);
   margin: 0;

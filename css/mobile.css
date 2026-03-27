@@ -184,7 +184,7 @@
     width: min(100%, calc(100% - 1.5rem));
     margin: 1.25rem auto 0;
     padding: 1.1rem 1rem 0;
-    gap: 1.1rem;
+    gap: 1.8rem;
     text-align: center;
   }
 
@@ -237,10 +237,10 @@
   .hero-subtitle {
     width: min(34rem, 100%);
     margin: 0 auto;
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.65;
     color: #e5eaf5;
-    font-family: var(--font-sans);
+    font-family: "Cormorant Garamond", sans-serif;
     text-wrap: pretty;
   }
 }
@@ -248,7 +248,7 @@
 @media (max-width: 560px) {
   .hero-copy {
     padding: 0.85rem 0.35rem 0;
-    gap: 0.9rem;
+    gap: 1.8rem;
   }
 
   .hero-title {
@@ -262,7 +262,7 @@
   }
 
   .hero-subtitle {
-    font-size: 0.96rem;
+    font-size: 1.2rem;
     line-height: 1.58;
   }
 }

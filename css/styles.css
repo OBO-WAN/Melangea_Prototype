@@ -86,7 +86,7 @@
   width: min(1120px, 100%);
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(1.95rem, 2.8vw, 3.3rem);
+  font-size: clamp(1.95rem, 2.8vw, 3.0rem);
   font-weight: 600;
   line-height: 1.02;
   letter-spacing: 0.02em;

@@ -90,7 +90,6 @@
   align-items: center;
   gap: 2rem;
   margin-right: 1.15rem;
-  font-family: "Cormorant Garamond", sans-serif;
 }
 
 .nav a {
@@ -98,8 +97,8 @@
   display: inline-flex;
   align-items: center;
   color: #e0e4eb;
-  font-size: 1.5rem;
-  font-weight: bolder;
+  font-size: 1.2rem;
+  font-weight: 600;
   line-height: 1;
   text-decoration: none;
   transition: color 220ms cubic-bezier(0.165, 0.84, 0.44, 1);

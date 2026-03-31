@@ -194,7 +194,7 @@
     grid-template-columns: 1fr;
     gap: 0.75rem;
     margin: 0;
-    font-size: clamp(2rem, 7vw, 2.9rem);
+    font-size: clamp(2rem, 7vw, 2.5rem);
     line-height: 1.02;
     letter-spacing: 0.02em;
   }

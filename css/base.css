@@ -179,6 +179,10 @@ h3 {
   font-size: 0.9rem;
 }
 
+.btn-youtube{
+  background:#e0002c ;
+}
+
 .btn-youtube:hover {
   background: #e0002c;
   border-color: #e0002c;

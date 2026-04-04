@@ -131,7 +131,7 @@
   font-size: 1.6rem;
   line-height: 1.7;
   color: #e5eaf5;
-  font-family: "Cormorant Garamond", sans-serif;
+  font-family: "Cormorant Garamond", serif;
 }
 
 @media (max-width: 1024px) {
@@ -602,81 +602,6 @@
 
 .press-head {
   text-align: center;
-  margin-bottom: 2.5rem;
-}
-
-.press-grid {
-  display: grid;
-  grid-template-columns: 1.15fr 1fr 1fr;
-  gap: 1.5rem;
-  align-items: stretch;
-}
-
-.press-quote {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100%;
-  padding: 1.75rem 1.5rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: var(--radius);
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.04),
-    rgba(255, 255, 255, 0.02)
-  );
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.14);
-}
-
-.press-quote--featured {
-  padding: 2rem 1.75rem;
-}
-
-.press-text {
-  margin: 0 0 1rem;
-  font-family: "Cormorant Garamond", serif;
-  font-size: clamp(1.3rem, 2vw, 1.7rem);
-  line-height: 1.35;
-  color: var(--text);
-}
-
-.press-quote:not(.press-quote--featured) .press-text {
-  font-size: clamp(1.15rem, 1.5vw, 1.4rem);
-}
-
-.press-source {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  margin-top: 1.25rem;
-}
-
-.press-publication {
-  color: #f4e7ba;
-  font-size: 0.9rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-}
-
-.press-author {
-  color: var(--muted);
-  font-size: 0.95rem;
-}
-
-@media (max-width: 900px) {
-  .press-grid {
-    grid-template-columns: 1fr;
-    gap: 1.2rem;
-  }
-
-  .press-head {
-    margin-bottom: 2rem;
-  }
-}
-
-
-.press-head {
-  text-align: center;
   margin-bottom: 2.75rem;
 }
 
@@ -696,7 +621,7 @@
 .press-grid {
   display: grid;
   grid-template-columns: 1.15fr 1fr 1fr;
-  gap: 1.5rem;
+  gap: 1.75rem;
   align-items: stretch;
 }
 
@@ -711,7 +636,7 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 100%;
-  padding: 1.75rem 1.5rem;
+  padding: 2rem 1.7rem;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: var(--radius);
   background: linear-gradient(
@@ -723,31 +648,50 @@
 }
 
 .press-quote--featured {
-  padding: 2rem 1.75rem;
+  padding: 2.2rem 1.9rem;
 }
 
-.audience-quote .press-text {
-  font-size: clamp(1.1rem, 1.45vw, 1.35rem);
+.press-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
 }
 
 .press-text {
+  max-width: 30ch;
   margin: 0 0 1rem;
   font-family: "Cormorant Garamond", serif;
-  font-size: clamp(1.2rem, 1.7vw, 1.55rem);
-  line-height: 1.38;
+  font-size: clamp(1.2rem, 1.6vw, 1.55rem);
+  line-height: 1.48;
   color: var(--text);
+  text-wrap: pretty;
+}
+
+.press-quote--featured .press-text {
+  font-size: clamp(1.32rem, 1.9vw, 1.75rem);
+  line-height: 1.42;
+}
+
+.audience-quote .press-text {
+  font-size: clamp(1.08rem, 1.35vw, 1.3rem);
+}
+
+.press-text--secondary {
+  opacity: 0.92;
 }
 
 .press-source {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
-  margin-top: 1.25rem;
+  gap: 0.25rem;
+  margin-top: 1.4rem;
+  padding-top: 0.9rem;
+  border-top: 1px solid rgba(244, 231, 186, 0.14);
 }
 
 .press-publication {
   color: #f4e7ba;
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -758,6 +702,10 @@
 }
 
 @media (max-width: 900px) {
+  .press-head {
+    margin-bottom: 2rem;
+  }
+
   .press-grid,
   .audience-grid {
     grid-template-columns: 1fr;
@@ -766,5 +714,9 @@
 
   .press-group + .press-group {
     margin-top: 2.5rem;
+  }
+
+  .press-text {
+    max-width: none;
   }
 }

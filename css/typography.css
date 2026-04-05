@@ -1,0 +1,100 @@
+/* =========================================
+   Typography only
+========================================= */
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.95rem, 2.8vw, 3rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.28);
+}
+
+.hero-title span:nth-child(3) {
+  color: #f4e7ba;
+  letter-spacing: 0.03em;
+}
+
+.hero-subtitle {
+  font-size: 1.6rem;
+  line-height: 1.7;
+  color: #e5eaf5;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.person-name {
+  margin: 0.4rem 0 0.2rem;
+  font-size: 1.8rem;
+  font-weight: lighter;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  text-wrap: balance;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.person-role {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.05em;
+  font-family: "Cormorant Garamond", serif;
+}
+
+.event-day {
+  font-weight: 900;
+  font-size: 1.1rem;
+  line-height: 1;
+}
+
+.event-month {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-transform: uppercase;
+}
+
+.press-group-title {
+  margin: 0 0 1.4rem;
+  color: #f4e7ba;
+  font-size: 0.98rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.press-text {
+  max-width: 30ch;
+  margin: 0 0 1rem;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.2rem, 1.6vw, 1.55rem);
+  line-height: 1.48;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+.press-quote--featured .press-text {
+  font-size: clamp(1.32rem, 1.9vw, 1.75rem);
+  line-height: 1.42;
+}
+
+.audience-quote .press-text {
+  font-size: clamp(1.2rem, 1.35vw, 1.3rem);
+}
+
+.press-text--secondary {
+  opacity: 0.92;
+}
+
+.press-publication {
+  color: #f4e7ba;
+  font-size: 0.88rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.press-author {
+  color: var(--muted);
+  font-size: 0.95rem;
+}

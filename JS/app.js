@@ -1,16 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-  [
-    initBioOverlay,
-    initScrollProgress,
-    initHeroSlider,
-    initMobileNav,
-  ].forEach((init) => {
-    try {
-      init();
-    } catch (error) {
-      console.error(`Failed to initialize ${init.name}:`, error);
-    }
-  });
+  [initBioOverlay, initScrollProgress, initHeroSlider, initMobileNav].forEach(
+    (init) => {
+      try {
+        init();
+      } catch (error) {
+        console.error(`Failed to initialize ${init.name}:`, error);
+      }
+    },
+  );
 });
 
 // -----------------------------------------------------
@@ -178,11 +175,13 @@ function initScrollProgress() {
     const scrollTop = window.scrollY;
     const docHeight =
       document.documentElement.scrollHeight - window.innerHeight;
-    const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+
+    const rawProgress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    const progress = Math.max(0, Math.min(rawProgress, 100));
 
     document.documentElement.style.setProperty(
       "--scroll-progress",
-      `${progress}%`
+      `${progress}%`,
     );
   }
 
@@ -204,7 +203,7 @@ function initHeroSlider() {
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const intervalMs = 5000;
   let current = slides.findIndex((slide) =>
-    slide.classList.contains("is-active")
+    slide.classList.contains("is-active"),
   );
   let sliderTimer = null;
 

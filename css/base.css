@@ -140,7 +140,7 @@ h3 {
   padding: 0.75rem 1.1rem;
   border: 1px solid transparent;
   border-radius: 999px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  background: linear-gradient(135deg, #a1b8c9, var(--accent2));
   color: #08121f;
   font-weight: 800;
   letter-spacing: 0.02em;

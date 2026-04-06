@@ -39,7 +39,7 @@
 .person-name {
   margin: 0.4rem 0 0.2rem;
   font-size: 1.8rem;
-  font-weight: bold;
+  font-weight: 400;
   letter-spacing: 0.04em;
   color: var(--text);
   text-wrap: balance;
@@ -48,7 +48,7 @@
 
 .person-role {
   margin: 0;
-  font-size: 1.4rem;
+  font-size: 1.0rem;
   font-weight: 400;
   color: var(--text);
   letter-spacing: 0.05em;

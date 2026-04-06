@@ -3,13 +3,25 @@
 ========================================= */
 
 .hero-title {
-  font-family: var(--font-display);
+  font-family: "Raleway", sans-serif;
   font-size: clamp(1.95rem, 2.8vw, 3rem);
-  font-weight: 600;
+  font-weight: 300;
   line-height: 1.02;
   letter-spacing: 0.02em;
   color: var(--text);
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.28);
+}
+
+@media (min-width: 1600px) {
+  .hero-title {
+    font-size: clamp(1.7rem, 2.1vw, 2.45rem);
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+  }
+
+  .hero-title span {
+    padding: 0 1.5rem;
+  }
 }
 
 .hero-title span:nth-child(3) {
@@ -21,26 +33,26 @@
   font-size: 1.6rem;
   line-height: 1.7;
   color: #e5eaf5;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Raleway", sans-serif;
 }
 
 .person-name {
   margin: 0.4rem 0 0.2rem;
   font-size: 1.8rem;
-  font-weight: lighter;
+  font-weight: bold;
   letter-spacing: 0.04em;
   color: var(--text);
   text-wrap: balance;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Raleway", sans-serif;
 }
 
 .person-role {
   margin: 0;
   font-size: 1.4rem;
-  font-weight: 500;
+  font-weight: 400;
   color: var(--text);
   letter-spacing: 0.05em;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Raleway", sans-serif;
 }
 
 .event-day {
@@ -67,7 +79,7 @@
 .press-text {
   max-width: 30ch;
   margin: 0 0 1rem;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Raleway", sans-serif;
   font-size: clamp(1.2rem, 1.6vw, 1.55rem);
   line-height: 1.48;
   color: var(--text);

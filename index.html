@@ -7,7 +7,10 @@
   <title>Mélange à Deux — Prototype</title>
   <meta name="description" content="Music / events / projects homepage prototype." />
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
 
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="icon" href="assets/favicon.svg" sizes="any" />
@@ -79,7 +82,8 @@
         </h1>
 
         <p class="hero-subtitle">
-          Ein unverwechselbarer Klang im Spannungsfeld von Acoustic Fusion Jazz, Filmmusik und Chanson
+          Ein unverwechselbarer Klang im Spannungsfeld von Acoustic Fusion
+          Jazz, Filmmusik und Chanson
         </p>
       </div>
       <div class="hero-divider" aria-hidden="true"><span></span></div>
@@ -93,6 +97,20 @@
         </div>
 
         <div class="grid team">
+
+          <article class="card person">
+            <div class="avatar">
+              <img src="assets/IMG/portrait/Wolli.webp" alt="Wolfgang Mayé – Akkordeon" width="240" height="240"
+                loading="lazy" />
+            </div>
+
+            <h3 class="person-name">Wolfgang Mayé</h3>
+            <p class="person-role">Kontrabass</p>
+
+            <div class="person-links">
+              <button class="person-bio-btn" data-player="Maye">Bio</button>
+            </div>
+          </article>
           <article class="card person">
             <div class="avatar">
               <img src="assets/IMG/portrait/uli.webp" alt="Ulrike Albeseder – Oboe" width="240" height="240"
@@ -121,19 +139,7 @@
             </div>
           </article>
 
-          <article class="card person">
-            <div class="avatar">
-              <img src="assets/IMG/portrait/Wolli.webp" alt="Wolfgang Mayé – Akkordeon" width="240" height="240"
-                loading="lazy" />
-            </div>
 
-            <h3 class="person-name">Wolfgang Mayé</h3>
-            <p class="person-role">Kontrabass</p>
-
-            <div class="person-links">
-              <button class="person-bio-btn" data-player="Maye">Bio</button>
-            </div>
-          </article>
 
           <article class="card person">
             <div class="avatar">
@@ -351,8 +357,8 @@
           <div class="press-grid">
             <article class="press-quote press-quote--featured">
               <p class="press-text">
-                „Sie bewiesen, dass ihre künstlerischen Qualitäten keine einfache
-                Mélange, sondern genial ineinander verwoben sind.“
+                „Sie bewiesen, dass ihre künstlerischen Qualitäten keine
+                einfache Mélange, sondern genial ineinander verwoben sind.“
               </p>
               <footer class="press-source">
                 <span class="press-publication">Rheinpfalz</span>
@@ -362,9 +368,10 @@
 
             <article class="press-quote">
               <p class="press-text">
-                „Die Musiker spielen sensibel und mit wechselnden Rhythmen, die das
-                Publikum in ihren Bann ziehen, die Besetzung ist einzigartig und die
-                Musik ist eine großartige Mischung aus Tradition und Innovation.“
+                „Die Musiker spielen sensibel und mit wechselnden Rhythmen,
+                die das Publikum in ihren Bann ziehen, die Besetzung ist
+                einzigartig und die Musik ist eine großartige Mischung aus
+                Tradition und Innovation.“
               </p>
               <footer class="press-source">
                 <span class="press-publication">Odenwälder Zeitung</span>
@@ -378,8 +385,8 @@
                   „So mancher wird sich in den Klang der Oboe verliebt haben.“
                 </p>
                 <p class="press-text press-text--secondary">
-                  „Die Musiker beeindruckten durch ihre Vielseitigkeit und ihre
-                  Fähigkeit, verschiedene Welten zu vereinen.“
+                  „Die Musiker beeindruckten durch ihre Vielseitigkeit und
+                  ihre Fähigkeit, verschiedene Welten zu vereinen.“
                 </p>
               </div>
               <footer class="press-source">
@@ -396,10 +403,10 @@
           <div class="audience-grid">
             <article class="press-quote audience-quote">
               <p class="press-text">
-                „Ihr Konzert am Sonntag Abend war eine Entdeckung und ein Genuss für
-                mich. Ihre Musikauswahl und Ihre einfühlsamen Arrangements haben
-                mich ergriffen. Ich wüsste nicht, dass es in der Szene etwas
-                Vergleichbares gäbe. Danke!“
+                „Ihr Konzert am Sonntag Abend war eine Entdeckung und ein
+                Genuss für mich. Ihre Musikauswahl und Ihre einfühlsamen
+                Arrangements haben mich ergriffen. Ich wüsste nicht, dass es
+                in der Szene etwas Vergleichbares gäbe. Danke!“
               </p>
               <footer class="press-source">
                 <span class="press-author">Werner F.</span>
@@ -424,10 +431,7 @@
       <div class="container">
         <div class="cta card">
           <div>
-            <h2>Aktuelle CD / Shop</h2>
-            <!-- <p class="muted">
-                Später WooCommerce: Produktkarte, Preis, “In den Warenkorb”.
-              </p> -->
+            <h2>Aktuelle CD</h2>
           </div>
           <div class="cta-actions">
             <a class="btn" href="#">Jetzt bestellen</a>
@@ -443,9 +447,7 @@
     <div class="container footer-grid">
       <div class="footer-col">
         <div class="strong footer-brand">Mélange à Deux</div>
-        <p class="muted small">
-          &#169; 2026. Alle Rechte Vorbehalten
-        </p>
+        <p class="muted small">&#169; 2026. Alle Rechte Vorbehalten</p>
       </div>
 
       <div class="footer-col">

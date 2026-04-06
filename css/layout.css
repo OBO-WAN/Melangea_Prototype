@@ -143,9 +143,9 @@
 .section-head h2 {
   margin: 0;
   font-size: 2rem;
-  font-weight: 800;
+  font-weight: 300;
   letter-spacing: 0.4em;
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Raleway", sans-serif;
   text-wrap: balance;
 }
 

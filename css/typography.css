@@ -5,9 +5,9 @@
 .hero-title {
   font-family: "Raleway", sans-serif;
   font-size: clamp(1.95rem, 2.8vw, 3rem);
-  font-weight: 300;
+  font-weight: 600;
   line-height: 1.02;
-  letter-spacing: 0.02em;
+  /* letter-spacing: 0.02em; */
   color: var(--text);
   text-shadow: 0 2px 18px rgba(0, 0, 0, 0.28);
 }
@@ -34,6 +34,7 @@
   line-height: 1.7;
   color: #e5eaf5;
   font-family: "Raleway", sans-serif;
+  font-weight: 600;
 }
 
 .person-name {

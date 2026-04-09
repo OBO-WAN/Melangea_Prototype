@@ -42,6 +42,29 @@
     visibility 0.22s ease;
 }
 
+@media (max-height: 990px) {
+  .newsletter-overlay {
+    place-items: start center;
+    overflow-y: auto;
+    padding: 0.75rem;
+  }
+
+  .newsletter-modal {
+    width: min(680px, 100%);
+    max-height: calc(100dvh - 1.5rem);
+    margin: 0 auto;
+    overflow-y: auto;
+  }
+
+  .newsletter-modal__content {
+    padding: 1.25rem;
+  }
+
+  .newsletter-actions {
+    padding-bottom: 0.15rem;
+  }
+}
+
 .newsletter-overlay.is-open {
   opacity: 1;
   visibility: visible;
@@ -213,4 +236,22 @@
   .newsletter-actions .btn-ghost {
     width: 100%;
   }
+}
+
+.newsletter-required {
+  margin-left: 0.15rem;
+  color: #f4e7ba;
+  font-weight: 700;
+}
+
+.newsletter-required-note {
+  margin: 0.2rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+.newsletter-required-note span {
+  color: #f4e7ba;
+  font-weight: 700;
 }

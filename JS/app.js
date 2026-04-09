@@ -258,3 +258,27 @@ function initHeroSlider() {
     reducedMotion.addListener(motionListener);
   }
 }
+
+// Scroll to the top button
+
+const scrollTopBtn = document.getElementById("scrollTopBtn");
+
+if (scrollTopBtn) {
+  const toggleScrollTopBtn = () => {
+    if (window.scrollY > 300) {
+      scrollTopBtn.classList.add("is-visible");
+    } else {
+      scrollTopBtn.classList.remove("is-visible");
+    }
+  };
+
+  scrollTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  });
+
+  window.addEventListener("scroll", toggleScrollTopBtn, { passive: true });
+  toggleScrollTopBtn();
+}

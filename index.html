@@ -1,725 +1,588 @@
 <!doctype html>
 <html lang="de">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Mélange à Deux — Prototype</title>
-    <meta
-      name="description"
-      content="Music / events / projects homepage prototype."
-    />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
-      rel="stylesheet"
-    />
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mélange à Deux — Prototype</title>
+  <meta name="description" content="Music / events / projects homepage prototype." />
 
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-    <link rel="icon" href="assets/favicon.svg" sizes="any" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
 
-    <link rel="stylesheet" href="css/base.css" />
-    <link rel="stylesheet" href="css/typography.css" />
-    <link rel="stylesheet" href="css/layout.css" />
-    <link rel="stylesheet" href="css/styles.css" />
-    <link rel="stylesheet" href="css/footer.css" />
-    <link rel="stylesheet" href="css/audio.css" />
-    <link rel="stylesheet" href="css/mobile.css" />
-    <link rel="stylesheet" href="css/overlay.css" />
-    <link rel="stylesheet" href="css/newsletter.css" />
-  </head>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="icon" href="assets/favicon.svg" sizes="any" />
 
-  <body>
-    <a class="skip-link" href="#main">Zum Inhalt springen</a>
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/typography.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/audio.css" />
+  <link rel="stylesheet" href="css/mobile.css" />
+  <link rel="stylesheet" href="css/overlay.css" />
+  <link rel="stylesheet" href="css/newsletter.css" />
+</head>
 
-    <!-- Header -->
-    <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="#">
-          <img
-            src="./assets/IMG/LOGO/logo_et_amis.png"
-            alt="Mélange à Deux Logo"
-            class="brand-logo"
-          />
+<body>
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="#">
+        <img src="./assets/IMG/LOGO/logo_et_amis.png" alt="Mélange à Deux Logo" class="brand-logo" />
+      </a>
+
+      <div class="nav-wrap">
+        <input type="checkbox" id="nav-toggle" class="nav-checkbox" />
+
+        <label for="nav-toggle" class="nav-toggle">
+          <span class="nav-toggle__icon" aria-hidden="true">☰</span>
+          <span class="sr-only">Menü öffnen</span>
+        </label>
+
+        <nav class="nav" aria-label="Hauptnavigation">
+          <a href="#about">Über uns</a>
+          <a href="#shows">Konzerte</a>
+          <a href="#projects">Programme</a>
+          <a href="#media">Medien</a>
+          <a href="#booking">Booking</a>
+          <a href="#presse">News</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-stage">
+        <div class="hero-slider" aria-label="Mélange à Deux Bildslider">
+          <div class="hero-slide is-active" style="--fx: 50%; --fy: 18%; --fx-mobile: 50%; --fy-mobile: 22%">
+            <img src="./assets/IMG/background/melange_et_amis_mit_Überschrift.png" alt="Mélange à Deux et amis" />
+          </div>
+
+          <div class="hero-slide" style="--fx: 62%; --fy: 50%; --fx-mobile: 54%; --fy-mobile: 50%">
+            <img src="./assets/IMG/background/duo_landscape_rotated_cropped.webp" alt="Mélange à Deux Duo" />
+          </div>
+
+          <div class="hero-slide" style="--fx: 50%; --fy: 38%; --fx-mobile: 50%; --fy-mobile: 42%">
+            <img src="./assets/IMG/background/trio_landscape.png" alt="Mélange à Deux Trio live" />
+          </div>
+        </div>
+      </div>
+      <div class="hero-copy">
+        <h1 class="hero-title">
+          <span>Ungewöhnliche Klangfarben</span>
+          <span>Feiner Groove</span>
+          <span>Musik jenseits von Schubladen</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Ein unverwechselbarer Klang im Spannungsfeld von Acoustic Fusion
+          Jazz, Filmmusik und Chanson
+        </p>
+      </div>
+      <div class="hero-divider" aria-hidden="true"><span></span></div>
+    </section>
+
+    <!-- Team -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Wer wir sind</h2>
+        </div>
+
+        <div class="grid team">
+          <article class="card person">
+            <div class="avatar">
+              <img src="assets/IMG/portrait/Wolli.webp" alt="Wolfgang Mayé – Akkordeon" width="240" height="240"
+                loading="lazy" />
+            </div>
+
+            <h3 class="person-name">Wolfgang Mayé</h3>
+            <p class="person-role">Kontrabass</p>
+
+            <div class="person-links">
+              <button class="person-bio-btn" data-player="Maye">Bio</button>
+            </div>
+          </article>
+          <article class="card person">
+            <div class="avatar">
+              <img src="assets/IMG/portrait/uli.webp" alt="Ulrike Albeseder – Oboe" width="240" height="240"
+                loading="lazy" />
+            </div>
+
+            <h3 class="person-name">Ulrike Albeseder</h3>
+            <p class="person-role">Oboe & Blockflöte</p>
+
+            <div class="person-links">
+              <button class="person-bio-btn" data-player="Ulrike">Bio</button>
+            </div>
+          </article>
+
+          <article class="card person">
+            <div class="avatar">
+              <img src="assets/IMG/portrait/Uwe.webp" alt="Uwe Hanewald – Akkordeon" width="240" height="240"
+                loading="lazy" />
+            </div>
+
+            <h3 class="person-name">Uwe Hanewald</h3>
+            <p class="person-role">Akkordeon & Vocals</p>
+
+            <div class="person-links">
+              <button class="person-bio-btn" data-player="Uwe">Bio</button>
+            </div>
+          </article>
+
+          <article class="card person">
+            <div class="avatar">
+              <img src="assets/IMG/portrait/wolfgang-disch.webp" alt="Player 4 – Instrument" width="240" height="240"
+                loading="lazy" />
+            </div>
+
+            <h3 class="person-name">Wolfgang Disch</h3>
+            <p class="person-role">Schlagzeug & Percussion</p>
+
+            <div class="person-links">
+              <button class="person-bio-btn" data-player="Disch">Bio</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shows / Events -->
+    <section id="shows" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Nächste Konzerte</h2>
+        </div>
+
+        <div class="card">
+          <ul class="eventlist">
+            <li class="event">
+              <div class="event-date">
+                <div class="event-day">12</div>
+                <div class="event-month">Apr</div>
+              </div>
+              <div class="event-body">
+                <div class="strong">Konzert</div>
+                <div class="muted small">Freinsheim • 19:30</div>
+              </div>
+              <div class="event-actions">
+                <a class="btn btn-small btn-ghost" href="#">Details</a>
+                <a class="btn btn-small" href="#">Tickets</a>
+              </div>
+            </li>
+
+            <li class="event">
+              <div class="event-date">
+                <div class="event-day">04</div>
+                <div class="event-month">Mai</div>
+              </div>
+              <div class="event-body">
+                <div class="strong">Familienkonzert</div>
+                <div class="muted small">Ludwigshafen BASF Halle • 11:00</div>
+              </div>
+              <div class="event-actions">
+                <a class="btn btn-small btn-ghost" href="#">Details</a>
+                <a class="btn btn-small" href="#">Tickets</a>
+              </div>
+            </li>
+          </ul>
+
+          <div class="card-footer">
+            <a class="btn btn-ghost" href="#">Alle Konzerte ansehen →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="newsletter" class="section section-newsletter">
+      <div class="container newsletter-wrap">
+        <a class="btn newsletter-btn newsletter-open" href="#newsletter-overlay" data-newsletter-open>
+          Newsletter abonnieren
         </a>
+      </div>
+    </section>
 
-        <div class="nav-wrap">
-          <input type="checkbox" id="nav-toggle" class="nav-checkbox" />
+    <!-- Videos -->
+    <section id="media" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Videos</h2>
+        </div>
 
-          <label for="nav-toggle" class="nav-toggle">
-            <span class="nav-toggle__icon" aria-hidden="true">☰</span>
-            <span class="sr-only">Menü öffnen</span>
+        <div class="grid three">
+          <div class="card video">
+            <div class="video-embed">
+              <iframe title="Video 1"
+                src="https://www.youtube-nocookie.com/embed/JDRfZDNSr8o?rel=0&modestbranding=1&playsinline=1" allow="
+                    accelerometer;
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    gyroscope;
+                    picture-in-picture;
+                  " allowfullscreen></iframe>
+            </div>
+            <div class="muted small">Mélange à Deux Show-Projekt-Live</div>
+          </div>
+
+          <div class="card video">
+            <div class="video-embed">
+              <iframe title="Video 2"
+                src="https://www.youtube-nocookie.com/embed/FXFr5nbusVI?rel=0&modestbranding=1&playsinline=1" allow="
+                    accelerometer;
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    gyroscope;
+                    picture-in-picture;
+                  " allowfullscreen></iframe>
+            </div>
+            <div class="muted small">
+              Mélange à Deux & Amis -open air live-
+            </div>
+          </div>
+
+          <div class="card video">
+            <div class="video-embed">
+              <iframe title="Video 3"
+                src="https://www.youtube-nocookie.com/embed/qyVGaWTaV2w?rel=0&modestbranding=1&playsinline=1" allow="
+                    accelerometer;
+                    autoplay;
+                    clipboard-write;
+                    encrypted-media;
+                    gyroscope;
+                    picture-in-picture;
+                  " allowfullscreen></iframe>
+            </div>
+            <div class="muted small">
+              Gabriel´s Oboe - Mélange à Deux & Amis
+            </div>
+          </div>
+        </div>
+
+        <div class="section-foot">
+          <a class="btn btn-ghost btn-youtube" href="https://www.youtube.com/@MelangeaDeux" target="_blank"
+            rel="noopener">
+            ▶ YouTube
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Music / Playlist -->
+    <section class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Hörbeispiele</h2>
+        </div>
+
+        <div class="grid two">
+          <div class="card">
+            <div class="card-head">
+              <h3>Playlist</h3>
+              <span class="muted small" id="trackCount">0 Tracks</span>
+            </div>
+
+            <div class="wave-player" aria-label="Audioplayer">
+              <div class="wave-player__meta">
+                <div>
+                  <p class="muted small">Aktueller Titel</p>
+                  <h4 class="wave-player__title" id="waveTitle">
+                    Jeu des Nuages
+                  </h4>
+                  <p class="wave-player__subtitle muted small" id="waveSubtitle">
+                    Live Session
+                  </p>
+                </div>
+              </div>
+
+              <div class="wave-player__timeline">
+                <span class="muted small" id="waveCurrent">0:00</span>
+
+                <div class="wave-player__wave-wrap">
+                  <label class="sr-only" for="waveSeek">Wiedergabeposition</label>
+                  <input id="waveSeek" class="wave-player__seek" type="range" min="0" max="100" value="0" step="0.1" />
+
+                  <div class="wave-player__visual" aria-hidden="true">
+                    <div class="wave-player__peaks" id="wavePeaks"></div>
+                  </div>
+                </div>
+
+                <span class="muted small" id="waveDuration">0:00</span>
+              </div>
+
+              <div class="wave-player__controls">
+                <button type="button" class="wave-player__btn" id="wavePrev" aria-label="Vorheriger Titel">
+                  ⏮
+                </button>
+                <button type="button" class="wave-player__btn wave-player__btn--primary" id="waveToggle"
+                  aria-label="Play">
+                  ▶
+                </button>
+                <button type="button" class="wave-player__btn" id="waveNext" aria-label="Nächster Titel">
+                  ⏭
+                </button>
+              </div>
+
+              <audio id="waveAudio" preload="none"></audio>
+            </div>
+
+            <ol class="tracklist" id="trackList" aria-label="Trackliste">
+              <!-- injected by audio.js -->
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Presse/News -->
+    <section id="presse" class="section press-section">
+      <div class="container">
+        <div class="section-head press-head">
+          <h2>Presse</h2>
+        </div>
+
+        <div class="press-group">
+          <h3 class="press-group-title">Pressestimmen</h3>
+
+          <div class="press-grid">
+            <article class="press-quote press-quote--featured">
+              <p class="press-text">
+                „Sie bewiesen, dass ihre künstlerischen Qualitäten keine
+                einfache Mélange, sondern genial ineinander verwoben sind.“
+              </p>
+              <footer class="press-source">
+                <span class="press-publication">Rheinpfalz</span>
+                <span class="press-author">Doris Aust</span>
+              </footer>
+            </article>
+
+            <article class="press-quote">
+              <p class="press-text">
+                „Die Musiker spielen sensibel und mit wechselnden Rhythmen,
+                die das Publikum in ihren Bann ziehen, die Besetzung ist
+                einzigartig und die Musik ist eine großartige Mischung aus
+                Tradition und Innovation.“
+              </p>
+              <footer class="press-source">
+                <span class="press-publication">Odenwälder Zeitung</span>
+                <span class="press-author">Fritz Kopetzky</span>
+              </footer>
+            </article>
+
+            <article class="press-quote">
+              <div class="press-copy">
+                <p class="press-text">
+                  „So mancher wird sich in den Klang der Oboe verliebt haben.“
+                </p>
+                <p class="press-text press-text--secondary">
+                  „Die Musiker beeindruckten durch ihre Vielseitigkeit und
+                  ihre Fähigkeit, verschiedene Welten zu vereinen.“
+                </p>
+              </div>
+              <footer class="press-source">
+                <span class="press-publication">Rheinpfalz</span>
+                <span class="press-author">Matthias Haag</span>
+              </footer>
+            </article>
+          </div>
+        </div>
+
+        <div class="press-group">
+          <h3 class="press-group-title">Stimmen aus dem Publikum</h3>
+
+          <div class="audience-grid">
+            <article class="press-quote audience-quote">
+              <p class="press-text">
+                „Ihr Konzert am Sonntag Abend war eine Entdeckung und ein
+                Genuss für mich. Ihre Musikauswahl und Ihre einfühlsamen
+                Arrangements haben mich ergriffen. Ich wüsste nicht, dass es
+                in der Szene etwas Vergleichbares gäbe. Danke!“
+              </p>
+              <footer class="press-source">
+                <span class="press-author">Werner F.</span>
+              </footer>
+            </article>
+
+            <article class="press-quote audience-quote">
+              <p class="press-text">
+                „Eure Musik ist wie eine Massage, die niemals enden soll...“
+              </p>
+              <footer class="press-source">
+                <span class="press-author">Nadine R.</span>
+              </footer>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shop CTA -->
+    <section id="shop" class="section">
+      <div class="container">
+        <div class="cta card">
+          <div>
+            <h2>Aktuelle CD</h2>
+          </div>
+          <div class="cta-actions">
+            <a class="btn" href="#">Jetzt bestellen</a>
+            <a class="btn btn-ghost" href="#">Mehr erfahren</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <div class="strong footer-brand">Mélange à Deux</div>
+        <p class="muted small">&#169; 2026. Alle Rechte Vorbehalten</p>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-heading">Kontakt</h3>
+        <a href="#newsletter-overlay" data-newsletter-open>
+          Newsletter abonnieren
+        </a>
+        <a href="mailto:info@melange2.com">info@melange2.com</a>
+        <a href="tel:+49123456789">+49 123 456789</a>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-heading">Rechtliches</h3>
+        <div class="footer-links">
+          <a href="#">Impressum</a>
+          <a href="#">Datenschutz</a>
+          <a href="#">Kontakt</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Overlays -->
+
+  <div class="bio-overlay" id="bioOverlay" aria-hidden="true">
+    <div class="bio-overlay__backdrop" data-close-overlay></div>
+
+    <div class="bio-modal" role="dialog" aria-modal="true" aria-labelledby="bioTitle">
+      <button class="bio-modal__close" type="button" aria-label="Schließen" data-close-overlay>
+        ✕
+      </button>
+
+      <div class="bio-modal__content">
+        <h3 class="bio-modal__title" id="bioTitle">Name</h3>
+        <p class="bio-modal__role" id="bioRole">Instrument</p>
+        <div class="bio-modal__text" id="bioText">
+          <p>Biografie folgt.</p>
+        </div>
+        <a class="bio-download" id="bioDownload" href="#" download>
+          ⬇ PDF herunterladen
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Newsletter Overlay -->
+
+  <div class="newsletter-overlay" id="newsletter-overlay" aria-hidden="true">
+    <div class="newsletter-overlay__backdrop" data-newsletter-close></div>
+
+    <div class="newsletter-modal" role="dialog" aria-modal="true" aria-labelledby="newsletterTitle"
+      aria-describedby="newsletterDescription">
+      <button class="newsletter-modal__close" type="button" aria-label="Schließen" data-newsletter-close>
+        ✕
+      </button>
+
+      <div class="newsletter-modal__content">
+        <p class="newsletter-kicker">Newsletter</p>
+        <h2 class="newsletter-modal__title" id="newsletterTitle">
+          Newsletter abonnieren
+        </h2>
+        <p class="newsletter-modal__text" id="newsletterDescription">
+          Hier erfahren Sie aktuelle Neuigkeiten und Konzerttermine rund um
+          Mélange à Deux & Amis
+        </p>
+
+        <form class="newsletter-form" action="#" method="post">
+          <div class="newsletter-form__grid">
+            <div class="newsletter-field">
+              <label for="newsletter-first-name">
+                Vorname <span class="newsletter-required" aria-hidden="true">*</span>
+              </label>
+              <input id="newsletter-first-name" name="first-name" type="text" placeholder="Ihr Vorname"
+                autocomplete="given-name" required />
+            </div>
+
+            <div class="newsletter-field">
+              <label for="newsletter-last-name">
+                Nachname <span class="newsletter-required" aria-hidden="true">*</span>
+              </label>
+              <input id="newsletter-last-name" name="last-name" type="text" placeholder="Ihr Nachname"
+                autocomplete="family-name" required />
+            </div>
+          </div>
+
+          <div class="newsletter-field">
+            <label for="newsletter-email">
+              E-Mail <span class="newsletter-required" aria-hidden="true">*</span>
+            </label>
+            <input id="newsletter-email" name="email" type="email" placeholder="ihre@email.de" autocomplete="email"
+              required />
+          </div>
+
+          <div class="newsletter-field">
+            <label for="newsletter-postal-code">PLZ</label>
+            <input id="newsletter-postal-code" name="postal-code" type="text" placeholder="z. B. 67061"
+              autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" />
+          </div>
+
+          <div class="newsletter-field">
+            <label for="newsletter-message">Nachricht</label>
+            <textarea id="newsletter-message" name="message" rows="4" placeholder="Optional: Ihre Nachricht"></textarea>
+          </div>
+
+          <label class="newsletter-consent">
+            <input type="checkbox" name="consent" required />
+            <span>
+              Ich stimme der Verarbeitung meiner Daten zum Erhalt des Newsletters zu.
+            </span>
           </label>
 
-          <nav class="nav" aria-label="Hauptnavigation">
-            <a href="#about">Über uns</a>
-            <a href="#shows">Konzerte</a>
-            <a href="#projects">Programme</a>
-            <a href="#media">Medien</a>
-            <a href="#booking">Booking</a>
-            <a href="#presse">News</a>
-          </nav>
-        </div>
-      </div>
-    </header>
-
-    <main id="main">
-      <!-- Hero -->
-      <section class="hero">
-        <div class="hero-stage">
-          <div class="hero-slider" aria-label="Mélange à Deux Bildslider">
-            <div
-              class="hero-slide is-active"
-              style="--fx: 50%; --fy: 18%; --fx-mobile: 50%; --fy-mobile: 22%"
-            >
-              <img
-                src="./assets/IMG/background/melange_et_amis_mit_Überschrift.png"
-                alt="Mélange à Deux et amis"
-              />
-            </div>
-
-            <div
-              class="hero-slide"
-              style="--fx: 62%; --fy: 50%; --fx-mobile: 54%; --fy-mobile: 50%"
-            >
-              <img
-                src="./assets/IMG/background/duo_landscape_rotated_cropped.webp"
-                alt="Mélange à Deux Duo"
-              />
-            </div>
-
-            <div
-              class="hero-slide"
-              style="--fx: 50%; --fy: 38%; --fx-mobile: 50%; --fy-mobile: 42%"
-            >
-              <img
-                src="./assets/IMG/background/trio_landscape.png"
-                alt="Mélange à Deux Trio live"
-              />
-            </div>
-          </div>
-        </div>
-        <div class="hero-copy">
-          <h1 class="hero-title">
-            <span>Ungewöhnliche Klangfarben</span>
-            <span>Feiner Groove</span>
-            <span>Musik jenseits von Schubladen</span>
-          </h1>
-
-          <p class="hero-subtitle">
-            Ein unverwechselbarer Klang im Spannungsfeld von Acoustic Fusion
-            Jazz, Filmmusik und Chanson
-          </p>
-        </div>
-        <div class="hero-divider" aria-hidden="true"><span></span></div>
-      </section>
-
-      <!-- Team -->
-      <section id="about" class="section">
-        <div class="container">
-          <div class="section-head">
-            <h2>Wer wir sind</h2>
-          </div>
-
-          <div class="grid team">
-            <article class="card person">
-              <div class="avatar">
-                <img
-                  src="assets/IMG/portrait/Wolli.webp"
-                  alt="Wolfgang Mayé – Akkordeon"
-                  width="240"
-                  height="240"
-                  loading="lazy"
-                />
-              </div>
-
-              <h3 class="person-name">Wolfgang Mayé</h3>
-              <p class="person-role">Kontrabass</p>
-
-              <div class="person-links">
-                <button class="person-bio-btn" data-player="Maye">Bio</button>
-              </div>
-            </article>
-            <article class="card person">
-              <div class="avatar">
-                <img
-                  src="assets/IMG/portrait/uli.webp"
-                  alt="Ulrike Albeseder – Oboe"
-                  width="240"
-                  height="240"
-                  loading="lazy"
-                />
-              </div>
-
-              <h3 class="person-name">Ulrike Albeseder</h3>
-              <p class="person-role">Oboe & Blockflöte</p>
-
-              <div class="person-links">
-                <button class="person-bio-btn" data-player="Ulrike">Bio</button>
-              </div>
-            </article>
-
-            <article class="card person">
-              <div class="avatar">
-                <img
-                  src="assets/IMG/portrait/Uwe.webp"
-                  alt="Uwe Hanewald – Akkordeon"
-                  width="240"
-                  height="240"
-                  loading="lazy"
-                />
-              </div>
-
-              <h3 class="person-name">Uwe Hanewald</h3>
-              <p class="person-role">Akkordeon & Vocals</p>
-
-              <div class="person-links">
-                <button class="person-bio-btn" data-player="Uwe">Bio</button>
-              </div>
-            </article>
-
-            <article class="card person">
-              <div class="avatar">
-                <img
-                  src="assets/IMG/portrait/wolfgang-disch.webp"
-                  alt="Player 4 – Instrument"
-                  width="240"
-                  height="240"
-                  loading="lazy"
-                />
-              </div>
-
-              <h3 class="person-name">Wolfgang Disch</h3>
-              <p class="person-role">Schlagzeug & Percussion</p>
-
-              <div class="person-links">
-                <button class="person-bio-btn" data-player="Disch">Bio</button>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <!-- Shows / Events -->
-      <section id="shows" class="section">
-        <div class="container">
-          <div class="section-head">
-            <h2>Nächste Konzerte</h2>
-          </div>
-
-          <div class="card">
-            <ul class="eventlist">
-              <li class="event">
-                <div class="event-date">
-                  <div class="event-day">12</div>
-                  <div class="event-month">Apr</div>
-                </div>
-                <div class="event-body">
-                  <div class="strong">Konzert</div>
-                  <div class="muted small">Freinsheim • 19:30</div>
-                </div>
-                <div class="event-actions">
-                  <a class="btn btn-small btn-ghost" href="#">Details</a>
-                  <a class="btn btn-small" href="#">Tickets</a>
-                </div>
-              </li>
-
-              <li class="event">
-                <div class="event-date">
-                  <div class="event-day">04</div>
-                  <div class="event-month">Mai</div>
-                </div>
-                <div class="event-body">
-                  <div class="strong">Familienkonzert</div>
-                  <div class="muted small">Ludwigshafen BASF Halle • 11:00</div>
-                </div>
-                <div class="event-actions">
-                  <a class="btn btn-small btn-ghost" href="#">Details</a>
-                  <a class="btn btn-small" href="#">Tickets</a>
-                </div>
-              </li>
-            </ul>
-
-            <div class="card-footer">
-              <a class="btn btn-ghost" href="#">Alle Konzerte ansehen →</a>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="newsletter" class="section section-newsletter">
-        <div class="container newsletter-wrap">
-          <a
-            class="btn newsletter-btn newsletter-open"
-            href="#newsletter-overlay"
-            data-newsletter-open
-          >
-            Newsletter abonnieren
-          </a>
-        </div>
-      </section>
-
-      <!-- Videos -->
-      <section id="media" class="section">
-        <div class="container">
-          <div class="section-head">
-            <h2>Videos</h2>
-          </div>
-
-          <div class="grid three">
-            <div class="card video">
-              <div class="video-embed">
-                <iframe
-                  title="Video 1"
-                  src="https://www.youtube-nocookie.com/embed/JDRfZDNSr8o?rel=0&modestbranding=1&playsinline=1"
-                  allow="
-                    accelerometer;
-                    autoplay;
-                    clipboard-write;
-                    encrypted-media;
-                    gyroscope;
-                    picture-in-picture;
-                  "
-                  allowfullscreen
-                ></iframe>
-              </div>
-              <div class="muted small">Mélange à Deux Show-Projekt-Live</div>
-            </div>
-
-            <div class="card video">
-              <div class="video-embed">
-                <iframe
-                  title="Video 2"
-                  src="https://www.youtube-nocookie.com/embed/FXFr5nbusVI?rel=0&modestbranding=1&playsinline=1"
-                  allow="
-                    accelerometer;
-                    autoplay;
-                    clipboard-write;
-                    encrypted-media;
-                    gyroscope;
-                    picture-in-picture;
-                  "
-                  allowfullscreen
-                ></iframe>
-              </div>
-              <div class="muted small">
-                Mélange à Deux & Amis -open air live-
-              </div>
-            </div>
-
-            <div class="card video">
-              <div class="video-embed">
-                <iframe
-                  title="Video 3"
-                  src="https://www.youtube-nocookie.com/embed/qyVGaWTaV2w?rel=0&modestbranding=1&playsinline=1"
-                  allow="
-                    accelerometer;
-                    autoplay;
-                    clipboard-write;
-                    encrypted-media;
-                    gyroscope;
-                    picture-in-picture;
-                  "
-                  allowfullscreen
-                ></iframe>
-              </div>
-              <div class="muted small">
-                Gabriel´s Oboe - Mélange à Deux & Amis
-              </div>
-            </div>
-          </div>
-
-          <div class="section-foot">
-            <a
-              class="btn btn-ghost btn-youtube"
-              href="https://www.youtube.com/@MelangeaDeux"
-              target="_blank"
-              rel="noopener"
-            >
-              ▶ YouTube
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <!-- Music / Playlist -->
-      <section class="section">
-        <div class="container">
-          <div class="section-head">
-            <h2>Hörbeispiele</h2>
-          </div>
-
-          <div class="grid two">
-            <div class="card">
-              <div class="card-head">
-                <h3>Playlist</h3>
-                <span class="muted small" id="trackCount">0 Tracks</span>
-              </div>
-
-              <div class="wave-player" aria-label="Audioplayer">
-                <div class="wave-player__meta">
-                  <div>
-                    <p class="muted small">Aktueller Titel</p>
-                    <h4 class="wave-player__title" id="waveTitle">
-                      Jeu des Nuages
-                    </h4>
-                    <p
-                      class="wave-player__subtitle muted small"
-                      id="waveSubtitle"
-                    >
-                      Live Session
-                    </p>
-                  </div>
-                </div>
-
-                <div class="wave-player__timeline">
-                  <span class="muted small" id="waveCurrent">0:00</span>
-
-                  <div class="wave-player__wave-wrap">
-                    <label class="sr-only" for="waveSeek"
-                      >Wiedergabeposition</label
-                    >
-                    <input
-                      id="waveSeek"
-                      class="wave-player__seek"
-                      type="range"
-                      min="0"
-                      max="100"
-                      value="0"
-                      step="0.1"
-                    />
-
-                    <div class="wave-player__visual" aria-hidden="true">
-                      <div class="wave-player__peaks" id="wavePeaks"></div>
-                    </div>
-                  </div>
-
-                  <span class="muted small" id="waveDuration">0:00</span>
-                </div>
-
-                <div class="wave-player__controls">
-                  <button
-                    type="button"
-                    class="wave-player__btn"
-                    id="wavePrev"
-                    aria-label="Vorheriger Titel"
-                  >
-                    ⏮
-                  </button>
-                  <button
-                    type="button"
-                    class="wave-player__btn wave-player__btn--primary"
-                    id="waveToggle"
-                    aria-label="Play"
-                  >
-                    ▶
-                  </button>
-                  <button
-                    type="button"
-                    class="wave-player__btn"
-                    id="waveNext"
-                    aria-label="Nächster Titel"
-                  >
-                    ⏭
-                  </button>
-                </div>
-
-                <audio id="waveAudio" preload="none"></audio>
-              </div>
-
-              <ol class="tracklist" id="trackList" aria-label="Trackliste">
-                <!-- injected by audio.js -->
-              </ol>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Presse/News -->
-      <section id="presse" class="section press-section">
-        <div class="container">
-          <div class="section-head press-head">
-            <h2>Presse</h2>
-          </div>
-
-          <div class="press-group">
-            <h3 class="press-group-title">Pressestimmen</h3>
-
-            <div class="press-grid">
-              <article class="press-quote press-quote--featured">
-                <p class="press-text">
-                  „Sie bewiesen, dass ihre künstlerischen Qualitäten keine
-                  einfache Mélange, sondern genial ineinander verwoben sind.“
-                </p>
-                <footer class="press-source">
-                  <span class="press-publication">Rheinpfalz</span>
-                  <span class="press-author">Doris Aust</span>
-                </footer>
-              </article>
-
-              <article class="press-quote">
-                <p class="press-text">
-                  „Die Musiker spielen sensibel und mit wechselnden Rhythmen,
-                  die das Publikum in ihren Bann ziehen, die Besetzung ist
-                  einzigartig und die Musik ist eine großartige Mischung aus
-                  Tradition und Innovation.“
-                </p>
-                <footer class="press-source">
-                  <span class="press-publication">Odenwälder Zeitung</span>
-                  <span class="press-author">Fritz Kopetzky</span>
-                </footer>
-              </article>
-
-              <article class="press-quote">
-                <div class="press-copy">
-                  <p class="press-text">
-                    „So mancher wird sich in den Klang der Oboe verliebt haben.“
-                  </p>
-                  <p class="press-text press-text--secondary">
-                    „Die Musiker beeindruckten durch ihre Vielseitigkeit und
-                    ihre Fähigkeit, verschiedene Welten zu vereinen.“
-                  </p>
-                </div>
-                <footer class="press-source">
-                  <span class="press-publication">Rheinpfalz</span>
-                  <span class="press-author">Matthias Haag</span>
-                </footer>
-              </article>
-            </div>
-          </div>
-
-          <div class="press-group">
-            <h3 class="press-group-title">Stimmen aus dem Publikum</h3>
-
-            <div class="audience-grid">
-              <article class="press-quote audience-quote">
-                <p class="press-text">
-                  „Ihr Konzert am Sonntag Abend war eine Entdeckung und ein
-                  Genuss für mich. Ihre Musikauswahl und Ihre einfühlsamen
-                  Arrangements haben mich ergriffen. Ich wüsste nicht, dass es
-                  in der Szene etwas Vergleichbares gäbe. Danke!“
-                </p>
-                <footer class="press-source">
-                  <span class="press-author">Werner F.</span>
-                </footer>
-              </article>
-
-              <article class="press-quote audience-quote">
-                <p class="press-text">
-                  „Eure Musik ist wie eine Massage, die niemals enden soll...“
-                </p>
-                <footer class="press-source">
-                  <span class="press-author">Nadine R.</span>
-                </footer>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Shop CTA -->
-      <section id="shop" class="section">
-        <div class="container">
-          <div class="cta card">
-            <div>
-              <h2>Aktuelle CD</h2>
-            </div>
-            <div class="cta-actions">
-              <a class="btn" href="#">Jetzt bestellen</a>
-              <a class="btn btn-ghost" href="#">Mehr erfahren</a>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="container footer-grid">
-        <div class="footer-col">
-          <div class="strong footer-brand">Mélange à Deux</div>
-          <p class="muted small">&#169; 2026. Alle Rechte Vorbehalten</p>
-        </div>
-
-        <div class="footer-col">
-          <h3 class="footer-heading">Kontakt</h3>
-          <a href="#newsletter-overlay" data-newsletter-open>
-            Newsletter abonnieren
-          </a>
-          <a href="mailto:info@melange2.com">info@melange2.com</a>
-          <a href="tel:+49123456789">+49 123 456789</a>
-        </div>
-
-        <div class="footer-col">
-          <h3 class="footer-heading">Rechtliches</h3>
-          <div class="footer-links">
-            <a href="#">Impressum</a>
-            <a href="#">Datenschutz</a>
-            <a href="#">Kontakt</a>
-          </div>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Overlays -->
-
-    <div class="bio-overlay" id="bioOverlay" aria-hidden="true">
-      <div class="bio-overlay__backdrop" data-close-overlay></div>
-
-      <div
-        class="bio-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="bioTitle"
-      >
-        <button
-          class="bio-modal__close"
-          type="button"
-          aria-label="Schließen"
-          data-close-overlay
-        >
-          ✕
-        </button>
-
-        <div class="bio-modal__content">
-          <h3 class="bio-modal__title" id="bioTitle">Name</h3>
-          <p class="bio-modal__role" id="bioRole">Instrument</p>
-          <div class="bio-modal__text" id="bioText">
-            <p>Biografie folgt.</p>
-          </div>
-          <a class="bio-download" id="bioDownload" href="#" download>
-            ⬇ PDF herunterladen
-          </a>
-        </div>
-      </div>
-    </div>
-
-    <!-- Newsletter Overlay -->
-
-    <div class="newsletter-overlay" id="newsletter-overlay" aria-hidden="true">
-      <div class="newsletter-overlay__backdrop" data-newsletter-close></div>
-
-      <div
-        class="newsletter-modal"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="newsletterTitle"
-        aria-describedby="newsletterDescription"
-      >
-        <button
-          class="newsletter-modal__close"
-          type="button"
-          aria-label="Schließen"
-          data-newsletter-close
-        >
-          ✕
-        </button>
-
-        <div class="newsletter-modal__content">
-          <p class="newsletter-kicker">Newsletter</p>
-          <h2 class="newsletter-modal__title" id="newsletterTitle">
-            Newsletter abonnieren
-          </h2>
-          <p class="newsletter-modal__text" id="newsletterDescription">
-            Hier erfahren Sie aktuelle Neuigkeiten und Konzerttermine rund um
-            Mélange à Deux & Amis
+          <p class="newsletter-required-note">
+            Mit <span aria-hidden="true">*</span> gekennzeichnete Felder sind Pflichtfelder.
           </p>
 
-          <form class="newsletter-form" action="#" method="post">
-            <div class="newsletter-form__grid">
-              <div class="newsletter-field">
-                <label for="newsletter-name">
-                  Name
-                  <span class="newsletter-required" aria-hidden="true">*</span>
-                </label>
-                <input
-                  id="newsletter-name"
-                  name="name"
-                  type="text"
-                  placeholder="Ihr Name"
-                  autocomplete="name"
-                  required
-                />
-              </div>
-
-              <div class="newsletter-field">
-                <label for="newsletter-email">
-                  E-Mail
-                  <span class="newsletter-required" aria-hidden="true">*</span>
-                </label>
-                <input
-                  id="newsletter-email"
-                  name="email"
-                  type="email"
-                  placeholder="ihre@email.de"
-                  autocomplete="email"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="newsletter-field">
-              <label for="newsletter-postal-code">PLZ</label>
-              <input
-                id="newsletter-postal-code"
-                name="postal-code"
-                type="text"
-                placeholder="z. B. 67061"
-                autocomplete="postal-code"
-                inputmode="numeric"
-                pattern="[0-9]{5}"
-              />
-            </div>
-
-            <div class="newsletter-field">
-              <label for="newsletter-message">Nachricht</label>
-              <textarea
-                id="newsletter-message"
-                name="message"
-                rows="4"
-                placeholder="Optional: Ihre Nachricht"
-              ></textarea>
-            </div>
-
-            <label class="newsletter-consent">
-              <input type="checkbox" name="consent" required />
-              <span>
-                Ich stimme der Verarbeitung meiner Daten zum Erhalt des
-                Newsletters zu.
-              </span>
-            </label>
-
-            <p class="newsletter-required-note">
-              Alle die mit <span aria-hidden="true">*</span> gekennzeichnete
-              Felder sind Pflichtfelder.
-            </p>
-
-            <div class="newsletter-actions">
-              <button type="submit" class="btn">Jetzt abonnieren</button>
-              <button type="button" class="btn btn-ghost" data-newsletter-close>
-                Abbrechen
-              </button>
-            </div>
-          </form>
-        </div>
+          <div class="newsletter-actions">
+            <button type="submit" class="btn">Jetzt abonnieren</button>
+            <button type="button" class="btn btn-ghost" data-newsletter-close>
+              Abbrechen
+            </button>
+          </div>
+        </form>
       </div>
     </div>
+  </div>
 
-    <!-- Scroll to the top button -->
+  <!-- Scroll to the top button -->
 
-    <button
-      class="scroll-top"
-      id="scrollTopBtn"
-      type="button"
-      aria-label="Nach oben scrollen"
-    >
-      ↑
-    </button>
+  <button class="scroll-top" id="scrollTopBtn" type="button" aria-label="Nach oben scrollen">
+    ↑
+  </button>
 
-    <script src="./JS/objects.js"></script>
-    <script src="./JS/audio.js"></script>
-    <script src="./JS/newsletter.js"></script>
-    <script src="./JS/app.js"></script>
-  </body>
+  <script src="./JS/objects.js"></script>
+  <script src="./JS/audio.js"></script>
+  <script src="./JS/newsletter.js"></script>
+  <script src="./JS/app.js"></script>
+</body>
+
 </html>

@@ -32,6 +32,8 @@
 .bio-modal {
   position: relative;
   z-index: 1;
+  display: flex;
+  flex-direction: column;
   width: min(680px, calc(100% - 2rem));
   max-height: min(86dvh, 900px);
   margin: 0;
@@ -86,6 +88,12 @@
   outline-offset: 2px;
 }
 
+.bio-modal__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
 .bio-modal__title {
   margin: 0 0 0.35rem;
   padding-right: 3rem;
@@ -103,7 +111,8 @@
 }
 
 .bio-modal__text {
-  max-height: min(68dvh, 620px);
+  flex: 1 1 auto;
+  min-height: 0;
   overflow-y: auto;
   padding-right: 0.6rem;
   scrollbar-width: thin;
@@ -136,6 +145,8 @@
   align-items: center;
   gap: 0.45rem;
   margin-top: 1.2rem;
+  flex-shrink: 0;
+  align-self: flex-start;
   padding: 0.55rem 1rem;
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -174,7 +185,13 @@
     border-radius: 22px;
   }
 
-  .bio-modal__title {
+  .bio-modal__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+.bio-modal__title {
     font-size: 1.65rem;
     padding-right: 2.75rem;
   }
@@ -184,7 +201,6 @@
   }
 
   .bio-modal__text {
-    max-height: 62dvh;
     padding-right: 0.35rem;
   }
 
@@ -202,7 +218,13 @@
     border-radius: 18px;
   }
 
-  .bio-modal__title {
+  .bio-modal__content {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+.bio-modal__title {
     font-size: 1.4rem;
   }
 
@@ -213,6 +235,53 @@
   .bio-download {
     width: 100%;
     justify-content: center;
+  }
+}
+
+
+@media (max-height: 920px) and (min-width: 681px) {
+  .bio-modal {
+    max-height: 82dvh;
+    padding: 1.75rem;
+  }
+}
+
+@media (max-height: 820px) and (min-width: 681px) {
+  .bio-modal {
+    max-height: 78dvh;
+    padding: 1.5rem;
+  }
+
+  .bio-modal__title {
+    font-size: 1.8rem;
+  }
+
+  .bio-modal__role {
+    margin-bottom: 0.9rem;
+  }
+
+  .bio-download {
+    margin-top: 1rem;
+  }
+}
+
+@media (max-height: 760px) {
+  .bio-modal {
+    max-height: 76dvh;
+    padding: 1.25rem;
+  }
+
+  .bio-modal__title {
+    font-size: 1.55rem;
+  }
+
+  .bio-modal__role {
+    margin-bottom: 0.8rem;
+    font-size: 0.95rem;
+  }
+
+  .bio-download {
+    margin-top: 0.85rem;
   }
 }
 

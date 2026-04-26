@@ -8,6 +8,17 @@ const newsletterForm = document.querySelector(
   "#newsletter-overlay .newsletter-form"
 );
 
+const NOTIFICATION_EMAIL = "info@melangea2.com";
+
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
 if (newsletterForm) {
   newsletterForm.addEventListener("submit", async (event) => {
     event.preventDefault();
@@ -31,6 +42,13 @@ if (newsletterForm) {
       return;
     }
 
+    const firstName = firstNameInput?.value.trim() || "";
+    const lastName = lastNameInput?.value.trim() || "";
+    const email = emailInput?.value.trim() || "";
+    const postalCode = postalCodeInput?.value.trim() || "";
+    const message = messageInput?.value.trim() || "";
+    const consent = consentInput?.checked || false;
+
     const submitButton = newsletterForm.querySelector('button[type="submit"]');
     const originalButtonText = submitButton ? submitButton.textContent : "";
 
@@ -41,13 +59,29 @@ if (newsletterForm) {
       }
 
       await addDoc(collection(db, "newsletter_signups"), {
-        firstName: firstNameInput?.value.trim() || "",
-        lastName: lastNameInput?.value.trim() || "",
-        email: emailInput?.value.trim() || "",
-        postalCode: postalCodeInput?.value.trim() || "",
-        message: messageInput?.value.trim() || "",
-        consent: consentInput?.checked || false,
+        firstName,
+        lastName,
+        email,
+        postalCode,
+        message,
+        consent,
         createdAt: serverTimestamp(),
+      });
+
+      await addDoc(collection(db, "mail"), {
+        to: [NOTIFICATION_EMAIL],
+        message: {
+          subject: "Neue Newsletter-Anmeldung",
+          html: `
+            <h2>Neue Newsletter-Anmeldung</h2>
+            <p><strong>Vorname:</strong> ${escapeHtml(firstName)}</p>
+            <p><strong>Nachname:</strong> ${escapeHtml(lastName)}</p>
+            <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+            <p><strong>Postleitzahl:</strong> ${escapeHtml(postalCode)}</p>
+            <p><strong>Nachricht:</strong> ${escapeHtml(message)}</p>
+            <p><strong>Einwilligung:</strong> ${consent ? "Ja" : "Nein"}</p>
+          `,
+        },
       });
 
       alert("Vielen Dank! Ihre Anmeldung wurde gespeichert.");

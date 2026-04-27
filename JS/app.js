@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  [initBioOverlay, initScrollProgress, initHeroSlider, initMobileNav].forEach(
+  [initBioOverlay, initScrollProgress, initHeroSlider, initMobileNav, initPressCarousel].forEach(
     (init) => {
       try {
         init();
@@ -259,7 +259,168 @@ function initHeroSlider() {
   }
 }
 
+// -----------------------------------------------------
+// Press carousel
+// -----------------------------------------------------
+
+function initPressCarousel() {
+  const carousels = qsa("[data-press-carousel]");
+  if (carousels.length === 0) return;
+
+  carousels.forEach((carousel) => {
+    const viewport = qs("[data-press-carousel-viewport]", carousel);
+    const track = qs("[data-press-carousel-track]", carousel);
+    const prevButton = qs("[data-press-carousel-prev]", carousel);
+    const nextButton = qs("[data-press-carousel-next]", carousel);
+    const dotsWrap = qs("[data-press-carousel-dots]", carousel);
+    const controls = qs("[data-press-carousel-controls]", carousel);
+
+    if (!viewport || !track || !prevButton || !nextButton || !dotsWrap) return;
+
+    const slides = qsa(".press-carousel__slide", track);
+    if (slides.length === 0) return;
+
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    );
+
+    let pageCount = 1;
+    let activePage = 0;
+    let scrollFrame = null;
+    let resizeTimer = null;
+
+    function clampPage(page) {
+      return Math.max(0, Math.min(page, pageCount - 1));
+    }
+
+    function getSlidesPerView() {
+      const firstSlide = slides[0];
+      const slideWidth = firstSlide.getBoundingClientRect().width;
+      const viewportWidth = viewport.getBoundingClientRect().width;
+
+      if (!slideWidth || !viewportWidth) return 1;
+
+      return Math.max(1, Math.round(viewportWidth / slideWidth));
+    }
+
+    function getMaxScroll() {
+      return Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+    }
+
+    function calculatePageCount() {
+      pageCount = Math.max(1, Math.ceil(slides.length / getSlidesPerView()));
+      activePage = clampPage(activePage);
+    }
+
+    function updateControls() {
+      prevButton.disabled = activePage <= 0;
+      nextButton.disabled = activePage >= pageCount - 1;
+
+      qsa(".press-carousel__dot", dotsWrap).forEach((dot, index) => {
+        const isActive = index === activePage;
+        dot.classList.toggle("is-active", isActive);
+        dot.setAttribute("aria-current", isActive ? "true" : "false");
+      });
+
+      if (controls) {
+        controls.hidden = pageCount <= 1;
+      }
+    }
+
+    function renderDots() {
+      dotsWrap.innerHTML = "";
+
+      for (let index = 0; index < pageCount; index += 1) {
+        const dot = document.createElement("button");
+        dot.type = "button";
+        dot.className = "press-carousel__dot";
+        dot.setAttribute("aria-label", `Pressestimmen Seite ${index + 1}`);
+
+        dot.addEventListener("click", () => {
+          goToPage(index);
+        });
+
+        dotsWrap.appendChild(dot);
+      }
+    }
+
+    function goToPage(page) {
+      activePage = clampPage(page);
+
+      const maxScroll = getMaxScroll();
+      const targetLeft =
+        pageCount > 1 ? (maxScroll / (pageCount - 1)) * activePage : 0;
+
+      viewport.scrollTo({
+        left: targetLeft,
+        behavior: prefersReducedMotion.matches ? "auto" : "smooth",
+      });
+
+      updateControls();
+    }
+
+    function syncActivePageFromScroll() {
+      const maxScroll = getMaxScroll();
+      const nextPage =
+        maxScroll > 0
+          ? Math.round((viewport.scrollLeft / maxScroll) * (pageCount - 1))
+          : 0;
+
+      activePage = clampPage(nextPage);
+      updateControls();
+    }
+
+    function refreshCarousel() {
+      calculatePageCount();
+      renderDots();
+      goToPage(activePage);
+    }
+
+    prevButton.addEventListener("click", () => {
+      goToPage(activePage - 1);
+    });
+
+    nextButton.addEventListener("click", () => {
+      goToPage(activePage + 1);
+    });
+
+    viewport.addEventListener(
+      "scroll",
+      () => {
+        if (scrollFrame) return;
+
+        scrollFrame = window.requestAnimationFrame(() => {
+          syncActivePageFromScroll();
+          scrollFrame = null;
+        });
+      },
+      { passive: true },
+    );
+
+    viewport.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        goToPage(activePage - 1);
+      }
+
+      if (event.key === "ArrowRight") {
+        event.preventDefault();
+        goToPage(activePage + 1);
+      }
+    });
+
+    window.addEventListener("resize", () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(refreshCarousel, 120);
+    });
+
+    refreshCarousel();
+  });
+}
+
+// -----------------------------------------------------
 // Scroll to the top button
+// -----------------------------------------------------
 
 const scrollTopBtn = document.getElementById("scrollTopBtn");
 

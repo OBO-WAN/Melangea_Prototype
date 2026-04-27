@@ -36,24 +36,24 @@ function initAudioPlaylist() {
 
   const tracks = [
     {
-      title: "Jeu des Nuages",
-      subtitle: "Live Session",
-      duration: "3:42",
-      src: "assets/MP3/02-Jeu-des-Nuages.mp3",
+      title: "Ostinato",
+      subtitle: "Studio Version",
+      duration: "1:52",
+      src: "assets/MP3/Ostinato_Studio_1.mp3",
       seed: 1.15,
     },
     {
-      title: "Valse des Oiseaux",
-      subtitle: "Studio Cut",
-      duration: "4:10",
-      src: "assets/MP3/03-Valse-des-Oiseaux.mp3",
+      title: "Eurology",
+      subtitle: "Live",
+      duration: "3:21",
+      src: "assets/MP3/Eurology_Live_2.mp3",
       seed: 2.4,
     },
     {
-      title: "Cogene",
-      subtitle: "Acoustic",
-      duration: "3:15",
-      src: "assets/MP3/09-Cogene.mp3",
+      title: "Higher Sky",
+      subtitle: "Live",
+      duration: "3:47",
+      src: "assets/MP3/higherSky_Live_3.mp3",
       seed: 3.1,
     },
   ];
@@ -123,7 +123,7 @@ function initAudioPlaylist() {
     wavePeaks.innerHTML = peaks
       .map(
         (peak) =>
-          `<span class="wave-player__peak" style="--peak-height:${peak}"></span>`
+          `<span class="wave-player__peak" style="--peak-height:${peak}"></span>`,
       )
       .join("");
 
@@ -131,7 +131,9 @@ function initAudioPlaylist() {
   }
 
   function updateWaveProgress() {
-    const duration = Number.isFinite(waveAudio.duration) ? waveAudio.duration : 0;
+    const duration = Number.isFinite(waveAudio.duration)
+      ? waveAudio.duration
+      : 0;
     const current = Number.isFinite(waveAudio.currentTime)
       ? waveAudio.currentTime
       : 0;
@@ -144,7 +146,7 @@ function initAudioPlaylist() {
       peak.classList.toggle("is-played", index < playedCount);
       peak.classList.toggle(
         "is-current",
-        index === playedCount && progress > 0 && progress < 1
+        index === playedCount && progress > 0 && progress < 1,
       );
     });
 
@@ -289,7 +291,9 @@ function initAudioPlaylist() {
   waveSeek.addEventListener("input", () => {
     isScrubbing = true;
 
-    const duration = Number.isFinite(waveAudio.duration) ? waveAudio.duration : 0;
+    const duration = Number.isFinite(waveAudio.duration)
+      ? waveAudio.duration
+      : 0;
     const nextTime = (Number(waveSeek.value) / 100) * duration;
 
     if (duration > 0 && Number.isFinite(nextTime)) {

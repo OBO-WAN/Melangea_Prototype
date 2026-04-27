@@ -337,3 +337,195 @@
   padding-top: 0.9rem;
   border-top: 1px solid rgba(244, 231, 186, 0.14);
 }
+
+/* =========================================
+   Press carousel
+   Add more cards by adding another
+   .press-carousel__slide inside
+   .press-carousel__track
+========================================= */
+
+.press-carousel {
+  position: relative;
+  width: 100%;
+}
+
+.press-carousel__viewport {
+  position: relative;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+  border-radius: calc(var(--radius) + 6px);
+}
+
+.press-carousel__viewport::-webkit-scrollbar {
+  display: none;
+}
+
+.press-carousel__viewport:focus-visible {
+  outline: 2px solid rgba(46, 229, 157, 0.75);
+  outline-offset: 6px;
+}
+
+.press-carousel__track {
+  display: flex;
+  grid-template-columns: none;
+  gap: 1.35rem;
+  align-items: stretch;
+  margin: 0;
+  padding: 0.15rem 0.1rem 0.35rem;
+}
+
+.press-carousel__slide {
+  flex: 0 0 calc((100% - 2.7rem) / 3);
+  min-width: 0;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.press-carousel .press-text {
+  max-width: none;
+}
+
+.press-carousel .press-quote {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background:
+    radial-gradient(420px 220px at 16% 0%, rgba(244, 231, 186, 0.08), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018));
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
+}
+
+.press-carousel .press-quote::before {
+  content: "“";
+  position: absolute;
+  top: -1.35rem;
+  right: 1.15rem;
+  z-index: -1;
+  color: rgba(244, 231, 186, 0.085);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 8rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.press-carousel__controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 1.3rem;
+}
+
+.press-carousel__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.045);
+  color: var(--text);
+  font-size: 1.7rem;
+  line-height: 1;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease,
+    opacity 0.18s ease;
+}
+
+.press-carousel__button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  border-color: rgba(46, 229, 157, 0.42);
+  background: rgba(255, 255, 255, 0.075);
+  color: var(--accent2);
+}
+
+.press-carousel__button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.press-carousel__button:focus-visible,
+.press-carousel__dot:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 3px;
+}
+
+.press-carousel__dots {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-width: 3.6rem;
+}
+
+.press-carousel__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition:
+    width 0.2s ease,
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.press-carousel__dot:hover {
+  transform: scale(1.15);
+  background: rgba(255, 255, 255, 0.42);
+}
+
+.press-carousel__dot.is-active {
+  width: 24px;
+  background: linear-gradient(135deg, #f4e7ba, var(--accent2));
+}
+
+.press-carousel__controls[hidden] {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .press-carousel__track {
+    gap: 1.2rem;
+  }
+
+  .press-carousel__slide {
+    flex-basis: calc((100% - 1.2rem) / 2);
+  }
+}
+
+@media (max-width: 680px) {
+  .press-carousel__track {
+    gap: 1rem;
+  }
+
+  .press-carousel__slide {
+    flex-basis: 100%;
+  }
+
+  .press-carousel__controls {
+    margin-top: 1rem;
+  }
+
+  .press-carousel__button {
+    width: 38px;
+    height: 38px;
+    font-size: 1.5rem;
+  }
+}

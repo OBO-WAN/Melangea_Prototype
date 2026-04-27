@@ -97,6 +97,13 @@
   font-size: clamp(1.2rem, 1.35vw, 1.3rem);
 }
 
+/* oVERRIDE */
+.press-carousel .audience-quote .press-text {
+  font-size: clamp(1.2rem, 1.6vw, 1.55rem);
+  font-family: "Raleway", sans-serif;
+  line-height: 1.48;
+}
+
 .press-text--secondary {
   opacity: 0.92;
 }

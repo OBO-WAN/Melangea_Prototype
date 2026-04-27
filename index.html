@@ -347,79 +347,87 @@
     <section id="presse" class="section press-section">
       <div class="container">
         <div class="section-head press-head">
-          <h2>Presse</h2>
+          <h2>Presse und Publikumsstimmen</h2>
         </div>
 
         <div class="press-group">
-          <h3 class="press-group-title">Pressestimmen</h3>
+          <!-- <h3 class="press-group-title">Pressestimmen & Publikum</h3> -->
 
-          <div class="press-grid">
-            <article class="press-quote press-quote--featured">
-              <p class="press-text">
-                „Sie bewiesen, dass ihre künstlerischen Qualitäten keine
-                einfache Mélange, sondern genial ineinander verwoben sind.“
-              </p>
-              <footer class="press-source">
-                <span class="press-publication">Rheinpfalz</span>
-                <span class="press-author">Doris Aust</span>
-              </footer>
-            </article>
+          <div class="press-carousel" data-press-carousel aria-label="Pressestimmen Karussell">
+            <div class="press-carousel__viewport" data-press-carousel-viewport tabindex="0">
+              <div class="press-grid press-carousel__track" data-press-carousel-track>
+                <article class="press-quote press-quote--featured press-carousel__slide" aria-roledescription="Slide">
+                  <p class="press-text">
+                    „Sie bewiesen, dass ihre künstlerischen Qualitäten keine
+                    einfache Mélange, sondern genial ineinander verwoben sind.“
+                  </p>
+                  <footer class="press-source">
+                    <span class="press-publication">Rheinpfalz</span>
+                    <span class="press-author">Doris Aust</span>
+                  </footer>
+                </article>
 
-            <article class="press-quote">
-              <p class="press-text">
-                „Die Musiker spielen sensibel und mit wechselnden Rhythmen,
-                die das Publikum in ihren Bann ziehen, die Besetzung ist
-                einzigartig und die Musik ist eine großartige Mischung aus
-                Tradition und Innovation.“
-              </p>
-              <footer class="press-source">
-                <span class="press-publication">Odenwälder Zeitung</span>
-                <span class="press-author">Fritz Kopetzky</span>
-              </footer>
-            </article>
+                <article class="press-quote press-carousel__slide" aria-roledescription="Slide">
+                  <p class="press-text">
+                    „Die Musiker spielen sensibel und mit wechselnden Rhythmen,
+                    die das Publikum in ihren Bann ziehen, die Besetzung ist
+                    einzigartig und die Musik ist eine großartige Mischung aus
+                    Tradition und Innovation.“
+                  </p>
+                  <footer class="press-source">
+                    <span class="press-publication">Odenwälder Zeitung</span>
+                    <span class="press-author">Fritz Kopetzky</span>
+                  </footer>
+                </article>
 
-            <article class="press-quote">
-              <div class="press-copy">
-                <p class="press-text">
-                  „So mancher wird sich in den Klang der Oboe verliebt haben.“
-                </p>
-                <p class="press-text press-text--secondary">
-                  „Die Musiker beeindruckten durch ihre Vielseitigkeit und
-                  ihre Fähigkeit, verschiedene Welten zu vereinen.“
-                </p>
+                <article class="press-quote press-carousel__slide" aria-roledescription="Slide">
+                  <div class="press-copy">
+                    <p class="press-text">
+                      „So mancher wird sich in den Klang der Oboe verliebt haben.“
+                    </p>
+                    <p class="press-text press-text--secondary">
+                      „Die Musiker beeindruckten durch ihre Vielseitigkeit und
+                      ihre Fähigkeit, verschiedene Welten zu vereinen.“
+                    </p>
+                  </div>
+                  <footer class="press-source">
+                    <span class="press-publication">Rheinpfalz</span>
+                    <span class="press-author">Matthias Haag</span>
+                  </footer>
+                </article>
+
+                <article class="press-quote audience-quote press-carousel__slide" aria-roledescription="Slide">
+                  <p class="press-text">
+                    „Ihr Konzert am Sonntag Abend war eine Entdeckung und ein
+                    Genuss für mich. Ihre Musikauswahl und Ihre einfühlsamen
+                    Arrangements haben mich ergriffen. Ich wüsste nicht, dass es
+                    in der Szene etwas Vergleichbares gäbe. Danke!“
+                  </p>
+                  <footer class="press-source">
+                    <span class="press-author">Werner F.</span>
+                  </footer>
+                </article>
+
+                <article class="press-quote audience-quote press-carousel__slide" aria-roledescription="Slide">
+                  <p class="press-text">
+                    „Eure Musik ist wie eine Massage, die niemals enden soll...“
+                  </p>
+                  <footer class="press-source">
+                    <span class="press-author">Nadine R.</span>
+                  </footer>
+                </article>
               </div>
-              <footer class="press-source">
-                <span class="press-publication">Rheinpfalz</span>
-                <span class="press-author">Matthias Haag</span>
-              </footer>
-            </article>
-          </div>
-        </div>
+            </div>
 
-        <div class="press-group">
-          <h3 class="press-group-title">Stimmen aus dem Publikum</h3>
-
-          <div class="audience-grid">
-            <article class="press-quote audience-quote">
-              <p class="press-text">
-                „Ihr Konzert am Sonntag Abend war eine Entdeckung und ein
-                Genuss für mich. Ihre Musikauswahl und Ihre einfühlsamen
-                Arrangements haben mich ergriffen. Ich wüsste nicht, dass es
-                in der Szene etwas Vergleichbares gäbe. Danke!“
-              </p>
-              <footer class="press-source">
-                <span class="press-author">Werner F.</span>
-              </footer>
-            </article>
-
-            <article class="press-quote audience-quote">
-              <p class="press-text">
-                „Eure Musik ist wie eine Massage, die niemals enden soll...“
-              </p>
-              <footer class="press-source">
-                <span class="press-author">Nadine R.</span>
-              </footer>
-            </article>
+            <div class="press-carousel__controls" data-press-carousel-controls aria-label="Pressestimmen Navigation">
+              <button class="press-carousel__button" type="button" data-press-carousel-prev aria-label="Vorherige Pressestimme">
+                ‹
+              </button>
+              <div class="press-carousel__dots" data-press-carousel-dots aria-label="Karussell-Seiten"></div>
+              <button class="press-carousel__button" type="button" data-press-carousel-next aria-label="Nächste Pressestimme">
+                ›
+              </button>
+            </div>
           </div>
         </div>
       </div>

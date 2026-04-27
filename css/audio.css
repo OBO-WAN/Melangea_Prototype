@@ -1,33 +1,86 @@
 .wave-player {
-    margin-bottom: 1.25rem;
-    padding: 1rem;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    background: rgba(255, 255, 255, 0.03);
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.18);
+    position: relative;
+    isolation: isolate;
+    margin-bottom: 1rem;
+    padding: 0.8rem;
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 18px;
+    background:
+        radial-gradient(circle at 18% 0%, rgba(124, 92, 255, 0.14), transparent 34%),
+        radial-gradient(circle at 86% 12%, rgba(46, 229, 157, 0.10), transparent 30%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.028)),
+        rgba(255, 255, 255, 0.025);
+    box-shadow:
+        0 16px 38px rgba(0, 0, 0, 0.22),
+        inset 0 1px 0 rgba(255, 255, 255, 0.10),
+        0 0 0 1px rgba(124, 92, 255, 0.055);
     overflow: hidden;
 }
 
+.wave-player::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255, 255, 255, 0.16),
+            transparent 28%,
+            transparent 72%,
+            rgba(46, 229, 157, 0.10)
+        );
+    opacity: 0.5;
+    z-index: 0;
+}
+
+.wave-player::after {
+    content: "";
+    position: absolute;
+    inset: 1px;
+    border-radius: calc(18px - 1px);
+    pointer-events: none;
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.045);
+    z-index: 0;
+}
+
+.wave-player > * {
+    position: relative;
+    z-index: 1;
+}
+
+@supports ((backdrop-filter: blur(14px)) or (-webkit-backdrop-filter: blur(14px))) {
+    .wave-player,
+    .wave-player__visual,
+    .wave-player__btn {
+        -webkit-backdrop-filter: blur(14px);
+        backdrop-filter: blur(14px);
+    }
+}
+
 .wave-player__meta {
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.6rem;
 }
 
 .wave-player__title {
     margin: 0;
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     font-weight: 800;
-    line-height: 1.2;
+    line-height: 1.15;
+    letter-spacing: 0.012em;
+    text-wrap: balance;
 }
 
 .wave-player__subtitle {
-    margin: 0.3rem 0 0;
+    margin: 0.2rem 0 0;
 }
 
 .wave-player__timeline {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr) auto;
     align-items: center;
-    gap: 0.75rem;
+    gap: 0.55rem;
     width: 100%;
     min-width: 0;
 }
@@ -36,7 +89,7 @@
     position: relative;
     min-width: 0;
     width: 100%;
-    height: 64px;
+    height: 52px;
     overflow: hidden;
 }
 
@@ -48,7 +101,7 @@
     margin: 0;
     opacity: 0;
     cursor: pointer;
-    z-index: 2;
+    z-index: 3;
 }
 
 .wave-player__visual {
@@ -57,104 +110,191 @@
     display: flex;
     align-items: center;
     overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    border-radius: 14px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018)),
+        rgba(0, 0, 0, 0.08);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        inset 0 -10px 24px rgba(0, 0, 0, 0.09);
+}
+
+.wave-player__visual::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.045), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.035));
 }
 
 .wave-player__peaks {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: minmax(4px, 1fr);
-    gap: 3px;
+    grid-auto-columns: minmax(3px, 1fr);
+    gap: 2px;
     align-items: center;
     width: 100%;
     max-width: 100%;
     height: 100%;
+    padding: 0 0.45rem;
 }
 
 .wave-player__peak {
     height: calc(var(--peak-height, 0.5) * 100%);
-    min-height: 8px;
+    min-height: 6px;
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.16);
+    background: rgba(255, 255, 255, 0.18);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10);
     transition:
         background 0.16s ease,
+        box-shadow 0.16s ease,
         transform 0.16s ease,
         opacity 0.16s ease;
 }
 
 .wave-player__peak.is-played {
-    background: var(--accent2);
+    background: linear-gradient(180deg, rgba(46, 229, 157, 0.95), rgba(46, 229, 157, 0.58));
+    box-shadow: 0 0 12px rgba(46, 229, 157, 0.12);
 }
 
 .wave-player__peak.is-current {
-    background: #fff;
-    transform: scaleY(1.06);
+    background: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 0 14px rgba(255, 255, 255, 0.20);
+    transform: scaleY(1.08);
 }
 
 .wave-player__controls {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.85rem;
+    gap: 0.65rem;
+    margin-top: 0.65rem;
 }
 
 .wave-player__btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    min-width: 46px;
-    min-height: 46px;
-    border: 1px solid var(--border);
+    min-width: 40px;
+    min-height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.13);
     border-radius: 999px;
-    background: rgba(255, 255, 255, 0.03);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025)),
+        rgba(255, 255, 255, 0.035);
     color: var(--text);
     cursor: pointer;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.08),
+        0 8px 18px rgba(0, 0, 0, 0.12);
     transition:
         transform 0.18s ease,
         box-shadow 0.18s ease,
-        border-color 0.18s ease;
+        border-color 0.18s ease,
+        background 0.18s ease;
 }
 
 .wave-player__btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
-    border-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.24);
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.105), rgba(255, 255, 255, 0.035)),
+        rgba(255, 255, 255, 0.045);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.12),
+        0 12px 24px rgba(0, 0, 0, 0.18);
+}
+
+.wave-player__btn:focus-visible,
+.wave-player__seek:focus-visible + .wave-player__visual {
+    outline: 2px solid rgba(46, 229, 157, 0.42);
+    outline-offset: 3px;
 }
 
 .wave-player__btn--primary {
-    min-width: 58px;
-    min-height: 58px;
-    font-size: 1.1rem;
-    background: rgba(124, 92, 255, 0.18);
+    min-width: 50px;
+    min-height: 50px;
+    font-size: 1rem;
+    border-color: rgba(124, 92, 255, 0.34);
+    background:
+        radial-gradient(circle at 35% 20%, rgba(255, 255, 255, 0.18), transparent 26%),
+        linear-gradient(135deg, rgba(124, 92, 255, 0.46), rgba(124, 92, 255, 0.18));
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.15),
+        0 12px 26px rgba(124, 92, 255, 0.18);
+}
+
+.wave-player__btn--primary:hover {
+    border-color: rgba(124, 92, 255, 0.48);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.18),
+        0 14px 30px rgba(124, 92, 255, 0.24);
 }
 
 .track.is-active {
-    border-color: rgba(124, 92, 255, 0.48);
-    background: rgba(124, 92, 255, 0.12);
+    border-color: rgba(124, 92, 255, 0.42);
+    background:
+        linear-gradient(135deg, rgba(124, 92, 255, 0.14), rgba(46, 229, 157, 0.045)),
+        rgba(255, 255, 255, 0.025);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.055),
+        0 8px 20px rgba(0, 0, 0, 0.10);
 }
 
 .track button[aria-pressed="true"] {
     color: var(--accent2);
-    border-color: rgba(46, 229, 157, 0.35);
+    border-color: rgba(46, 229, 157, 0.40);
+    box-shadow: 0 0 0 1px rgba(46, 229, 157, 0.07);
 }
 
 @media (max-width: 900px) {
+    .wave-player {
+        padding: 0.7rem;
+    }
+
     .wave-player__timeline {
-        grid-template-columns: 40px minmax(0, 1fr) 40px;
-        gap: 0.55rem;
+        grid-template-columns: 36px minmax(0, 1fr) 36px;
+        gap: 0.45rem;
+    }
+
+    .wave-player__wave-wrap {
+        height: 48px;
     }
 
     .wave-player__peaks {
         gap: 2px;
+        padding: 0 0.4rem;
+    }
+
+    .wave-player__btn {
+        min-width: 38px;
+        min-height: 38px;
+    }
+
+    .wave-player__btn--primary {
+        min-width: 46px;
+        min-height: 46px;
     }
 }
 
 @media (max-width: 860px) {
+    .wave-player {
+        padding: 0.65rem;
+    }
+
     .wave-player__timeline {
         grid-template-columns: 1fr;
-        gap: 0.6rem;
+        gap: 0.45rem;
     }
 
     .wave-player__wave-wrap {
         order: 2;
+        height: 44px;
+    }
+
+    .wave-player__controls {
+        gap: 0.5rem;
+        margin-top: 0.55rem;
     }
 }

@@ -183,7 +183,7 @@ body.page-ueber-uns .site-footer {
 }
 
 .about-image--duo .about-image__placeholder {
-  min-height: 310px;
+  min-height: 325px;
 }
 
 .about-image--quartett .about-image__placeholder {
@@ -240,7 +240,7 @@ body.page-ueber-uns .site-footer {
 .about-history-intro h2 {
   grid-column: 1 / -1;
   margin: clamp(1.2rem, 3vw, 2.6rem) 0 0;
-  font-size: clamp(4rem, 9vw, 8rem);
+  font-size: clamp(4rem, 6vw, 8rem);
   line-height: 0.92;
 }
 
@@ -342,7 +342,7 @@ body.page-ueber-uns .site-footer {
   }
 
   .about-history-intro h2 {
-    font-size: clamp(3.4rem, 17vw, 5.4rem);
+    font-size: clamp(3.4rem, 17vw, 3.4rem);
   }
 
   .about-image__placeholder,

@@ -1,0 +1,28 @@
+/* =========================================
+   Über uns page shell
+   Keeps the shared footer at the bottom on
+   short subpages without affecting index.html
+========================================= */
+
+body.page-ueber-uns {
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+body.page-ueber-uns #main {
+  flex: 1 0 auto;
+  width: 100%;
+}
+
+body.page-ueber-uns .site-footer {
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+/* Temporary spacing while the page content is still light.
+   Future content CSS can replace or extend this safely. */
+body.page-ueber-uns #main > .section:first-child {
+  margin-bottom: clamp(2rem, 6vw, 5rem);
+}

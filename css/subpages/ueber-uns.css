@@ -1,7 +1,14 @@
+@font-face {
+  font-family: "Andantino";
+  src: url("../../fonts/andantino-script-regular_2k5P1/Andantino script Regular/Andantino_script_Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 /* =========================================
-   Über uns page shell
-   Keeps the shared footer at the bottom on
-   short subpages without affecting index.html
+   Über uns page shell + content layout
+   Place this file at: css/subpages/ueber-uns.css
 ========================================= */
 
 body.page-ueber-uns {
@@ -21,8 +28,337 @@ body.page-ueber-uns .site-footer {
   flex-shrink: 0;
 }
 
-/* Temporary spacing while the page content is still light.
-   Future content CSS can replace or extend this safely. */
-body.page-ueber-uns #main > .section:first-child {
-  margin-bottom: clamp(2rem, 6vw, 5rem);
+.about-page-main {
+  overflow: hidden;
+}
+
+.about-hero {
+  padding: clamp(3rem, 7vw, 6rem) 0 clamp(1.5rem, 4vw, 3rem);
+}
+
+.about-hero__inner {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.about-kicker {
+  margin: 0 0 0.6rem;
+  color: #f4e7ba;
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+.about-page-title,
+.about-copy h2,
+.about-vision h2,
+.about-history-intro h2 {
+  font-family: "Andantino", "Brush Script MT", "Segoe Script", cursive;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  color: #fff;
+}
+
+.about-page-title {
+  margin: 0;
+  font-size: clamp(4rem, 9vw, 8rem);
+  line-height: 0.9;
+  text-shadow: 0 16px 38px rgba(0, 0, 0, 0.22);
+}
+
+.about-page-lead {
+  width: min(760px, 100%);
+  margin: 1.3rem auto 0;
+  color: #f3f2ff;
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(1.12rem, 1.9vw, 1.55rem);
+  line-height: 1.65;
+  text-wrap: balance;
+}
+
+.about-story {
+  padding: clamp(1rem, 3vw, 2rem) 0 clamp(4rem, 9vw, 7rem);
+}
+
+.about-story__inner {
+  display: grid;
+  gap: clamp(3rem, 7vw, 6rem);
+}
+
+.about-grid {
+  display: grid;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+.about-grid--intro {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: start;
+}
+
+.about-grid--intro .about-copy:nth-child(3) {
+  align-self: end;
+}
+
+.about-grid--music,
+.about-grid--work {
+  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+}
+
+.about-grid--work {
+  align-items: end;
+}
+
+.about-copy {
+  min-width: 0;
+}
+
+.about-copy h2,
+.about-vision h2 {
+  margin: 0 0 0.45rem;
+  font-size: clamp(2.25rem, 4.5vw, 4.6rem);
+  line-height: 0.98;
+}
+
+.about-copy p,
+.about-vision p,
+.about-history p {
+  margin: 0;
+  color: #fff;
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(1.05rem, 2.8vw, 1.45rem);
+  line-height: 1.48;
+  letter-spacing: 0.01em;
+}
+
+.about-copy p + p,
+.about-history p + p {
+  margin-top: 1rem;
+}
+
+.about-copy em,
+.about-history em {
+  font-style: italic;
+}
+
+.about-image {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: clamp(26px, 4vw, 48px);
+  background:
+    radial-gradient(650px 260px at 10% 0%, rgba(244, 231, 186, 0.08), transparent 65%),
+    rgba(255, 255, 255, 0.045);
+  box-shadow:
+    0 18px 46px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.about-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1);
+}
+
+.about-image__placeholder {
+  display: grid;
+  min-height: 280px;
+  place-items: center;
+  padding: 2rem;
+  color: rgba(255, 255, 255, 0.66);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+  border: 1px dashed rgba(255, 255, 255, 0.22);
+  border-radius: inherit;
+}
+
+.about-image--duo {
+  align-self: end;
+}
+
+.about-image--duo .about-image__placeholder {
+  min-height: 310px;
+}
+
+.about-image--quartett .about-image__placeholder {
+  min-height: 390px;
+}
+
+.about-image--accordion {
+  width: min(420px, 100%);
+  justify-self: center;
+}
+
+.about-image--accordion .about-image__placeholder {
+  min-height: 420px;
+}
+
+.about-vision {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.about-vision p {
+  max-width: 1160px;
+}
+
+.about-quote {
+  margin: clamp(2rem, 4vw, 3.2rem) auto 0;
+  padding: 0;
+  text-align: center;
+}
+
+.about-quote p {
+  margin: 0 0 0.25rem;
+  color: #fff;
+  font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+}
+
+.about-quote strong {
+  display: block;
+  color: #fff;
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(1.65rem, 3.2vw, 2.8rem);
+  font-style: italic;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.about-history-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.05fr);
+  align-items: end;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+
+.about-history-intro h2 {
+  grid-column: 1 / -1;
+  margin: clamp(1.2rem, 3vw, 2.6rem) 0 0;
+  font-size: clamp(4rem, 9vw, 8rem);
+  line-height: 0.92;
+}
+
+.about-image--oboe .about-image__placeholder {
+  min-height: 260px;
+}
+
+.about-image--van .about-image__placeholder {
+  min-height: 420px;
+}
+
+.about-history {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.6rem, 4vw, 3rem);
+  padding-top: clamp(0.5rem, 2vw, 1rem);
+}
+
+.about-history__chapter {
+  min-width: 0;
+  padding: clamp(1.15rem, 2.4vw, 2rem);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018));
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.14);
+}
+
+.about-history__chapter--wide {
+  grid-column: 1 / -1;
+}
+
+.about-history h3 {
+  margin: 0 0 0.9rem;
+  color: #f4e7ba;
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(1.05rem, 1.9vw, 1.55rem);
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  line-height: 1.32;
+  text-transform: uppercase;
+}
+
+.about-history p {
+  font-size: clamp(1rem, 1.22vw, 1.18rem);
+  line-height: 1.72;
+}
+
+@media (max-width: 1080px) {
+  .about-grid--intro,
+  .about-grid--music,
+  .about-grid--work,
+  .about-history-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .about-grid--intro .about-copy:nth-child(3) {
+    align-self: auto;
+  }
+
+  .about-image,
+  .about-image--accordion {
+    width: 100%;
+  }
+
+  .about-grid--music .about-image,
+  .about-grid--work .about-image {
+    order: 2;
+  }
+
+  .about-history {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 680px) {
+  .about-hero {
+    padding-top: 2.5rem;
+  }
+
+  .about-kicker {
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+  }
+
+  .about-story__inner {
+    gap: 3.2rem;
+  }
+
+  .about-copy h2,
+  .about-vision h2 {
+    font-size: clamp(2.3rem, 13vw, 2.4rem);
+  }
+
+  .about-copy p,
+  .about-vision p {
+    font-size: 1.02rem;
+    line-height: 1.62;
+  }
+
+  .about-history-intro h2 {
+    font-size: clamp(3.4rem, 17vw, 5.4rem);
+  }
+
+  .about-image__placeholder,
+  .about-image--duo .about-image__placeholder,
+  .about-image--quartett .about-image__placeholder,
+  .about-image--accordion .about-image__placeholder,
+  .about-image--oboe .about-image__placeholder,
+  .about-image--van .about-image__placeholder {
+    min-height: 230px;
+  }
+
+  .about-history__chapter {
+    padding: 1rem;
+  }
+
+  .about-history h3 {
+    letter-spacing: 0.06em;
+  }
 }

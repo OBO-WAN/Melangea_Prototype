@@ -118,7 +118,7 @@ body.page-ueber-uns .site-footer {
 .about-copy h2,
 .about-vision h2 {
   margin: 0 0 1.45rem;
-  font-size: clamp(2.25rem, 4.0vw, 4.6rem);
+  font-size: clamp(2.25rem, 4.0vw, 3.6rem);
   line-height: 0.98;
 }
 

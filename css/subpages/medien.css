@@ -1,0 +1,54 @@
+.page-medien .media-main {
+  padding-bottom: 4rem;
+}
+
+.media-hero {
+  padding-top: 3rem;
+  padding-bottom: 1rem;
+}
+
+.media-hero__inner,
+.media-section__head {
+  max-width: 60rem;
+}
+
+.media-intro {
+  margin-top: 0.75rem;
+  max-width: 52ch;
+}
+
+.media-section {
+  padding-top: 1.5rem;
+}
+
+.media-video-grid,
+.media-gallery-grid {
+  gap: 1.25rem;
+}
+
+.media-gallery-card {
+  min-height: 180px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  border: 1px dashed rgba(255, 255, 255, 0.28);
+}
+
+.media-gallery-card p,
+.media-press-card p {
+  margin: 0;
+}
+
+.media-press-card {
+  padding: 1.5rem;
+}
+
+@media (max-width: 900px) {
+  .media-hero {
+    padding-top: 2.25rem;
+  }
+
+  .media-gallery-card {
+    min-height: 140px;
+  }
+}

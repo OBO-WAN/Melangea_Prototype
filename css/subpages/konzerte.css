@@ -1,0 +1,71 @@
+.page-konzerte .concerts-main {
+  padding-top: clamp(1.5rem, 2.5vw, 2.5rem);
+}
+
+.concerts-hero {
+  padding-bottom: 0;
+}
+
+.concerts-hero__inner {
+  max-width: 72ch;
+}
+
+.concerts-intro {
+  margin-top: 0.75rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.concerts-section {
+  padding-top: clamp(1.5rem, 2.2vw, 2.5rem);
+}
+
+.concerts-section__head {
+  margin-bottom: 1.25rem;
+}
+
+.concerts-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+}
+
+.concerts-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  height: 100%;
+}
+
+.concerts-card__date {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.concerts-card__title {
+  margin: 0;
+}
+
+.concerts-card__meta,
+.concerts-card__description {
+  margin: 0;
+}
+
+.concerts-card__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: auto;
+}
+
+.concerts-card--past {
+  border-left: 3px solid color-mix(in srgb, currentColor 25%, transparent);
+}
+
+@media (max-width: 640px) {
+  .concerts-card__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

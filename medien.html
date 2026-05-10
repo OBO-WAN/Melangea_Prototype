@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="css/mobile.css" />
   <link rel="stylesheet" href="css/overlay.css" />
   <link rel="stylesheet" href="css/newsletter.css" />
+  <link rel="stylesheet" href="vendor/aos/aos.css" />
   <link rel="stylesheet" href="css/subpages/medien.css" />
 </head>
 
@@ -58,7 +59,7 @@
 
   <main id="main" class="media-main">
     <section class="section media-hero" aria-labelledby="media-title">
-      <div class="container media-hero__inner">
+      <div class="container media-hero__inner" data-aos="fade-up">
         <h1 id="media-title">Medien</h1>
         <p class="media-intro muted">
           Hier finden Sie ausgewählte Videos, Hörbeispiele, erste Galeriebilder sowie Materialien für Presse und Veranstalter.
@@ -68,12 +69,12 @@
 
     <section class="section media-section" aria-labelledby="media-videos-title">
       <div class="container">
-        <div class="section-head media-section__head">
+        <div class="section-head media-section__head" data-aos="fade-up">
           <h2 id="media-videos-title">Video</h2>
         </div>
 
         <div class="grid three media-video-grid">
-          <article class="card video media-video-card">
+          <article class="card video media-video-card" data-aos="fade-up">
             <div class="video-embed">
               <iframe title="Video 1"
                 src="https://www.youtube-nocookie.com/embed/JDRfZDNSr8o?rel=0&modestbranding=1&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
@@ -81,7 +82,7 @@
             <p class="muted small">Mélange à Deux Show-Projekt-Live</p>
           </article>
 
-          <article class="card video media-video-card">
+          <article class="card video media-video-card" data-aos="fade-up">
             <div class="video-embed">
               <iframe title="Video 2"
                 src="https://www.youtube-nocookie.com/embed/FXFr5nbusVI?rel=0&modestbranding=1&playsinline=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture;" allowfullscreen></iframe>
@@ -94,7 +95,7 @@
 
     <section class="section media-section" aria-labelledby="media-audio-title">
       <div class="container">
-        <div class="section-head media-section__head">
+        <div class="section-head media-section__head" data-aos="fade-up">
           <h2 id="media-audio-title">Hören</h2>
         </div>
 
@@ -146,24 +147,24 @@
 
     <section class="section media-section" aria-labelledby="media-gallery-title">
       <div class="container">
-        <div class="section-head media-section__head">
+        <div class="section-head media-section__head" data-aos="fade-up">
           <h2 id="media-gallery-title">Fotos / Galerie</h2>
         </div>
 
         <div class="grid three media-gallery-grid" role="list" aria-label="Galerie Platzhalter">
-          <article class="card media-gallery-card" role="listitem"><p>[Galeriebild 1]</p></article>
-          <article class="card media-gallery-card" role="listitem"><p>[Galeriebild 2]</p></article>
-          <article class="card media-gallery-card" role="listitem"><p>[Galeriebild 3]</p></article>
+          <article class="card media-gallery-card" data-aos="zoom-in" role="listitem"><p>[Galeriebild 1]</p></article>
+          <article class="card media-gallery-card" data-aos="zoom-in" role="listitem"><p>[Galeriebild 2]</p></article>
+          <article class="card media-gallery-card" data-aos="zoom-in" role="listitem"><p>[Galeriebild 3]</p></article>
         </div>
       </div>
     </section>
 
     <section class="section media-section" aria-labelledby="media-press-title">
       <div class="container">
-        <div class="section-head media-section__head">
+        <div class="section-head media-section__head" data-aos="fade-up">
           <h2 id="media-press-title">Presse / Downloads</h2>
         </div>
-        <div class="card media-press-card">
+        <div class="card media-press-card" data-aos="fade-up">
           <p class="muted">[Hier können später Pressefotos, Logos, Tech-Rider und Pressetexte zum Download bereitgestellt werden.]</p>
         </div>
       </div>
@@ -312,6 +313,7 @@
   <script src="./JS/newsletter.js"></script>
   <script src="./JS/validation.js"></script>
   <script type="module" src="./JS/newsletter-submit.js"></script>
+  <script src="./vendor/aos/aos.js"></script>
   <script src="./JS/app.js"></script>
 </body>
 

@@ -1,13 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
-  [initBioOverlay, initScrollProgress, initHeroSlider, initMobileNav, initPressCarousel].forEach(
-    (init) => {
-      try {
-        init();
-      } catch (error) {
-        console.error(`Failed to initialize ${init.name}:`, error);
-      }
-    },
-  );
+  [
+    initAOS,
+    initBioOverlay,
+    initScrollProgress,
+    initHeroSlider,
+    initMobileNav,
+    initPressCarousel,
+  ].forEach((init) => {
+    try {
+      init();
+    } catch (error) {
+      console.error(`Failed to initialize ${init.name}:`, error);
+    }
+  });
 });
 
 // -----------------------------------------------------
@@ -20,6 +25,34 @@ function qs(selector, scope = document) {
 
 function qsa(selector, scope = document) {
   return Array.from(scope.querySelectorAll(selector));
+}
+
+// -----------------------------------------------------
+// Animate on scroll
+// -----------------------------------------------------
+
+function initAOS() {
+  if (typeof window.AOS === "undefined") return;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+  window.AOS.init({
+    duration: 700,
+    easing: "ease-out-cubic",
+    once: true,
+    offset: 80,
+    disable: () => reducedMotion.matches,
+  });
+
+  const refreshAOS = () => {
+    window.AOS.refreshHard();
+  };
+
+  if (typeof reducedMotion.addEventListener === "function") {
+    reducedMotion.addEventListener("change", refreshAOS);
+  } else if (typeof reducedMotion.addListener === "function") {
+    reducedMotion.addListener(refreshAOS);
+  }
 }
 
 // -----------------------------------------------------

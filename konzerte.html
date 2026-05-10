@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="css/mobile.css" />
   <link rel="stylesheet" href="css/overlay.css" />
   <link rel="stylesheet" href="css/newsletter.css" />
+  <link rel="stylesheet" href="vendor/aos/aos.css" />
   <link rel="stylesheet" href="css/subpages/konzerte.css" />
 </head>
 
@@ -58,7 +59,7 @@
 
   <main id="main" class="concerts-main">
     <section class="section concerts-hero" aria-labelledby="concerts-title">
-      <div class="container concerts-hero__inner">
+      <div class="container concerts-hero__inner" data-aos="fade-up">
         <h1 id="concerts-title">Konzerte</h1>
         <p class="concerts-intro muted">
           Hier finden Sie alle anstehenden Termine von Mélange à Deux &amp; Amis sowie ausgewählte
@@ -69,12 +70,12 @@
 
     <section class="section concerts-section" aria-labelledby="concerts-upcoming-title">
       <div class="container">
-        <div class="section-head concerts-section__head">
+        <div class="section-head concerts-section__head" data-aos="fade-up">
           <h2 id="concerts-upcoming-title">Kommende Konzerte</h2>
         </div>
 
         <div class="concerts-grid" role="list" aria-label="Bevorstehende Konzerttermine">
-          <article class="card concerts-card" role="listitem">
+          <article class="card concerts-card" data-aos="fade-up" role="listitem">
             <p class="concerts-card__date">TT.MM.JJJJ · 19:30 Uhr</p>
             <h3 class="concerts-card__title">[Titel des Konzerts]</h3>
             <p class="concerts-card__meta">[Spielort, Stadt]</p>
@@ -85,7 +86,7 @@
             </div>
           </article>
 
-          <article class="card concerts-card" role="listitem">
+          <article class="card concerts-card" data-aos="fade-up" role="listitem">
             <p class="concerts-card__date">TT.MM.JJJJ · 20:00 Uhr</p>
             <h3 class="concerts-card__title">[Titel des Konzerts]</h3>
             <p class="concerts-card__meta">[Spielort, Stadt]</p>
@@ -101,19 +102,19 @@
 
     <section class="section concerts-section concerts-section--archive" aria-labelledby="concerts-archive-title">
       <div class="container">
-        <div class="section-head concerts-section__head">
+        <div class="section-head concerts-section__head" data-aos="fade-up">
           <h2 id="concerts-archive-title">Archiv / Vergangene Konzerte</h2>
         </div>
 
         <div class="concerts-grid" role="list" aria-label="Vergangene Konzerte">
-          <article class="card concerts-card concerts-card--past" role="listitem">
+          <article class="card concerts-card concerts-card--past" data-aos="fade-up" role="listitem">
             <p class="concerts-card__date">TT.MM.JJJJ · [Uhrzeit]</p>
             <h3 class="concerts-card__title">[Ehemaliger Konzerttitel]</h3>
             <p class="concerts-card__meta">[Veranstaltungsort, Stadt]</p>
             <p class="concerts-card__description">[Optional: Rückblick, Festivalname oder Besonderheit.]</p>
           </article>
 
-          <article class="card concerts-card concerts-card--past" role="listitem">
+          <article class="card concerts-card concerts-card--past" data-aos="fade-up" role="listitem">
             <p class="concerts-card__date">TT.MM.JJJJ · [Uhrzeit]</p>
             <h3 class="concerts-card__title">[Ehemaliger Konzerttitel]</h3>
             <p class="concerts-card__meta">[Veranstaltungsort, Stadt]</p>
@@ -266,6 +267,7 @@
   <script src="./JS/newsletter.js"></script>
   <script src="./JS/validation.js"></script>
   <script type="module" src="./JS/newsletter-submit.js"></script>
+  <script src="./vendor/aos/aos.js"></script>
   <script src="./JS/app.js"></script>
 </body>
 

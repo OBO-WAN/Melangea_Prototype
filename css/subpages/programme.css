@@ -276,3 +276,69 @@
   width: min(960px, 100%);
   margin: 0 auto;
 }
+
+/* Compact hero image, but with more elegant spacing below */
+.programmes-page .programmes-hero.section {
+  margin-bottom: 0;
+  padding-top: clamp(0.75rem, 2vw, 1.25rem);
+  padding-bottom: clamp(0.75rem, 1.8vw, 1.25rem);
+  min-height: auto;
+}
+
+.programmes-page .programmes-hero__image {
+  width: min(1040px, 100%);
+  height: clamp(280px, 38vw, 430px);
+  max-height: 430px;
+  margin: 0 auto;
+}
+
+.programmes-page .programmes-hero__image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.programmes-page .programmes-divider {
+  margin: 0.85rem auto 1.35rem;
+}
+
+.programmes-page .programmes-repertoire.section {
+  margin-top: 0;
+  padding-top: clamp(0.5rem, 1.5vw, 1rem);
+}
+
+.programmes-page .programmes-repertoire__inner {
+  gap: clamp(1.25rem, 2.4vw, 1.8rem);
+}
+
+@media (max-width: 640px) {
+  .programmes-page .programmes-hero__image {
+    height: clamp(220px, 58vw, 320px);
+  }
+
+  .programmes-page .programmes-divider {
+    margin: 0.7rem auto 1rem;
+  }
+
+  .programmes-page .programmes-repertoire.section {
+    padding-top: 0.5rem;
+  }
+}
+
+.mobile-title-break {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .mobile-title-break {
+    display: initial;
+  }
+
+  .programmes-programme h3.programmes-programme__title--long {
+    font-size: clamp(2rem, 9.5vw, 2.15rem);
+    line-height: 1.08;
+    letter-spacing: 0.015em;
+  }
+}

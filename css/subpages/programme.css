@@ -1,6 +1,7 @@
 @font-face {
   font-family: "Andantino";
-  src: url("../../fonts/andantino-script-regular_2k5P1/Andantino script Regular/Andantino_script_Regular.ttf") format("truetype");
+  src: url("../../fonts/andantino-script-regular_2k5P1/Andantino script Regular/Andantino_script_Regular.ttf")
+    format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -87,8 +88,16 @@
   padding: clamp(1.25rem, 2.5vw, 1.8rem);
   border: 1px solid rgba(255, 255, 255, 0.095);
   background:
-    radial-gradient(560px 260px at 4% 0%, rgba(244, 231, 186, 0.07), transparent 58%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.02));
+    radial-gradient(
+      560px 260px at 4% 0%,
+      rgba(244, 231, 186, 0.07),
+      transparent 58%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.052),
+      rgba(255, 255, 255, 0.02)
+    );
   box-shadow:
     0 16px 34px rgba(0, 0, 0, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.04);
@@ -109,7 +118,7 @@
 }
 
 .programmes-programme__content {
-  text-align: center;
+  text-align: justify;
   min-width: 0;
 }
 
@@ -147,7 +156,7 @@
 }
 
 .programmes-programme__lead {
-  color: #f4e7ba !important;
+  color: #85d9ff !important;
   font-weight: 650;
 }
 
@@ -168,9 +177,36 @@
 
 .programmes-programme--child {
   background:
-    radial-gradient(580px 280px at 2% 0%, rgba(46, 229, 157, 0.08), transparent 58%),
-    radial-gradient(520px 240px at 100% 8%, rgba(124, 92, 255, 0.1), transparent 55%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.02));
+    radial-gradient(
+      580px 280px at 2% 0%,
+      rgba(46, 229, 157, 0.08),
+      transparent 58%
+    ),
+    radial-gradient(
+      520px 240px at 100% 8%,
+      rgba(124, 92, 255, 0.1),
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.055),
+      rgba(255, 255, 255, 0.02)
+    );
+}
+
+.programmes-cta-card {
+  gap: 1rem;
+  border: 1px solid rgba(244, 231, 186, 0.14);
+  background:
+    linear-gradient(145deg, rgb(15 29 129 / 98%), rgb(34 56 83 / 96%)),
+    radial-gradient(
+      500px 220px at 15% 0%,
+      rgba(244, 231, 186, 0.08),
+      transparent 65%
+    );
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.045);
 }
 
 .programmes-cta-card {
@@ -215,7 +251,7 @@
 
 .programmes-hero.section {
   margin-bottom: 0;
-  padding-bottom: 0.0rem;
+  padding-bottom: 0rem;
 }
 
 .programmes-repertoire.section {

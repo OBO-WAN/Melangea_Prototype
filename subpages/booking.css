@@ -1,0 +1,391 @@
+.booking-page {
+  overflow: hidden;
+  padding-top: clamp(1rem, 2.5vw, 2rem);
+}
+
+.booking-hero {
+  position: relative;
+  margin-top: 0;
+  padding: clamp(4rem, 9vw, 8rem) 0 clamp(3.5rem, 7vw, 6rem);
+}
+
+.booking-hero::before,
+.booking-hero::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  filter: blur(2px);
+}
+
+.booking-hero::before {
+  inset: 8% auto auto 5%;
+  width: clamp(12rem, 24vw, 22rem);
+  height: clamp(12rem, 24vw, 22rem);
+  background: rgba(46, 229, 157, 0.11);
+}
+
+.booking-hero::after {
+  right: -7rem;
+  bottom: 0;
+  width: clamp(16rem, 30vw, 28rem);
+  height: clamp(16rem, 30vw, 28rem);
+  background: rgba(39, 131, 203, 0.18);
+}
+
+.booking-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 1.25rem;
+  max-width: 880px;
+  text-align: center;
+}
+
+.booking-kicker {
+  margin: 0;
+  color: #f4e7ba;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.booking-hero h1 {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(3.2rem, 10vw, 7.5rem);
+  font-weight: 200;
+  letter-spacing: clamp(0.1em, 1vw, 0.28em);
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.booking-hero__subtitle {
+  max-width: 760px;
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.08rem, 2vw, 1.35rem);
+  line-height: 1.75;
+}
+
+.booking-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+
+.booking-divider {
+  margin-top: 0;
+  margin-bottom: clamp(1.5rem, 4vw, 3rem);
+}
+
+.booking-intro__grid,
+.booking-form-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.25fr);
+  gap: clamp(1.25rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.booking-intro__copy,
+.booking-form-copy {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.booking-intro__copy h2,
+.booking-form-copy h2,
+.booking-contact__card h2 {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 280;
+  line-height: 1.15;
+  letter-spacing: 0.03em;
+}
+
+.booking-intro__copy p:not(.booking-kicker),
+.booking-form-copy p,
+.booking-contact__card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: clamp(1rem, 1.4vw, 1.12rem);
+  line-height: 1.75;
+}
+
+.booking-intro__note,
+.booking-card,
+.booking-form,
+.booking-contact__card {
+  border: 1px solid rgba(255, 255, 255, 0.095);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(560px 260px at 4% 0%, rgba(244, 231, 186, 0.07), transparent 58%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.052), rgba(255, 255, 255, 0.02));
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.booking-intro__note {
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.booking-intro__note strong {
+  display: block;
+  margin-bottom: 0.6rem;
+  color: #85d9ff;
+  font-size: 1.05rem;
+}
+
+.booking-intro__note p {
+  margin: 0;
+  color: var(--text);
+  line-height: 1.7;
+}
+
+.booking-intro__note a,
+.booking-form__notice a {
+  color: var(--accent2);
+  font-weight: 750;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.24em;
+}
+
+.booking-section-head {
+  margin-bottom: clamp(1.25rem, 3vw, 2rem);
+}
+
+.booking-section-head > div {
+  display: grid;
+  justify-items: center;
+  gap: 0.4rem;
+}
+
+.booking-card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.booking-card {
+  display: grid;
+  gap: 0.85rem;
+  padding: clamp(1.2rem, 2.5vw, 1.6rem);
+  transition:
+    transform 0.18s ease,
+    border-color 0.18s ease,
+    background 0.18s ease;
+}
+
+.booking-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(46, 229, 157, 0.35);
+  background:
+    radial-gradient(520px 240px at 12% 0%, rgba(46, 229, 157, 0.09), transparent 60%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.025));
+}
+
+.booking-card__number {
+  display: grid;
+  place-items: center;
+  width: 2.85rem;
+  height: 2.85rem;
+  border: 1px solid rgba(244, 231, 186, 0.24);
+  border-radius: 999px;
+  color: #f4e7ba;
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  background: rgba(244, 231, 186, 0.06);
+}
+
+.booking-card h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  line-height: 1.25;
+}
+
+.booking-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.booking-form-section {
+  padding-top: clamp(1rem, 3vw, 2.5rem);
+}
+
+.booking-form {
+  display: grid;
+  gap: 1.15rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+}
+
+.booking-form__notice {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border: 1px solid rgba(46, 229, 157, 0.22);
+  border-radius: 16px;
+  background: rgba(46, 229, 157, 0.07);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.booking-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.booking-field {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.booking-field label,
+.booking-consent {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.booking-field label span[aria-hidden="true"] {
+  color: var(--accent2);
+}
+
+.booking-optional {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 550;
+}
+
+.booking-field input,
+.booking-field select,
+.booking-field textarea {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  background: rgba(7, 11, 24, 0.52);
+  color: var(--text);
+  padding: 0.85rem 0.95rem;
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.18s ease,
+    background 0.18s ease;
+}
+
+.booking-field select {
+  color-scheme: dark;
+}
+
+.booking-field textarea {
+  min-height: 10rem;
+}
+
+.booking-field input:hover,
+.booking-field select:hover,
+.booking-field textarea:hover {
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.booking-field input:focus,
+.booking-field select:focus,
+.booking-field textarea:focus {
+  border-color: rgba(46, 229, 157, 0.62);
+  outline: 0;
+  box-shadow: 0 0 0 3px rgba(46, 229, 157, 0.14);
+  background: rgba(7, 11, 24, 0.7);
+}
+
+.booking-field--full {
+  grid-column: 1 / -1;
+}
+
+.booking-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  line-height: 1.55;
+}
+
+.booking-consent input {
+  width: 1.1rem;
+  height: 1.1rem;
+  margin-top: 0.2rem;
+  accent-color: var(--accent2);
+  flex: 0 0 auto;
+}
+
+.booking-submit {
+  justify-self: start;
+}
+
+.booking-contact {
+  padding-bottom: clamp(2rem, 5vw, 4rem);
+}
+
+.booking-contact__card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  background:
+    linear-gradient(145deg, rgb(15 29 129 / 92%), rgb(34 56 83 / 88%)),
+    radial-gradient(500px 220px at 15% 0%, rgba(244, 231, 186, 0.08), transparent 65%);
+}
+
+.booking-contact__card > div {
+  display: grid;
+  gap: 0.65rem;
+  max-width: 720px;
+}
+
+@media (max-width: 1080px) {
+  .booking-card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 820px) {
+  .booking-intro__grid,
+  .booking-form-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-contact__card {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .booking-hero {
+    padding-top: 3rem;
+  }
+
+  .booking-hero h1 {
+    letter-spacing: 0.08em;
+  }
+
+  .booking-card-grid,
+  .booking-form__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .booking-hero__actions,
+  .booking-contact__card .btn,
+  .booking-submit {
+    width: 100%;
+  }
+
+  .booking-hero__actions .btn {
+    width: 100%;
+  }
+}

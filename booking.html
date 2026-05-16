@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Booking — Mélange à Deux</title>
+  <meta name="description"
+    content="Booking-Anfrage für Konzerte, private Veranstaltungen, Festivals und Kulturprogramme von Mélange à Deux & Amis." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet" />
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="icon" href="assets/favicon.svg" sizes="any" />
+
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/typography.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/footer.css" />
+  <link rel="stylesheet" href="css/audio.css" />
+  <link rel="stylesheet" href="css/mobile.css" />
+  <link rel="stylesheet" href="css/overlay.css" />
+  <link rel="stylesheet" href="css/newsletter.css" />
+  <link rel="stylesheet" href="vendor/aos/aos.css" />
+  <link rel="stylesheet" href="css/subpages/booking.css" />
+</head>
+
+<body class="page page-booking">
+  <a class="skip-link" href="#main">Zum Inhalt springen</a>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="./index.html">
+        <img src="./assets/IMG/LOGO/logo_et_amis.png" alt="Mélange à Deux Logo" class="brand-logo" />
+      </a>
+
+      <div class="nav-wrap">
+        <input type="checkbox" id="nav-toggle" class="nav-checkbox" />
+
+        <label for="nav-toggle" class="nav-toggle">
+          <span class="nav-toggle__icon" aria-hidden="true">☰</span>
+          <span class="sr-only">Menü öffnen</span>
+        </label>
+
+        <nav class="nav" aria-label="Hauptnavigation">
+          <a href="./ueber_uns.html">Über uns</a>
+          <a href="./konzerte.html">Konzerte</a>
+          <a href="./programme.html">Programme</a>
+          <a href="./medien.html">Medien</a>
+          <a href="./booking.html" aria-current="page">Booking</a>
+          <a href="./presse.html">News</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="booking-page">
+    <section class="section booking-hero" aria-labelledby="booking-title">
+      <div class="container booking-hero__inner" data-aos="fade-up">
+        <p class="booking-kicker">Mélange à Deux &amp; Amis live erleben</p>
+        <h1 id="booking-title">Booking</h1>
+        <p class="booking-hero__subtitle">
+          Buchen Sie das Ensemble für Konzerte, private Veranstaltungen, Festivals, kulturelle Programme und besondere
+          Anlässe mit einem individuell abgestimmten musikalischen Rahmen.
+        </p>
+        <div class="booking-hero__actions">
+          <a class="btn" href="#booking-request-form">Booking-Anfrage senden</a>
+          <a class="btn btn-ghost" href="mailto:info@melange2.com">Direkt per E-Mail</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="booking-divider hero-divider" aria-hidden="true">
+      <span></span>
+    </div>
+
+    <section class="section booking-intro" aria-labelledby="booking-intro-title">
+      <div class="container booking-intro__grid">
+        <div class="booking-intro__copy" data-aos="fade-up">
+          <p class="booking-kicker">Anfrage &amp; Abstimmung</p>
+          <h2 id="booking-intro-title">Individuell geplant, persönlich betreut.</h2>
+          <p>
+            Jede Anfrage wird einzeln geprüft und mit Blick auf Anlass, Raum, Publikum und gewünschte Atmosphäre
+            beantwortet. Nach Ihrer Nachricht melden wir uns mit Rückfragen, Programmvorschlägen und den nächsten
+            Schritten für ein passendes Angebot.
+          </p>
+        </div>
+        <aside class="booking-intro__note" data-aos="fade-up" aria-label="Hinweis zur Bearbeitung">
+          <strong>Hinweis</strong>
+          <p>
+            Dieses Formular ist als sichere Anfrage-Struktur vorbereitet. Booking-Anfragen können alternativ jederzeit
+            direkt per E-Mail an <a href="mailto:info@melange2.com">info@melange2.com</a> gesendet werden.
+          </p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="section booking-options" aria-labelledby="booking-options-title">
+      <div class="container">
+        <div class="section-head booking-section-head" data-aos="fade-up">
+          <div>
+            <p class="booking-kicker">Formate</p>
+            <h2 id="booking-options-title">Booking-Optionen</h2>
+          </div>
+        </div>
+
+        <div class="booking-card-grid" role="list" aria-label="Buchbare Veranstaltungsformate">
+          <article class="booking-card" role="listitem" data-aos="fade-up">
+            <span class="booking-card__number" aria-hidden="true">01</span>
+            <h3>Concerts &amp; Recitals</h3>
+            <p>Konzertabende, Kammermusikprogramme und atmosphärische Recitals für Bühnen, Kirchen und Säle.</p>
+          </article>
+
+          <article class="booking-card" role="listitem" data-aos="fade-up">
+            <span class="booking-card__number" aria-hidden="true">02</span>
+            <h3>Festivals &amp; Cultural Events</h3>
+            <p>Programme für Festivals, Kulturreihen, kommunale Veranstaltungen und kuratierte Musikformate.</p>
+          </article>
+
+          <article class="booking-card" role="listitem" data-aos="fade-up">
+            <span class="booking-card__number" aria-hidden="true">03</span>
+            <h3>Private Events</h3>
+            <p>Elegante musikalische Gestaltung für Empfänge, Feiern, besondere Momente und exklusive Anlässe.</p>
+          </article>
+
+          <article class="booking-card" role="listitem" data-aos="fade-up">
+            <span class="booking-card__number" aria-hidden="true">04</span>
+            <h3>Educational / Special Programs</h3>
+            <p>Vermittlungsformate, Kinderprogramme, Workshops und thematische Sonderkonzepte nach Absprache.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section booking-form-section" aria-labelledby="booking-form-title">
+      <div class="container booking-form-layout">
+        <div class="booking-form-copy" data-aos="fade-up">
+          <p class="booking-kicker">Ihre Anfrage</p>
+          <h2 id="booking-form-title">Konzert-Booking anfragen</h2>
+          <p>
+            Je genauer die Angaben sind, desto besser können Besetzung, Programm, Technik und Verfügbarkeit eingeschätzt
+            werden. Pflichtfelder sind mit einem Stern markiert.
+          </p>
+        </div>
+
+        <form class="booking-form" id="booking-request-form" action="mailto:info@melange2.com" method="post"
+          enctype="text/plain" data-aos="fade-up">
+          <p class="booking-form__notice">
+            Es ist noch kein Backend für Booking-Anfragen verbunden. Beim Absenden öffnet sich Ihr E-Mail-Programm;
+            alternativ schreiben Sie direkt an <a href="mailto:info@melange2.com">info@melange2.com</a>.
+          </p>
+
+          <div class="booking-form__grid">
+            <div class="booking-field">
+              <label for="booking-name">Name <span aria-hidden="true">*</span></label>
+              <input id="booking-name" name="name" type="text" autocomplete="name" required />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-email">E-Mail <span aria-hidden="true">*</span></label>
+              <input id="booking-email" name="email" type="email" autocomplete="email" required />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-phone">Telefon <span class="booking-optional">optional</span></label>
+              <input id="booking-phone" name="phone" type="tel" autocomplete="tel" />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-organization">Organisation / Venue <span class="booking-optional">optional</span></label>
+              <input id="booking-organization" name="organization" type="text" autocomplete="organization" />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-event-type">Event type <span aria-hidden="true">*</span></label>
+              <select id="booking-event-type" name="event-type" required>
+                <option value="">Bitte auswählen</option>
+                <option value="concert-recital">Concert / Recital</option>
+                <option value="festival-cultural-event">Festival / Cultural Event</option>
+                <option value="private-event">Private Event</option>
+                <option value="educational-special-program">Educational / Special Program</option>
+                <option value="other">Anderer Anlass</option>
+              </select>
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-date">Preferred date <span aria-hidden="true">*</span></label>
+              <input id="booking-date" name="preferred-date" type="date" required />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-location">Location / city <span aria-hidden="true">*</span></label>
+              <input id="booking-location" name="location" type="text" autocomplete="address-level2" required />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-audience">Estimated audience size <span class="booking-optional">optional</span></label>
+              <input id="booking-audience" name="audience-size" type="number" min="1" inputmode="numeric" />
+            </div>
+          </div>
+
+          <div class="booking-field booking-field--full">
+            <label for="booking-message">Message / booking details <span aria-hidden="true">*</span></label>
+            <textarea id="booking-message" name="message" rows="7"
+              placeholder="Bitte nennen Sie Anlass, gewünschtes Programm, Zeitrahmen, technische Informationen oder weitere Details."
+              required></textarea>
+          </div>
+
+          <label class="booking-consent" for="booking-consent">
+            <input id="booking-consent" name="contact-consent" type="checkbox" required />
+            <span>Ich bin damit einverstanden, zur Bearbeitung meiner Booking-Anfrage kontaktiert zu werden.</span>
+          </label>
+
+          <button class="btn booking-submit" type="submit">Anfrage vorbereiten</button>
+        </form>
+      </div>
+    </section>
+
+    <section class="section booking-contact" aria-labelledby="booking-contact-title">
+      <div class="container">
+        <div class="booking-contact__card" data-aos="fade-up">
+          <div>
+            <p class="booking-kicker">Direkter Kontakt</p>
+            <h2 id="booking-contact-title">Sie möchten lieber direkt schreiben?</h2>
+            <p>
+              Senden Sie Ihre Booking-Anfrage mit Datum, Ort, Anlass und ersten Rahmeninformationen direkt per E-Mail.
+              Wir melden uns persönlich zurück.
+            </p>
+          </div>
+          <a class="btn" href="mailto:info@melange2.com">info@melange2.com</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-col">
+        <div class="strong footer-brand">Mélange à Deux</div>
+        <p class="muted small">&#169; 2026. Alle Rechte Vorbehalten</p>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-heading">Kontakt</h3>
+        <a href="#newsletter-overlay" data-newsletter-open>
+          Newsletter abonnieren
+        </a>
+        <a href="mailto:info@melange2.com">info@melange2.com</a>
+        <a href="tel:+49123456789">+49 123 456789</a>
+      </div>
+
+      <div class="footer-col">
+        <h3 class="footer-heading">Rechtliches</h3>
+        <div class="footer-links">
+          <a href="./impressum.html">Impressum</a>
+          <a href="./datenschutz.html">Datenschutz</a>
+          <a href="#">Kontakt</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <div class="newsletter-overlay" id="newsletter-overlay" aria-hidden="true">
+    <div class="newsletter-overlay__backdrop" data-newsletter-close></div>
+
+    <div class="newsletter-modal" role="dialog" aria-modal="true" aria-labelledby="newsletterTitle"
+      aria-describedby="newsletterDescription">
+      <button class="newsletter-modal__close" type="button" aria-label="Schließen" data-newsletter-close>
+        ✕
+      </button>
+
+      <div class="newsletter-modal__content">
+        <p class="newsletter-kicker">Newsletter</p>
+        <h2 class="newsletter-modal__title" id="newsletterTitle">
+          Newsletter abonnieren
+        </h2>
+        <p class="newsletter-modal__text" id="newsletterDescription">
+          Hier erfahren Sie aktuelle Neuigkeiten und Konzerttermine rund um
+          Mélange à Deux & Amis
+        </p>
+
+        <form class="newsletter-form" action="#" method="post">
+          <div class="newsletter-form__grid">
+            <div class="newsletter-field">
+              <label for="newsletter-first-name">
+                Vorname
+                <span class="newsletter-required" aria-hidden="true">*</span>
+              </label>
+              <input id="newsletter-first-name" name="first-name" type="text" placeholder="Ihr Vorname"
+                autocomplete="given-name" required />
+            </div>
+
+            <div class="newsletter-field">
+              <label for="newsletter-last-name">
+                Nachname
+                <span class="newsletter-required" aria-hidden="true">*</span>
+              </label>
+              <input id="newsletter-last-name" name="last-name" type="text" placeholder="Ihr Nachname"
+                autocomplete="family-name" required />
+            </div>
+          </div>
+
+          <div class="newsletter-field">
+            <label for="newsletter-email">
+              E-Mail
+              <span class="newsletter-required" aria-hidden="true">*</span>
+            </label>
+            <input id="newsletter-email" name="email" type="email" placeholder="ihre@email.de" autocomplete="email"
+              pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" required />
+          </div>
+
+          <div class="newsletter-field">
+            <label for="newsletter-postal-code">PLZ</label>
+            <input id="newsletter-postal-code" name="postal-code" type="text" placeholder="z. B. 67061"
+              autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" />
+          </div>
+
+          <div class="newsletter-field">
+            <label for="newsletter-message">Nachricht</label>
+            <textarea id="newsletter-message" name="message" rows="4" placeholder="Optional: Ihre Nachricht"></textarea>
+          </div>
+
+          <label class="newsletter-consent">
+            <input type="checkbox" name="consent" required />
+            <span>
+              Ich stimme der Verarbeitung meiner Daten zum Erhalt des
+              Newsletters zu.
+            </span>
+          </label>
+
+          <p class="newsletter-required-note">
+            Mit <span aria-hidden="true">*</span> gekennzeichnete Felder sind
+            Pflichtfelder.
+          </p>
+
+          <div class="newsletter-actions">
+            <button type="submit" class="btn">Jetzt abonnieren</button>
+            <button type="button" class="btn btn-ghost" data-newsletter-close>
+              Abbrechen
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <button class="scroll-top" id="scrollTopBtn" type="button" aria-label="Nach oben scrollen">
+    ↑
+  </button>
+
+  <script type="module" src="./JS/firebase-config.js"></script>
+  <script src="./JS/objects.js"></script>
+  <script src="./JS/audio.js"></script>
+  <script src="./JS/newsletter.js"></script>
+  <script src="./JS/validation.js"></script>
+  <script type="module" src="./JS/newsletter-submit.js"></script>
+  <script src="./vendor/aos/aos.js"></script>
+  <script src="./JS/app.js"></script>
+</body>
+
+</html>

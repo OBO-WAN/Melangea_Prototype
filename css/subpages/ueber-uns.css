@@ -292,6 +292,29 @@ body.page-ueber-uns .site-footer {
   line-height: 1.72;
 }
 
+.about-history-decoration {
+  grid-column: 1 / -1;
+  width: min(520px, 72vw);
+  margin: clamp(0.5rem, 2vw, 1rem) auto;
+  padding: clamp(0.65rem, 1.4vw, 1rem);
+  overflow: hidden;
+  border-radius: clamp(22px, 3vw, 36px);
+  background:
+    radial-gradient(520px 220px at 50% 0%, rgba(244, 231, 186, 0.08), transparent 65%),
+    rgba(255, 255, 255, 0.045);
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.about-history-decoration img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: clamp(16px, 2vw, 26px);
+}
+
 @media (max-width: 1080px) {
   .about-grid--intro,
   .about-grid--music,
@@ -359,6 +382,12 @@ body.page-ueber-uns .site-footer {
 
   .about-history__chapter {
     padding: 1rem;
+  }
+
+  .about-history-decoration {
+    width: min(360px, 86vw);
+    margin: 0.25rem auto;
+    padding: 0.55rem;
   }
 
   .about-history h3 {

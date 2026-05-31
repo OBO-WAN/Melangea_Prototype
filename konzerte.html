@@ -77,29 +77,8 @@
           <h2 id="concerts-upcoming-title">Nächste Konzerte:</h2>
         </div>
 
-        <div class="concerts-grid" role="list" aria-label="Bevorstehende Konzerttermine">
-          <article class="card concerts-card" data-aos="fade-up" role="listitem">
-            <p class="concerts-card__date">TT.MM.JJJJ · 19:30 Uhr</p>
-            <h3 class="concerts-card__title">[Titel des Konzerts]</h3>
-            <p class="concerts-card__meta">[Spielort, Stadt]</p>
-            <p class="concerts-card__description">[Kurze Beschreibung oder Besetzung hier einfügen.]</p>
-            <div class="concerts-card__actions">
-              <a class="btn btn-small btn-ghost" href="#">Details</a>
-              <a class="btn btn-small" href="#">Tickets</a>
-            </div>
-          </article>
-
-          <article class="card concerts-card" data-aos="fade-up" role="listitem">
-            <p class="concerts-card__date">TT.MM.JJJJ · 20:00 Uhr</p>
-            <h3 class="concerts-card__title">[Titel des Konzerts]</h3>
-            <p class="concerts-card__meta">[Spielort, Stadt]</p>
-            <p class="concerts-card__description">[Programmhinweis oder Gastmusiker ergänzen.]</p>
-            <div class="concerts-card__actions">
-              <a class="btn btn-small btn-ghost" href="#">Details</a>
-              <a class="btn btn-small" href="#">Tickets</a>
-            </div>
-          </article>
-        </div>
+        <div class="concerts-grid" role="list" aria-label="Bevorstehende Konzerttermine" data-concert-render="cards"
+          data-concert-status="upcoming"></div>
       </div>
     </section>
 
@@ -109,21 +88,8 @@
           <h2 id="concerts-archive-title">Archiv / Vergangene Konzerte</h2>
         </div>
 
-        <div class="concerts-grid" role="list" aria-label="Vergangene Konzerte">
-          <article class="card concerts-card concerts-card--past" data-aos="fade-up" role="listitem">
-            <p class="concerts-card__date">TT.MM.JJJJ · [Uhrzeit]</p>
-            <h3 class="concerts-card__title">[Ehemaliger Konzerttitel]</h3>
-            <p class="concerts-card__meta">[Veranstaltungsort, Stadt]</p>
-            <p class="concerts-card__description">[Optional: Rückblick, Festivalname oder Besonderheit.]</p>
-          </article>
-
-          <article class="card concerts-card concerts-card--past" data-aos="fade-up" role="listitem">
-            <p class="concerts-card__date">TT.MM.JJJJ · [Uhrzeit]</p>
-            <h3 class="concerts-card__title">[Ehemaliger Konzerttitel]</h3>
-            <p class="concerts-card__meta">[Veranstaltungsort, Stadt]</p>
-            <p class="concerts-card__description">[Optional: Thema des Programms / Anlass.]</p>
-          </article>
-        </div>
+        <div class="concerts-grid" role="list" aria-label="Vergangene Konzerte" data-concert-render="cards"
+          data-concert-status="past"></div>
       </div>
     </section>
   </main>
@@ -270,6 +236,8 @@
   <script src="./JS/newsletter.js"></script>
   <script src="./JS/validation.js"></script>
   <script type="module" src="./JS/newsletter-submit.js"></script>
+  <script src="./JS/concert-events.js"></script>
+  <script src="./JS/concert-render.js"></script>
   <script src="./vendor/aos/aos.js"></script>
   <script src="./JS/app.js"></script>
 </body>

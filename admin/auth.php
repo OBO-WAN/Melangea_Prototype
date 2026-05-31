@@ -9,8 +9,31 @@ session_start();
 const ADMIN_SESSION_KEY = 'melange_admin_authenticated';
 const CSRF_SESSION_KEY = 'melange_admin_csrf_token';
 
-// Replace this hash before publishing. Generate a new hash with password_hash('YOUR_PASSWORD', PASSWORD_DEFAULT).
-const ADMIN_PASSWORD_HASH = '$2y$10$3u6NGYbq9z21w1kdfz9MFOJCp1q2bchWbP0r2v8q5ujtEXjYfq8SC';
+function get_admin_password_hash(): string
+{
+    $environmentHash = getenv('ADMIN_PASSWORD_HASH');
+
+    if (is_string($environmentHash) && $environmentHash !== '') {
+        return $environmentHash;
+    }
+
+    $localConfigPath = __DIR__ . '/config.local.php';
+
+    if (is_file($localConfigPath)) {
+        $localConfig = require $localConfigPath;
+
+        if (
+            is_array($localConfig)
+            && isset($localConfig['ADMIN_PASSWORD_HASH'])
+            && is_string($localConfig['ADMIN_PASSWORD_HASH'])
+            && $localConfig['ADMIN_PASSWORD_HASH'] !== ''
+        ) {
+            return $localConfig['ADMIN_PASSWORD_HASH'];
+        }
+    }
+
+    return '';
+}
 
 function is_authenticated(): bool
 {

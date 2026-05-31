@@ -86,3 +86,6 @@ firebase-adminsdk*.json
 
 # Personal local notes
 Melangea_safe_git_add_guidelines.txt
+
+# Local admin secrets
+admin/config.local.php

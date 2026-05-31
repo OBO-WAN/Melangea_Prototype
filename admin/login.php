@@ -13,7 +13,7 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = isset($_POST['password']) && is_string($_POST['password']) ? $_POST['password'] : '';
 
-    if (password_verify($password, ADMIN_PASSWORD_HASH)) {
+    if (password_verify($password, get_admin_password_hash())) {
         session_regenerate_id(true);
         $_SESSION[ADMIN_SESSION_KEY] = true;
         redirect_to_admin();

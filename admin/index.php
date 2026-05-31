@@ -54,12 +54,13 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
 {
     $rowClass = $isTemplate ? 'concert-row concert-row--template' : 'concert-row';
     $namePrefix = $isTemplate ? 'concerts[__INDEX__]' : 'concerts[' . $index . ']';
+    $disabledAttribute = $isTemplate ? ' disabled' : '';
     ?>
     <section class="<?= escape_html($rowClass) ?>" data-concert-row <?= $isTemplate ? 'hidden' : '' ?>>
       <div class="concert-row__head">
         <h2><?= $isTemplate ? 'Neuer Konzerttermin' : 'Konzert ' . escape_html((string) ((int) $index + 1)) ?></h2>
         <label class="remove-toggle">
-          <input type="checkbox" name="<?= escape_html($namePrefix) ?>[remove]" value="1" data-remove-toggle>
+          <input type="checkbox" name="<?= escape_html($namePrefix) ?>[remove]" value="1" data-remove-toggle<?= $disabledAttribute ?>>
           <span>Diesen Termin entfernen</span>
         </label>
       </div>
@@ -69,9 +70,9 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
           <label class="field field--<?= $key === 'description' ? 'wide' : 'normal' ?>">
             <span><?= escape_html($label) ?></span>
             <?php if ($key === 'description'): ?>
-              <textarea name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" rows="3"><?= escape_html(concert_value($concert, $key)) ?></textarea>
+              <textarea name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" rows="3"<?= $disabledAttribute ?>><?= escape_html(concert_value($concert, $key)) ?></textarea>
             <?php else: ?>
-              <input type="text" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(concert_value($concert, $key)) ?>">
+              <input type="text" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(concert_value($concert, $key)) ?>"<?= $disabledAttribute ?>>
             <?php endif; ?>
           </label>
         <?php endforeach; ?>
@@ -79,7 +80,7 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
         <label class="field">
           <span>Status</span>
           <?php $status = concert_value($concert, 'status') ?: 'upcoming'; ?>
-          <select name="<?= escape_html($namePrefix) ?>[status]">
+          <select name="<?= escape_html($namePrefix) ?>[status]"<?= $disabledAttribute ?>>
             <option value="upcoming" <?= $status === 'upcoming' ? 'selected' : '' ?>>upcoming</option>
             <option value="past" <?= $status === 'past' ? 'selected' : '' ?>>past</option>
             <option value="cancelled" <?= $status === 'cancelled' ? 'selected' : '' ?>>cancelled</option>
@@ -143,6 +144,14 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
       const addButton = document.getElementById('add-concert');
       let nextIndex = <?= json_encode(count($concerts), JSON_THROW_ON_ERROR) ?>;
 
+      const setRowFieldsDisabled = (row, disabled) => {
+        row.querySelectorAll('input, textarea, select').forEach((field) => {
+          field.disabled = disabled;
+        });
+      };
+
+      setRowFieldsDisabled(template, true);
+
       const updateRowState = (row) => {
         const checkbox = row.querySelector('[data-remove-toggle]');
         if (!checkbox) return;
@@ -154,11 +163,18 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
         updateRowState(event.target.closest('[data-concert-row]'));
       });
 
+      document.getElementById('concert-form').addEventListener('submit', () => {
+        rows.querySelectorAll('[data-remove-toggle]:checked').forEach((checkbox) => {
+          checkbox.closest('[data-concert-row]').remove();
+        });
+      });
+
       addButton.addEventListener('click', () => {
         const clone = template.cloneNode(true);
         clone.hidden = false;
         clone.classList.remove('concert-row--template');
         clone.innerHTML = clone.innerHTML.replaceAll('__INDEX__', String(nextIndex));
+        setRowFieldsDisabled(clone, false);
         clone.querySelector('h2').textContent = 'Neuer Konzerttermin';
         rows.append(clone);
         nextIndex += 1;

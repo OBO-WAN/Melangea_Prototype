@@ -41,18 +41,58 @@ function clean_text($value): string
     return preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $text) ?? '';
 }
 
-function is_valid_date(string $date): bool
+function normalize_german_date(string $date): ?string
 {
-    if (!preg_match('/^(\d{2})\.(\d{2})\.(\d{4})$/', $date, $matches)) {
-        return false;
+    $date = trim($date);
+
+    if (preg_match('/^(\d{2})\.(\d{2})\.(\d{4})$/', $date, $matches)) {
+        if (checkdate((int) $matches[2], (int) $matches[1], (int) $matches[3])) {
+            return $date;
+        }
+
+        return null;
     }
 
-    return checkdate((int) $matches[2], (int) $matches[1], (int) $matches[3]);
+    if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $date, $matches)) {
+        if (checkdate((int) $matches[2], (int) $matches[3], (int) $matches[1])) {
+            return $matches[3] . '.' . $matches[2] . '.' . $matches[1];
+        }
+    }
+
+    return null;
 }
 
-function is_valid_time(string $time): bool
+function normalize_german_time(string $time): ?string
 {
-    return preg_match('/^([01]\d|2[0-3]):[0-5]\d Uhr$/', $time) === 1;
+    $time = trim($time);
+
+    if (preg_match('/^([01]\d|2[0-3]):([0-5]\d)(?: Uhr)?$/', $time, $matches)) {
+        return $matches[1] . ':' . $matches[2] . ' Uhr';
+    }
+
+    return null;
+}
+
+function is_empty_concert_row(array $concert): bool
+{
+    $fieldsToCheck = [
+        'date',
+        'time',
+        'title',
+        'venue',
+        'city',
+        'description',
+        'detailsUrl',
+        'ticketsUrl',
+    ];
+
+    foreach ($fieldsToCheck as $field) {
+        if (clean_text($concert[$field] ?? '') !== '') {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 function starts_with_text(string $value, string $prefix): bool
@@ -102,12 +142,20 @@ if (!is_array($postedConcerts)) {
 $validatedConcerts = [];
 $rowNumber = 0;
 
-foreach ($postedConcerts as $concert) {
+foreach ($postedConcerts as $postedIndex => $concert) {
     if (!is_array($concert)) {
         show_error('Ein Konzerttermin hat ein ungültiges Format.');
     }
 
+    if ($postedIndex === '__INDEX__') {
+        continue;
+    }
+
     if (!empty($concert['remove'])) {
+        continue;
+    }
+
+    if (is_empty_concert_row($concert)) {
         continue;
     }
 
@@ -123,11 +171,14 @@ foreach ($postedConcerts as $concert) {
     $ticketsUrl = clean_text($concert['ticketsUrl'] ?? '');
     $status = clean_text($concert['status'] ?? '');
 
-    if (!is_valid_date($date)) {
+    $normalizedDate = normalize_german_date($date);
+    $normalizedTime = normalize_german_time($time);
+
+    if ($normalizedDate === null) {
         show_error('Bitte prüfen Sie das Datum in Zeile ' . $rowNumber . '. Erwartetes Format: TT.MM.JJJJ.');
     }
 
-    if (!is_valid_time($time)) {
+    if ($normalizedTime === null) {
         show_error('Bitte prüfen Sie die Uhrzeit in Zeile ' . $rowNumber . '. Erwartetes Format: HH:MM Uhr.');
     }
 
@@ -144,8 +195,8 @@ foreach ($postedConcerts as $concert) {
     }
 
     $validatedConcerts[] = [
-        'date' => $date,
-        'time' => $time,
+        'date' => $normalizedDate,
+        'time' => $normalizedTime,
         'title' => $title,
         'venue' => $venue,
         'city' => $city,

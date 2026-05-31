@@ -62,9 +62,37 @@ function normalize_german_date(string $date): ?string
     return null;
 }
 
-function is_valid_time(string $time): bool
+function normalize_german_time(string $time): ?string
 {
-    return preg_match('/^([01]\d|2[0-3]):[0-5]\d Uhr$/', $time) === 1;
+    $time = trim($time);
+
+    if (preg_match('/^([01]\d|2[0-3]):([0-5]\d)(?: Uhr)?$/', $time, $matches)) {
+        return $matches[1] . ':' . $matches[2] . ' Uhr';
+    }
+
+    return null;
+}
+
+function is_empty_concert_row(array $concert): bool
+{
+    $fieldsToCheck = [
+        'date',
+        'time',
+        'title',
+        'venue',
+        'city',
+        'description',
+        'detailsUrl',
+        'ticketsUrl',
+    ];
+
+    foreach ($fieldsToCheck as $field) {
+        if (clean_text($concert[$field] ?? '') !== '') {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 function starts_with_text(string $value, string $prefix): bool
@@ -114,12 +142,20 @@ if (!is_array($postedConcerts)) {
 $validatedConcerts = [];
 $rowNumber = 0;
 
-foreach ($postedConcerts as $concert) {
+foreach ($postedConcerts as $postedIndex => $concert) {
     if (!is_array($concert)) {
         show_error('Ein Konzerttermin hat ein ungültiges Format.');
     }
 
+    if ($postedIndex === '__INDEX__') {
+        continue;
+    }
+
     if (!empty($concert['remove'])) {
+        continue;
+    }
+
+    if (is_empty_concert_row($concert)) {
         continue;
     }
 
@@ -136,12 +172,13 @@ foreach ($postedConcerts as $concert) {
     $status = clean_text($concert['status'] ?? '');
 
     $normalizedDate = normalize_german_date($date);
+    $normalizedTime = normalize_german_time($time);
 
     if ($normalizedDate === null) {
         show_error('Bitte prüfen Sie das Datum in Zeile ' . $rowNumber . '. Erwartetes Format: TT.MM.JJJJ.');
     }
 
-    if (!is_valid_time($time)) {
+    if ($normalizedTime === null) {
         show_error('Bitte prüfen Sie die Uhrzeit in Zeile ' . $rowNumber . '. Erwartetes Format: HH:MM Uhr.');
     }
 
@@ -159,7 +196,7 @@ foreach ($postedConcerts as $concert) {
 
     $validatedConcerts[] = [
         'date' => $normalizedDate,
-        'time' => $time,
+        'time' => $normalizedTime,
         'title' => $title,
         'venue' => $venue,
         'city' => $city,

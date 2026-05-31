@@ -1,0 +1,250 @@
+body.admin-page {
+  --admin-bg: #f6f1e9;
+  --admin-card: #fffaf3;
+  --admin-text: #2f261d;
+  --admin-muted: #74685e;
+  --admin-border: #decfbd;
+  --admin-accent: #6f3f2f;
+  --admin-accent-dark: #4f2b20;
+  --admin-success-bg: #e8f4e8;
+  --admin-success-text: #24532a;
+  --admin-error-bg: #f9e4df;
+  --admin-error-text: #7c2418;
+}
+
+body.admin-page * {
+  box-sizing: border-box;
+}
+
+body.admin-page {
+  min-height: 100vh;
+  margin: 0;
+  background: var(--admin-bg);
+  color: var(--admin-text);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.5;
+}
+
+.admin-page a {
+  color: var(--admin-accent);
+}
+
+.admin-header,
+.admin-main,
+.admin-login {
+  width: min(1120px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.admin-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 36px 0 20px;
+}
+
+.admin-header h1,
+.admin-login h1 {
+  margin: 0 0 8px;
+  font-size: clamp(1.8rem, 4vw, 2.7rem);
+  line-height: 1.15;
+}
+
+.admin-kicker {
+  margin: 0 0 8px;
+  color: var(--admin-accent);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.admin-muted {
+  margin: 0;
+  color: var(--admin-muted);
+}
+
+.admin-link {
+  font-weight: 700;
+}
+
+.admin-message {
+  margin: 0 0 18px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  font-weight: 700;
+}
+
+.admin-message--success {
+  background: var(--admin-success-bg);
+  color: var(--admin-success-text);
+}
+
+.admin-message--error {
+  background: var(--admin-error-bg);
+  color: var(--admin-error-text);
+}
+
+.admin-card,
+.concert-row {
+  background: var(--admin-card);
+  border: 1px solid var(--admin-border);
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgba(58, 39, 25, 0.08);
+}
+
+.admin-login {
+  max-width: 460px;
+  padding: 72px 0;
+}
+
+.admin-card {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 24px;
+}
+
+.concert-row {
+  margin: 0 0 20px;
+  padding: 22px;
+}
+
+.concert-row--removed {
+  opacity: 0.58;
+  outline: 2px dashed var(--admin-error-text);
+}
+
+.concert-row__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.concert-row__head h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.remove-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--admin-muted);
+  font-size: 0.95rem;
+}
+
+.concert-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 7px;
+  font-weight: 700;
+}
+
+.field--wide {
+  grid-column: 1 / -1;
+}
+
+.admin-page input[type="text"],
+.admin-page input[type="password"],
+.admin-page textarea,
+.admin-page select {
+  width: 100%;
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  background: #fff;
+  color: var(--admin-text);
+  font: inherit;
+  font-weight: 400;
+  padding: 11px 12px;
+}
+
+.admin-page textarea {
+  resize: vertical;
+}
+
+.admin-page input:focus,
+.admin-page textarea:focus,
+.admin-page select:focus {
+  border-color: var(--admin-accent);
+  outline: 3px solid rgba(111, 63, 47, 0.18);
+}
+
+.admin-actions {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 26px;
+  padding: 16px 0 28px;
+  background: linear-gradient(rgba(246, 241, 233, 0), var(--admin-bg) 30%);
+}
+
+.admin-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--admin-accent);
+  color: #fff;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 800;
+  padding: 12px 20px;
+  text-decoration: none;
+}
+
+.admin-button:hover,
+.admin-button:focus-visible {
+  background: var(--admin-accent-dark);
+}
+
+.admin-button--secondary {
+  border: 1px solid var(--admin-border);
+  background: #fff;
+  color: var(--admin-accent);
+}
+
+.admin-button--secondary:hover,
+.admin-button--secondary:focus-visible {
+  background: #f4e8da;
+  color: var(--admin-accent-dark);
+}
+
+.admin-page code {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--admin-border);
+  border-radius: 6px;
+  padding: 2px 5px;
+}
+
+@media (max-width: 760px) {
+  .admin-header {
+    flex-direction: column;
+    padding-top: 24px;
+  }
+
+  .concert-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .concert-row__head,
+  .admin-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .admin-actions {
+    position: static;
+  }
+}

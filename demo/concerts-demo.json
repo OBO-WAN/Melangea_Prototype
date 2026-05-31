@@ -1,0 +1,35 @@
+[
+  {
+    "date": "12.06.2026",
+    "time": "19:30 Uhr",
+    "title": "Demo-Konzert im Salon",
+    "venue": "Demo-Saal",
+    "city": "Musterstadt",
+    "description": "Öffentlicher Beispieltermin für die statische Demo der Konzertverwaltung.",
+    "detailsUrl": "#",
+    "ticketsUrl": "#",
+    "status": "upcoming"
+  },
+  {
+    "date": "20.09.2026",
+    "time": "18:00 Uhr",
+    "title": "Demo-Matinee",
+    "venue": "Kulturhaus Beispiel",
+    "city": "Beispielstadt",
+    "description": "Fiktiver Termin mit sicheren Demo-Daten ohne private Informationen.",
+    "detailsUrl": "#",
+    "ticketsUrl": "#",
+    "status": "upcoming"
+  },
+  {
+    "date": "05.04.2025",
+    "time": "20:15 Uhr",
+    "title": "Vergangenes Demo-Konzert",
+    "venue": "Archiv-Bühne",
+    "city": "Demodorf",
+    "description": "Beispieldatensatz für einen vergangenen Konzertstatus.",
+    "detailsUrl": "#",
+    "ticketsUrl": "#",
+    "status": "past"
+  }
+]

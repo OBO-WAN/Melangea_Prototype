@@ -1,6 +1,6 @@
 window.CONCERT_EVENTS = [
   {
-    date: "12.04.2026",
+    date: "12.06.2026",
     time: "19:30 Uhr",
     title: "Konzert",
     venue: "Freinsheim",
@@ -8,6 +8,28 @@ window.CONCERT_EVENTS = [
     description: "Kurze Beschreibung oder Programmhinweis ergänzen.",
     detailsUrl: "#",
     ticketsUrl: "#",
-    status: "upcoming"
-  }
+    status: "upcoming",
+  },
+  {
+    date: "25.07.2026",
+    time: "20:00 Uhr",
+    title: "Konzert",
+    venue: "Tonhalle Düsseldorf",
+    city: "Düsseldorf",
+    description: "Feat. Franzl",
+    detailsUrl: "#",
+    ticketsUrl: "#",
+    status: "upcoming",
+  },
+  {
+    date: "25.07.2026",
+    time: "20:00 Uhr",
+    title: "Konzert",
+    venue: "Tonhalle Düsseldorf",
+    city: "Düsseldorf",
+    description: "Feat. Franzl",
+    detailsUrl: "#",
+    ticketsUrl: "#",
+    status: "upcoming",
+  },
 ];

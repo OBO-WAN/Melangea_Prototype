@@ -98,6 +98,7 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>Konzertverwaltung | Mélange à Deux &amp; Amis</title>
+  <script src="admin-theme.js"></script>
   <link rel="stylesheet" href="admin.css">
 </head>
 <body class="admin-page">
@@ -107,7 +108,10 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
       <h1>Konzerttermine bearbeiten</h1>
       <p class="admin-muted">Die Daten werden direkt aus <code>data/concerts.json</code> geladen.</p>
     </div>
-    <a class="admin-link" href="logout.php">Ausloggen</a>
+    <div class="admin-header__actions">
+      <button type="button" class="admin-theme-toggle" data-theme-toggle aria-pressed="false">Dunkel</button>
+      <a class="admin-link" href="logout.php">Ausloggen</a>
+    </div>
   </header>
 
   <main class="admin-main">

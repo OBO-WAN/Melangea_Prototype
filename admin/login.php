@@ -29,10 +29,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>Admin-Login | Mélange à Deux &amp; Amis</title>
+  <script src="admin-theme.js"></script>
   <link rel="stylesheet" href="admin.css">
 </head>
 <body class="admin-page admin-page--login">
   <main class="admin-login" aria-labelledby="login-title">
+    <div class="admin-login__theme">
+      <button type="button" class="admin-theme-toggle" data-theme-toggle aria-pressed="false">Dunkel</button>
+    </div>
     <h1 id="login-title">Konzertverwaltung</h1>
     <p class="admin-muted">Bitte melden Sie sich an, um Konzerttermine zu bearbeiten.</p>
 

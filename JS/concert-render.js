@@ -14,12 +14,29 @@
     "Dez",
   ];
 
-  const getEvents = () => {
-    if (!Array.isArray(window.CONCERT_EVENTS)) return [];
+  const CONCERTS_DATA_URL = "./data/concerts.json";
 
-    return window.CONCERT_EVENTS
-      .map((event) => ({ ...event, sortDate: parseGermanDate(event.date) }))
-      .sort((eventA, eventB) => eventA.sortDate - eventB.sortDate);
+  const loadEvents = async () => {
+    try {
+      const response = await fetch(CONCERTS_DATA_URL);
+
+      if (!response.ok) {
+        throw new Error(
+          `Concert data request failed with status ${response.status}`
+        );
+      }
+
+      const events = await response.json();
+
+      if (!Array.isArray(events)) return [];
+
+      return events
+        .map((event) => ({ ...event, sortDate: parseGermanDate(event.date) }))
+        .sort((eventA, eventB) => eventA.sortDate - eventB.sortDate);
+    } catch (error) {
+      console.error("Unable to load concert data.", error);
+      return [];
+    }
   };
 
   const parseGermanDate = (date) => {
@@ -56,6 +73,12 @@
     link.href = href || "#";
     link.textContent = text;
     return link;
+  };
+
+  const refreshAnimations = () => {
+    if (window.AOS && typeof window.AOS.refreshHard === "function") {
+      window.AOS.refreshHard();
+    }
   };
 
   const renderCompactList = (events) => {
@@ -173,9 +196,10 @@
     return card;
   };
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const events = getEvents();
+  document.addEventListener("DOMContentLoaded", async () => {
+    const events = await loadEvents();
     renderCompactList(events);
     renderConcertCards(events);
+    refreshAnimations();
   });
 })();

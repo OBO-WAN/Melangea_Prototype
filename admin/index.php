@@ -109,7 +109,19 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
       <p class="admin-muted">Die Daten werden direkt aus <code>data/concerts.json</code> geladen.</p>
     </div>
     <div class="admin-header__actions">
-      <button type="button" class="admin-theme-toggle" data-theme-toggle aria-pressed="false">Dunkel</button>
+      <button type="button" class="admin-theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Dunkelmodus aktivieren">
+        <span class="admin-theme-toggle__icon admin-theme-toggle__icon--moon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false" role="img">
+            <path d="M20.5 15.2A8.5 8.5 0 0 1 8.8 3.5a7 7 0 1 0 11.7 11.7Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span class="admin-theme-toggle__icon admin-theme-toggle__icon--sun" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false" role="img">
+            <circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+            <path d="M12 2.8v2.1M12 19.1v2.1M21.2 12h-2.1M4.9 12H2.8M18.5 5.5 17 7M7 17l-1.5 1.5M18.5 18.5 17 17M7 7 5.5 5.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+        </span>
+      </button>
       <a class="admin-link" href="logout.php">Ausloggen</a>
     </div>
   </header>

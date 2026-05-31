@@ -19,7 +19,6 @@
   const updateToggle = (theme) => {
     document.querySelectorAll('[data-theme-toggle]').forEach((toggle) => {
       const isDark = theme === 'dark';
-      toggle.textContent = isDark ? 'Hell' : 'Dunkel';
       toggle.setAttribute('aria-pressed', String(isDark));
       toggle.setAttribute('aria-label', isDark ? 'Hellmodus aktivieren' : 'Dunkelmodus aktivieren');
     });

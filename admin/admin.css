@@ -111,22 +111,55 @@ body.admin-page {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 38px;
+  width: 40px;
+  height: 40px;
   border: 1px solid var(--admin-border);
   border-radius: 999px;
   background: var(--admin-card);
   color: var(--admin-accent);
   cursor: pointer;
-  font: inherit;
-  font-size: 0.95rem;
-  font-weight: 800;
-  padding: 8px 14px;
+  padding: 0;
+  box-shadow: 0 8px 22px var(--admin-shadow);
+  transition: background-color 160ms ease, color 160ms ease, border-color 160ms ease, transform 160ms ease;
 }
 
-.admin-theme-toggle:hover,
+.admin-theme-toggle:hover {
+  background: var(--admin-secondary-hover);
+  color: var(--admin-accent-dark);
+  transform: translateY(-1px);
+}
+
 .admin-theme-toggle:focus-visible {
   background: var(--admin-secondary-hover);
   color: var(--admin-accent-dark);
+  outline: 3px solid var(--admin-focus);
+  outline-offset: 3px;
+}
+
+.admin-theme-toggle__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+
+.admin-theme-toggle__icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.admin-theme-toggle__icon--sun {
+  display: none;
+}
+
+:root[data-theme="dark"] .admin-theme-toggle__icon--moon {
+  display: none;
+}
+
+:root[data-theme="dark"] .admin-theme-toggle__icon--sun {
+  display: inline-flex;
 }
 
 .admin-message {

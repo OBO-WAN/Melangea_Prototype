@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Konzertverwaltung Demo | Mélange à Deux &amp; Amis</title>
+  <link rel="stylesheet" href="admin-demo.css">
+</head>
+<body class="demo-admin-page demo-editor-page">
+  <header class="demo-admin-header">
+    <div>
+      <p class="demo-kicker">Mélange à Deux &amp; Amis</p>
+      <h1>Konzerttermine bearbeiten</h1>
+      <p class="demo-muted">Statische GitHub-Demo der Konzertverwaltung.</p>
+    </div>
+    <button type="button" class="demo-link-button" id="demo-logout">Demo ausloggen</button>
+  </header>
+
+  <main class="demo-admin-main">
+    <p class="demo-notice demo-notice--info">Demo-Modus: Änderungen werden nur im Browser simuliert und nicht auf dem Server gespeichert.</p>
+    <p id="demo-editor-message" class="demo-message" role="status" aria-live="polite"></p>
+
+    <form id="demo-concert-form" novalidate>
+      <div id="demo-concert-rows" class="demo-concert-rows"></div>
+
+      <div class="demo-actions">
+        <button type="button" class="demo-button demo-button--secondary" id="demo-add-concert">Neuen Termin hinzufügen</button>
+        <button type="submit" class="demo-button">Demo speichern</button>
+      </div>
+    </form>
+  </main>
+
+  <template id="demo-concert-template">
+    <section class="demo-concert-row" data-concert-row>
+      <div class="demo-concert-row__head">
+        <h2></h2>
+        <button type="button" class="demo-remove-button" data-remove-row>Diesen Termin entfernen</button>
+      </div>
+
+      <div class="demo-concert-grid">
+        <label class="demo-field">
+          <span>Datum</span>
+          <input type="text" name="date" placeholder="TT.MM.JJJJ" required>
+        </label>
+        <label class="demo-field">
+          <span>Uhrzeit</span>
+          <input type="text" name="time" placeholder="HH:MM Uhr" required>
+        </label>
+        <label class="demo-field">
+          <span>Titel</span>
+          <input type="text" name="title">
+        </label>
+        <label class="demo-field">
+          <span>Spielort</span>
+          <input type="text" name="venue">
+        </label>
+        <label class="demo-field">
+          <span>Stadt</span>
+          <input type="text" name="city">
+        </label>
+        <label class="demo-field demo-field--wide">
+          <span>Beschreibung</span>
+          <textarea name="description" rows="3"></textarea>
+        </label>
+        <label class="demo-field">
+          <span>Details-Link</span>
+          <input type="text" name="detailsUrl">
+        </label>
+        <label class="demo-field">
+          <span>Tickets-Link</span>
+          <input type="text" name="ticketsUrl">
+        </label>
+        <label class="demo-field">
+          <span>Status</span>
+          <select name="status" required>
+            <option value="upcoming">upcoming</option>
+            <option value="past">past</option>
+            <option value="cancelled">cancelled</option>
+          </select>
+        </label>
+      </div>
+    </section>
+  </template>
+
+  <script src="admin-demo.js" defer></script>
+</body>
+</html>

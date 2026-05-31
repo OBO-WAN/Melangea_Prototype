@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Demo-Login | Konzertverwaltung</title>
+  <link rel="stylesheet" href="admin-demo.css">
+</head>
+<body class="demo-admin-page demo-login-page">
+  <main class="demo-login-card" aria-labelledby="demo-login-title">
+    <p class="demo-kicker">Mélange à Deux &amp; Amis</p>
+    <h1 id="demo-login-title">Konzertverwaltung Demo</h1>
+    <p class="demo-notice demo-notice--warning">Dies ist nur ein Demo-Login. Es schützt keine echten Daten.</p>
+    <p class="demo-muted">Demo-Passwort: <strong>demo</strong></p>
+
+    <form id="demo-login-form" class="demo-form" novalidate>
+      <label class="demo-field">
+        <span>Demo-Passwort</span>
+        <input type="password" id="demo-password" autocomplete="off" required>
+      </label>
+      <p id="demo-login-message" class="demo-message" role="status" aria-live="polite"></p>
+      <button type="submit" class="demo-button">Demo öffnen</button>
+    </form>
+  </main>
+
+  <script src="admin-demo.js" defer></script>
+</body>
+</html>

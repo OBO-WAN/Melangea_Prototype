@@ -56,6 +56,15 @@ Before production use:
 3. Ensure the backend email extension/process consuming `mail` is configured.
 4. Verify consent and retention policies for your jurisdiction.
 
+## Static Admin Demo
+
+A public-safe static demo of the concert admin interface is available at `demo/admin-demo-login.html`.
+
+- Demo password: `demo`
+- The fake login runs only in browser JavaScript and stores its session state in `sessionStorage`.
+- Demo editor changes are saved only in this browser with `localStorage`; no server data is changed.
+- The real admin interface requires PHP hosting and does not run on GitHub Pages.
+
 ## Deployment
 
 This repository is configured for Firebase Hosting via `firebase.json`.

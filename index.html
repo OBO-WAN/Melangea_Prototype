@@ -164,37 +164,7 @@
         </div>
 
         <div class="card" data-aos="fade-up">
-          <ul class="eventlist">
-            <li class="event">
-              <div class="event-date">
-                <div class="event-day">12</div>
-                <div class="event-month">Apr</div>
-              </div>
-              <div class="event-body">
-                <div class="strong">Konzert</div>
-                <div class="muted small">Freinsheim • 19:30</div>
-              </div>
-              <div class="event-actions">
-                <a class="btn btn-small btn-ghost" href="#">Details</a>
-                <a class="btn btn-small" href="#">Tickets</a>
-              </div>
-            </li>
-
-            <li class="event">
-              <div class="event-date">
-                <div class="event-day">04</div>
-                <div class="event-month">Mai</div>
-              </div>
-              <div class="event-body">
-                <div class="strong">Familienkonzert</div>
-                <div class="muted small">Ludwigshafen BASF Halle • 11:00</div>
-              </div>
-              <div class="event-actions">
-                <a class="btn btn-small btn-ghost" href="#">Details</a>
-                <a class="btn btn-small" href="#">Tickets</a>
-              </div>
-            </li>
-          </ul>
+          <ul class="eventlist" data-concert-render="compact"></ul>
 
           <div class="card-footer">
             <a class="btn btn-ghost" href="konzerte.html">Alle Konzerte ansehen →</a>
@@ -600,6 +570,8 @@
   <script src="./JS/newsletter.js"></script>
   <script src="./JS/validation.js"></script>
   <script type="module" src="./JS/newsletter-submit.js"></script>
+  <script src="./JS/concert-events.js"></script>
+  <script src="./JS/concert-render.js"></script>
   <script src="./vendor/aos/aos.js"></script>
   <script src="./JS/app.js"></script>
 </body>

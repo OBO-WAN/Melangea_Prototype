@@ -41,13 +41,25 @@ function clean_text($value): string
     return preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $text) ?? '';
 }
 
-function is_valid_date(string $date): bool
+function normalize_german_date(string $date): ?string
 {
-    if (!preg_match('/^(\d{2})\.(\d{2})\.(\d{4})$/', $date, $matches)) {
-        return false;
+    $date = trim($date);
+
+    if (preg_match('/^(\d{2})\.(\d{2})\.(\d{4})$/', $date, $matches)) {
+        if (checkdate((int) $matches[2], (int) $matches[1], (int) $matches[3])) {
+            return $date;
+        }
+
+        return null;
     }
 
-    return checkdate((int) $matches[2], (int) $matches[1], (int) $matches[3]);
+    if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $date, $matches)) {
+        if (checkdate((int) $matches[2], (int) $matches[3], (int) $matches[1])) {
+            return $matches[3] . '.' . $matches[2] . '.' . $matches[1];
+        }
+    }
+
+    return null;
 }
 
 function is_valid_time(string $time): bool
@@ -123,7 +135,9 @@ foreach ($postedConcerts as $concert) {
     $ticketsUrl = clean_text($concert['ticketsUrl'] ?? '');
     $status = clean_text($concert['status'] ?? '');
 
-    if (!is_valid_date($date)) {
+    $normalizedDate = normalize_german_date($date);
+
+    if ($normalizedDate === null) {
         show_error('Bitte prüfen Sie das Datum in Zeile ' . $rowNumber . '. Erwartetes Format: TT.MM.JJJJ.');
     }
 
@@ -144,7 +158,7 @@ foreach ($postedConcerts as $concert) {
     }
 
     $validatedConcerts[] = [
-        'date' => $date,
+        'date' => $normalizedDate,
         'time' => $time,
         'title' => $title,
         'venue' => $venue,

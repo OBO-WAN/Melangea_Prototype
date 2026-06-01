@@ -46,22 +46,34 @@ body.page-ueber-uns .site-footer {
   z-index: 0;
   border-radius: 999px;
   pointer-events: none;
-  filter: blur(4px);
+  filter: blur(8px);
+  opacity: 0.74;
+  mix-blend-mode: screen;
 }
 
 .about-hero::before {
-  inset: 12% auto auto 7%;
-  width: clamp(7rem, 13vw, 14rem);
-  height: clamp(7rem, 13vw, 14rem);
-  background: rgba(46, 229, 157, 0.075);
+  inset: 13% auto auto 6%;
+  width: clamp(7rem, 13vw, 13rem);
+  height: clamp(7rem, 13vw, 13rem);
+  background:
+    radial-gradient(circle at 32% 30%, rgba(255, 255, 255, 0.14), transparent 20%),
+    radial-gradient(circle at 62% 28%, rgba(244, 231, 186, 0.20), transparent 24%),
+    radial-gradient(circle at 38% 66%, rgba(46, 229, 157, 0.14), transparent 27%),
+    radial-gradient(circle at 72% 70%, rgba(255, 255, 255, 0.10), transparent 21%),
+    radial-gradient(circle, rgba(46, 229, 157, 0.06), transparent 70%);
 }
 
 .about-hero::after {
   right: 8%;
-  bottom: 8%;
-  width: clamp(6rem, 11vw, 12rem);
-  height: clamp(6rem, 11vw, 12rem);
-  background: rgba(244, 231, 186, 0.08);
+  bottom: 10%;
+  width: clamp(6rem, 11vw, 11.5rem);
+  height: clamp(6rem, 11vw, 11.5rem);
+  background:
+    radial-gradient(circle at 28% 36%, rgba(244, 231, 186, 0.18), transparent 24%),
+    radial-gradient(circle at 66% 34%, rgba(255, 255, 255, 0.13), transparent 20%),
+    radial-gradient(circle at 56% 72%, rgba(46, 229, 157, 0.11), transparent 26%),
+    radial-gradient(circle at 76% 64%, rgba(244, 231, 186, 0.10), transparent 18%),
+    radial-gradient(circle, rgba(244, 231, 186, 0.055), transparent 72%);
 }
 
 .about-hero__inner {

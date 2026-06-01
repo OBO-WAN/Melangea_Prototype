@@ -15,36 +15,34 @@
   content: "";
   position: absolute;
   z-index: 0;
-  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 50%;
   pointer-events: none;
-  filter: blur(8px);
-  opacity: 0.68;
+  background:
+    radial-gradient(circle at 30% 28%, rgba(255, 255, 255, 0.40) 0 5%, transparent 10%),
+    radial-gradient(circle at 67% 71%, rgba(46, 229, 157, 0.13) 0 7%, transparent 16%),
+    radial-gradient(circle at 50% 50%, transparent 53%, rgba(244, 231, 186, 0.17) 55%, transparent 63%),
+    radial-gradient(circle at 50% 50%, transparent 69%, rgba(255, 255, 255, 0.18) 71%, transparent 75%);
+  box-shadow:
+    inset 7px 9px 18px rgba(255, 255, 255, 0.08),
+    inset -8px -10px 22px rgba(46, 229, 157, 0.055),
+    0 0 22px rgba(244, 231, 186, 0.065);
+  opacity: 0.54;
   mix-blend-mode: screen;
 }
 
 .concerts-hero::before {
-  inset: 9% auto auto 5%;
-  width: clamp(6.5rem, 12vw, 12.5rem);
-  height: clamp(6.5rem, 12vw, 12.5rem);
-  background:
-    radial-gradient(circle at 30% 32%, rgba(255, 255, 255, 0.12), transparent 20%),
-    radial-gradient(circle at 58% 26%, rgba(46, 229, 157, 0.15), transparent 25%),
-    radial-gradient(circle at 38% 68%, rgba(244, 231, 186, 0.16), transparent 24%),
-    radial-gradient(circle at 74% 66%, rgba(255, 255, 255, 0.09), transparent 18%),
-    radial-gradient(circle, rgba(46, 229, 157, 0.055), transparent 72%);
+  inset: 11% auto auto 6%;
+  width: clamp(4.5rem, 7.5vw, 7.5rem);
+  height: clamp(4.5rem, 7.5vw, 7.5rem);
 }
 
 .concerts-hero::after {
-  right: 7%;
-  bottom: 7%;
-  width: clamp(5.75rem, 10vw, 10.5rem);
-  height: clamp(5.75rem, 10vw, 10.5rem);
-  background:
-    radial-gradient(circle at 32% 34%, rgba(244, 231, 186, 0.17), transparent 24%),
-    radial-gradient(circle at 66% 38%, rgba(255, 255, 255, 0.12), transparent 20%),
-    radial-gradient(circle at 54% 74%, rgba(46, 229, 157, 0.11), transparent 27%),
-    radial-gradient(circle at 78% 58%, rgba(244, 231, 186, 0.09), transparent 18%),
-    radial-gradient(circle, rgba(244, 231, 186, 0.05), transparent 72%);
+  right: 8%;
+  bottom: 11%;
+  width: clamp(4rem, 6.5vw, 6.5rem);
+  height: clamp(4rem, 6.5vw, 6.5rem);
+  opacity: 0.48;
 }
 
 .concerts-hero__inner {

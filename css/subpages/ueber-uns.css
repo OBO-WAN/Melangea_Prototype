@@ -287,7 +287,7 @@ body.page-ueber-uns .site-footer {
 
 .about-history__header h2 {
   margin: 0;
-  font-size: clamp(3.4rem, 6vw, 7rem);
+  font-size: clamp(3.4rem, 6vw, 4rem);
   line-height: 0.95;
 }
 

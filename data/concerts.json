@@ -1,46 +1,46 @@
 [
-  {
-    "date": "12.06.2026",
-    "time": "19:30 Uhr",
-    "title": "Konzert",
-    "venue": "Freinsheim",
-    "city": "Freinsheim",
-    "description": "Kurze Beschreibung oder Programmhinweis ergänzen.",
-    "detailsUrl": "#",
-    "ticketsUrl": "#",
-    "status": "upcoming"
-  },
-  {
-    "date": "25.07.2026",
-    "time": "20:00 Uhr",
-    "title": "Konzert",
-    "venue": "Tonhalle Düsseldorf",
-    "city": "Düsseldorf",
-    "description": "Feat. Franzl",
-    "detailsUrl": "#",
-    "ticketsUrl": "#",
-    "status": "upcoming"
-  },
-  {
-    "date": "25.07.2026",
-    "time": "20:00 Uhr",
-    "title": "Konzert",
-    "venue": "Tonhalle Düsseldorf",
-    "city": "Düsseldorf",
-    "description": "Feat. Franzl",
-    "detailsUrl": "#",
-    "ticketsUrl": "#",
-    "status": "upcoming"
-  },
-   {
-    "date": "25.07.2026",
-    "time": "20:00 Uhr",
-    "title": "Konzert",
-    "venue": "Tonhalle Düsseldorf",
-    "city": "Düsseldorf",
-    "description": "Feat. Franzl",
-    "detailsUrl": "#",
-    "ticketsUrl": "#",
-    "status": "upcoming"
-  }
+    {
+        "date": "12.06.2026",
+        "time": "19:30 Uhr",
+        "title": "Konzert",
+        "venue": "Freinsheim",
+        "city": "Freinsheim",
+        "description": "Kurze Beschreibung oder Programmhinweis ergänzen.",
+        "detailsUrl": "#",
+        "ticketsUrl": "#",
+        "status": "upcoming"
+    },
+    {
+        "date": "25.07.2026",
+        "time": "20:00 Uhr",
+        "title": "Konzert",
+        "venue": "Tonhalle Düsseldorf",
+        "city": "Düsseldorf",
+        "description": "Feat. Franzl",
+        "detailsUrl": "#",
+        "ticketsUrl": "#",
+        "status": "upcoming"
+    },
+    {
+        "date": "25.07.2026",
+        "time": "20:00 Uhr",
+        "title": "Konzert",
+        "venue": "Tonhalle Düsseldorf",
+        "city": "Düsseldorf",
+        "description": "Feat. Franzl",
+        "detailsUrl": "#",
+        "ticketsUrl": "#",
+        "status": "upcoming"
+    },
+    {
+        "date": "25.09.2026",
+        "time": "11:30 Uhr",
+        "title": "Kinderzonzert",
+        "venue": "Kindergarten",
+        "city": "Bad Dürkehim",
+        "description": "Wein ist ebenfalls für die Kids dabei!",
+        "detailsUrl": "#",
+        "ticketsUrl": "#",
+        "status": "upcoming"
+    }
 ]

@@ -55,7 +55,7 @@
 .booking-hero h1 {
   margin: 0;
   font-family: "Raleway", sans-serif;
-  font-size: clamp(3.2rem, 10vw, 7.5rem);
+  font-size: clamp(3.2rem, 10vw, 4rem);
   font-weight: 200;
   letter-spacing: clamp(0.1em, 1vw, 0.28em);
   line-height: 0.98;

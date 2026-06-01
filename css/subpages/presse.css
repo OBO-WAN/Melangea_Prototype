@@ -53,7 +53,7 @@
 .news-hero h1 {
   margin: 0;
   font-family: "Raleway", sans-serif;
-  font-size: clamp(3.25rem, 9vw, 7rem);
+  font-size: clamp(3.25rem, 9vw, 4rem);
   font-weight: 220;
   letter-spacing: clamp(0.08em, 1vw, 0.24em);
   line-height: 1;

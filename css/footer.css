@@ -224,6 +224,18 @@
     padding: 0.1rem 0;
   }
 
+  .footer-col--booking {
+    align-items: center;
+  }
+
+  .footer-booking-btn,
+  .footer-col .footer-booking-btn {
+    padding-inline: 1.2rem;
+    width: fit-content;
+    max-width: 100%;
+    white-space: nowrap;
+  }
+
   .footer-col a:hover {
     transform: none;
   }

@@ -7,7 +7,7 @@
 
 .footer-grid {
   display: grid;
-  grid-template-columns: 1.45fr 1fr 1fr;
+  grid-template-columns: 1.35fr 1fr 0.9fr 1.05fr;
   gap: 3.25rem;
   align-items: start;
 }
@@ -20,12 +20,14 @@
 }
 
 .footer-col:nth-child(2),
-.footer-col:nth-child(3) {
+.footer-col:nth-child(3),
+.footer-col:nth-child(4) {
   padding-left: 2rem;
 }
 
 .footer-col:nth-child(2)::before,
-.footer-col:nth-child(3)::before {
+.footer-col:nth-child(3)::before,
+.footer-col:nth-child(4)::before {
   content: "";
   position: absolute;
   left: 0;
@@ -75,6 +77,16 @@
   opacity: 0.8;
 }
 
+.footer-col--booking .small {
+  max-width: 15rem;
+}
+
+.footer-booking-btn,
+.footer-col .footer-booking-btn {
+  display: inline-flex;
+  color: #08121f;
+}
+
 /* 641px – 900px */
 @media (min-width: 641px) and (max-width: 900px) {
   .site-footer {
@@ -85,7 +97,7 @@
     grid-template-columns: 1.2fr 1fr;
     grid-template-areas:
       "brand kontakt"
-      "brand recht";
+      "recht booking";
     gap: 2.2rem 2rem;
   }
 
@@ -108,8 +120,14 @@
     padding-left: 1.4rem;
   }
 
+  .footer-col:nth-child(4) {
+    grid-area: booking;
+    padding-left: 1.4rem;
+  }
+
   .footer-col:nth-child(2)::before,
-  .footer-col:nth-child(3)::before {
+  .footer-col:nth-child(3)::before,
+  .footer-col:nth-child(4)::before {
     top: 0.2rem;
     bottom: 0.2rem;
     background: linear-gradient(
@@ -156,12 +174,14 @@
   }
 
   .footer-col:nth-child(2),
-  .footer-col:nth-child(3) {
+  .footer-col:nth-child(3),
+  .footer-col:nth-child(4) {
     padding-left: 0;
   }
 
   .footer-col:nth-child(2)::before,
-  .footer-col:nth-child(3)::before {
+  .footer-col:nth-child(3)::before,
+  .footer-col:nth-child(4)::before {
     display: none;
   }
 

@@ -139,43 +139,6 @@
   grid-row: span 2;
 }
 
-/* Press / Downloads */
-
-.media-press-section {
-  padding-top: clamp(2rem, 4vw, 3rem);
-}
-
-.media-press-collage {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.25rem;
-  padding: clamp(1.4rem, 3vw, 2rem);
-  border: 1px solid rgba(244, 231, 186, 0.16);
-  background:
-    radial-gradient(620px 280px at 8% 0%, rgba(244, 231, 186, 0.1), transparent 60%),
-    radial-gradient(520px 260px at 100% 100%, rgba(133, 217, 255, 0.055), transparent 58%),
-    linear-gradient(135deg, rgba(18, 19, 27, 0.98), rgba(30, 27, 35, 0.96));
-  box-shadow:
-    0 20px 44px rgba(0, 0, 0, 0.24),
-    inset 0 1px 0 rgba(255, 255, 255, 0.055);
-}
-
-.media-press-collage h2 {
-  margin-bottom: 0.5rem;
-}
-
-.media-press-collage p {
-  margin-bottom: 0;
-}
-
-.media-press-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: flex-end;
-}
-
 /* Responsive */
 
 @media (max-width: 900px) {
@@ -198,15 +161,6 @@
   .media-photo-wall {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: 180px;
-  }
-
-  .media-press-collage {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  .media-press-actions {
-    justify-content: flex-start;
   }
 }
 

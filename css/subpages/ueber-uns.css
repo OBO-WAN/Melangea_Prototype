@@ -429,13 +429,19 @@ body.page-ueber-uns .site-footer {
   }
 
   .about-hero::before {
-    width: clamp(5rem, 24vw, 8rem);
-    height: clamp(5rem, 24vw, 8rem);
+    inset: 18% auto auto 7%;
+    width: clamp(3.5rem, 18vw, 5.5rem);
+    height: clamp(3.5rem, 18vw, 5.5rem);
+    opacity: 0.38;
   }
 
   .about-hero::after {
-    width: clamp(4.5rem, 20vw, 7rem);
-    height: clamp(4.5rem, 20vw, 7rem);
+    top: 34%;
+    right: 8%;
+    bottom: auto;
+    width: clamp(3rem, 15vw, 4.75rem);
+    height: clamp(3rem, 15vw, 4.75rem);
+    opacity: 0.3;
   }
 
   .about-kicker {
@@ -456,6 +462,12 @@ body.page-ueber-uns .site-footer {
   .about-vision p {
     font-size: 1.02rem;
     line-height: 1.62;
+  }
+
+  .about-copy p,
+  .about-vision p,
+  .about-history p {
+    text-align: left;
   }
 
   .about-history__header h2 {

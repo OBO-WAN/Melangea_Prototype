@@ -3,11 +3,41 @@
 }
 
 .concerts-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   /* padding-top: clamp(1rem, 3vw, 2.25rem); */
   padding-bottom: clamp(1.5rem, 4vw, 3rem);
 }
 
+.concerts-hero::before,
+.concerts-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  border-radius: 999px;
+  pointer-events: none;
+  filter: blur(4px);
+}
+
+.concerts-hero::before {
+  inset: 10% auto auto 6%;
+  width: clamp(7rem, 13vw, 14rem);
+  height: clamp(7rem, 13vw, 14rem);
+  background: rgba(46, 229, 157, 0.075);
+}
+
+.concerts-hero::after {
+  right: 7%;
+  bottom: 6%;
+  width: clamp(6rem, 11vw, 12rem);
+  height: clamp(6rem, 11vw, 12rem);
+  background: rgba(244, 231, 186, 0.075);
+}
+
 .concerts-hero__inner {
+  position: relative;
+  z-index: 1;
   display: grid;
   justify-items: center;
 }
@@ -75,6 +105,18 @@
 
 .concerts-card--past {
   border-left: 3px solid color-mix(in srgb, currentColor 25%, transparent);
+}
+
+@media (max-width: 680px) {
+  .concerts-hero::before {
+    width: clamp(5rem, 24vw, 8rem);
+    height: clamp(5rem, 24vw, 8rem);
+  }
+
+  .concerts-hero::after {
+    width: clamp(4.5rem, 20vw, 7rem);
+    height: clamp(4.5rem, 20vw, 7rem);
+  }
 }
 
 @media (max-width: 640px) {

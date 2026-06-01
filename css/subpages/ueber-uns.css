@@ -33,10 +33,40 @@ body.page-ueber-uns .site-footer {
 }
 
 .about-hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   padding: clamp(3rem, 7vw, 6rem) 0 clamp(1.5rem, 4vw, 3rem);
 }
 
+.about-hero::before,
+.about-hero::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  border-radius: 999px;
+  pointer-events: none;
+  filter: blur(4px);
+}
+
+.about-hero::before {
+  inset: 12% auto auto 7%;
+  width: clamp(7rem, 13vw, 14rem);
+  height: clamp(7rem, 13vw, 14rem);
+  background: rgba(46, 229, 157, 0.075);
+}
+
+.about-hero::after {
+  right: 8%;
+  bottom: 8%;
+  width: clamp(6rem, 11vw, 12rem);
+  height: clamp(6rem, 11vw, 12rem);
+  background: rgba(244, 231, 186, 0.08);
+}
+
 .about-hero__inner {
+  position: relative;
+  z-index: 1;
   display: grid;
   justify-items: center;
   text-align: center;
@@ -386,6 +416,16 @@ body.page-ueber-uns .site-footer {
 @media (max-width: 680px) {
   .about-hero {
     padding-top: 2.5rem;
+  }
+
+  .about-hero::before {
+    width: clamp(5rem, 24vw, 8rem);
+    height: clamp(5rem, 24vw, 8rem);
+  }
+
+  .about-hero::after {
+    width: clamp(4.5rem, 20vw, 7rem);
+    height: clamp(4.5rem, 20vw, 7rem);
   }
 
   .about-kicker {

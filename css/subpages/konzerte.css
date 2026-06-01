@@ -81,7 +81,7 @@
 .concerts-grid {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
 }
 
 .concerts-card {
@@ -89,6 +89,8 @@
   flex-direction: column;
   gap: 0.7rem;
   height: 100%;
+  min-width: 0;
+  width: 100%;
 }
 
 .concerts-card__date {
@@ -104,6 +106,7 @@
 .concerts-card__meta,
 .concerts-card__description {
   margin: 0;
+  overflow-wrap: anywhere;
 }
 
 .concerts-card__actions {
@@ -133,5 +136,26 @@
   .concerts-card__actions {
     flex-direction: column;
     align-items: stretch;
+  }
+}
+
+@media (max-width: 551px) {
+  .concerts-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .concerts-card {
+    max-width: 100%;
+    width: min(100%, 32rem);
+  }
+
+  .concerts-card__actions {
+    width: 100%;
+  }
+
+  .concerts-card__actions .btn {
+    min-width: 0;
+    width: 100%;
   }
 }

@@ -6,6 +6,7 @@ require __DIR__ . '/auth.php';
 require_authentication();
 
 const ALLOWED_STATUSES = ['upcoming', 'past', 'cancelled'];
+const ALLOWED_MINUTES = ['00', '15', '30', '45'];
 
 function show_error(string $message): void
 {
@@ -78,6 +79,8 @@ function is_empty_concert_row(array $concert): bool
     $fieldsToCheck = [
         'date',
         'time',
+        'hour',
+        'minute',
         'title',
         'venue',
         'city',
@@ -162,7 +165,9 @@ foreach ($postedConcerts as $postedIndex => $concert) {
     $rowNumber++;
 
     $date = clean_text($concert['date'] ?? '');
-    $time = clean_text($concert['time'] ?? '');
+    $hour = clean_text($concert['hour'] ?? '');
+    $minute = clean_text($concert['minute'] ?? '');
+    $time = $hour . ':' . $minute . ' Uhr';
     $title = clean_text($concert['title'] ?? '');
     $venue = clean_text($concert['venue'] ?? '');
     $city = clean_text($concert['city'] ?? '');
@@ -172,6 +177,11 @@ foreach ($postedConcerts as $postedIndex => $concert) {
     $status = clean_text($concert['status'] ?? '');
 
     $normalizedDate = normalize_german_date($date);
+
+    if (!preg_match('/^([01]\d|2[0-3])$/', $hour) || !in_array($minute, ALLOWED_MINUTES, true)) {
+        show_error('Bitte prüfen Sie die Uhrzeit in Zeile ' . $rowNumber . '. Erlaubt sind Stunden von 00 bis 23 und Minuten 00, 15, 30 oder 45.');
+    }
+
     $normalizedTime = normalize_german_time($time);
 
     if ($normalizedDate === null) {

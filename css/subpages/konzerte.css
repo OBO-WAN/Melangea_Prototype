@@ -94,9 +94,8 @@
 
 .concerts-grid {
   display: grid;
-  grid-template-columns: minmax(0, min(100%, 760px));
-  justify-content: center;
-  gap: clamp(1.25rem, 3vw, 2rem);
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
 }
 
 .concerts-card {
@@ -155,6 +154,16 @@
 }
 
 @media (max-width: 551px) {
+  .concerts-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .concerts-card {
+    max-width: 100%;
+    width: min(100%, 32rem);
+  }
+
   .concerts-card__actions {
     width: 100%;
   }

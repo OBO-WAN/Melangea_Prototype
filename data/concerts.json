@@ -1,13 +1,13 @@
 [
     {
-        "date": "12.06.2026",
-        "time": "19:30 Uhr",
+        "date": "13.06.2026",
+        "time": "20:45 Uhr",
         "title": "Konzert",
-        "venue": "Freinsheim",
+        "venue": "Markthalle",
         "city": "Freinsheim",
-        "description": "Kurze Beschreibung oder Programmhinweis ergänzen.",
-        "detailsUrl": "#",
-        "ticketsUrl": "#",
+        "description": "Casual Concert sponsored by Stadt Freinsheim",
+        "detailsUrl": "https://www.vg-freinsheim.de/gemeinden/freinsheim/",
+        "ticketsUrl": "https://www.vg-freinsheim.de/rathaus-politik/verwaltung/verwaltungsgliederung/",
         "status": "upcoming"
     },
     {
@@ -17,8 +17,8 @@
         "venue": "Tonhalle Düsseldorf",
         "city": "Düsseldorf",
         "description": "Feat. Franzl",
-        "detailsUrl": "#",
-        "ticketsUrl": "#",
+        "detailsUrl": "https://www.tonhalle.de/",
+        "ticketsUrl": "https://www.tonhalle.de/konzertkasse-tonhalle",
         "status": "upcoming"
     },
     {
@@ -27,9 +27,9 @@
         "title": "Konzert",
         "venue": "Tonhalle Düsseldorf",
         "city": "Düsseldorf",
-        "description": "Feat. Franzl",
-        "detailsUrl": "#",
-        "ticketsUrl": "#",
+        "description": "Monsieur L' accordioniste avec Mme. la hautboiste",
+        "detailsUrl": "https://www.tonhalle.de/konzertkasse-tonhalle",
+        "ticketsUrl": "https://www.tonhalle.de/konzertkasse-tonhalle",
         "status": "upcoming"
     },
     {
@@ -39,7 +39,7 @@
         "venue": "Kindergarten",
         "city": "Bad Dürkehim",
         "description": "Wein ist ebenfalls für die Kids dabei!",
-        "detailsUrl": "#",
+        "detailsUrl": "https://www.bad-duerkheim.de/lokales-soziales/kinder-jugendliche/kindertagesstaetten/haus-fuer-kinder/",
         "ticketsUrl": "#",
         "status": "upcoming"
     }

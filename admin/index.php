@@ -59,13 +59,13 @@ function german_date_to_input_date(string $date): string
     return '';
 }
 
-function german_time_to_input_time(string $time): string
+function split_german_time(string $time): array
 {
     if (preg_match('/^([01]\d|2[0-3]):([0-5]\d)(?: Uhr)?$/', trim($time), $matches)) {
-        return $matches[1] . ':' . $matches[2];
+        return [$matches[1], $matches[2]];
     }
 
-    return '';
+    return ['19', '30'];
 }
 
 function render_concert_row(array $concert, $index, array $fields, bool $isTemplate = false): void
@@ -85,20 +85,46 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
 
       <div class="concert-grid">
         <?php foreach ($fields as $key => $label): ?>
-          <label class="field field--<?= $key === 'description' ? 'wide' : 'normal' ?>">
-            <span><?= escape_html($label) ?></span>
-            <?php if ($key === 'description'): ?>
-              <textarea name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" rows="3"<?= $disabledAttribute ?>><?= escape_html(concert_value($concert, $key)) ?></textarea>
-            <?php elseif ($key === 'date'): ?>
-              <input type="date" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(german_date_to_input_date(concert_value($concert, $key))) ?>"<?= $disabledAttribute ?>>
-              <small class="field-help">Datum über den Kalender auswählen.</small>
-            <?php elseif ($key === 'time'): ?>
-              <input type="time" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(german_time_to_input_time(concert_value($concert, $key))) ?>"<?= $disabledAttribute ?>>
-              <small class="field-help">Uhrzeit über den Zeitwähler auswählen.</small>
-            <?php else: ?>
-              <input type="text" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(concert_value($concert, $key)) ?>"<?= $disabledAttribute ?>>
-            <?php endif; ?>
-          </label>
+          <?php if ($key === 'time'): ?>
+            <?php [$selectedHour, $selectedMinute] = split_german_time(concert_value($concert, $key)); ?>
+            <div class="field field--normal">
+              <span><?= escape_html($label) ?></span>
+              <div class="time-select" role="group" aria-label="Uhrzeit">
+                <label class="time-select__field">
+                  <span class="sr-only">Stunde</span>
+                  <select name="<?= escape_html($namePrefix) ?>[hour]"<?= $disabledAttribute ?>>
+                    <?php for ($hour = 0; $hour <= 23; $hour++): ?>
+                      <?php $hourValue = str_pad((string) $hour, 2, '0', STR_PAD_LEFT); ?>
+                      <option value="<?= escape_html($hourValue) ?>" <?= $selectedHour === $hourValue ? 'selected' : '' ?>><?= escape_html($hourValue) ?></option>
+                    <?php endfor; ?>
+                  </select>
+                </label>
+                <span class="time-select__separator" aria-hidden="true">:</span>
+                <label class="time-select__field">
+                  <span class="sr-only">Minute</span>
+                  <select name="<?= escape_html($namePrefix) ?>[minute]"<?= $disabledAttribute ?>>
+                    <?php foreach (['00', '15', '30', '45'] as $minuteValue): ?>
+                      <option value="<?= escape_html($minuteValue) ?>" <?= $selectedMinute === $minuteValue ? 'selected' : '' ?>><?= escape_html($minuteValue) ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </label>
+                <span class="time-select__suffix">Uhr</span>
+              </div>
+              <small class="field-help">Stunde und Viertelstunde direkt auswählen.</small>
+            </div>
+          <?php else: ?>
+            <label class="field field--<?= $key === 'description' ? 'wide' : 'normal' ?>">
+              <span><?= escape_html($label) ?></span>
+              <?php if ($key === 'description'): ?>
+                <textarea name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" rows="3"<?= $disabledAttribute ?>><?= escape_html(concert_value($concert, $key)) ?></textarea>
+              <?php elseif ($key === 'date'): ?>
+                <input type="date" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(german_date_to_input_date(concert_value($concert, $key))) ?>"<?= $disabledAttribute ?>>
+                <small class="field-help">Datum über den Kalender auswählen.</small>
+              <?php else: ?>
+                <input type="text" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(concert_value($concert, $key)) ?>"<?= $disabledAttribute ?>>
+              <?php endif; ?>
+            </label>
+          <?php endif; ?>
         <?php endforeach; ?>
 
         <label class="field">

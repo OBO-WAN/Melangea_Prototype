@@ -261,6 +261,42 @@ body.admin-page {
   padding: 11px 12px;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.time-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.time-select__field {
+  flex: 0 1 96px;
+}
+
+.time-select__field select {
+  text-align: center;
+}
+
+.time-select__separator,
+.time-select__suffix {
+  color: var(--admin-muted);
+  font-weight: 800;
+}
+
+.time-select__separator {
+  font-size: 1.25rem;
+}
+
 .admin-page textarea {
   resize: vertical;
 }

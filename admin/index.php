@@ -59,6 +59,15 @@ function german_date_to_input_date(string $date): string
     return '';
 }
 
+function german_time_to_input_time(string $time): string
+{
+    if (preg_match('/^([01]\d|2[0-3]):([0-5]\d)(?: Uhr)?$/', trim($time), $matches)) {
+        return $matches[1] . ':' . $matches[2];
+    }
+
+    return '';
+}
+
 function render_concert_row(array $concert, $index, array $fields, bool $isTemplate = false): void
 {
     $rowClass = $isTemplate ? 'concert-row concert-row--template' : 'concert-row';
@@ -83,6 +92,9 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
             <?php elseif ($key === 'date'): ?>
               <input type="date" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(german_date_to_input_date(concert_value($concert, $key))) ?>"<?= $disabledAttribute ?>>
               <small class="field-help">Datum über den Kalender auswählen.</small>
+            <?php elseif ($key === 'time'): ?>
+              <input type="time" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(german_time_to_input_time(concert_value($concert, $key))) ?>"<?= $disabledAttribute ?>>
+              <small class="field-help">Uhrzeit über den Zeitwähler auswählen.</small>
             <?php else: ?>
               <input type="text" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(concert_value($concert, $key)) ?>"<?= $disabledAttribute ?>>
             <?php endif; ?>

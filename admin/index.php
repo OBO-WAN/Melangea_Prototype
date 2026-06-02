@@ -50,6 +50,15 @@ function concert_value(array $concert, string $key): string
     return isset($concert[$key]) && is_scalar($concert[$key]) ? (string) $concert[$key] : '';
 }
 
+function german_date_to_input_date(string $date): string
+{
+    if (preg_match('/^(\d{2})\.(\d{2})\.(\d{4})$/', $date, $matches)) {
+        return $matches[3] . '-' . $matches[2] . '-' . $matches[1];
+    }
+
+    return '';
+}
+
 function render_concert_row(array $concert, $index, array $fields, bool $isTemplate = false): void
 {
     $rowClass = $isTemplate ? 'concert-row concert-row--template' : 'concert-row';
@@ -71,6 +80,9 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
             <span><?= escape_html($label) ?></span>
             <?php if ($key === 'description'): ?>
               <textarea name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" rows="3"<?= $disabledAttribute ?>><?= escape_html(concert_value($concert, $key)) ?></textarea>
+            <?php elseif ($key === 'date'): ?>
+              <input type="date" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(german_date_to_input_date(concert_value($concert, $key))) ?>"<?= $disabledAttribute ?>>
+              <small class="field-help">Datum über den Kalender auswählen.</small>
             <?php else: ?>
               <input type="text" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(concert_value($concert, $key)) ?>"<?= $disabledAttribute ?>>
             <?php endif; ?>

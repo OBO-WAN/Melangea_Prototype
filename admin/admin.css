@@ -248,6 +248,7 @@ body.admin-page {
 
 .admin-page input[type="text"],
 .admin-page input[type="password"],
+.admin-page input[type="date"],
 .admin-page textarea,
 .admin-page select {
   width: 100%;
@@ -262,6 +263,12 @@ body.admin-page {
 
 .admin-page textarea {
   resize: vertical;
+}
+
+.field-help {
+  color: var(--admin-muted);
+  font-size: 0.85rem;
+  font-weight: 400;
 }
 
 .admin-page input:focus,

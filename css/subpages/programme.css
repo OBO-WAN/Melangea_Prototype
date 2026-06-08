@@ -73,6 +73,19 @@
   z-index: 1;
   display: grid;
   justify-items: center;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  text-align: center;
+}
+
+.programmes-hero h1 {
+  margin: 0;
+  color: var(--text);
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(2.8rem, 7vw, 4.8rem);
+  font-weight: 200;
+  letter-spacing: clamp(0.1em, 1vw, 0.28em);
+  line-height: 0.98;
+  text-transform: uppercase;
 }
 
 .programmes-hero__inner::before {
@@ -274,10 +287,6 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.045);
 }
 
-.programmes-cta-card {
-  gap: 1rem;
-}
-
 .programmes-cta-actions {
   display: flex;
   flex-wrap: wrap;
@@ -389,21 +398,5 @@
 
   .programmes-page .programmes-repertoire.section {
     padding-top: 0.5rem;
-  }
-}
-
-.mobile-title-break {
-  display: none;
-}
-
-@media (max-width: 640px) {
-  .mobile-title-break {
-    display: initial;
-  }
-
-  .programmes-programme h3.programmes-programme__title--long {
-    font-size: clamp(2rem, 9.5vw, 2.15rem);
-    line-height: 1.08;
-    letter-spacing: 0.015em;
   }
 }

@@ -64,6 +64,19 @@
   z-index: 1;
   display: grid;
   justify-items: center;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  text-align: center;
+}
+
+.concerts-hero h1 {
+  margin: 0;
+  color: var(--text);
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(2.8rem, 7vw, 4.8rem);
+  font-weight: 200;
+  letter-spacing: clamp(0.1em, 1vw, 0.28em);
+  line-height: 0.98;
+  text-transform: uppercase;
 }
 
 .concerts-hero__image {

@@ -35,11 +35,12 @@
   position: relative;
   margin: 0;
   color: var(--text);
-  font-family: var(--font-display);
-  font-size: clamp(1.35rem, 7vw, 4.35rem);
-  font-weight: 700;
-  letter-spacing: 0.035em;
-  line-height: 1.02;
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  font-weight: 200;
+  letter-spacing: clamp(0.1em, 1vw, 0.28em);
+  line-height: 0.98;
+  text-transform: uppercase;
 }
 
 .legal-card {

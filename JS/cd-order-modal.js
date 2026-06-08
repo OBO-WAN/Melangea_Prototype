@@ -2,11 +2,8 @@ const cdOrderOverlay = document.getElementById("cd-order-overlay");
 const cdOrderOpenButtons = document.querySelectorAll("[data-cd-order-open]");
 const cdOrderCloseButtons = document.querySelectorAll("[data-cd-order-close]");
 const cdOrderForm = document.querySelector(".cd-order-form");
-const cdOrderRecipient = "info@melangea2.com";
-const cdOrderSubject = "CD-Bestellung Mélange à Deux";
-
-// A real automatic reply must be configured later via the email provider, backend, or mail automation.
-// The subject ‘CD-Bestellung Mélange à Deux’ can be used for filtering.
+const cdOrderStatus = document.querySelector("[data-cd-order-status]");
+const cdOrderSubmitButton = cdOrderForm?.querySelector('button[type="submit"]');
 
 if (cdOrderOverlay && cdOrderOpenButtons.length) {
   let cdOrderLastFocusedElement = null;
@@ -29,6 +26,16 @@ if (cdOrderOverlay && cdOrderOpenButtons.length) {
     document.body.style.overflow = isOpen ? "hidden" : "";
   };
 
+  const setCdOrderStatus = (message, type = "info") => {
+    if (!cdOrderStatus) {
+      return;
+    }
+
+    cdOrderStatus.textContent = message;
+    cdOrderStatus.hidden = !message;
+    cdOrderStatus.dataset.status = type;
+  };
+
   const openCdOrderModal = (event) => {
     event.preventDefault();
     cdOrderLastFocusedElement = event.currentTarget;
@@ -45,7 +52,8 @@ if (cdOrderOverlay && cdOrderOpenButtons.length) {
     }, 0);
   };
 
-  const closeCdOrderModal = () => {
+  const closeCdOrderModal = (event) => {
+    event?.preventDefault();
     cdOrderOverlay.classList.remove("is-open");
     cdOrderOverlay.setAttribute("aria-hidden", "true");
     setCdOrderBodyScroll(false);
@@ -90,57 +98,73 @@ if (cdOrderOverlay && cdOrderOpenButtons.length) {
     }
 
     if (event.key === "Escape") {
-      closeCdOrderModal();
+      closeCdOrderModal(event);
       return;
     }
 
     trapCdOrderFocus(event);
   });
 
-  cdOrderForm?.addEventListener("submit", (event) => {
+  cdOrderForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
+    setCdOrderStatus("");
 
     if (!cdOrderForm.checkValidity()) {
       cdOrderForm.reportValidity();
+      setCdOrderStatus("Bitte prüfen Sie die Pflichtfelder.", "error");
       return;
     }
 
-    const formData = new FormData(cdOrderForm);
-    const email = String(formData.get("email") || "").trim();
-    const street = String(formData.get("street") || "").trim();
-    const city = String(formData.get("city") || "").trim();
-    const cdTitle = String(formData.get("cd-title") || "").trim();
-    const quantity = String(formData.get("quantity") || "").trim();
-    const format = String(formData.get("format") || "").trim();
-    const wishes = String(formData.get("wishes") || "").trim() || "Keine Angabe";
+    const originalButtonText = cdOrderSubmitButton?.textContent || "";
 
-    const emailBody = [
-      "CD-Bestellung Mélange à Deux",
-      "",
-      "Absender-E-Mail:",
-      email,
-      "",
-      "Versandadresse:",
-      `Straße: ${street}`,
-      `PLZ / Ort: ${city}`,
-      "",
-      "CD:",
-      cdTitle,
-      "",
-      "Anzahl:",
-      quantity,
-      "",
-      "Format:",
-      format,
-      "",
-      "Weitere Wünsche:",
-      wishes,
-    ].join("\n");
+    try {
+      if (cdOrderSubmitButton) {
+        cdOrderSubmitButton.disabled = true;
+        cdOrderSubmitButton.textContent = "Bestellung wird gesendet...";
+      }
 
-    const mailtoUrl = `mailto:${cdOrderRecipient}?subject=${encodeURIComponent(
-      cdOrderSubject
-    )}&body=${encodeURIComponent(emailBody)}`;
+      const response = await fetch(cdOrderForm.action, {
+        method: "POST",
+        body: new FormData(cdOrderForm),
+        headers: {
+          Accept: "application/json",
+          "X-Requested-With": "fetch",
+        },
+      });
 
-    window.location.href = mailtoUrl;
+      const payload = await response.json();
+
+      if (!response.ok || !payload.success) {
+        const errors = Array.isArray(payload.errors)
+          ? ` ${payload.errors.join(" ")}`
+          : "";
+        throw new Error(
+          `${payload.message || "Die Bestellung konnte nicht gesendet werden."}${errors}`
+        );
+      }
+
+      cdOrderForm.reset();
+      const quantityInput = document.getElementById("cd-order-quantity");
+      if (quantityInput) {
+        quantityInput.value = "1";
+      }
+      setCdOrderStatus(
+        payload.message || "Vielen Dank! Ihre CD-Bestellung wurde übermittelt.",
+        "success"
+      );
+      cdOrderStatus?.focus?.();
+    } catch (error) {
+      setCdOrderStatus(
+        error instanceof Error
+          ? error.message
+          : "Die Bestellung konnte nicht gesendet werden. Bitte versuchen Sie es erneut.",
+        "error"
+      );
+    } finally {
+      if (cdOrderSubmitButton) {
+        cdOrderSubmitButton.disabled = false;
+        cdOrderSubmitButton.textContent = originalButtonText;
+      }
+    }
   });
 }

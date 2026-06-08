@@ -595,7 +595,14 @@
           <p>Zur Abwicklung Ihrer CD-Bestellung bitten wir Sie um folgende Angaben:</p>
         </div>
 
-        <form class="cd-order-form" action="mailto:info@melangea2.com" method="post">
+        <form class="cd-order-form" action="php/cd-order-submit.php" method="post">
+          <div class="cd-order-status" data-cd-order-status role="status" aria-live="polite" tabindex="-1" hidden></div>
+
+          <div class="cd-order-field cd-order-honeypot" aria-hidden="true">
+            <label for="cd-order-website">Website</label>
+            <input id="cd-order-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
           <div class="cd-order-field">
             <label for="cd-order-email">
               Absender-E-Mail-Adresse
@@ -680,11 +687,12 @@
           </label>
 
           <p class="cd-order-mail-note">
-            Beim Absenden öffnet sich Ihr E-Mail-Programm mit einer vorbereiteten Nachricht.
+            Beim Absenden wird Ihre Bestellung per E-Mail an Mélange à Deux übermittelt. Sie erhalten anschließend eine
+            automatische Bestätigung per E-Mail.
           </p>
 
           <div class="cd-order-actions">
-            <button type="submit" class="btn">Bestellung per E-Mail vorbereiten</button>
+            <button type="submit" class="btn">CD-Bestellung absenden</button>
             <button type="button" class="btn btn-ghost" data-cd-order-close>Abbrechen</button>
           </div>
         </form>

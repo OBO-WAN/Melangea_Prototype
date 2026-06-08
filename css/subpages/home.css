@@ -18,7 +18,8 @@
     visibility 0.22s ease;
 }
 
-.cd-order-overlay.is-open {
+.cd-order-overlay.is-open,
+.cd-order-overlay:target {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
@@ -49,7 +50,8 @@
   transition: transform 0.22s ease;
 }
 
-.cd-order-overlay.is-open .cd-order-modal {
+.cd-order-overlay.is-open .cd-order-modal,
+.cd-order-overlay:target .cd-order-modal {
   transform: translateY(0) scale(1);
 }
 
@@ -118,6 +120,33 @@
 .cd-order-form {
   display: grid;
   gap: 1rem;
+}
+
+.cd-order-status {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0.9rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.cd-order-status[data-status="success"] {
+  border-color: rgba(46, 229, 157, 0.45);
+  background: rgba(46, 229, 157, 0.1);
+}
+
+.cd-order-status[data-status="error"] {
+  border-color: rgba(255, 118, 118, 0.55);
+  background: rgba(255, 118, 118, 0.1);
+}
+
+.cd-order-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 .cd-order-form__grid {

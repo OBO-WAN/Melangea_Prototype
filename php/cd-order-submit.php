@@ -103,6 +103,8 @@ if ($honeypot !== '') {
     exit;
 }
 
+$firstName = clean_text((string) ($_POST['first_name'] ?? ''));
+$lastName = clean_text((string) ($_POST['last_name'] ?? ''));
 $emailRaw = (string) ($_POST['email'] ?? '');
 $email = clean_header_value($emailRaw);
 $street = clean_text((string) ($_POST['street'] ?? ''));
@@ -114,6 +116,14 @@ $wishes = clean_text((string) ($_POST['wishes'] ?? ''));
 $consent = isset($_POST['consent']);
 
 $errors = [];
+
+if ($firstName === '') {
+    $errors[] = 'Bitte geben Sie Ihren Vornamen an.';
+}
+
+if ($lastName === '') {
+    $errors[] = 'Bitte geben Sie Ihren Nachnamen an.';
+}
 
 if ($email === '' || has_header_injection($emailRaw) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
     $errors[] = 'Bitte geben Sie eine gültige Absender-E-Mail-Adresse an.';
@@ -171,6 +181,12 @@ $wishesForMail = $wishes !== '' ? $wishes : 'Keine Angabe';
 $notificationBody = implode("\n", [
     CD_ORDER_SUBJECT,
     '',
+    'Vorname:',
+    $firstName,
+    '',
+    'Nachname:',
+    $lastName,
+    '',
     'Absender-E-Mail:',
     $email,
     '',
@@ -213,6 +229,16 @@ if ($format === 'Digitaler Download') {
 
 $confirmationBody = implode("\n", [
     'Wir haben Ihre E-Mail erhalten und bedanken uns für Ihre Bestellung.',
+    '',
+    'Ihre Angaben:',
+    'Vorname: ' . $firstName,
+    'Nachname: ' . $lastName,
+    'Absender-E-Mail: ' . $email,
+    'Versandadresse: ' . $street . ', ' . $city,
+    'CD: ' . $cdTitle,
+    'Anzahl: ' . (string) $quantity,
+    'Format: ' . $format,
+    'Weitere Wünsche: ' . $wishesForMail,
     '',
     $confirmationMiddle,
     '',

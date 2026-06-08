@@ -53,7 +53,7 @@ if (cdOrderOverlay && cdOrderOpenButtons.length) {
     setCdOrderBodyScroll(true);
 
     const focusableElements = getCdOrderFocusableElements();
-    const firstInput = document.getElementById("cd-order-email");
+    const firstInput = document.getElementById("cd-order-first-name");
     const initialFocus = firstInput || focusableElements[0];
 
     window.setTimeout(() => {

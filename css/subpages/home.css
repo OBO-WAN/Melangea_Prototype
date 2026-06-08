@@ -112,8 +112,8 @@
 }
 
 .cd-order-cover img {
-  display: block;
-  width: 100%;
+  display: inline;
+  width: 55%;
   max-height: clamp(9rem, 24vw, 13.5rem);
   object-fit: contain;
   border-radius: 1rem;

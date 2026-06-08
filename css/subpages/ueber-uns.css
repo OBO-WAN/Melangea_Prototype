@@ -106,7 +106,6 @@ body.page-ueber-uns .site-footer {
   text-transform: uppercase;
 }
 
-.about-page-title,
 .about-copy h2,
 .about-vision h2,
 .about-history__header h2 {
@@ -118,19 +117,14 @@ body.page-ueber-uns .site-footer {
 
 .about-page-title {
   margin: 0;
-  font-size: clamp(3rem, 6vw, 4rem);
-  line-height: 0.9;
-  text-shadow: 0 16px 38px rgba(0, 0, 0, 0.22);
-}
-
-.about-page-lead {
-  width: min(760px, 100%);
-  margin: 1.3rem auto 0;
-  color: #f3f2ff;
+  color: #fff;
   font-family: "Raleway", sans-serif;
-  font-size: clamp(1.12rem, 1.9vw, 1.55rem);
-  line-height: 1.65;
-  text-wrap: balance;
+  font-size: clamp(2.8rem, 7vw, 4.8rem);
+  font-weight: 200;
+  letter-spacing: clamp(0.1em, 1vw, 0.28em);
+  line-height: 0.98;
+  text-shadow: 0 16px 38px rgba(0, 0, 0, 0.22);
+  text-transform: uppercase;
 }
 
 .about-story {
@@ -219,40 +213,13 @@ body.page-ueber-uns .site-footer {
   filter: grayscale(1);
 }
 
-.about-image__placeholder {
-  display: grid;
-  min-height: 280px;
-  place-items: center;
-  padding: 2rem;
-  color: rgba(255, 255, 255, 0.66);
-  font-size: 0.92rem;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  text-align: center;
-  text-transform: uppercase;
-  border: 1px dashed rgba(255, 255, 255, 0.22);
-  border-radius: inherit;
-}
-
 .about-image--duo {
   align-self: end;
-}
-
-.about-image--duo .about-image__placeholder {
-  min-height: 325px;
-}
-
-.about-image--quartett .about-image__placeholder {
-  min-height: 390px;
 }
 
 .about-image--accordion {
   width: min(420px, 100%);
   justify-self: center;
-}
-
-.about-image--accordion .about-image__placeholder {
-  min-height: 420px;
 }
 
 .about-vision {
@@ -317,14 +284,6 @@ body.page-ueber-uns .site-footer {
   aspect-ratio: 16 / 10;
   max-width: 520px;
   justify-self: start;
-}
-
-.about-image--oboe .about-image__placeholder {
-  min-height: 260px;
-}
-
-.about-image--van .about-image__placeholder {
-  min-height: 420px;
 }
 
 .about-history {
@@ -490,15 +449,6 @@ body.page-ueber-uns .site-footer {
 
   .about-history-intro .about-image {
     max-height: 280px;
-  }
-
-  .about-image__placeholder,
-  .about-image--duo .about-image__placeholder,
-  .about-image--quartett .about-image__placeholder,
-  .about-image--accordion .about-image__placeholder,
-  .about-image--oboe .about-image__placeholder,
-  .about-image--van .about-image__placeholder {
-    min-height: 230px;
   }
 
   .about-history__chapter {

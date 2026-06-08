@@ -586,13 +586,20 @@
         <h2 class="cd-order-modal__title" id="cdOrderTitle">Aktuelle CD bestellen</h2>
 
         <figure class="cd-order-cover">
-          <img
-            src="./assets/IMG/cd/CD-cover.webp"
-            alt="Mélange à Deux – Le début CD-Cover"
-            loading="lazy"
-            decoding="async"
-          />
-          <figcaption>Mélange à Deux — Le début</figcaption>
+          <button
+            class="cd-order-cover__button"
+            type="button"
+            data-cd-cover-open
+            aria-label="CD-Cover vergrößern"
+          >
+            <img
+              src="./assets/IMG/cd/CD-cover.webp"
+              alt="Mélange à Deux – Le début CD-Cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+          <figcaption>Mélange à Deux — Le début · Cover vergrößern</figcaption>
         </figure>
 
         <div class="cd-order-intro" id="cdOrderDescription">
@@ -709,6 +716,24 @@
         <p class="cd-order-payment-note">
           Nach Eingang Ihrer Bestellung erhalten Sie weitere Informationen zur Zahlung und zum Versand.
         </p>
+      </div>
+    </div>
+
+    <div class="cd-cover-lightbox" data-cd-cover-lightbox aria-hidden="true">
+      <div class="cd-cover-lightbox__backdrop" data-cd-cover-close></div>
+      <div class="cd-cover-lightbox__dialog" role="dialog" aria-modal="true" aria-label="CD-Cover Vorschau">
+        <button
+          class="cd-cover-lightbox__close"
+          type="button"
+          data-cd-cover-close
+          aria-label="Cover-Vorschau schließen"
+        >
+          ×
+        </button>
+        <img
+          src="./assets/IMG/cd/CD-cover.webp"
+          alt="Mélange à Deux – Le début CD-Cover"
+        />
       </div>
     </div>
   </div>

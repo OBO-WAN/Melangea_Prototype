@@ -69,7 +69,7 @@
 }
 
 .concerts-hero h1 {
-  margin: 0;
+  margin: 8px;
   color: var(--text);
   font-family: "Raleway", sans-serif;
   font-size: clamp(2.8rem, 7vw, 4.8rem);

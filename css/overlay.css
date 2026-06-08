@@ -123,8 +123,9 @@
 .bio-modal__text p {
   margin: 0;
   color: var(--text);
-  line-height: 1.9;
+  line-height: 1.8;
   white-space: break-spaces;
+  text-align: justify;
 }
 
 .bio-modal__text > * + * {

@@ -1,0 +1,283 @@
+/* =========================================
+   Startseite: CD-Bestellung Overlay
+   Page-specific styles for the shop CTA modal.
+========================================= */
+
+.cd-order-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 125;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.22s ease,
+    visibility 0.22s ease;
+}
+
+.cd-order-overlay.is-open,
+.cd-order-overlay:target {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.cd-order-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(4, 8, 18, 0.76);
+  backdrop-filter: blur(8px);
+}
+
+.cd-order-modal {
+  position: relative;
+  z-index: 1;
+  width: min(760px, 100%);
+  max-height: calc(100dvh - 2rem);
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  background: linear-gradient(
+    180deg,
+    rgba(17, 21, 38, 0.97),
+    rgba(10, 14, 28, 0.97)
+  );
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.46);
+  transform: translateY(14px) scale(0.985);
+  transition: transform 0.22s ease;
+}
+
+.cd-order-overlay.is-open .cd-order-modal,
+.cd-order-overlay:target .cd-order-modal {
+  transform: translateY(0) scale(1);
+}
+
+.cd-order-modal__content {
+  padding: 2rem;
+}
+
+.cd-order-modal__close {
+  position: absolute;
+  top: 0.9rem;
+  right: 0.9rem;
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  cursor: pointer;
+  transition:
+    transform 0.16s ease,
+    background 0.16s ease,
+    border-color 0.16s ease;
+}
+
+.cd-order-modal__close:hover {
+  transform: scale(1.04);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(46, 229, 157, 0.45);
+}
+
+.cd-order-modal__close:focus-visible {
+  outline: 2px solid var(--accent2);
+  outline-offset: 2px;
+}
+
+.cd-order-kicker {
+  margin: 0 0 0.4rem;
+  color: #f4e7ba;
+  font-size: 0.86rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.cd-order-modal__title {
+  margin: 0;
+  padding-right: 3rem;
+  font-size: clamp(1.7rem, 3vw, 2.25rem);
+  font-family: "Raleway", sans-serif;
+  font-weight: 300;
+}
+
+.cd-order-intro {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0.9rem 0 1.5rem;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.cd-order-intro p {
+  margin: 0;
+}
+
+.cd-order-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.cd-order-status {
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 0.9rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.cd-order-status[data-status="success"] {
+  border-color: rgba(46, 229, 157, 0.45);
+  background: rgba(46, 229, 157, 0.1);
+}
+
+.cd-order-status[data-status="error"] {
+  border-color: rgba(255, 118, 118, 0.55);
+  background: rgba(255, 118, 118, 0.1);
+}
+
+.cd-order-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.cd-order-form__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.cd-order-field,
+.cd-order-fieldset {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.cd-order-fieldset {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+
+.cd-order-fieldset--compact {
+  align-content: start;
+}
+
+.cd-order-field label,
+.cd-order-fieldset legend {
+  color: var(--text);
+  font-size: 0.95rem;
+}
+
+.cd-order-fieldset legend {
+  padding: 0 0.35rem;
+}
+
+.cd-order-required {
+  color: var(--accent2);
+}
+
+.cd-order-field input,
+.cd-order-field textarea {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  padding: 0.9rem 1rem;
+  outline: none;
+  transition:
+    border-color 0.16s ease,
+    box-shadow 0.16s ease,
+    background 0.16s ease;
+}
+
+.cd-order-field input:focus,
+.cd-order-field textarea:focus {
+  border-color: rgba(46, 229, 157, 0.5);
+  box-shadow: 0 0 0 3px rgba(46, 229, 157, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.cd-order-field textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.cd-order-choice-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem 1.25rem;
+}
+
+.cd-order-choice,
+.cd-order-consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.cd-order-choice input,
+.cd-order-consent input {
+  margin-top: 0.25rem;
+  accent-color: var(--accent2);
+}
+
+.cd-order-mail-note,
+.cd-order-payment-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.cd-order-payment-note {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.cd-order-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+@media (max-height: 780px) {
+  .cd-order-overlay {
+    place-items: start center;
+    overflow-y: auto;
+    padding: 0.75rem;
+  }
+
+  .cd-order-modal {
+    max-height: calc(100dvh - 1.5rem);
+  }
+}
+
+@media (max-width: 720px) {
+  .cd-order-modal__content {
+    padding: 1.25rem;
+  }
+
+  .cd-order-form__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cd-order-actions .btn {
+    justify-content: center;
+    width: 100%;
+  }
+}

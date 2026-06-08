@@ -4,6 +4,12 @@ const cdOrderCloseButtons = document.querySelectorAll("[data-cd-order-close]");
 const cdOrderForm = document.querySelector(".cd-order-form");
 const cdOrderStatus = document.querySelector("[data-cd-order-status]");
 const cdOrderSubmitButton = cdOrderForm?.querySelector('button[type="submit"]');
+const cdCoverOpenButton = document.querySelector("[data-cd-cover-open]");
+const cdCoverLightbox = document.querySelector("[data-cd-cover-lightbox]");
+const cdCoverCloseButtons = document.querySelectorAll("[data-cd-cover-close]");
+const cdCoverLightboxCloseButton = cdCoverLightbox?.querySelector(
+  ".cd-cover-lightbox__close"
+);
 
 if (cdOrderOverlay && cdOrderOpenButtons.length) {
   let cdOrderLastFocusedElement = null;
@@ -17,10 +23,13 @@ if (cdOrderOverlay && cdOrderOpenButtons.length) {
     '[tabindex]:not([tabindex="-1"])',
   ].join(",");
 
-  const getCdOrderFocusableElements = () =>
-    Array.from(cdOrderOverlay.querySelectorAll(cdOrderFocusableSelector)).filter(
+  const getCdOrderFocusableElements = (container = cdOrderOverlay) =>
+    Array.from(container.querySelectorAll(cdOrderFocusableSelector)).filter(
       (element) => element.offsetParent !== null
     );
+
+  const isCdCoverLightboxOpen = () =>
+    cdCoverLightbox?.getAttribute("aria-hidden") === "false";
 
   const setCdOrderBodyScroll = (isOpen) => {
     document.body.style.overflow = isOpen ? "hidden" : "";
@@ -52,8 +61,40 @@ if (cdOrderOverlay && cdOrderOpenButtons.length) {
     }, 0);
   };
 
+  let cdCoverLastFocusedElement = null;
+
+  const closeCdCoverLightbox = (event, shouldRestoreFocus = true) => {
+    event?.preventDefault();
+
+    if (!cdCoverLightbox || !isCdCoverLightboxOpen()) {
+      return;
+    }
+
+    cdCoverLightbox.setAttribute("aria-hidden", "true");
+
+    if (shouldRestoreFocus) {
+      cdCoverLastFocusedElement?.focus();
+    }
+  };
+
+  const openCdCoverLightbox = (event) => {
+    event.preventDefault();
+
+    if (!cdCoverLightbox) {
+      return;
+    }
+
+    cdCoverLastFocusedElement = event.currentTarget;
+    cdCoverLightbox.setAttribute("aria-hidden", "false");
+
+    window.setTimeout(() => {
+      cdCoverLightboxCloseButton?.focus();
+    }, 0);
+  };
+
   const closeCdOrderModal = (event) => {
     event?.preventDefault();
+    closeCdCoverLightbox(undefined, false);
     cdOrderOverlay.classList.remove("is-open");
     cdOrderOverlay.setAttribute("aria-hidden", "true");
     setCdOrderBodyScroll(false);
@@ -65,7 +106,10 @@ if (cdOrderOverlay && cdOrderOpenButtons.length) {
       return;
     }
 
-    const focusableElements = getCdOrderFocusableElements();
+    const focusContainer = isCdCoverLightboxOpen()
+      ? cdCoverLightbox
+      : cdOrderOverlay;
+    const focusableElements = getCdOrderFocusableElements(focusContainer);
 
     if (!focusableElements.length) {
       event.preventDefault();
@@ -92,12 +136,23 @@ if (cdOrderOverlay && cdOrderOpenButtons.length) {
     button.addEventListener("click", closeCdOrderModal);
   });
 
+  cdCoverOpenButton?.addEventListener("click", openCdCoverLightbox);
+
+  cdCoverCloseButtons.forEach((button) => {
+    button.addEventListener("click", closeCdCoverLightbox);
+  });
+
   document.addEventListener("keydown", (event) => {
     if (!cdOrderOverlay.classList.contains("is-open")) {
       return;
     }
 
     if (event.key === "Escape") {
+      if (isCdCoverLightboxOpen()) {
+        closeCdCoverLightbox(event);
+        return;
+      }
+
       closeCdOrderModal(event);
       return;
     }

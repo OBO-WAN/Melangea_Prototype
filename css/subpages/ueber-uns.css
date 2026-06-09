@@ -97,15 +97,6 @@ body.page-ueber-uns .site-footer {
   gap: 24px;
 }
 
-.about-kicker {
-  margin: 0 0 0.6rem;
-  color: #f4e7ba;
-  font-size: 0.86rem;
-  font-weight: 700;
-  letter-spacing: 0.26em;
-  text-transform: uppercase;
-}
-
 .about-copy h2,
 .about-vision h2,
 .about-history__header h2 {
@@ -417,10 +408,6 @@ body.page-ueber-uns .site-footer {
     opacity: 0.3;
   }
 
-  .about-kicker {
-    font-size: 0.78rem;
-    letter-spacing: 0.18em;
-  }
 
   .about-story__inner {
     gap: 3.2rem;

@@ -108,6 +108,7 @@ $lastName = clean_text((string) ($_POST['last_name'] ?? ''));
 $emailRaw = (string) ($_POST['email'] ?? '');
 $email = clean_header_value($emailRaw);
 $street = clean_text((string) ($_POST['street'] ?? ''));
+$postalCode = clean_text((string) ($_POST['postal_code'] ?? ''));
 $city = clean_text((string) ($_POST['city'] ?? ''));
 $cdTitle = clean_text((string) ($_POST['cd-title'] ?? ''));
 $quantityRaw = trim((string) ($_POST['quantity'] ?? ''));
@@ -133,8 +134,12 @@ if ($street === '') {
     $errors[] = 'Bitte geben Sie Straße und Hausnummer an.';
 }
 
+if ($postalCode === '') {
+    $errors[] = 'Bitte geben Sie die PLZ an.';
+}
+
 if ($city === '') {
-    $errors[] = 'Bitte geben Sie PLZ und Ort an.';
+    $errors[] = 'Bitte geben Sie den Ort an.';
 }
 
 if ($cdTitle !== 'Le Début') {
@@ -191,8 +196,12 @@ $notificationBody = implode("\n", [
     $email,
     '',
     'Versandadresse:',
-    'Straße: ' . $street,
-    'PLZ / Ort: ' . $city,
+    'Straße und Hausnummer:',
+    $street,
+    'PLZ:',
+    $postalCode,
+    'Ort:',
+    $city,
     '',
     'CD:',
     $cdTitle,
@@ -234,7 +243,13 @@ $confirmationBody = implode("\n", [
     'Vorname: ' . $firstName,
     'Nachname: ' . $lastName,
     'Absender-E-Mail: ' . $email,
-    'Versandadresse: ' . $street . ', ' . $city,
+    'Versandadresse:',
+    'Straße und Hausnummer:',
+    $street,
+    'PLZ:',
+    $postalCode,
+    'Ort:',
+    $city,
     'CD: ' . $cdTitle,
     'Anzahl: ' . (string) $quantity,
     'Format: ' . $format,

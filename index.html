@@ -672,11 +672,19 @@
               </div>
 
               <div class="cd-order-field">
-                <label for="cd-order-city">
-                  PLZ und Ort
+                <label for="cd-order-postal-code">
+                  PLZ
                   <span class="cd-order-required" aria-hidden="true">*</span>
                 </label>
-                <input id="cd-order-city" name="city" type="text" autocomplete="postal-code address-level2" required />
+                <input id="cd-order-postal-code" name="postal_code" type="text" autocomplete="postal-code" inputmode="numeric" required />
+              </div>
+
+              <div class="cd-order-field">
+                <label for="cd-order-city">
+                  Ort
+                  <span class="cd-order-required" aria-hidden="true">*</span>
+                </label>
+                <input id="cd-order-city" name="city" type="text" autocomplete="address-level2" required />
               </div>
             </div>
           </fieldset>

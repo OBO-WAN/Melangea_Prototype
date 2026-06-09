@@ -311,20 +311,6 @@
   accent-color: var(--accent2);
 }
 
-.cd-order-mail-note,
-.cd-order-payment-note {
-  margin: 0;
-  color: var(--muted);
-  font-size: 0.95rem;
-  line-height: 1.55;
-}
-
-.cd-order-payment-note {
-  margin-top: 1rem;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-
 .cd-order-actions {
   display: flex;
   flex-wrap: wrap;

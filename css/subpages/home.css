@@ -3,6 +3,91 @@
    Page-specific styles for the shop CTA modal.
 ========================================= */
 
+/* =========================================
+   Startseite: Aktuelle-CD-Karte
+   Scoped enhancement for the shop CTA only.
+========================================= */
+
+#shop .cta.card {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: clamp(1.4rem, 3vw, 2.2rem);
+  background:
+    radial-gradient(
+      circle at 12% 20%,
+      rgba(46, 229, 157, 0.13),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 88% 78%,
+      rgba(190, 145, 255, 0.11),
+      transparent 38%
+    ),
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.1),
+      rgba(255, 255, 255, 0.04)
+    );
+  box-shadow:
+    0 24px 52px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09);
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+#shop .cta.card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: linear-gradient(
+    180deg,
+    rgba(244, 231, 186, 0.9),
+    rgba(46, 229, 157, 0.82),
+    rgba(190, 145, 255, 0.76)
+  );
+}
+
+#shop .cta h2 {
+  margin: 0;
+  font-size: clamp(1.9rem, 3.5vw, 3rem);
+  letter-spacing: 0.04em;
+}
+
+#shop .cta-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#shop .cta.card:hover,
+#shop .cta.card:focus-within {
+  transform: translateY(-2px);
+  border-color: rgba(244, 231, 186, 0.28);
+  box-shadow:
+    0 28px 62px rgba(0, 0, 0, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.11);
+}
+
+@media (max-width: 680px) {
+  #shop .cta.card {
+    padding: 1.4rem;
+  }
+
+  #shop .cta-actions {
+    justify-content: center;
+  }
+
+  #shop .cta-actions .btn {
+    width: fit-content;
+    min-width: 11rem;
+  }
+}
+
 .cd-order-overlay {
   position: fixed;
   inset: 0;

@@ -9,6 +9,7 @@ const messages = {
 };
 
 if (bookingForm) {
+  bookingForm.setAttribute('novalidate', '');
   const statusElement = bookingForm.querySelector('[data-booking-status]');
   const submitButton = bookingForm.querySelector('button[type="submit"]');
   const isGitHubPages = window.location.hostname.endsWith('github.io');
@@ -46,6 +47,69 @@ if (bookingForm) {
     }
   };
 
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  const getField = (name) => bookingForm.elements[name];
+
+  const setFieldError = (name, message) => {
+    const field = getField(name);
+    if (!field) return;
+
+    let error = bookingForm.querySelector(`[data-error-for="${field.id}"]`);
+    if (!error) {
+      error = document.createElement('p');
+      error.id = `${field.id}-error`;
+      error.className = 'form-field__error';
+      error.dataset.errorFor = field.id;
+      error.hidden = true;
+      const describedBy = (field.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean);
+      if (!describedBy.includes(error.id)) {
+        describedBy.push(error.id);
+        field.setAttribute('aria-describedby', describedBy.join(' '));
+      }
+      (field.closest('.booking-field, .booking-consent') || field.parentElement)?.appendChild(error);
+    }
+
+    field.setAttribute('aria-invalid', 'true');
+    error.textContent = message;
+    error.hidden = false;
+  };
+
+  const clearFieldErrors = () => {
+    bookingForm.querySelectorAll('[aria-invalid="true"]').forEach((field) => field.removeAttribute('aria-invalid'));
+    bookingForm.querySelectorAll('[data-error-for]').forEach((error) => {
+      error.textContent = '';
+      error.hidden = true;
+    });
+  };
+
+  const validateBookingForm = () => {
+    clearFieldErrors();
+    const errors = {};
+    const value = (name) => {
+      const field = getField(name);
+      if (field && typeof field.value === 'string') field.value = field.value.trim();
+      return field?.value || '';
+    };
+
+    if (!value('first-name')) errors['first-name'] = 'Bitte geben Sie Ihren Vornamen ein.';
+    if (!value('last-name')) errors['last-name'] = 'Bitte geben Sie Ihren Nachnamen ein.';
+    if (!value('email')) errors.email = 'Bitte geben Sie Ihre E-Mail-Adresse ein.';
+    else if (!emailPattern.test(value('email'))) errors.email = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
+    if (!value('event-type')) errors['event-type'] = 'Bitte wählen Sie eine Veranstaltungsart aus.';
+    if (!value('preferred-date')) errors['preferred-date'] = 'Bitte wählen Sie einen Termin aus.';
+    if (!value('location')) errors.location = 'Bitte geben Sie den Ort ein.';
+    if (value('audience-size') && (!/^\d+$/.test(value('audience-size')) || Number(value('audience-size')) < 1)) {
+      errors['audience-size'] = 'Bitte geben Sie eine gültige Publikumsgröße ein.';
+    }
+    if (!value('message')) errors.message = 'Bitte geben Sie Ihre Nachricht ein.';
+    if (!getField('contact-consent')?.checked) errors['contact-consent'] = 'Bitte stimmen Sie der Kontaktaufnahme zu.';
+
+    Object.entries(errors).forEach(([name, message]) => setFieldError(name, message));
+    return errors;
+  };
+
   const readJsonResponse = async (response) => {
     const contentType = response.headers.get('content-type') || '';
     if (!contentType.toLowerCase().includes('application/json')) {
@@ -62,8 +126,10 @@ if (bookingForm) {
 
     clearStatus();
 
-    if (!bookingForm.reportValidity()) {
+    const validationErrors = validateBookingForm();
+    if (Object.keys(validationErrors).length > 0) {
       showStatus(messages.validation, 'error');
+      focusFirstInvalidField(validationErrors);
       return;
     }
 

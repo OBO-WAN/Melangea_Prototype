@@ -30,8 +30,7 @@ if (newsletterForm) {
     const messageInput = document.getElementById("newsletter-message");
     const consentInput = newsletterForm.querySelector('input[name="consent"]');
 
-    if (!newsletterForm.checkValidity()) {
-      newsletterForm.reportValidity();
+    if (!window.validateNewsletterForm?.(newsletterForm, { focusInvalid: true })) {
       return;
     }
 

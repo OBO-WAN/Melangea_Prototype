@@ -43,6 +43,13 @@
   text-transform: uppercase;
 }
 
+#privacy-title {
+  max-width: 100%;
+  white-space: normal;
+  overflow-wrap: normal;
+  text-align: center;
+}
+
 .legal-card {
   display: grid;
   gap: 1rem;
@@ -148,6 +155,14 @@
   outline: var(--focus-ring);
   outline-offset: 0.18rem;
   border-radius: 0.25rem;
+}
+
+@media (max-width: 680px) {
+  #privacy-title {
+    font-size: clamp(2rem, 9vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: clamp(0.08em, 1.4vw, 0.15em);
+  }
 }
 
 @media (max-width: 760px) {

@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 const CD_ORDER_SUBJECT = 'CD-Bestellung Mélange à Deux';
+const CD_ORDER_GENERIC_ERROR = 'Die Bestellung konnte nicht verarbeitet werden. Bitte versuchen Sie es erneut.';
 
 $configPath = __DIR__ . '/cd-order-config.local.php';
 if (!is_file($configPath)) {
@@ -17,6 +18,20 @@ function wants_json_response(): bool
     $requestedWith = $_SERVER['HTTP_X_REQUESTED_WITH'] ?? '';
 
     return stripos($accept, 'application/json') !== false || strtolower($requestedWith) === 'fetch';
+}
+
+function post_string(string $name): ?string
+{
+    if (!array_key_exists($name, $_POST) || is_array($_POST[$name])) {
+        return null;
+    }
+
+    return clean_text((string) $_POST[$name]);
+}
+
+function string_length(string $value): int
+{
+    return function_exists('mb_strlen') ? mb_strlen($value, 'UTF-8') : strlen($value);
 }
 
 function clean_text(string $value): string
@@ -93,7 +108,8 @@ if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
     exit;
 }
 
-$honeypot = trim((string) ($_POST['website'] ?? ''));
+$honeypotValue = post_string('website');
+$honeypot = $honeypotValue ?? '';
 if ($honeypot !== '') {
     send_response([
         'success' => false,
@@ -103,27 +119,39 @@ if ($honeypot !== '') {
     exit;
 }
 
-$firstName = clean_text((string) ($_POST['first_name'] ?? ''));
-$lastName = clean_text((string) ($_POST['last_name'] ?? ''));
-$emailRaw = (string) ($_POST['email'] ?? '');
+$firstName = post_string('first_name') ?? '';
+$lastName = post_string('last_name') ?? '';
+$emailRawValue = post_string('email');
+$emailRaw = $emailRawValue ?? '';
 $email = clean_header_value($emailRaw);
-$street = clean_text((string) ($_POST['street'] ?? ''));
-$postalCode = clean_text((string) ($_POST['postal_code'] ?? ''));
-$city = clean_text((string) ($_POST['city'] ?? ''));
-$cdTitle = clean_text((string) ($_POST['cd-title'] ?? ''));
-$quantityRaw = trim((string) ($_POST['quantity'] ?? ''));
-$format = clean_text((string) ($_POST['format'] ?? ''));
-$wishes = clean_text((string) ($_POST['wishes'] ?? ''));
-$consent = isset($_POST['consent']);
+$street = post_string('street') ?? '';
+$postalCode = post_string('postal_code') ?? '';
+$city = post_string('city') ?? '';
+$cdTitle = post_string('cd-title') ?? '';
+$quantityRaw = trim(post_string('quantity') ?? '');
+$format = post_string('format') ?? '';
+$wishes = post_string('wishes') ?? '';
+$consent = isset($_POST['consent']) && !is_array($_POST['consent']);
 
 $errors = [];
 
+foreach (['first_name', 'last_name', 'email', 'street', 'postal_code', 'city', 'cd-title', 'quantity', 'format', 'wishes', 'website'] as $fieldName) {
+    if (isset($_POST[$fieldName]) && is_array($_POST[$fieldName])) {
+        $errors[] = 'Bitte senden Sie gültige Formularwerte.';
+        break;
+    }
+}
+
 if ($firstName === '') {
     $errors[] = 'Bitte geben Sie Ihren Vornamen an.';
+} elseif (string_length($firstName) > 80) {
+    $errors[] = 'Bitte kürzen Sie Ihren Vornamen.';
 }
 
 if ($lastName === '') {
     $errors[] = 'Bitte geben Sie Ihren Nachnamen an.';
+} elseif (string_length($lastName) > 80) {
+    $errors[] = 'Bitte kürzen Sie Ihren Nachnamen.';
 }
 
 if ($email === '' || has_header_injection($emailRaw) || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -132,14 +160,20 @@ if ($email === '' || has_header_injection($emailRaw) || !filter_var($email, FILT
 
 if ($street === '') {
     $errors[] = 'Bitte geben Sie Straße und Hausnummer an.';
+} elseif (string_length($street) > 160) {
+    $errors[] = 'Bitte kürzen Sie Straße und Hausnummer.';
 }
 
 if ($postalCode === '') {
     $errors[] = 'Bitte geben Sie die PLZ an.';
+} elseif (!preg_match('/^\d{5}$/', $postalCode)) {
+    $errors[] = 'Bitte geben Sie eine gültige PLZ mit 5 Ziffern an.';
 }
 
 if ($city === '') {
     $errors[] = 'Bitte geben Sie den Ort an.';
+} elseif (string_length($city) > 120) {
+    $errors[] = 'Bitte kürzen Sie den Ort.';
 }
 
 if ($cdTitle !== 'Le Début') {
@@ -156,6 +190,10 @@ if (!in_array($format, $allowedFormats, true)) {
     $errors[] = 'Bitte wählen Sie ein gültiges Format aus.';
 }
 
+if (string_length($wishes) > 2000) {
+    $errors[] = 'Bitte kürzen Sie Ihre weiteren Wünsche.';
+}
+
 if (!$consent) {
     $errors[] = 'Bitte bestätigen Sie die Einwilligung zur Bearbeitung Ihrer CD-Bestellung.';
 }
@@ -168,7 +206,7 @@ $cdPrice = clean_text((string) ($config['cd_price_eur'] ?? '15'));
 $shipping = clean_text((string) ($config['shipping_eur'] ?? '3'));
 
 if (!filter_var($recipientEmail, FILTER_VALIDATE_EMAIL) || !filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
-    $errors[] = 'Die Bestellkonfiguration ist unvollständig. Bitte kontaktieren Sie Mélange à Deux direkt.';
+    $errors[] = CD_ORDER_GENERIC_ERROR;
 }
 
 if (count($errors) > 0) {

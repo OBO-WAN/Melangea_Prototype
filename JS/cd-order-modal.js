@@ -12,7 +12,73 @@ const cdCoverLightboxCloseButton = cdCoverLightbox?.querySelector(
 );
 
 if (cdOrderOverlay && cdOrderOpenButtons.length) {
+  cdOrderForm?.setAttribute("novalidate", "");
   let cdOrderLastFocusedElement = null;
+  let isCdOrderSubmitting = false;
+  const cdEmailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+  const ensureCdOrderError = (field) => {
+    if (!field) return null;
+    if (!field.id) field.id = `cd-order-${field.name}-field`;
+    let error = cdOrderForm?.querySelector(`[data-error-for="${field.id}"]`);
+    if (error) return error;
+    error = document.createElement("p");
+    error.id = `${field.id}-error`;
+    error.className = "form-field__error";
+    error.dataset.errorFor = field.id;
+    error.hidden = true;
+    const describedBy = (field.getAttribute("aria-describedby") || "").split(/\s+/).filter(Boolean);
+    if (!describedBy.includes(error.id)) {
+      describedBy.push(error.id);
+      field.setAttribute("aria-describedby", describedBy.join(" "));
+    }
+    (field.closest(".cd-order-field, .cd-order-choice, .cd-order-consent, .cd-order-fieldset") || field.parentElement)?.appendChild(error);
+    return error;
+  };
+
+  const showCdOrderError = (field, message) => {
+    const error = ensureCdOrderError(field);
+    if (!field || !error) return;
+    field.setAttribute("aria-invalid", "true");
+    error.textContent = message;
+    error.hidden = false;
+  };
+
+  const clearCdOrderErrors = () => {
+    cdOrderForm?.querySelectorAll('[aria-invalid="true"]').forEach((field) => field.removeAttribute("aria-invalid"));
+    cdOrderForm?.querySelectorAll("[data-error-for]").forEach((error) => {
+      error.textContent = "";
+      error.hidden = true;
+    });
+  };
+
+  const validateCdOrderForm = () => {
+    clearCdOrderErrors();
+    const errors = [];
+    const byName = (name) => cdOrderForm?.elements[name];
+    const value = (name) => {
+      const field = byName(name);
+      if (field && typeof field.value === "string") field.value = field.value.trim();
+      return field?.value || "";
+    };
+
+    if (!value("first_name")) errors.push([byName("first_name"), "Bitte geben Sie Ihren Vornamen ein."]);
+    if (!value("last_name")) errors.push([byName("last_name"), "Bitte geben Sie Ihren Nachnamen ein."]);
+    if (!value("email")) errors.push([byName("email"), "Bitte geben Sie Ihre E-Mail-Adresse ein."]);
+    else if (!cdEmailPattern.test(value("email"))) errors.push([byName("email"), "Bitte geben Sie eine gültige E-Mail-Adresse ein."]);
+    if (!value("street")) errors.push([byName("street"), "Bitte geben Sie Straße und Hausnummer ein."]);
+    if (!value("postal_code")) errors.push([byName("postal_code"), "Bitte geben Sie Ihre Postleitzahl ein."]);
+    else if (!/^\d{5}$/.test(value("postal_code"))) errors.push([byName("postal_code"), "Bitte geben Sie eine gültige Postleitzahl mit 5 Ziffern ein."]);
+    if (!value("city")) errors.push([byName("city"), "Bitte geben Sie Ihren Ort ein."]);
+    if (!value("quantity") || !/^\d+$/.test(value("quantity")) || Number(value("quantity")) < 1) {
+      errors.push([byName("quantity"), "Bitte geben Sie eine gültige Anzahl ein."]);
+    }
+    if (!byName("consent")?.checked) errors.push([byName("consent"), "Bitte stimmen Sie der Datenschutzerklärung zu."]);
+
+    errors.forEach(([field, message]) => showCdOrderError(field, message));
+    return errors;
+  };
+
 
   const cdOrderFocusableSelector = [
     "a[href]",
@@ -164,15 +230,21 @@ if (cdOrderOverlay && cdOrderOpenButtons.length) {
     event.preventDefault();
     setCdOrderStatus("");
 
-    if (!cdOrderForm.checkValidity()) {
-      cdOrderForm.reportValidity();
+    if (isCdOrderSubmitting) {
+      return;
+    }
+
+    const validationErrors = validateCdOrderForm();
+    if (validationErrors.length > 0) {
       setCdOrderStatus("Bitte prüfen Sie die Pflichtfelder.", "error");
+      validationErrors[0][0]?.focus();
       return;
     }
 
     const originalButtonText = cdOrderSubmitButton?.textContent || "";
 
     try {
+      isCdOrderSubmitting = true;
       if (cdOrderSubmitButton) {
         cdOrderSubmitButton.disabled = true;
         cdOrderSubmitButton.textContent = "Bestellung wird gesendet...";
@@ -216,6 +288,7 @@ if (cdOrderOverlay && cdOrderOpenButtons.length) {
         "error"
       );
     } finally {
+      isCdOrderSubmitting = false;
       if (cdOrderSubmitButton) {
         cdOrderSubmitButton.disabled = false;
         cdOrderSubmitButton.textContent = originalButtonText;

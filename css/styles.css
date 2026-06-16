@@ -529,3 +529,21 @@
     font-size: 1.5rem;
   }
 }
+
+[aria-invalid="true"] {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 0.15rem rgba(192, 57, 43, 0.18);
+}
+
+.form-field__error {
+  display: block;
+  margin: 0.35rem 0 0;
+  color: #c0392b;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.form-field__error[hidden],
+.form-status[hidden] {
+  display: none;
+}

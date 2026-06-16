@@ -93,3 +93,6 @@ data/backups/
 
 # Local CD order payment configuration
 php/cd-order-config.local.php
+
+# Local booking mail configuration
+php/booking-config.local.php

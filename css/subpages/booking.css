@@ -354,6 +354,44 @@
   justify-self: center;
 }
 
+.booking-form[data-booking-form] .booking-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.booking-form[data-booking-form] .booking-form__status {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 16px;
+  line-height: 1.6;
+}
+
+.booking-form[data-booking-form] .booking-form__status[data-status="neutral"] {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.booking-form[data-booking-form] .booking-form__status[data-status="success"] {
+  border: 1px solid rgba(46, 229, 157, 0.34);
+  background: rgba(46, 229, 157, 0.1);
+  color: var(--text);
+}
+
+.booking-form[data-booking-form] .booking-form__status[data-status="error"] {
+  border: 1px solid rgba(255, 112, 112, 0.38);
+  background: rgba(255, 112, 112, 0.1);
+  color: var(--text);
+}
+
+.booking-form[data-booking-form] .booking-submit:disabled {
+  cursor: wait;
+  opacity: 0.68;
+}
+
 .booking-contact {
   padding-bottom: clamp(2rem, 5vw, 4rem);
 }

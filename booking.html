@@ -27,6 +27,7 @@
   <link rel="stylesheet" href="css/newsletter.css" />
   <link rel="stylesheet" href="vendor/aos/aos.css" />
   <link rel="stylesheet" href="css/subpages/booking.css" />
+  <script src="./JS/booking-form.js" defer></script>
 </head>
 
 <body class="page page-booking">
@@ -139,11 +140,9 @@
           </p>
         </div>
 
-        <form class="booking-form" id="booking-request-form" action="mailto:info@melangea2.com" method="post"
-          enctype="text/plain" data-aos="fade-up">
+        <form class="booking-form" id="booking-request-form" action="./php/booking-submit.php" method="post" data-booking-form data-aos="fade-up">
           <p class="booking-form__notice">
-            Es ist noch keine technische Verarbeitung für Buchungsanfragen verbunden. Beim Absenden öffnet sich Ihr
-            E-Mail-Programm; alternativ schreiben Sie direkt an
+            Ihre Angaben werden sicher an Mélange à Deux übermittelt. Alternativ schreiben Sie direkt an
             <a href="mailto:info@melangea2.com">info@melangea2.com</a>.
           </p>
 
@@ -213,6 +212,13 @@
             <input id="booking-consent" name="contact-consent" type="checkbox" required />
             <span>Ich bin damit einverstanden, zur Bearbeitung meiner Buchungsanfrage kontaktiert zu werden.</span>
           </label>
+
+          <div class="booking-honeypot" aria-hidden="true">
+            <label for="booking-company">Firma</label>
+            <input id="booking-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <p class="booking-form__status" data-booking-status role="status" aria-live="polite" hidden></p>
 
           <button class="btn booking-submit" type="submit">Anfrage vorbereiten</button>
         </form>

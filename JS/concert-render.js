@@ -59,9 +59,6 @@
     };
   };
 
-  const getLocationText = (event) => {
-    return [event.venue, event.city].filter(Boolean).join(", ");
-  };
 
   const getCompactMeta = (event) => {
     return [event.city || event.venue, event.time].filter(Boolean).join(" • ");
@@ -167,21 +164,20 @@
 
     const date = document.createElement("p");
     date.className = "concerts-card__date";
-    date.textContent = [event.date, event.time].filter(Boolean).join(" · ");
+    date.textContent = event.date || "";
 
-    const title = document.createElement("h3");
-    title.className = "concerts-card__title";
-    title.textContent = event.title || "Konzert";
+    const details = document.createElement("div");
+    details.className = "concerts-card__details";
+
+    const location = document.createElement("h3");
+    location.className = "concerts-card__location";
+    location.textContent = event.city || event.venue || "Konzert";
 
     const meta = document.createElement("p");
     meta.className = "concerts-card__meta";
-    meta.textContent = getLocationText(event);
+    meta.textContent = [event.venue, event.time].filter(Boolean).join(" · ");
 
-    const description = document.createElement("p");
-    description.className = "concerts-card__description";
-    description.textContent = event.description || "";
-
-    card.append(date, title, meta, description);
+    details.append(location, meta);
 
     if (event.status !== "past") {
       const actions = document.createElement("div");
@@ -190,8 +186,22 @@
         createLink("btn btn-small btn-ghost", event.detailsUrl, "Details"),
         createLink("btn btn-small", event.ticketsUrl, "Tickets")
       );
-      card.append(actions);
+      details.append(actions);
     }
+
+    const programme = document.createElement("div");
+    programme.className = "concerts-card__programme";
+
+    const title = document.createElement("h4");
+    title.className = "concerts-card__title";
+    title.textContent = event.title || "Konzert";
+
+    const description = document.createElement("p");
+    description.className = "concerts-card__description";
+    description.textContent = event.description || "";
+
+    programme.append(title, description);
+    card.append(date, details, programme);
 
     return card;
   };

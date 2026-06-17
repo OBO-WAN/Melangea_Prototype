@@ -107,36 +107,71 @@
 
 .concerts-grid {
   display: grid;
-  gap: clamp(1rem, 2vw, 1.35rem);
-  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+  grid-template-columns: minmax(0, 1fr);
+  gap: clamp(0.75rem, 1.5vw, 1.15rem);
 }
 
 .concerts-card {
-  display: flex;
-  flex-direction: column;
-  gap: 0.7rem;
-  height: 100%;
+  display: grid;
+  grid-template-columns:
+    minmax(6.5rem, 0.18fr)
+    minmax(18rem, 1fr)
+    minmax(14rem, 0.55fr);
+  align-items: start;
+  gap: clamp(1.25rem, 3vw, 3rem);
+  height: auto;
   min-width: 0;
   width: 100%;
-  padding: clamp(1.1rem, 2vw, 1.6rem);
+  padding: clamp(1.15rem, 2.5vw, 1.8rem);
   border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: var(--radius);
+  border-radius: 1.1rem;
   background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.028)),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.065), rgba(255, 255, 255, 0.025)),
     rgba(14, 16, 22, 0.18);
-  box-shadow:
-    0 18px 38px rgba(0, 0, 0, 0.16),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.concerts-card > * {
+  min-width: 0;
 }
 
 .concerts-card__date {
+  grid-column: 1;
   margin: 0;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  color: var(--text);
+  font-weight: 700;
+  letter-spacing: 0.035em;
+}
+
+.concerts-card__details {
+  grid-column: 2;
+  display: grid;
+  gap: 0.5rem;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.concerts-card__programme {
+  grid-column: 3;
+  display: grid;
+  gap: 0.45rem;
+  min-width: 0;
+  text-align: right;
+  overflow-wrap: anywhere;
+}
+
+.concerts-card__location,
+.concerts-card__title {
+  margin: 0;
+}
+
+.concerts-card__location {
+  color: var(--text);
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
 }
 
 .concerts-card__title {
-  margin: 0;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
 }
 
 .concerts-card__meta,
@@ -145,18 +180,67 @@
   overflow-wrap: anywhere;
 }
 
+.concerts-card__meta {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.concerts-card__description {
+  color: var(--muted);
+}
+
+.concerts-card a {
+  overflow-wrap: anywhere;
+}
+
 .concerts-card__actions {
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
-  margin-top: auto;
+  margin-top: 0.15rem;
 }
 
 .concerts-card--past {
   border-left: 3px solid color-mix(in srgb, currentColor 25%, transparent);
 }
 
+@media (max-width: 980px) and (min-width: 681px) {
+  .concerts-card {
+    grid-template-columns: minmax(6rem, 0.22fr) minmax(0, 1fr);
+  }
+
+  .concerts-card__date {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  .concerts-card__details,
+  .concerts-card__programme {
+    grid-column: 2;
+  }
+
+  .concerts-card__programme {
+    text-align: left;
+  }
+}
+
 @media (max-width: 680px) {
+  .concerts-card {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .concerts-card__date,
+  .concerts-card__details,
+  .concerts-card__programme {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .concerts-card__programme {
+    text-align: left;
+  }
+
   .concerts-hero::before {
     width: clamp(5rem, 24vw, 8rem);
     height: clamp(5rem, 24vw, 8rem);

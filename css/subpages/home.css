@@ -521,3 +521,37 @@
     width: 100%;
   }
 }
+/* =========================================
+   Startseite: Video-Karten im Medienbereich
+   Centers the final home-page video card without affecting other grids.
+========================================= */
+
+#media .grid.three {
+  --media-card-gap: clamp(1.5rem, 4vw, 4rem);
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--media-card-gap);
+}
+
+#media .grid.three > * {
+  flex: 0 1 calc(50% - (var(--media-card-gap) / 2));
+  min-width: 0;
+}
+
+#media .grid.three > * .video-embed,
+#media .grid.three > * iframe {
+  max-width: 100%;
+}
+
+@media (max-width: 680px) {
+  #media .grid.three {
+    gap: 1.5rem;
+  }
+
+  #media .grid.three > * {
+    flex-basis: 100%;
+  }
+}

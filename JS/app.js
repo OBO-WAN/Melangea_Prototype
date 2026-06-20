@@ -495,6 +495,13 @@ function initSocialFab() {
       label: "Mélange à Deux auf Instagram",
       icon: "instagram",
     },
+    {
+      name: "YouTube",
+      href: "https://www.youtube.com/@MelangeaDeux",
+      label: "Mélange à Deux auf YouTube",
+      title: "YouTube",
+      icon: "youtube",
+    },
   ];
 
   if (qs("[data-social-fab]") || socialProfiles.length === 0) return;
@@ -516,6 +523,9 @@ function initSocialFab() {
     link.target = "_blank";
     link.rel = "noopener noreferrer";
     link.setAttribute("aria-label", profile.label);
+    if (profile.title) {
+      link.title = profile.title;
+    }
     link.setAttribute("tabindex", "-1");
     link.style.setProperty("--social-fab-index", String(index));
     link.innerHTML = getSocialFabIcon(profile.icon);
@@ -578,6 +588,8 @@ function getSocialFabIcon(icon) {
       '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8.9V7.2c0-.8.2-1.3 1.4-1.3h1.7V3.1c-.8-.1-1.7-.2-2.5-.2-2.6 0-4.4 1.6-4.4 4.5v1.5H7.3V12h2.9v8.9H14V12h2.8l.4-3.1H14Z"/></svg>',
     instagram:
       '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.8 2.8h8.4a5 5 0 0 1 5 5v8.4a5 5 0 0 1-5 5H7.8a5 5 0 0 1-5-5V7.8a5 5 0 0 1 5-5Zm0 2A3 3 0 0 0 4.8 7.8v8.4a3 3 0 0 0 3 3h8.4a3 3 0 0 0 3-3V7.8a3 3 0 0 0-3-3H7.8Zm4.2 3.5a3.7 3.7 0 1 1 0 7.4 3.7 3.7 0 0 1 0-7.4Zm0 2a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Zm4-2.9a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"/></svg>',
+    youtube:
+      '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M21.6 7.2a3 3 0 0 0-2.1-2.1C17.7 4.6 12 4.6 12 4.6s-5.7 0-7.5.5a3 3 0 0 0-2.1 2.1C1.9 9 1.9 12 1.9 12s0 3 .5 4.8a3 3 0 0 0 2.1 2.1c1.8.5 7.5.5 7.5.5s5.7 0 7.5-.5a3 3 0 0 0 2.1-2.1c.5-1.8.5-4.8.5-4.8s0-3-.5-4.8ZM10 15.5v-7l6 3.5-6 3.5Z"/></svg>',
     share:
       '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 15.2c-1.2 0-2.2.6-2.8 1.5L9 13.6a3.7 3.7 0 0 0 0-3.2l6.2-3.1A3.4 3.4 0 1 0 14.4 5c0 .2 0 .4.1.6L8.2 8.7a3.4 3.4 0 1 0 0 6.6l6.3 3.1c0 .2-.1.4-.1.6a3.4 3.4 0 1 0 3.6-3.8Z"/></svg>',
   };

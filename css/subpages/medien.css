@@ -353,6 +353,55 @@ body.media-lightbox-open {
   outline-offset: 4px;
 }
 
+.media-lightbox__nav {
+  position: fixed;
+  top: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: clamp(2.8rem, 5vw, 3.6rem);
+  height: clamp(2.8rem, 5vw, 3.6rem);
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(8, 25, 49, 0.82);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition:
+    background-color 180ms ease,
+    border-color 180ms ease,
+    transform 180ms ease;
+}
+
+.media-lightbox__nav--previous {
+  left: clamp(0.75rem, 3vw, 2rem);
+}
+
+.media-lightbox__nav--next {
+  right: clamp(0.75rem, 3vw, 2rem);
+}
+
+.media-lightbox__nav span {
+  display: block;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  line-height: 1;
+  transform: translateY(-0.08em);
+}
+
+.media-lightbox__nav:hover,
+.media-lightbox__nav:focus-visible {
+  border-color: rgba(80, 205, 230, 0.8);
+  background: rgba(17, 70, 104, 0.94);
+}
+
+.media-lightbox__nav:focus-visible {
+  outline: 2px solid rgba(80, 205, 230, 0.95);
+  outline-offset: 4px;
+}
+
 .media-lightbox__caption {
   max-width: min(90vw, 52rem);
   color: rgba(255, 255, 255, 0.86);
@@ -373,6 +422,20 @@ body.media-lightbox-open {
   .media-lightbox__close {
     top: 0.5rem;
     right: 0.5rem;
+  }
+
+  .media-lightbox__nav {
+    top: auto;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+    transform: none;
+  }
+
+  .media-lightbox__nav--previous {
+    left: calc(50% - 4rem);
+  }
+
+  .media-lightbox__nav--next {
+    right: calc(50% - 4rem);
   }
 }
 

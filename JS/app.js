@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initHeroSlider,
     initMobileNav,
     initPressCarousel,
+    initSocialFab,
   ].forEach((init) => {
     try {
       init();
@@ -475,4 +476,111 @@ if (scrollTopBtn) {
 
   window.addEventListener("scroll", toggleScrollTopBtn, { passive: true });
   toggleScrollTopBtn();
+}
+// -----------------------------------------------------
+// Floating social media menu
+// -----------------------------------------------------
+
+function initSocialFab() {
+  const socialProfiles = [
+    {
+      name: "Facebook",
+      href: "https://www.facebook.com/melangea2/",
+      label: "Mélange à Deux auf Facebook",
+      icon: "facebook",
+    },
+    {
+      name: "Instagram",
+      href: "https://www.instagram.com/melangea2/",
+      label: "Mélange à Deux auf Instagram",
+      icon: "instagram",
+    },
+  ];
+
+  if (qs("[data-social-fab]") || socialProfiles.length === 0) return;
+
+  const socialFab = document.createElement("div");
+  socialFab.className = "social-fab";
+  socialFab.setAttribute("data-social-fab", "");
+
+  const socialLinks = document.createElement("div");
+  socialLinks.className = "social-fab__links";
+  socialLinks.id = "social-fab-links";
+  socialLinks.setAttribute("data-social-fab-links", "");
+  socialLinks.setAttribute("aria-hidden", "true");
+
+  socialProfiles.forEach((profile, index) => {
+    const link = document.createElement("a");
+    link.className = "social-fab__link";
+    link.href = profile.href;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.setAttribute("aria-label", profile.label);
+    link.setAttribute("tabindex", "-1");
+    link.style.setProperty("--social-fab-index", String(index));
+    link.innerHTML = getSocialFabIcon(profile.icon);
+    socialLinks.append(link);
+  });
+
+  const socialToggle = document.createElement("button");
+  socialToggle.className = "social-fab__toggle";
+  socialToggle.type = "button";
+  socialToggle.setAttribute("data-social-fab-toggle", "");
+  socialToggle.setAttribute("aria-label", "Social-Media-Links öffnen");
+  socialToggle.setAttribute("aria-controls", socialLinks.id);
+  socialToggle.setAttribute("aria-expanded", "false");
+  socialToggle.innerHTML = getSocialFabIcon("share");
+
+  socialFab.append(socialLinks, socialToggle);
+  document.body.append(socialFab);
+
+  const setSocialFabOpen = (isOpen) => {
+    socialFab.classList.toggle("is-open", isOpen);
+    socialToggle.setAttribute("aria-expanded", String(isOpen));
+    socialToggle.setAttribute(
+      "aria-label",
+      isOpen ? "Social-Media-Links schließen" : "Social-Media-Links öffnen",
+    );
+    socialLinks.setAttribute("aria-hidden", String(!isOpen));
+    qsa(".social-fab__link", socialLinks).forEach((link) => {
+      link.setAttribute("tabindex", isOpen ? "0" : "-1");
+    });
+  };
+
+  socialToggle.addEventListener("click", () => {
+    setSocialFabOpen(!socialFab.classList.contains("is-open"));
+  });
+
+  socialLinks.addEventListener("click", (event) => {
+    if (event.target.closest("a")) {
+      setSocialFabOpen(false);
+    }
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!socialFab.classList.contains("is-open")) return;
+    if (!socialFab.contains(event.target)) {
+      setSocialFabOpen(false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && socialFab.classList.contains("is-open")) {
+      setSocialFabOpen(false);
+      socialToggle.focus();
+    }
+  });
+}
+
+function getSocialFabIcon(icon) {
+  const icons = {
+    facebook:
+      '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 8.9V7.2c0-.8.2-1.3 1.4-1.3h1.7V3.1c-.8-.1-1.7-.2-2.5-.2-2.6 0-4.4 1.6-4.4 4.5v1.5H7.3V12h2.9v8.9H14V12h2.8l.4-3.1H14Z"/></svg>',
+    instagram:
+      '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.8 2.8h8.4a5 5 0 0 1 5 5v8.4a5 5 0 0 1-5 5H7.8a5 5 0 0 1-5-5V7.8a5 5 0 0 1 5-5Zm0 2A3 3 0 0 0 4.8 7.8v8.4a3 3 0 0 0 3 3h8.4a3 3 0 0 0 3-3V7.8a3 3 0 0 0-3-3H7.8Zm4.2 3.5a3.7 3.7 0 1 1 0 7.4 3.7 3.7 0 0 1 0-7.4Zm0 2a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Zm4-2.9a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z"/></svg>',
+    share:
+      '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M18 15.2c-1.2 0-2.2.6-2.8 1.5L9 13.6a3.7 3.7 0 0 0 0-3.2l6.2-3.1A3.4 3.4 0 1 0 14.4 5c0 .2 0 .4.1.6L8.2 8.7a3.4 3.4 0 1 0 0 6.6l6.3 3.1c0 .2-.1.4-.1.6a3.4 3.4 0 1 0 3.6-3.8Z"/></svg>',
+  };
+
+  return icons[icon] || "";
 }

@@ -17,7 +17,7 @@
     activeTrigger = trigger;
 
     const alt = trigger.dataset.mediaAlt || '';
-    const caption = trigger.dataset.mediaCaption || alt;
+    const caption = trigger.dataset.mediaCaption || '';
 
     lightboxImage.src = source;
     lightboxImage.alt = alt;

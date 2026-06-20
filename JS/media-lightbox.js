@@ -1,31 +1,71 @@
 (() => {
   const lightbox = document.querySelector('[data-media-lightbox]');
-  const triggers = document.querySelectorAll('[data-media-lightbox-open]');
+  const triggers = Array.from(
+    document.querySelectorAll('[data-media-lightbox-open]')
+  );
   const lightboxImage = lightbox?.querySelector('[data-media-lightbox-image]');
   const lightboxCaption = lightbox?.querySelector('[data-media-lightbox-caption]');
   const closeButton = lightbox?.querySelector('.media-lightbox__close');
+  const previousButton = lightbox?.querySelector('[data-media-lightbox-previous]');
+  const nextButton = lightbox?.querySelector('[data-media-lightbox-next]');
   const closeControls = lightbox?.querySelectorAll('[data-media-lightbox-close]') ?? [];
 
   let activeTrigger = null;
+  let activeIndex = -1;
 
-  const openMediaLightbox = (trigger) => {
-    if (!lightbox || !lightboxImage || !closeButton) return;
+  const hasMultipleImages = triggers.length > 1;
 
-    const source = trigger.dataset.mediaSrc;
+  if (previousButton) {
+    previousButton.hidden = !hasMultipleImages;
+  }
+
+  if (nextButton) {
+    nextButton.hidden = !hasMultipleImages;
+  }
+
+  const preloadMediaImage = (index) => {
+    if (triggers.length < 2) return;
+
+    const normalizedIndex = (index + triggers.length) % triggers.length;
+    const source = triggers[normalizedIndex].dataset.mediaSrc;
+
     if (!source) return;
 
-    activeTrigger = trigger;
+    const image = new Image();
+    image.src = source;
+  };
 
+  const showMediaImage = (index) => {
+    if (!lightboxImage || triggers.length === 0) return;
+
+    activeIndex = (index + triggers.length) % triggers.length;
+
+    const trigger = triggers[activeIndex];
+    const source = trigger.dataset.mediaSrc;
     const alt = trigger.dataset.mediaAlt || '';
-    const caption = trigger.dataset.mediaCaption || '';
+
+    if (!source) return;
 
     lightboxImage.src = source;
     lightboxImage.alt = alt;
 
     if (lightboxCaption) {
-      lightboxCaption.textContent = caption;
-      lightboxCaption.hidden = !caption;
+      lightboxCaption.textContent = '';
+      lightboxCaption.hidden = true;
     }
+
+    preloadMediaImage(activeIndex - 1);
+    preloadMediaImage(activeIndex + 1);
+  };
+
+  const openMediaLightbox = (trigger) => {
+    if (!lightbox || !lightboxImage || !closeButton) return;
+
+    const index = triggers.indexOf(trigger);
+    if (index < 0) return;
+
+    activeTrigger = trigger;
+    showMediaImage(index);
 
     lightbox.setAttribute('aria-hidden', 'false');
     document.body.classList.add('media-lightbox-open');
@@ -48,8 +88,17 @@
       lightboxCaption.hidden = true;
     }
 
+    activeIndex = -1;
     activeTrigger?.focus();
     activeTrigger = null;
+  };
+
+  const showPreviousImage = () => {
+    showMediaImage(activeIndex - 1);
+  };
+
+  const showNextImage = () => {
+    showMediaImage(activeIndex + 1);
   };
 
   triggers.forEach((trigger) => {
@@ -60,9 +109,27 @@
     control.addEventListener('click', closeMediaLightbox);
   });
 
+  previousButton?.addEventListener('click', showPreviousImage);
+  nextButton?.addEventListener('click', showNextImage);
+
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && lightbox?.getAttribute('aria-hidden') === 'false') {
+    const isOpen = lightbox?.getAttribute('aria-hidden') === 'false';
+
+    if (!isOpen) return;
+
+    if (event.key === 'Escape') {
       closeMediaLightbox();
+      return;
+    }
+
+    if (event.key === 'ArrowLeft') {
+      event.preventDefault();
+      showPreviousImage();
+    }
+
+    if (event.key === 'ArrowRight') {
+      event.preventDefault();
+      showNextImage();
     }
   });
 })();

@@ -99,6 +99,7 @@ if (bookingForm) {
     else if (!emailPattern.test(value('email'))) errors.email = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
     if (!value('event-type')) errors['event-type'] = 'Bitte wählen Sie eine Veranstaltungsart aus.';
     if (!value('preferred-date')) errors['preferred-date'] = 'Bitte wählen Sie einen Termin aus.';
+    if (!value('performance_date')) errors.performance_date = 'Bitte wählen Sie den gewünschten Veranstaltungstermin aus.';
     if (!value('location')) errors.location = 'Bitte geben Sie den Ort ein.';
     if (value('audience-size') && (!/^\d+$/.test(value('audience-size')) || Number(value('audience-size')) < 1)) {
       errors['audience-size'] = 'Bitte geben Sie eine gültige Publikumsgröße ein.';
@@ -118,6 +119,39 @@ if (bookingForm) {
 
     return response.json();
   };
+
+
+  bookingForm.addEventListener('input', (event) => {
+    const field = event.target;
+    if (!field?.name || field.getAttribute('aria-invalid') !== 'true') return;
+
+    const value = typeof field.value === 'string' ? field.value.trim() : '';
+    const isCorrected = field.type === 'checkbox' ? field.checked : value !== '';
+    if (!isCorrected) return;
+
+    const error = field.id ? bookingForm.querySelector(`[data-error-for="${field.id}"]`) : null;
+    field.removeAttribute('aria-invalid');
+    if (error) {
+      error.textContent = '';
+      error.hidden = true;
+    }
+  });
+
+  bookingForm.addEventListener('change', (event) => {
+    const field = event.target;
+    if (!field?.name || field.getAttribute('aria-invalid') !== 'true') return;
+
+    const value = typeof field.value === 'string' ? field.value.trim() : '';
+    const isCorrected = field.type === 'checkbox' ? field.checked : value !== '';
+    if (!isCorrected) return;
+
+    const error = field.id ? bookingForm.querySelector(`[data-error-for="${field.id}"]`) : null;
+    field.removeAttribute('aria-invalid');
+    if (error) {
+      error.textContent = '';
+      error.hidden = true;
+    }
+  });
 
   bookingForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -160,6 +194,10 @@ if (bookingForm) {
       }
 
       if (response.status === 422) {
+        if (payload.errors && typeof payload.errors === 'object') {
+          clearFieldErrors();
+          Object.entries(payload.errors).forEach(([name, message]) => setFieldError(name, message));
+        }
         showStatus(payload.message || messages.validation, 'error');
         focusFirstInvalidField(payload.errors);
         return;

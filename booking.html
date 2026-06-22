@@ -196,6 +196,13 @@
                   class="booking-optional">freiwillig</span></label>
               <input id="booking-audience" name="audience-size" type="number" min="1" inputmode="numeric" />
             </div>
+
+            <div class="booking-field">
+              <label for="booking-performance-date">Gewünschter Veranstaltungstermin <span aria-hidden="true">*</span></label>
+              <input id="booking-performance-date" name="performance_date" type="date" lang="de"
+                aria-required="true" aria-describedby="booking-performance-date-error" />
+              <p id="booking-performance-date-error" class="form-field__error" data-error-for="booking-performance-date" hidden></p>
+            </div>
           </div>
 
           <div class="booking-field booking-field--full">

@@ -125,6 +125,28 @@
   width: 100%;
 }
 
+.nav a[aria-current="page"] {
+  color: #fff;
+}
+
+.nav a[aria-current="page"]::after {
+  left: 50%;
+  bottom: -0.6rem;
+  width: 70%;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    rgba(94, 117, 255, 0.95),
+    rgba(46, 205, 222, 0.95)
+  );
+  transform: translateX(-50%);
+}
+
+.nav a[aria-current="page"]:hover {
+  color: #fff;
+}
+
 .section {
   margin: 40px 0 40px;
   padding: 8px 0 16px;
@@ -409,6 +431,12 @@
 
   .nav a:hover {
     background: rgba(255, 255, 255, 0.06);
+  }
+
+  .nav a[aria-current="page"] {
+    color: #fff;
+    border-left: 3px solid rgba(46, 205, 222, 0.9);
+    background: rgba(255, 255, 255, 0.04);
   }
 
   .nav-checkbox:checked ~ .nav {

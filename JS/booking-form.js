@@ -98,7 +98,6 @@ if (bookingForm) {
     if (!value('email')) errors.email = 'Bitte geben Sie Ihre E-Mail-Adresse ein.';
     else if (!emailPattern.test(value('email'))) errors.email = 'Bitte geben Sie eine gültige E-Mail-Adresse ein.';
     if (!value('event-type')) errors['event-type'] = 'Bitte wählen Sie eine Veranstaltungsart aus.';
-    if (!value('preferred-date')) errors['preferred-date'] = 'Bitte wählen Sie einen Termin aus.';
     if (!value('performance_date')) errors.performance_date = 'Bitte wählen Sie den gewünschten Veranstaltungstermin aus.';
     if (!value('location')) errors.location = 'Bitte geben Sie den Ort ein.';
     if (value('audience-size') && (!/^\d+$/.test(value('audience-size')) || Number(value('audience-size')) < 1)) {

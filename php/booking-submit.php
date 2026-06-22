@@ -152,14 +152,13 @@ $email = is_string($emailRaw) ? clean_header_value($emailRaw) : '';
 $phone = validate_max_length('phone', post_string('phone'), 60, $errors, 'Bitte geben Sie eine gültige Telefonnummer an.');
 $organization = validate_max_length('organization', post_string('organization'), 140, $errors, 'Bitte geben Sie eine gültige Organisation an.');
 $eventType = validate_max_length('event-type', post_string('event-type'), 40, $errors, 'Bitte wählen Sie eine Veranstaltungsart aus.', true);
-$preferredDate = validate_max_length('preferred-date', post_string('preferred-date'), 10, $errors, 'Bitte geben Sie ein gültiges Wunschdatum an.', true);
 $performanceDate = validate_max_length('performance_date', post_string('performance_date'), 10, $errors, 'Bitte wählen Sie den gewünschten Veranstaltungstermin aus.', true);
 $location = validate_max_length('location', post_string('location'), 140, $errors, 'Bitte geben Sie den Ort an.', true);
 $audienceSizeRaw = validate_max_length('audience-size', post_string('audience-size'), 10, $errors, 'Bitte geben Sie eine gültige Publikumsgröße an.');
 $message = validate_max_length('message', post_string('message'), 3000, $errors, 'Bitte geben Sie eine Nachricht zur Buchung an.', true);
 $consent = isset($_POST['contact-consent']) && !is_array($_POST['contact-consent']);
 
-foreach (['first-name' => $firstName, 'last-name' => $lastName, 'preferred-date' => $preferredDate, 'performance_date' => $performanceDate, 'location' => $location, 'message' => $message] as $field => $value) {
+foreach (['first-name' => $firstName, 'last-name' => $lastName, 'performance_date' => $performanceDate, 'location' => $location, 'message' => $message] as $field => $value) {
     if ($value === '') {
         $errors[$field] = $errors[$field] ?? 'Bitte füllen Sie dieses Pflichtfeld aus.';
     }
@@ -172,12 +171,6 @@ if ($emailRaw === null || is_array($emailRaw) || $email === '' || has_header_inj
 $allowedEventTypes = ['concert-recital', 'festival-cultural-event', 'private-event', 'educational-special-program', 'other'];
 if ($eventType === '' || !in_array($eventType, $allowedEventTypes, true)) {
     $errors['event-type'] = 'Bitte wählen Sie eine gültige Veranstaltungsart aus.';
-}
-
-$preferredDateGerman = format_german_date($preferredDate);
-if ($preferredDateGerman === null) {
-    $errors['preferred-date'] = 'Bitte geben Sie ein gültiges Wunschdatum an.';
-    $preferredDateGerman = '';
 }
 
 $performanceDateGerman = format_german_date($performanceDate);
@@ -248,9 +241,6 @@ $notificationBody = implode("\n", [
     'Art der Veranstaltung:',
     $eventTypeLabels[$eventType] ?? $eventType,
     '',
-    'Wunschtermin:',
-    $preferredDateGerman,
-    '',
     'Gewünschter Veranstaltungstermin:',
     $performanceDateGerman,
     '',
@@ -280,7 +270,7 @@ $confirmationBody = implode("\n", [
     '',
     'Wir haben Ihre Anfrage erhalten und melden uns persönlich bei Ihnen zurück. Da unsere Anfragen nicht automatisiert bearbeitet werden, bitten wir gegebenenfalls um etwas Geduld.',
     '',
-    'Ihr gewünschter Termin:',
+    'Gewünschter Veranstaltungstermin:',
     $performanceDateGerman,
     '',
     'Freundliche Grüße',

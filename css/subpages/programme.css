@@ -116,15 +116,6 @@
   object-fit: cover;
 }
 
-.programmes-kicker {
-  margin: 0 0 0.35rem;
-  color: #f4e7ba;
-  font-size: 0.9rem;
-  font-weight: 750;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-}
-
 .programmes-repertoire {
   padding-top: clamp(1.5rem, 3vw, 2.75rem);
 }
@@ -136,12 +127,6 @@
 
 .programmes-repertoire__head {
   margin-bottom: 0;
-}
-
-.programmes-repertoire__head > div {
-  display: grid;
-  justify-items: center;
-  gap: 0.45rem;
 }
 
 .programmes-repertoire__note {
@@ -318,8 +303,8 @@
     text-align: left;
   }
 
-  .programmes-repertoire__head > div {
-    justify-items: start;
+  .programmes-repertoire__head {
+    justify-content: flex-start;
   }
 }
 

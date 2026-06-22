@@ -185,15 +185,6 @@
   text-underline-offset: 0.24em;
 }
 
-.booking-section-head {
-  margin-bottom: clamp(1.25rem, 3vw, 2rem);
-}
-
-.booking-section-head > div {
-  display: grid;
-  justify-items: center;
-  gap: 0.4rem;
-}
 
 .booking-card-grid {
   display: grid;

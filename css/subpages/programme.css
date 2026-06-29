@@ -73,7 +73,7 @@
   z-index: 1;
   display: grid;
   justify-items: center;
-  gap: clamp(1.25rem, 3vw, 2rem);
+  gap: clamp(1.5rem, 3.2vw, 2.25rem);
   text-align: center;
 }
 

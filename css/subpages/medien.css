@@ -106,40 +106,26 @@
 
 
 .media-photo-wall {
-  width: min(100%, 920px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  width: min(100%, 980px);
   margin-inline: auto;
-  column-count: 2;
-  column-gap: clamp(1rem, 2vw, 1.5rem);
+  align-items: stretch;
 }
 
-.media-photo-card {
-  display: inline-block;
-  width: 100%;
+.media-photo-wall .media-photo-card {
+  position: relative;
   min-width: 0;
-  margin: 0 0 clamp(1rem, 2vw, 1.5rem);
+  margin: 0;
   overflow: hidden;
-  break-inside: avoid;
-  page-break-inside: avoid;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: clamp(0.75rem, 1.5vw, 1.1rem);
-  background: rgba(5, 12, 32, 0.2);
-  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.16);
-}
-
-.media-photo-wall .media-photo-card:first-child {
-  column-span: all;
-  display: block;
-  width: 100%;
-  margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: clamp(0.9rem, 1.6vw, 1.25rem);
+  background: rgba(5, 12, 32, 0.35);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
 }
 
 /* Responsive */
-
-@media (max-width: 900px) {
-  .media-photo-wall {
-    column-count: 2;
-  }
-}
 
 @media (max-width: 560px) {
   .media-collage-hero {
@@ -212,21 +198,24 @@
 }
 
 .media-photo-wall .media-gallery__zoom {
-  height: auto;
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
   padding: 0;
-  background: transparent;
+  border: 0;
+  overflow: hidden;
+  background: rgba(5, 12, 32, 0.45);
+  cursor: zoom-in;
 }
 
 .media-photo-wall .media-gallery__zoom img {
+  display: block;
   width: 100%;
-  height: auto;
+  height: 100%;
   max-width: 100%;
-  object-fit: initial;
-}
-
-.media-photo-wall .media-photo-card:first-child img {
-  width: 100%;
-  height: auto;
+  object-fit: cover;
+  object-position: center;
 }
 
 .media-gallery__zoom::after {
@@ -279,12 +268,11 @@
   }
 
   .media-photo-wall {
-    width: 100%;
-    column-count: 1;
+    grid-template-columns: 1fr;
   }
 
-  .media-photo-card {
-    margin-bottom: 1rem;
+  .media-photo-wall .media-gallery__zoom {
+    aspect-ratio: 3 / 2;
   }
 }
 

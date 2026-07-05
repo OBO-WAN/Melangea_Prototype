@@ -247,6 +247,7 @@ body.admin-page {
 }
 
 .admin-page input[type="text"],
+.admin-page input[type="email"],
 .admin-page input[type="password"],
 .admin-page input[type="date"],
 .admin-page textarea,

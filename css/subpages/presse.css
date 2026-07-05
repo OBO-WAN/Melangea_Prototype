@@ -96,14 +96,6 @@
   text-transform: uppercase;
 }
 
-.news-hero__intro {
-  max-width: 58ch;
-  margin: 1rem auto 0;
-  color: var(--text);
-  font-size: clamp(1.05rem, 1.8vw, 1.28rem);
-  line-height: 1.75;
-}
-
 .news-featured-section,
 .news-grid-section,
 .press-cta-section {
@@ -330,10 +322,6 @@
 @media (max-width: 760px) {
   .news-hero__inner {
     text-align: left;
-  }
-
-  .news-hero__intro {
-    margin-left: 0;
   }
 
   .news-featured {

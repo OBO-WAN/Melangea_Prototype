@@ -144,6 +144,10 @@
   justify-self: center;
 }
 
+#booking-request {
+  scroll-margin-top: clamp(6.5rem, 12vw, 9rem);
+}
+
 .booking-intro__copy h2,
 .booking-form-copy h2,
 .booking-contact__card h2 {

@@ -142,6 +142,19 @@
   animation-delay: 0.95s;
 }
 
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  margin-top: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+@media (max-width: 680px) {
+  .hero-actions {
+    justify-content: center;
+  }
+}
+
 @keyframes heroLineReveal {
   from {
     opacity: 0;

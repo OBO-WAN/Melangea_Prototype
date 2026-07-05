@@ -390,3 +390,13 @@ body.admin-page {
     position: static;
   }
 }
+
+.admin-login__link {
+  margin: 16px 0 0;
+  text-align: center;
+}
+
+.admin-login__link a {
+  color: var(--admin-accent);
+  font-weight: 700;
+}

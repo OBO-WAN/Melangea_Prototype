@@ -8,18 +8,28 @@ if (is_authenticated()) {
     redirect_to_admin();
 }
 
+$genericMessage = 'Wenn die E-Mail-Adresse bekannt ist, wurde ein Link zum Zurücksetzen des Passworts gesendet.';
+$message = '';
 $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $password = isset($_POST['password']) && is_string($_POST['password']) ? $_POST['password'] : '';
+    $email = isset($_POST['email']) && is_string($_POST['email']) ? trim($_POST['email']) : '';
 
-    if (password_verify($password, get_admin_password_hash())) {
-        session_regenerate_id(true);
-        $_SESSION[ADMIN_SESSION_KEY] = true;
-        redirect_to_admin();
+    if (!verify_csrf_token(isset($_POST['csrf_token']) && is_string($_POST['csrf_token']) ? $_POST['csrf_token'] : null)) {
+        $error = 'Die Anfrage konnte nicht überprüft werden. Bitte versuchen Sie es erneut.';
+    } else {
+        $adminEmail = get_admin_email();
+
+        if ($adminEmail !== '' && hash_equals(strtolower($adminEmail), strtolower($email))) {
+            $token = create_password_reset_token();
+
+            if (is_string($token)) {
+                send_password_reset_email($token);
+            }
+        }
+
+        $message = $genericMessage;
     }
-
-    $error = 'Das Passwort ist nicht korrekt.';
 }
 ?>
 <!doctype html>
@@ -28,12 +38,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
-  <title>Admin-Login | Mélange à Deux &amp; Amis</title>
+  <title>Passwort vergessen | Mélange à Deux &amp; Amis</title>
   <script src="admin-theme.js"></script>
   <link rel="stylesheet" href="admin.css">
 </head>
 <body class="admin-page admin-page--login">
-  <main class="admin-login" aria-labelledby="login-title">
+  <main class="admin-login" aria-labelledby="forgot-password-title">
     <div class="admin-login__theme">
       <button type="button" class="admin-theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Dunkelmodus aktivieren">
         <span class="admin-theme-toggle__icon admin-theme-toggle__icon--moon" aria-hidden="true">
@@ -49,19 +59,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </span>
       </button>
     </div>
-    <h1 id="login-title">Konzertverwaltung</h1>
-    <p class="admin-muted">Bitte melden Sie sich an, um Konzerttermine zu bearbeiten.</p>
+    <h1 id="forgot-password-title">Passwort vergessen?</h1>
+    <p class="admin-muted">Geben Sie die hinterlegte Admin-E-Mail-Adresse ein.</p>
+
+    <?php if ($message !== ''): ?>
+      <p class="admin-message admin-message--success"><?= escape_html($message) ?></p>
+    <?php endif; ?>
 
     <?php if ($error !== ''): ?>
       <p class="admin-message admin-message--error"><?= escape_html($error) ?></p>
     <?php endif; ?>
 
-    <form method="post" action="login.php" class="admin-card">
-      <label for="password">Passwort</label>
-      <input type="password" id="password" name="password" autocomplete="current-password" required autofocus>
-      <button type="submit" class="admin-button">Einloggen</button>
+    <form method="post" action="forgot-password.php" class="admin-card">
+      <input type="hidden" name="csrf_token" value="<?= escape_html(csrf_token()) ?>">
+      <label for="email">Admin-E-Mail-Adresse</label>
+      <input type="email" id="email" name="email" autocomplete="email" required autofocus>
+      <button type="submit" class="admin-button">Link senden</button>
     </form>
-    <p class="admin-login__link"><a href="forgot-password.php">Passwort vergessen?</a></p>
+    <p class="admin-login__link"><a href="login.php">Zurück zum Login</a></p>
   </main>
 </body>
 </html>

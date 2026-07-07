@@ -1,0 +1,62 @@
+/* Booking hero background: scoped to the booking hero section only. */
+.booking-page {
+  background: transparent;
+}
+
+.booking-page::after {
+  content: none;
+}
+
+.booking-hero::before,
+.booking-hero::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: clamp(0.75rem, 2vw, 1.75rem);
+  z-index: 0;
+  width: min(1240px, calc(100% - 2rem));
+  height: auto;
+  aspect-ratio: 21 / 9;
+  transform: translateX(-50%);
+  border-radius: 32px;
+  pointer-events: none;
+}
+
+.booking-hero::before {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background:
+    linear-gradient(
+      180deg,
+      rgba(6, 10, 24, 0.08) 0%,
+      rgba(6, 10, 24, 0.22) 46%,
+      rgba(21, 31, 72, 0.92) 100%
+    ),
+    url("../../assets/IMG/booking/background.webp") center / cover no-repeat;
+  box-shadow:
+    0 14px 14px rgba(0, 0, 0, 0.28),
+    0 8px 24px rgba(0, 0, 0, 0.18);
+  opacity: 1;
+}
+
+.booking-hero::after {
+  background:
+    radial-gradient(circle at 5% 16%, rgba(255, 255, 255, 0.2) 0 0.28rem, transparent 0.68rem),
+    radial-gradient(circle at 8% 18%, rgba(105, 245, 215, 0.16) 0 3.8rem, transparent 3.9rem),
+    radial-gradient(circle at 68% 18%, rgba(255, 255, 255, 0.16) 0 0.2rem, transparent 0.55rem),
+    radial-gradient(circle at 94% 20%, rgba(255, 255, 255, 0.18) 0 0.25rem, transparent 0.65rem),
+    radial-gradient(circle at 91% 23%, rgba(194, 145, 255, 0.16) 0 3.2rem, transparent 3.3rem),
+    radial-gradient(circle at 63% 38%, rgba(255, 255, 255, 0.16) 0 0.18rem, transparent 0.5rem),
+    radial-gradient(circle at 30% 68%, rgba(255, 255, 255, 0.12) 0 0.22rem, transparent 0.55rem);
+  opacity: 0.44;
+  mix-blend-mode: screen;
+}
+
+.booking-hero__inner {
+  position: relative;
+  z-index: 1;
+}
+
+.booking-hero__inner > * {
+  position: relative;
+  z-index: 1;
+}

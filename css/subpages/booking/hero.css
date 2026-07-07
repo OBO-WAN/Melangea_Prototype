@@ -1,0 +1,129 @@
+/* Booking hero background: scoped to the booking hero section only. */
+.booking-page {
+  background: transparent;
+}
+
+.booking-page::after {
+  content: none;
+}
+
+.booking-hero {
+  display: grid;
+  justify-items: center;
+  padding: 1.75rem 0.75rem 2.8rem;
+  overflow: visible;
+}
+
+.booking-hero::before,
+.booking-hero::after,
+.booking-hero__inner::before {
+  content: none;
+}
+
+.booking-hero__inner {
+  position: relative;
+  isolation: isolate;
+  z-index: 1;
+  width: min(1240px, 100%);
+  max-width: 1240px;
+  min-height: clamp(260px, 42vw, 530px);
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
+  align-content: center;
+  justify-items: center;
+  gap: clamp(0.85rem, 2vw, 1.25rem);
+  padding: clamp(2rem, 5vw, 4rem) clamp(1rem, 5vw, 2.5rem);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 32px;
+  background:
+    radial-gradient(circle at 5% 16%, rgba(255, 255, 255, 0.2) 0 0.28rem, transparent 0.68rem),
+    radial-gradient(circle at 8% 18%, rgba(105, 245, 215, 0.16) 0 3.8rem, transparent 3.9rem),
+    radial-gradient(circle at 68% 18%, rgba(255, 255, 255, 0.16) 0 0.2rem, transparent 0.55rem),
+    radial-gradient(circle at 94% 20%, rgba(255, 255, 255, 0.18) 0 0.25rem, transparent 0.65rem),
+    radial-gradient(circle at 91% 23%, rgba(194, 145, 255, 0.16) 0 3.2rem, transparent 3.3rem),
+    radial-gradient(circle at 63% 38%, rgba(255, 255, 255, 0.16) 0 0.18rem, transparent 0.5rem),
+    radial-gradient(circle at 30% 68%, rgba(255, 255, 255, 0.12) 0 0.22rem, transparent 0.55rem),
+    linear-gradient(
+      180deg,
+      rgba(6, 10, 24, 0.16) 0%,
+      rgba(6, 10, 24, 0.3) 48%,
+      rgba(21, 31, 72, 0.9) 100%
+    ),
+    url("../../../assets/IMG/booking/background.webp") center / cover no-repeat;
+  box-shadow:
+    0 14px 14px rgba(0, 0, 0, 0.28),
+    0 8px 24px rgba(0, 0, 0, 0.18);
+}
+
+.booking-hero__inner > * {
+  position: relative;
+  z-index: 1;
+}
+
+.booking-hero h1 {
+  max-width: 100%;
+  font-size: clamp(2.4rem, 7vw, 4.8rem);
+  letter-spacing: clamp(0.08em, 1vw, 0.28em);
+}
+
+.booking-hero__subtitle {
+  max-width: 760px;
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  line-height: 1.65;
+}
+
+.booking-hero__actions {
+  align-items: center;
+  max-width: 100%;
+}
+
+@media (max-width: 760px) {
+  .booking-hero {
+    padding: 1rem 0 2.35rem;
+  }
+
+  .booking-hero__inner {
+    width: min(100%, calc(100vw - 2rem));
+    min-height: 0;
+    aspect-ratio: auto;
+    align-content: start;
+    gap: 1rem;
+    padding: clamp(2rem, 8vw, 3rem) clamp(1rem, 5vw, 1.5rem);
+    border-radius: 28px;
+    background-position: center top;
+  }
+
+  .booking-hero h1 {
+    font-size: clamp(2.2rem, 12vw, 3.35rem);
+    letter-spacing: clamp(0.08em, 1.4vw, 0.18em);
+  }
+
+  .booking-hero__subtitle {
+    max-width: 32rem;
+    font-size: clamp(1rem, 4.6vw, 1.1rem);
+    line-height: 1.55;
+  }
+
+  .booking-hero__actions {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.8rem;
+    margin-top: 0.65rem;
+  }
+
+  .booking-hero__actions .btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .booking-hero__inner {
+    padding-top: 1.85rem;
+    padding-bottom: 2rem;
+    border-radius: 24px;
+  }
+
+  .booking-hero h1 {
+    font-size: clamp(2rem, 11vw, 2.75rem);
+  }
+}

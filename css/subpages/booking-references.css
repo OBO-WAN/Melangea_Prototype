@@ -1,0 +1,50 @@
+.booking-references {
+  padding-top: clamp(1.5rem, 4vw, 3rem);
+}
+
+.booking-references__inner {
+  display: grid;
+  justify-items: center;
+  gap: clamp(1.25rem, 3vw, 2rem);
+  text-align: center;
+}
+
+.booking-references__title {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 700;
+  line-height: 1.12;
+  text-decoration: underline;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.12em;
+}
+
+.booking-references__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.5rem, 7vw, 6rem);
+  width: min(980px, 100%);
+}
+
+.booking-references__list {
+  display: grid;
+  gap: 0.28rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.booking-references__list li {
+  color: var(--text);
+  font-size: clamp(0.92rem, 1.25vw, 1rem);
+  line-height: 1.32;
+}
+
+@media (max-width: 700px) {
+  .booking-references__grid {
+    grid-template-columns: 1fr;
+    gap: 0.28rem;
+    width: min(30rem, 100%);
+  }
+}

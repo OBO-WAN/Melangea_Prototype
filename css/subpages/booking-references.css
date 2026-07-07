@@ -41,10 +41,66 @@
   line-height: 1.32;
 }
 
+.booking-press-quotes {
+  padding-top: clamp(0.5rem, 2vw, 1rem);
+}
+
+.booking-press-quotes__card {
+  display: grid;
+  gap: clamp(1.35rem, 3vw, 2rem);
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: clamp(1.25rem, 4vw, 3rem);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 26px;
+  background:
+    radial-gradient(520px 260px at 82% 0%, rgba(46, 229, 157, 0.1), transparent 62%),
+    linear-gradient(135deg, rgba(29, 21, 106, 0.96), rgba(74, 24, 194, 0.86));
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.booking-press-quote {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.7fr) minmax(0, 1.6fr);
+  gap: clamp(1rem, 4vw, 3rem);
+  align-items: start;
+  margin: 0;
+}
+
+.booking-press-quote__source {
+  color: var(--text);
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.booking-press-quote blockquote {
+  display: grid;
+  gap: 0.35rem;
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1rem, 1.55vw, 1.16rem);
+  line-height: 1.5;
+}
+
+.booking-press-quote blockquote p {
+  margin: 0;
+}
+
 @media (max-width: 700px) {
   .booking-references__grid {
     grid-template-columns: 1fr;
     gap: 0.28rem;
     width: min(30rem, 100%);
+  }
+
+  .booking-press-quote {
+    grid-template-columns: 1fr;
+    gap: 0.65rem;
+  }
+
+  .booking-press-quotes__card {
+    border-radius: 22px;
   }
 }

@@ -158,6 +158,10 @@
   color: #f20b31;
 }
 
+.news-feature--red .news-feature__title br {
+  display: none;
+}
+
 .news-feature__title small {
   color: #f022ee;
   font-size: clamp(0.8rem, 1.55vw, 1.25rem);
@@ -343,6 +347,10 @@
 
   .news-feature__title {
     font-size: clamp(2.35rem, 16vw, 3.3rem);
+  }
+
+  .news-feature--red .news-feature__title br {
+    display: block;
   }
 
   .news-feature__title small {

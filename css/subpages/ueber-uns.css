@@ -325,6 +325,41 @@ body.page-ueber-uns .site-footer {
   line-height: 1.72;
 }
 
+.about-action-panel {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1rem, 3vw, 2rem);
+  min-width: 0;
+  padding: clamp(1rem, 2.6vw, 1.5rem);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius);
+  background:
+    radial-gradient(520px 240px at 12% 0%, rgba(46, 229, 157, 0.1), transparent 62%),
+    linear-gradient(135deg, rgba(13, 23, 84, 0.82), rgba(48, 24, 126, 0.58));
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.about-action-panel__text {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(1rem, 1.22vw, 1.18rem);
+  font-weight: 650;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.about-action-panel__actions {
+  display: flex;
+  flex: 0 0 auto;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.75rem;
+}
+
 .about-history-decoration {
   grid-column: 1 / -1;
   width: min(520px, 72vw);
@@ -440,6 +475,17 @@ body.page-ueber-uns .site-footer {
 
   .about-history__chapter {
     padding: 1rem;
+  }
+
+  .about-action-panel {
+    align-items: stretch;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-action-panel__actions,
+  .about-action-panel__actions .btn {
+    width: 100%;
   }
 
   .about-history-decoration {

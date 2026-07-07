@@ -41,6 +41,36 @@
   line-height: 1.32;
 }
 
+.booking-repertoire {
+  padding-top: clamp(0.5rem, 2vw, 1rem);
+}
+
+.booking-repertoire__card {
+  width: min(1100px, 100%);
+  margin: 0 auto;
+  padding: clamp(1.25rem, 3.5vw, 2.4rem);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 26px;
+  background:
+    radial-gradient(560px 260px at 18% 0%, rgba(46, 229, 157, 0.08), transparent 62%),
+    linear-gradient(135deg, rgba(29, 21, 106, 0.96), rgba(74, 24, 194, 0.86));
+  box-shadow:
+    0 18px 42px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.booking-repertoire__card p {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.05rem, 1.9vw, 1.35rem);
+  line-height: 1.46;
+  text-wrap: pretty;
+}
+
+.booking-repertoire__card em {
+  font-style: italic;
+}
+
 .booking-press-quotes {
   padding-top: clamp(0.5rem, 2vw, 1rem);
 }
@@ -95,12 +125,18 @@
     width: min(30rem, 100%);
   }
 
+  .booking-repertoire__card,
+  .booking-press-quotes__card {
+    border-radius: 22px;
+  }
+
+  .booking-repertoire__card p {
+    font-size: clamp(1rem, 4.8vw, 1.12rem);
+    line-height: 1.55;
+  }
+
   .booking-press-quote {
     grid-template-columns: 1fr;
     gap: 0.65rem;
-  }
-
-  .booking-press-quotes__card {
-    border-radius: 22px;
   }
 }

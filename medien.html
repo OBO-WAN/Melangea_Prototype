@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="css/newsletter.css" />
   <link rel="stylesheet" href="vendor/aos/aos.css" />
   <link rel="stylesheet" href="css/subpages/medien.css" />
+  <link rel="stylesheet" href="css/subpages/medien-audio.css" />
 </head>
 
 <body class="page page-medien">
@@ -271,6 +272,112 @@
       </div>
     </section>
 
+    <section class="section media-audio-section" aria-labelledby="media-audio-title">
+      <div class="container">
+        <div class="media-audio__head" data-aos="fade-up">
+          <p class="booking-kicker">Hörbeispiele</p>
+          <h2 id="media-audio-title">Audio</h2>
+          <p>
+            Eine moderne Auswahl von Hörbeispielen. Weitere MP3-Dateien können später einfach als neue Playlist-Einträge ergänzt werden.
+          </p>
+        </div>
+
+        <div class="media-wave-player" data-media-wave-player data-aos="fade-up">
+          <div class="media-wave-player__main">
+            <div class="media-wave-player__topline">
+              <p class="media-wave-player__label">Aktueller Titel</p>
+              <span class="media-wave-player__time">
+                <span data-media-wave-current>0:00</span>
+                <span aria-hidden="true"> / </span>
+                <span data-media-wave-duration>0:00</span>
+              </span>
+            </div>
+
+            <div>
+              <h3 class="media-wave-player__title" data-media-wave-title>Ostinato</h3>
+              <p class="media-wave-player__subtitle" data-media-wave-subtitle>Studio Version</p>
+            </div>
+
+            <div class="media-wave-player__wave">
+              <label class="sr-only" for="mediaWaveSeek">Wiedergabeposition</label>
+              <input id="mediaWaveSeek" class="media-wave-player__seek" type="range" min="0" max="100" value="0" step="0.1" data-media-wave-seek />
+              <div class="media-wave-player__bars" data-media-wave-bars aria-hidden="true"></div>
+            </div>
+
+            <div class="media-wave-player__controls">
+              <button class="media-wave-player__button" type="button" data-media-wave-previous aria-label="Vorheriger Titel">⏮</button>
+              <button class="media-wave-player__button media-wave-player__button--primary" type="button" data-media-wave-toggle aria-label="Play">▶</button>
+              <button class="media-wave-player__button" type="button" data-media-wave-next aria-label="Nächster Titel">⏭</button>
+            </div>
+          </div>
+
+          <ol class="media-wave-player__playlist" aria-label="Audio-Playlist">
+            <li>
+              <button
+                class="media-wave-player__track"
+                type="button"
+                data-media-wave-track
+                data-title="Ostinato"
+                data-subtitle="Studio Version"
+                data-duration="1:52"
+                data-src="assets/MP3/Ostinato_Studio_1.mp3"
+                data-seed="1.15"
+              >
+                <span class="media-wave-player__track-number">01</span>
+                <span>
+                  <span class="media-wave-player__track-title">Ostinato</span>
+                  <span class="media-wave-player__track-subtitle">Studio Version</span>
+                </span>
+                <span class="media-wave-player__track-duration">1:52</span>
+              </button>
+            </li>
+
+            <li>
+              <button
+                class="media-wave-player__track"
+                type="button"
+                data-media-wave-track
+                data-title="Eurology"
+                data-subtitle="Live"
+                data-duration="3:21"
+                data-src="assets/MP3/Eurology_Live_2.mp3"
+                data-seed="2.4"
+              >
+                <span class="media-wave-player__track-number">02</span>
+                <span>
+                  <span class="media-wave-player__track-title">Eurology</span>
+                  <span class="media-wave-player__track-subtitle">Live</span>
+                </span>
+                <span class="media-wave-player__track-duration">3:21</span>
+              </button>
+            </li>
+
+            <li>
+              <button
+                class="media-wave-player__track"
+                type="button"
+                data-media-wave-track
+                data-title="Higher Sky"
+                data-subtitle="Live"
+                data-duration="3:47"
+                data-src="assets/MP3/higherSky_Live_3.mp3"
+                data-seed="3.1"
+              >
+                <span class="media-wave-player__track-number">03</span>
+                <span>
+                  <span class="media-wave-player__track-title">Higher Sky</span>
+                  <span class="media-wave-player__track-subtitle">Live</span>
+                </span>
+                <span class="media-wave-player__track-duration">3:47</span>
+              </button>
+            </li>
+          </ol>
+
+          <audio data-media-wave-audio preload="none"></audio>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="site-footer">
@@ -447,6 +554,7 @@
   <script type="module" src="./JS/newsletter-submit.js"></script>
   <script src="./vendor/aos/aos.js"></script>
   <script src="./JS/app.js"></script>
+  <script src="./JS/media-audio-player.js" defer></script>
   <script src="./JS/media-lightbox.js" defer></script>
 </body>
 

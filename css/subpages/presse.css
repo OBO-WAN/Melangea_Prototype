@@ -100,6 +100,10 @@
   padding-top: clamp(0.5rem, 2vw, 1rem);
 }
 
+.news-feature-section + .news-feature-section {
+  padding-top: clamp(1.5rem, 4vw, 3rem);
+}
+
 .news-feature {
   display: grid;
   gap: clamp(1.5rem, 3vw, 2.25rem);
@@ -148,6 +152,10 @@
     0.05em -0.05em 0 #d7ffbc,
     -0.05em 0.05em 0 #d7ffbc,
     0.05em 0.05em 0 #d7ffbc;
+}
+
+.news-feature--red .news-feature__title {
+  color: #f20b31;
 }
 
 .news-feature__title small {

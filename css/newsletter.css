@@ -1,31 +1,3 @@
-.section-newsletter {
-  padding-top: 0;
-}
-
-.newsletter-wrap {
-  display: flex;
-  justify-content: center;
-}
-
-.newsletter-btn {
-  min-width: 240px;
-  letter-spacing: 0.04em;
-}
-
-.section-newsletter {
-  padding-top: 0;
-}
-
-.newsletter-wrap {
-  display: flex;
-  justify-content: center;
-}
-
-.newsletter-btn {
-  min-width: 240px;
-  letter-spacing: 0.04em;
-}
-
 /* overlay */
 .newsletter-overlay {
   position: fixed;

@@ -549,6 +549,201 @@
     </div>
   </div>
 
+  <div class="cd-order-overlay" id="cd-order-overlay" aria-hidden="true">
+    <div class="cd-order-overlay__backdrop" data-cd-order-close></div>
+
+    <div class="cd-order-modal" role="dialog" aria-modal="true" aria-labelledby="cdOrderTitle"
+      aria-describedby="cdOrderDescription">
+      <button class="cd-order-modal__close" type="button" aria-label="Schließen" data-cd-order-close>
+        ✕
+      </button>
+
+      <div class="cd-order-modal__content">
+        <p class="cd-order-kicker">CD-Bestellung</p>
+        <h2 class="cd-order-modal__title" id="cdOrderTitle">Musik bestellen</h2>
+
+        <figure class="cd-order-cover">
+          <button
+            class="cd-order-cover__button"
+            type="button"
+            data-cd-cover-open
+            aria-label="CD-Cover vergrößern"
+          >
+            <img
+              src="./assets/IMG/cd/CD-cover.webp"
+              alt="Mélange à Deux – Le début CD-Cover"
+              loading="lazy"
+              decoding="async"
+            />
+          </button>
+          <figcaption>Mélange à Deux — Le début · Cover vergrößern</figcaption>
+        </figure>
+
+        <div class="cd-order-intro" id="cdOrderDescription">
+          <p>Schön, dass Sie sich für die Musik von Mélange à Deux interessieren!</p>
+          <p>Unsere Aufnahmen sind erhältlich als:</p>
+          <ul>
+            <li>CD: 15 €</li>
+            <li>Download: 15 €</li>
+          </ul>
+          <p>
+            Für den Versand einer CD berechnen wir einmalig 3 € Versandkosten, unabhängig von der Anzahl der bestellten
+            CDs. Downloads werden selbstverständlich versandkostenfrei bereitgestellt.
+          </p>
+          <p>
+            Nach Eingang Ihrer Anfrage senden wir Ihnen die Zahlungsinformationen sowie die weiteren Schritte per E-Mail
+            zu. Da wir alle Bestellungen persönlich bearbeiten, bitten wir um etwas Geduld – die Abwicklung erfolgt nicht
+            automatisiert.
+          </p>
+          <p>
+            Vielen Dank für Ihr Interesse und Ihre Unterstützung. Wir wünschen Ihnen viel Freude mit unserer Musik!
+          </p>
+        </div>
+
+        <form class="cd-order-form" action="php/cd-order-submit.php" method="post" novalidate>
+          <div class="cd-order-status" data-cd-order-status role="status" aria-live="polite" tabindex="-1" hidden></div>
+
+          <div class="cd-order-field cd-order-honeypot" aria-hidden="true">
+            <label for="cd-order-website">Website</label>
+            <input id="cd-order-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="cd-order-form__grid">
+            <div class="cd-order-field">
+              <label for="cd-order-first-name">
+                Vorname
+                <span class="cd-order-required" aria-hidden="true">*</span>
+              </label>
+              <input id="cd-order-first-name" name="first_name" type="text" autocomplete="given-name" required />
+            </div>
+
+            <div class="cd-order-field">
+              <label for="cd-order-last-name">
+                Nachname
+                <span class="cd-order-required" aria-hidden="true">*</span>
+              </label>
+              <input id="cd-order-last-name" name="last_name" type="text" autocomplete="family-name" required />
+            </div>
+          </div>
+
+          <div class="cd-order-field">
+            <label for="cd-order-email">
+              Absender-E-Mail-Adresse
+              <span class="cd-order-required" aria-hidden="true">*</span>
+            </label>
+            <input id="cd-order-email" name="email" type="email" autocomplete="email" required />
+          </div>
+
+          <fieldset class="cd-order-fieldset">
+            <legend>
+              Versandadresse
+              <span class="cd-order-required" aria-hidden="true">*</span>
+            </legend>
+            <div class="cd-order-form__grid">
+              <div class="cd-order-field">
+                <label for="cd-order-street">
+                  Straße und Hausnummer
+                  <span class="cd-order-required" aria-hidden="true">*</span>
+                </label>
+                <input id="cd-order-street" name="street" type="text" autocomplete="street-address" required />
+              </div>
+
+              <div class="cd-order-field">
+                <label for="cd-order-postal-code">
+                  PLZ
+                  <span class="cd-order-required" aria-hidden="true">*</span>
+                </label>
+                <input id="cd-order-postal-code" name="postal_code" type="text" autocomplete="postal-code" inputmode="numeric" required />
+              </div>
+
+              <div class="cd-order-field">
+                <label for="cd-order-city">
+                  Ort
+                  <span class="cd-order-required" aria-hidden="true">*</span>
+                </label>
+                <input id="cd-order-city" name="city" type="text" autocomplete="address-level2" required />
+              </div>
+            </div>
+          </fieldset>
+
+          <fieldset class="cd-order-fieldset">
+            <legend>
+              Name der CD
+              <span class="cd-order-required" aria-hidden="true">*</span>
+            </legend>
+            <label class="cd-order-choice">
+              <input type="radio" name="cd-title" value="Le Début" checked required />
+              <span>Le Début</span>
+            </label>
+          </fieldset>
+
+          <div class="cd-order-form__grid">
+            <div class="cd-order-field">
+              <label for="cd-order-quantity">
+                Anzahl der CDs
+                <span class="cd-order-required" aria-hidden="true">*</span>
+              </label>
+              <input id="cd-order-quantity" name="quantity" type="number" min="1" value="1" inputmode="numeric" required />
+            </div>
+
+            <fieldset class="cd-order-fieldset cd-order-fieldset--compact">
+              <legend>
+                Format
+                <span class="cd-order-required" aria-hidden="true">*</span>
+              </legend>
+              <div class="cd-order-choice-row">
+                <label class="cd-order-choice">
+                  <input type="radio" name="format" value="CD" checked required />
+                  <span>CD</span>
+                </label>
+                <label class="cd-order-choice">
+                  <input type="radio" name="format" value="Digitaler Download" required />
+                  <span>Digitaler Download</span>
+                </label>
+              </div>
+            </fieldset>
+          </div>
+
+          <div class="cd-order-field">
+            <label for="cd-order-wishes">Weitere Wünsche</label>
+            <textarea id="cd-order-wishes" name="wishes" rows="4"></textarea>
+          </div>
+
+          <label class="cd-order-consent">
+            <input type="checkbox" name="consent" required />
+            <span>
+              Ich bin damit einverstanden, dass meine Angaben zur Bearbeitung der CD-Bestellung per E-Mail übermittelt
+              werden.
+            </span>
+          </label>
+
+          <div class="cd-order-actions">
+            <button type="submit" class="btn">CD-Bestellung absenden</button>
+            <button type="button" class="btn btn-ghost" data-cd-order-close>Abbrechen</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="cd-cover-lightbox" data-cd-cover-lightbox aria-hidden="true">
+      <div class="cd-cover-lightbox__backdrop" data-cd-cover-close></div>
+      <div class="cd-cover-lightbox__dialog" role="dialog" aria-modal="true" aria-label="CD-Cover Vorschau">
+        <button
+          class="cd-cover-lightbox__close"
+          type="button"
+          data-cd-cover-close
+          aria-label="Cover-Vorschau schließen"
+        >
+          ×
+        </button>
+        <img
+          src="./assets/IMG/cd/CD-cover.webp"
+          alt="Mélange à Deux – Le début CD-Cover"
+        />
+      </div>
+    </div>
+  </div>
+
   <div class="media-lightbox" data-media-lightbox aria-hidden="true">
     <div class="media-lightbox__backdrop" data-media-lightbox-close></div>
 
@@ -582,6 +777,7 @@
 
   <script type="module" src="./JS/firebase-config.js"></script>
   <script src="./JS/newsletter.js"></script>
+  <script src="./JS/cd-order-modal.js"></script>
   <script src="./JS/validation.js"></script>
   <script type="module" src="./JS/newsletter-submit.js"></script>
   <script src="./vendor/aos/aos.js"></script>

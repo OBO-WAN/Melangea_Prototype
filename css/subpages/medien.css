@@ -165,6 +165,47 @@
   gap: 0.75rem;
 }
 
+/* CD shop */
+
+.media-shop-section {
+  padding-top: clamp(0.25rem, 2vw, 1rem);
+  padding-bottom: clamp(3rem, 6vw, 5rem);
+}
+
+.media-shop-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1rem, 3vw, 2rem);
+  width: min(100%, 980px);
+  margin-inline: auto;
+  padding: clamp(1.15rem, 3vw, 1.75rem);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  background:
+    radial-gradient(520px 240px at 14% 0%, rgba(244, 231, 186, 0.09), transparent 62%),
+    radial-gradient(420px 220px at 92% 100%, rgba(46, 229, 157, 0.1), transparent 64%),
+    linear-gradient(135deg, rgba(13, 23, 84, 0.9), rgba(48, 24, 126, 0.7));
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.media-shop-card h2 {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  font-weight: 280;
+  letter-spacing: 0.04em;
+  line-height: 1.12;
+}
+
+.media-shop-card__actions {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+}
+
 /* Responsive */
 
 @media (max-width: 560px) {
@@ -192,14 +233,17 @@
     max-width: calc(100% - 1.5rem);
   }
 
-  .media-action-panel {
+  .media-action-panel,
+  .media-shop-card {
     align-items: stretch;
     flex-direction: column;
     text-align: center;
   }
 
   .media-action-panel__actions,
-  .media-action-panel__actions .btn {
+  .media-action-panel__actions .btn,
+  .media-shop-card__actions,
+  .media-shop-card__actions .btn {
     width: 100%;
   }
 }

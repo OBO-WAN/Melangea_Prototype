@@ -1,3 +1,13 @@
+#newsletter.section-newsletter .newsletter-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#newsletter.section-newsletter .newsletter-btn {
+  width: fit-content;
+}
+
 /* overlay */
 .newsletter-overlay {
   position: fixed;

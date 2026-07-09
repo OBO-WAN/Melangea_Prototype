@@ -214,12 +214,12 @@
   }
 
   .media-collage-intro {
-    text-align: left;
+    text-align: center;
   }
 
   .media-intro {
-    margin-left: 0;
-    margin-right: 0;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .media-collage-grid {

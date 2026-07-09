@@ -310,7 +310,7 @@
 
 @media (max-width: 760px) {
   .news-hero__inner {
-    text-align: left;
+    text-align: center;
   }
 
   .press-cta {

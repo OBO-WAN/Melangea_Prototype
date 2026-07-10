@@ -13,6 +13,20 @@ const cdCoverLightboxCloseButton = cdCoverLightbox?.querySelector(
 
 if (cdOrderOverlay && cdOrderOpenButtons.length) {
   cdOrderForm?.setAttribute("novalidate", "");
+
+  if (cdOrderForm && !cdOrderForm.querySelector(".cd-order-required-note")) {
+    const requiredNote = document.createElement("p");
+    requiredNote.className = "cd-order-required-note muted small";
+    requiredNote.innerHTML = 'Mit <span aria-hidden="true">*</span> gekennzeichnete Felder sind Pflichtfelder.';
+
+    const honeypot = cdOrderForm.querySelector(".cd-order-honeypot");
+    if (honeypot) {
+      honeypot.insertAdjacentElement("afterend", requiredNote);
+    } else {
+      cdOrderForm.prepend(requiredNote);
+    }
+  }
+
   let cdOrderLastFocusedElement = null;
   let isCdOrderSubmitting = false;
   const cdEmailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;

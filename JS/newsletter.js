@@ -3,6 +3,14 @@ const newsletterOpenButtons = document.querySelectorAll("[data-newsletter-open]"
 const newsletterCloseButtons = document.querySelectorAll("[data-newsletter-close]");
 
 if (newsletterOverlay && newsletterOpenButtons.length) {
+  const newsletterForm = newsletterOverlay.querySelector(".newsletter-form");
+  const newsletterDescription = newsletterOverlay.querySelector(".newsletter-modal__text");
+  const newsletterRequiredNote = newsletterForm?.querySelector(".newsletter-required-note");
+
+  if (newsletterDescription && newsletterRequiredNote) {
+    newsletterDescription.insertAdjacentElement("afterend", newsletterRequiredNote);
+  }
+
   const openNewsletter = (event) => {
     event.preventDefault();
     newsletterOverlay.classList.add("is-open");

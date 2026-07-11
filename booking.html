@@ -197,108 +197,15 @@
 
     <section class="section booking-form-section" aria-labelledby="booking-form-title">
       <div class="container booking-form-layout">
-        <div id="booking-request" class="booking-form-copy" data-aos="fade-up" data-aos-duration="700"
-          data-aos-easing="ease-out-cubic">
+        <div id="booking-request" class="booking-form-copy" data-aos="fade-up">
           <p class="booking-kicker">Ihre Anfrage</p>
           <h2 id="booking-form-title">Konzertanfrage stellen</h2>
           <p>
-            Je genauer die Angaben sind, desto besser können Besetzung, Programm, Technik und Verfügbarkeit eingeschätzt
-            werden. Pflichtfelder sind mit einem Stern markiert.
-          </p>
-        </div>
-
-        <form class="booking-form" id="booking-request-form" action="./php/booking-submit.php" method="post"
-          data-booking-form data-aos="fade-up" novalidate>
-          <p class="booking-form__notice">
-            Ihre Angaben werden sicher an Mélange à Deux übermittelt. Alternativ schreiben Sie direkt an
+            Öffnen Sie das Anfrageformular direkt als Dialog. Alternativ schreiben Sie direkt an
             <a href="mailto:info@melangea2.com">info@melangea2.com</a>.
           </p>
-
-          <p class="booking-form__required-note muted small">
-            Mit <span aria-hidden="true">*</span> gekennzeichnete Felder sind Pflichtfelder.
-          </p>
-
-          <div class="booking-form__grid">
-            <div class="booking-field">
-              <label for="booking-first-name">Vorname <span aria-hidden="true">*</span></label>
-              <input id="booking-first-name" name="first-name" type="text" autocomplete="given-name" required />
-            </div>
-
-            <div class="booking-field">
-              <label for="booking-last-name">Nachname <span aria-hidden="true">*</span></label>
-              <input id="booking-last-name" name="last-name" type="text" autocomplete="family-name" required />
-            </div>
-
-            <div class="booking-field">
-              <label for="booking-email">E-Mail <span aria-hidden="true">*</span></label>
-              <input id="booking-email" name="email" type="email" autocomplete="email" required />
-            </div>
-
-            <div class="booking-field">
-              <label for="booking-phone">Telefon <span class="booking-optional">freiwillig</span></label>
-              <input id="booking-phone" name="phone" type="tel" autocomplete="tel" />
-            </div>
-
-            <div class="booking-field">
-              <label for="booking-organization">Organisation / Veranstaltungsort
-                <span class="booking-optional">freiwillig</span></label>
-              <input id="booking-organization" name="organization" type="text" autocomplete="organization" />
-            </div>
-
-            <div class="booking-field">
-              <label for="booking-event-type">Art der Veranstaltung <span aria-hidden="true">*</span></label>
-              <select id="booking-event-type" name="event-type" required>
-                <option value="">Bitte auswählen</option>
-                <option value="concert-recital">Konzert / Vortragsabend</option>
-                <option value="festival-cultural-event">Festival / Kulturveranstaltung</option>
-                <option value="private-event">Private Veranstaltung</option>
-                <option value="educational-special-program">Vermittlungsformat / Sonderprogramm</option>
-                <option value="other">Anderer Anlass</option>
-              </select>
-            </div>
-
-            <div class="booking-field">
-              <label for="booking-location">Ort / Stadt <span aria-hidden="true">*</span></label>
-              <input id="booking-location" name="location" type="text" autocomplete="address-level2" required />
-            </div>
-
-            <div class="booking-field">
-              <label for="booking-audience">Geschätzte Publikumsgröße <span
-                  class="booking-optional">freiwillig</span></label>
-              <input id="booking-audience" name="audience-size" type="number" min="1" inputmode="numeric" />
-            </div>
-
-            <div class="booking-field">
-              <label for="booking-performance-date">Gewünschter Veranstaltungstermin <span
-                  aria-hidden="true">*</span></label>
-              <input id="booking-performance-date" name="performance_date" type="date" lang="de" aria-required="true"
-                aria-describedby="booking-performance-date-error" />
-              <p id="booking-performance-date-error" class="form-field__error" data-error-for="booking-performance-date"
-                hidden></p>
-            </div>
-          </div>
-
-          <div class="booking-field booking-field--full">
-            <label for="booking-message">Nachricht / Angaben zur Buchung <span aria-hidden="true">*</span></label>
-            <textarea id="booking-message" name="message" rows="7"
-              placeholder="Bitte nennen Sie Anlass, gewünschtes Programm, Zeitrahmen, technische Informationen oder weitere Details."
-              required></textarea>
-          </div>
-
-          <label class="booking-consent" for="booking-consent">
-            <input id="booking-consent" name="contact-consent" type="checkbox" required />
-            <span>Ich bin damit einverstanden, zur Bearbeitung meiner Buchungsanfrage kontaktiert zu werden.</span>
-          </label>
-
-          <div class="booking-honeypot" aria-hidden="true">
-            <label for="booking-company">Firma</label>
-            <input id="booking-company" name="company" type="text" tabindex="-1" autocomplete="off" />
-          </div>
-
-          <p class="booking-form__status" data-booking-status role="status" aria-live="polite" hidden></p>
-
-          <button class="btn booking-submit" type="submit">Jetzt anfragen</button>
-        </form>
+          <button class="btn" type="button" data-booking-open>Booking anfragen</button>
+        </div>
       </div>
     </section>
 

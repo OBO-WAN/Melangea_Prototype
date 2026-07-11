@@ -1,4 +1,4 @@
-const bookingForm = document.querySelector('[data-booking-form]');
+const bookingForms = document.querySelectorAll('[data-booking-form]');
 
 const messages = {
   sending: 'Ihre Anfrage wird übermittelt …',
@@ -8,11 +8,22 @@ const messages = {
   githubPages: 'Demo-Modus: Auf GitHub Pages kann die Booking-Anfrage nicht direkt versendet werden. Die vollständige Übermittlung ist auf der gehosteten Website verfügbar.',
 };
 
-if (bookingForm) {
+const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const isGitHubPages = window.location.hostname.endsWith('github.io');
+
+const readJsonResponse = async (response) => {
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.toLowerCase().includes('application/json')) {
+    throw new Error('Non-JSON response');
+  }
+
+  return response.json();
+};
+
+bookingForms.forEach((bookingForm) => {
   bookingForm.setAttribute('novalidate', '');
   const statusElement = bookingForm.querySelector('[data-booking-status]');
   const submitButton = bookingForm.querySelector('button[type="submit"]');
-  const isGitHubPages = window.location.hostname.endsWith('github.io');
   let isSubmitting = false;
 
   const showStatus = (message, type = 'neutral') => {
@@ -46,9 +57,6 @@ if (bookingForm) {
       field.focus();
     }
   };
-
-
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   const getField = (name) => bookingForm.elements[name];
 
@@ -110,18 +118,7 @@ if (bookingForm) {
     return errors;
   };
 
-  const readJsonResponse = async (response) => {
-    const contentType = response.headers.get('content-type') || '';
-    if (!contentType.toLowerCase().includes('application/json')) {
-      throw new Error('Non-JSON response');
-    }
-
-    return response.json();
-  };
-
-
-  bookingForm.addEventListener('input', (event) => {
-    const field = event.target;
+  const clearCorrectedFieldError = (field) => {
     if (!field?.name || field.getAttribute('aria-invalid') !== 'true') return;
 
     const value = typeof field.value === 'string' ? field.value.trim() : '';
@@ -134,22 +131,14 @@ if (bookingForm) {
       error.textContent = '';
       error.hidden = true;
     }
+  };
+
+  bookingForm.addEventListener('input', (event) => {
+    clearCorrectedFieldError(event.target);
   });
 
   bookingForm.addEventListener('change', (event) => {
-    const field = event.target;
-    if (!field?.name || field.getAttribute('aria-invalid') !== 'true') return;
-
-    const value = typeof field.value === 'string' ? field.value.trim() : '';
-    const isCorrected = field.type === 'checkbox' ? field.checked : value !== '';
-    if (!isCorrected) return;
-
-    const error = field.id ? bookingForm.querySelector(`[data-error-for="${field.id}"]`) : null;
-    field.removeAttribute('aria-invalid');
-    if (error) {
-      error.textContent = '';
-      error.hidden = true;
-    }
+    clearCorrectedFieldError(event.target);
   });
 
   bookingForm.addEventListener('submit', async (event) => {
@@ -176,7 +165,8 @@ if (bookingForm) {
     showStatus(messages.sending, 'neutral');
 
     try {
-      const response = await fetch('./php/booking-submit.php', {
+      const endpoint = bookingForm.getAttribute('action') || './php/booking-submit.php';
+      const response = await fetch(endpoint, {
         method: 'POST',
         body: new FormData(bookingForm),
         headers: {
@@ -209,4 +199,4 @@ if (bookingForm) {
       setSubmitting(false);
     }
   });
-}
+});

@@ -412,7 +412,8 @@
       <div class="footer-col footer-col--booking">
         <h3 class="footer-heading">Booking</h3>
         <p class="muted small">Konzerte, Veranstaltungen und besondere Anlässe.</p>
-        <a class="btn btn-small footer-booking-btn" href="#booking-request">Booking anfragen</a>
+        <a class="btn btn-small footer-booking-btn" href="./booking.html#booking-request" data-booking-open>Booking
+          anfragen</a>
       </div>
     </div>
   </footer>
@@ -502,15 +503,16 @@
             <div class="booking-field">
               <label for="booking-overlay-performance-date">Gewünschter Veranstaltungstermin <span
                   aria-hidden="true">*</span></label>
-              <input id="booking-overlay-performance-date" name="performance_date" type="date" lang="de" aria-required="true"
-                aria-describedby="booking-overlay-performance-date-error" />
-              <p id="booking-overlay-performance-date-error" class="form-field__error" data-error-for="booking-overlay-performance-date"
-                hidden></p>
+              <input id="booking-overlay-performance-date" name="performance_date" type="date" lang="de"
+                aria-required="true" aria-describedby="booking-overlay-performance-date-error" />
+              <p id="booking-overlay-performance-date-error" class="form-field__error"
+                data-error-for="booking-overlay-performance-date" hidden></p>
             </div>
           </div>
 
           <div class="booking-field booking-field--full">
-            <label for="booking-overlay-message">Nachricht / Angaben zur Buchung <span aria-hidden="true">*</span></label>
+            <label for="booking-overlay-message">Nachricht / Angaben zur Buchung <span
+                aria-hidden="true">*</span></label>
             <textarea id="booking-overlay-message" name="message" rows="7"
               placeholder="Bitte nennen Sie Anlass, gewünschtes Programm, Zeitrahmen, technische Informationen oder weitere Details."
               required></textarea>

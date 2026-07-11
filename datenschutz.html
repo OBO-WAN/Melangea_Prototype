@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="css/mobile.css" />
   <link rel="stylesheet" href="css/overlay.css" />
   <link rel="stylesheet" href="css/newsletter.css" />
+  <link rel="stylesheet" href="css/subpages/booking-modal.css" />
   <link rel="stylesheet" href="vendor/aos/aos.css" />
   <link rel="stylesheet" href="css/subpages/legal.css" />
 </head>
@@ -617,10 +618,127 @@
       <div class="footer-col footer-col--booking">
         <h3 class="footer-heading">Booking</h3>
         <p class="muted small">Konzerte, Veranstaltungen und besondere Anlässe.</p>
-        <a class="btn btn-small footer-booking-btn" href="./booking.html">Booking anfragen</a>
+        <a class="btn btn-small footer-booking-btn" href="./booking.html#booking-request" data-booking-open>Booking anfragen</a>
       </div>
     </div>
   </footer>
+
+  <!-- Booking Overlay -->
+
+  <div class="booking-overlay" id="booking-overlay" aria-hidden="true">
+    <div class="booking-overlay__backdrop" data-booking-close></div>
+
+    <div class="booking-modal" role="dialog" aria-modal="true" aria-labelledby="bookingOverlayTitle"
+      aria-describedby="bookingOverlayDescription">
+      <button class="booking-modal__close" type="button" aria-label="Schließen" data-booking-close>
+        ✕
+      </button>
+
+      <div class="booking-modal__content">
+        <div class="booking-modal__intro">
+          <p class="booking-kicker">Ihre Anfrage</p>
+          <h2 id="bookingOverlayTitle">Konzertanfrage stellen</h2>
+          <p id="bookingOverlayDescription">
+            Je genauer die Angaben sind, desto besser können Besetzung, Programm, Technik und Verfügbarkeit eingeschätzt
+            werden. Pflichtfelder sind mit einem Stern markiert.
+          </p>
+        </div>
+
+        <form class="booking-form" id="booking-overlay-form" action="./php/booking-submit.php" method="post"
+          data-booking-form novalidate>
+          <p class="booking-form__notice">
+            Ihre Angaben werden sicher an Mélange à Deux übermittelt. Alternativ schreiben Sie direkt an
+            <a href="mailto:info@melangea2.com">info@melangea2.com</a>.
+          </p>
+
+          <p class="booking-form__required-note muted small">
+            Mit <span aria-hidden="true">*</span> gekennzeichnete Felder sind Pflichtfelder.
+          </p>
+
+          <div class="booking-form__grid">
+            <div class="booking-field">
+              <label for="booking-overlay-first-name">Vorname <span aria-hidden="true">*</span></label>
+              <input id="booking-overlay-first-name" name="first-name" type="text" autocomplete="given-name" required />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-overlay-last-name">Nachname <span aria-hidden="true">*</span></label>
+              <input id="booking-overlay-last-name" name="last-name" type="text" autocomplete="family-name" required />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-overlay-email">E-Mail <span aria-hidden="true">*</span></label>
+              <input id="booking-overlay-email" name="email" type="email" autocomplete="email" required />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-overlay-phone">Telefon <span class="booking-optional">freiwillig</span></label>
+              <input id="booking-overlay-phone" name="phone" type="tel" autocomplete="tel" />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-overlay-organization">Organisation / Veranstaltungsort
+                <span class="booking-optional">freiwillig</span></label>
+              <input id="booking-overlay-organization" name="organization" type="text" autocomplete="organization" />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-overlay-event-type">Art der Veranstaltung <span aria-hidden="true">*</span></label>
+              <select id="booking-overlay-event-type" name="event-type" required>
+                <option value="">Bitte auswählen</option>
+                <option value="concert-recital">Konzert / Vortragsabend</option>
+                <option value="festival-cultural-event">Festival / Kulturveranstaltung</option>
+                <option value="private-event">Private Veranstaltung</option>
+                <option value="educational-special-program">Vermittlungsformat / Sonderprogramm</option>
+                <option value="other">Anderer Anlass</option>
+              </select>
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-overlay-location">Ort / Stadt <span aria-hidden="true">*</span></label>
+              <input id="booking-overlay-location" name="location" type="text" autocomplete="address-level2" required />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-overlay-audience">Geschätzte Publikumsgröße <span
+                  class="booking-optional">freiwillig</span></label>
+              <input id="booking-overlay-audience" name="audience-size" type="number" min="1" inputmode="numeric" />
+            </div>
+
+            <div class="booking-field">
+              <label for="booking-overlay-performance-date">Gewünschter Veranstaltungstermin <span
+                  aria-hidden="true">*</span></label>
+              <input id="booking-overlay-performance-date" name="performance_date" type="date" lang="de" aria-required="true"
+                aria-describedby="booking-overlay-performance-date-error" />
+              <p id="booking-overlay-performance-date-error" class="form-field__error" data-error-for="booking-overlay-performance-date"
+                hidden></p>
+            </div>
+          </div>
+
+          <div class="booking-field booking-field--full">
+            <label for="booking-overlay-message">Nachricht / Angaben zur Buchung <span aria-hidden="true">*</span></label>
+            <textarea id="booking-overlay-message" name="message" rows="7"
+              placeholder="Bitte nennen Sie Anlass, gewünschtes Programm, Zeitrahmen, technische Informationen oder weitere Details."
+              required></textarea>
+          </div>
+
+          <label class="booking-consent" for="booking-overlay-consent">
+            <input id="booking-overlay-consent" name="contact-consent" type="checkbox" required />
+            <span>Ich bin damit einverstanden, zur Bearbeitung meiner Buchungsanfrage kontaktiert zu werden.</span>
+          </label>
+
+          <div class="booking-honeypot" aria-hidden="true">
+            <label for="booking-overlay-company">Firma</label>
+            <input id="booking-overlay-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <p class="booking-form__status" data-booking-status role="status" aria-live="polite" hidden></p>
+
+          <button class="btn booking-submit" type="submit">Jetzt anfragen</button>
+        </form>
+      </div>
+    </div>
+  </div>
 
   <div class="newsletter-overlay" id="newsletter-overlay" aria-hidden="true">
     <div class="newsletter-overlay__backdrop" data-newsletter-close></div>
@@ -714,6 +832,8 @@
   <script src="./JS/objects.js"></script>
   <script src="./JS/audio.js"></script>
   <script src="./JS/newsletter.js"></script>
+  <script src="./JS/booking-form.js"></script>
+  <script src="./JS/booking-modal.js"></script>
   <script src="./JS/validation.js"></script>
   <script type="module" src="./JS/newsletter-submit.js"></script>
   <script src="./vendor/aos/aos.js"></script>

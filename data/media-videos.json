@@ -1,0 +1,24 @@
+{
+  "videos": [
+    {
+      "id": "video-01",
+      "youtubeId": "OX8V84pZxeg",
+      "title": "Mélange à Deux & Amis – Video 1"
+    },
+    {
+      "id": "video-02",
+      "youtubeId": "U7E0V9A5-LI",
+      "title": "Mélange à Deux & Amis – Video 2"
+    },
+    {
+      "id": "video-03",
+      "youtubeId": "qyVGaWTaV2w",
+      "title": "Mélange à Deux & Amis – Video 3"
+    },
+    {
+      "id": "video-04",
+      "youtubeId": "M91pLXai3jM",
+      "title": "Mélange à Deux & Amis – Video 4"
+    }
+  ]
+}

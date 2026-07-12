@@ -8,6 +8,8 @@ require_authentication();
 const MEDIA_SECTIONS = ['collage' => 'Collage oben', 'photoWall' => 'Fotowand'];
 const MEDIA_JSON_RELATIVE = 'data/media-gallery.json';
 const MEDIA_UPLOAD_PREFIX = 'assets/IMG/medien/';
+const MEDIA_VIDEOS_JSON_RELATIVE = 'data/media-videos.json';
+const YOUTUBE_ID_PATTERN = '/^[A-Za-z0-9_-]{11}$/';
 
 function media_clean_text($value): string
 {
@@ -67,6 +69,65 @@ function media_load_gallery(string $path, ?string &$error): ?array
     return $validated;
 }
 
+function media_valid_youtube_id(string $youtubeId): bool
+{
+    return preg_match(YOUTUBE_ID_PATTERN, $youtubeId) === 1;
+}
+
+function media_load_videos(string $path, ?string &$error): ?array
+{
+    if (!is_file($path) || !is_readable($path)) {
+        $error = 'Die Video-Datei data/media-videos.json konnte nicht gelesen werden.';
+        return null;
+    }
+
+    $decoded = json_decode((string) file_get_contents($path), true);
+    if (!is_array($decoded) || !isset($decoded['videos']) || !is_array($decoded['videos'])) {
+        $error = 'Die Video-Daten sind ungültig.';
+        return null;
+    }
+
+    $ids = [];
+    $validated = [];
+    foreach ($decoded['videos'] as $item) {
+        if (!is_array($item)) {
+            $error = 'Ein Video-Eintrag ist ungültig.';
+            return null;
+        }
+        $id = media_clean_text($item['id'] ?? '');
+        $youtubeId = media_clean_text($item['youtubeId'] ?? '');
+        $title = media_clean_text($item['title'] ?? '');
+        if (!preg_match('/^[a-z0-9][a-z0-9_-]*$/i', $id) || isset($ids[$id]) || !media_valid_youtube_id($youtubeId) || $title === '') {
+            $error = 'Eine Video-ID, YouTube-ID oder ein iframe-Titel ist ungültig.';
+            return null;
+        }
+        $ids[$id] = true;
+        $validated[] = ['id' => $id, 'youtubeId' => $youtubeId, 'title' => $title];
+    }
+
+    return $validated;
+}
+
+function render_video_row(array $item, int $index): void
+{
+    $prefix = 'videos[' . escape_html($item['id']) . ']';
+    ?>
+    <section class="concert-row media-admin-row" data-media-video-row>
+      <div class="concert-row__head">
+        <h3><?= escape_html($item['title']) ?></h3>
+        <label class="remove-toggle"><input type="checkbox" name="<?= $prefix ?>[remove]" value="1"> <span>Video entfernen</span></label>
+      </div>
+      <div class="concert-grid">
+        <input type="hidden" name="<?= $prefix ?>[id]" value="<?= escape_html($item['id']) ?>">
+        <input type="hidden" name="<?= $prefix ?>[youtubeId]" value="<?= escape_html($item['youtubeId']) ?>">
+        <label class="field"><span>YouTube-ID</span><input type="text" value="<?= escape_html($item['youtubeId']) ?>" readonly></label>
+        <label class="field"><span>Reihenfolge</span><input type="number" name="<?= $prefix ?>[order]" value="<?= escape_html((string) ($index + 1)) ?>" min="1"></label>
+        <label class="field field--wide"><span>Deutscher iframe-Titel</span><input type="text" name="<?= $prefix ?>[title]" value="<?= escape_html($item['title']) ?>" maxlength="220" required></label>
+      </div>
+    </section>
+    <?php
+}
+
 function render_media_row(array $item, string $section, int $index): void
 {
     $prefix = 'items[' . escape_html($item['id']) . ']';
@@ -97,15 +158,20 @@ function render_media_row(array $item, string $section, int $index): void
 $galleryPath = dirname(__DIR__) . '/' . MEDIA_JSON_RELATIVE;
 $loadError = null;
 $gallery = media_load_gallery($galleryPath, $loadError);
+$videosPath = dirname(__DIR__) . '/' . MEDIA_VIDEOS_JSON_RELATIVE;
+$videoLoadError = null;
+$videos = media_load_videos($videosPath, $videoLoadError);
 ?>
 <!doctype html>
 <html lang="de">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Medienverwaltung | Mélange à Deux &amp; Amis</title><script src="admin-theme.js"></script><link rel="stylesheet" href="admin.css"></head>
 <body class="admin-page">
-<header class="admin-header"><div><p class="admin-kicker">Mélange à Deux &amp; Amis</p><h1>Fotogalerien bearbeiten</h1><p class="admin-muted">Verwaltet nur die Foto-Galerien aus <code><?= MEDIA_JSON_RELATIVE ?></code>.</p></div><div class="admin-header__actions"><button type="button" class="admin-theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Dunkelmodus aktivieren"><span class="admin-theme-toggle__icon admin-theme-toggle__icon--moon" aria-hidden="true">◐</span><span class="admin-theme-toggle__icon admin-theme-toggle__icon--sun" aria-hidden="true">☀</span></button><a class="admin-link" href="index.php">Konzerte</a><a class="admin-link" href="logout.php">Ausloggen</a></div></header>
+<header class="admin-header"><div><p class="admin-kicker">Mélange à Deux &amp; Amis</p><h1>Medien verwalten</h1><p class="admin-muted">Verwaltet Foto-Galerien aus <code><?= MEDIA_JSON_RELATIVE ?></code> und YouTube-Videos aus <code><?= MEDIA_VIDEOS_JSON_RELATIVE ?></code>.</p></div><div class="admin-header__actions"><button type="button" class="admin-theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Dunkelmodus aktivieren"><span class="admin-theme-toggle__icon admin-theme-toggle__icon--moon" aria-hidden="true">◐</span><span class="admin-theme-toggle__icon admin-theme-toggle__icon--sun" aria-hidden="true">☀</span></button><a class="admin-link" href="index.php">Konzerte</a><a class="admin-link" href="logout.php">Ausloggen</a></div></header>
 <main class="admin-main">
 <?php if (isset($_GET['saved'])): ?><p class="admin-message admin-message--success">Die Mediengalerie wurde gespeichert.</p><?php endif; ?>
-<?php if ($loadError !== null): ?><p class="admin-message admin-message--error"><?= escape_html($loadError) ?> Speichern ist deaktiviert.</p><?php endif; ?>
+<?php if (isset($_GET['videos_saved'])): ?><p class="admin-message admin-message--success">Die Videos wurden gespeichert.</p><?php endif; ?>
+<?php if ($loadError !== null): ?><p class="admin-message admin-message--error"><?= escape_html($loadError) ?> Speichern der Fotos ist deaktiviert.</p><?php endif; ?>
+<?php if ($videoLoadError !== null): ?><p class="admin-message admin-message--error"><?= escape_html($videoLoadError) ?> Speichern der Videos ist deaktiviert.</p><?php endif; ?>
 <form method="post" action="save-media.php" enctype="multipart/form-data">
 <input type="hidden" name="csrf_token" value="<?= escape_html(csrf_token()) ?>">
 <?php if ($gallery !== null): ?>
@@ -121,4 +187,22 @@ $gallery = media_load_gallery($galleryPath, $loadError);
   </div></section>
 <?php endif; ?>
 <div class="admin-actions"><button type="submit" class="admin-button" <?= $gallery === null ? 'disabled' : '' ?>>Mediengalerie speichern</button></div>
-</form></main></body></html>
+</form>
+
+<section class="admin-card">
+  <h2>YouTube-Videos bearbeiten</h2>
+  <p class="admin-muted">Hier werden nur YouTube-Links gespeichert. Es sind keine Video-Uploads und keine fremden iframe-Codes erlaubt.</p>
+</section>
+<form method="post" action="save-media-videos.php">
+<input type="hidden" name="csrf_token" value="<?= escape_html(csrf_token()) ?>">
+<?php if ($videos !== null): ?>
+  <?php foreach ($videos as $index => $item): ?><?php render_video_row($item, $index); ?><?php endforeach; ?>
+  <section class="concert-row"><h2>Neues YouTube-Video hinzufügen</h2><div class="concert-grid">
+    <label class="field field--wide"><span>YouTube-Link</span><input type="url" name="new_youtube_url" placeholder="https://www.youtube.com/watch?v=..." maxlength="300"></label>
+    <label class="field"><span>Reihenfolge</span><input type="number" name="new_order" value="<?= escape_html((string) (count($videos) + 1)) ?>" min="1"></label>
+    <label class="field"><span>Deutscher iframe-Titel</span><input type="text" name="new_title" maxlength="220" placeholder="Mélange à Deux &amp; Amis – Video"></label>
+  </div></section>
+<?php endif; ?>
+<div class="admin-actions"><button type="submit" class="admin-button" <?= $videos === null ? 'disabled' : '' ?>>Videos speichern</button></div>
+</form>
+</main></body></html>

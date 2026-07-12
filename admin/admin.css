@@ -250,6 +250,8 @@ body.admin-page {
 .admin-page input[type="email"],
 .admin-page input[type="password"],
 .admin-page input[type="date"],
+.admin-page input[type="number"],
+.admin-page input[type="url"],
 .admin-page textarea,
 .admin-page select {
   width: 100%;

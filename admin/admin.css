@@ -250,6 +250,7 @@ body.admin-page {
 .admin-page input[type="email"],
 .admin-page input[type="password"],
 .admin-page input[type="date"],
+.admin-page input[type="number"],
 .admin-page textarea,
 .admin-page select {
   width: 100%;
@@ -400,4 +401,43 @@ body.admin-page {
 .admin-login__link a {
   color: var(--admin-accent);
   font-weight: 700;
+}
+
+
+.media-admin-section h2 {
+  margin: 0 0 10px;
+}
+
+.media-admin-item {
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 16px;
+  padding: 16px 0;
+  border-top: 1px solid var(--admin-border);
+}
+
+.media-admin-thumb {
+  width: 140px;
+  height: 100px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid var(--admin-border);
+}
+
+.media-admin-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.media-admin-fields .field-help {
+  grid-column: 1 / -1;
+  margin: 0;
+}
+
+@media (max-width: 760px) {
+  .media-admin-item,
+  .media-admin-fields {
+    grid-template-columns: 1fr;
+  }
 }

@@ -1,6 +1,6 @@
 (() => {
   const lightbox = document.querySelector('[data-media-lightbox]');
-  const triggers = Array.from(
+  let triggers = Array.from(
     document.querySelectorAll('[data-media-lightbox-open]')
   );
   const lightboxImage = lightbox?.querySelector('[data-media-lightbox-image]');
@@ -13,15 +13,20 @@
   let activeTrigger = null;
   let activeIndex = -1;
 
-  const hasMultipleImages = triggers.length > 1;
+  const refreshTriggers = () => {
+    triggers = Array.from(document.querySelectorAll('[data-media-lightbox-open]'));
+    const hasMultipleImages = triggers.length > 1;
 
-  if (previousButton) {
-    previousButton.hidden = !hasMultipleImages;
-  }
+    if (previousButton) {
+      previousButton.hidden = !hasMultipleImages;
+    }
 
-  if (nextButton) {
-    nextButton.hidden = !hasMultipleImages;
-  }
+    if (nextButton) {
+      nextButton.hidden = !hasMultipleImages;
+    }
+  };
+
+  refreshTriggers();
 
   const preloadMediaImage = (index) => {
     if (triggers.length < 2) return;
@@ -43,6 +48,7 @@
     const trigger = triggers[activeIndex];
     const source = trigger.dataset.mediaSrc;
     const alt = trigger.dataset.mediaAlt || '';
+    const caption = trigger.dataset.mediaCaption || '';
 
     if (!source) return;
 
@@ -50,8 +56,8 @@
     lightboxImage.alt = alt;
 
     if (lightboxCaption) {
-      lightboxCaption.textContent = '';
-      lightboxCaption.hidden = true;
+      lightboxCaption.textContent = caption;
+      lightboxCaption.hidden = caption === '';
     }
 
     preloadMediaImage(activeIndex - 1);
@@ -101,9 +107,16 @@
     showMediaImage(activeIndex + 1);
   };
 
-  triggers.forEach((trigger) => {
-    trigger.addEventListener('click', () => openMediaLightbox(trigger));
+  document.addEventListener('click', (event) => {
+    const trigger = event.target.closest('[data-media-lightbox-open]');
+
+    if (!trigger) return;
+
+    refreshTriggers();
+    openMediaLightbox(trigger);
   });
+
+  document.addEventListener('media-gallery:rendered', refreshTriggers);
 
   closeControls.forEach((control) => {
     control.addEventListener('click', closeMediaLightbox);

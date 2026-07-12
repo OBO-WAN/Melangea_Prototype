@@ -1,0 +1,72 @@
+{
+  "collage": [
+    {
+      "id": "collage-01",
+      "src": "assets/IMG/medien/01.webp",
+      "alt": "Mélange à Deux & Amis live auf der Bühne",
+      "caption": "Live auf der Bühne"
+    },
+    {
+      "id": "collage-02",
+      "src": "assets/IMG/medien/02.webp",
+      "alt": "Portrait von Mélange à Deux & Amis",
+      "caption": "Ensemble"
+    },
+    {
+      "id": "collage-03",
+      "src": "assets/IMG/medien/03.webp",
+      "alt": "Oboe und Akkordeon im Konzert",
+      "caption": "Oboe & Akkordeon"
+    },
+    {
+      "id": "collage-04",
+      "src": "assets/IMG/medien/04.webp",
+      "alt": "Konzertmoment mit Mélange à Deux & Amis",
+      "caption": "Konzertmoment"
+    },
+    {
+      "id": "collage-05",
+      "src": "assets/IMG/medien/05.webp",
+      "alt": "Mélange à Deux & Amis bei einem Auftritt",
+      "caption": "Auftritt"
+    }
+  ],
+  "photoWall": [
+    {
+      "id": "photo-wall-01",
+      "src": "assets/IMG/medien/06.webp",
+      "alt": "Mélange à Deux & Amis Konzertfoto 1",
+      "caption": "Konzertfoto 1"
+    },
+    {
+      "id": "photo-wall-02",
+      "src": "assets/IMG/medien/07.webp",
+      "alt": "Mélange à Deux & Amis Konzertfoto 2",
+      "caption": "Konzertfoto 2"
+    },
+    {
+      "id": "photo-wall-03",
+      "src": "assets/IMG/medien/08.webp",
+      "alt": "Mélange à Deux & Amis Konzertfoto 3",
+      "caption": "Konzertfoto 3"
+    },
+    {
+      "id": "photo-wall-04",
+      "src": "assets/IMG/medien/09.webp",
+      "alt": "Mélange à Deux & Amis Konzertfoto 4",
+      "caption": "Konzertfoto 4"
+    },
+    {
+      "id": "photo-wall-05",
+      "src": "assets/IMG/medien/10.webp",
+      "alt": "Mélange à Deux & Amis Konzertfoto 5",
+      "caption": "Konzertfoto 5"
+    },
+    {
+      "id": "photo-wall-06",
+      "src": "assets/IMG/medien/11.webp",
+      "alt": "Mélange à Deux & Amis Konzertfoto 6",
+      "caption": "Konzertfoto 6"
+    }
+  ]
+}

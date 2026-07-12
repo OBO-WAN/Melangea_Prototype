@@ -178,11 +178,6 @@
   display: none;
 }
 
-/* Hide visible media gallery captions while preserving image alt/lightbox metadata. */
-body.page-medien .media-collage-item figcaption {
-  display: none !important;
-}
-
 @media (max-width: 640px) {
   .booking-form {
     padding: 1rem;

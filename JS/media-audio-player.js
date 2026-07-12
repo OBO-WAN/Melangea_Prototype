@@ -1,11 +1,33 @@
-document.addEventListener("DOMContentLoaded", () => {
-  initMediaWavePlayers();
-});
+(() => {
+  const playerCleanups = new WeakMap();
+
+  document.addEventListener("DOMContentLoaded", () => {
+    initMediaWavePlayers();
+  });
+
+  document.addEventListener("media-audio:rendered", (event) => {
+    const player = event.detail && event.detail.player;
+    if (player) {
+      initMediaWavePlayer(player);
+    } else {
+      initMediaWavePlayers();
+    }
+  });
 
 function initMediaWavePlayers() {
   const players = document.querySelectorAll("[data-media-wave-player]");
 
   players.forEach((player) => {
+    initMediaWavePlayer(player);
+  });
+}
+
+function initMediaWavePlayer(player) {
+    const previousCleanup = playerCleanups.get(player);
+    if (previousCleanup) previousCleanup();
+
+    const controller = new AbortController();
+    const listenerOptions = { signal: controller.signal };
     const audio = player.querySelector("[data-media-wave-audio]");
     const title = player.querySelector("[data-media-wave-title]");
     const subtitle = player.querySelector("[data-media-wave-subtitle]");
@@ -31,8 +53,11 @@ function initMediaWavePlayers() {
       !next ||
       !trackButtons.length
     ) {
+      controller.abort();
       return;
     }
+
+    playerCleanups.set(player, () => controller.abort());
 
     const tracks = trackButtons.map((button, index) => ({
       title: button.dataset.title || `Titel ${index + 1}`,
@@ -166,23 +191,23 @@ function initMediaWavePlayers() {
         }
 
         loadTrack(index, true);
-      });
+      }, listenerOptions);
     });
 
-    toggle.addEventListener("click", togglePlayback);
-    previous.addEventListener("click", () => playAdjacent(-1));
-    next.addEventListener("click", () => playAdjacent(1));
+    toggle.addEventListener("click", togglePlayback, listenerOptions);
+    previous.addEventListener("click", () => playAdjacent(-1), listenerOptions);
+    next.addEventListener("click", () => playAdjacent(1), listenerOptions);
 
-    audio.addEventListener("play", updateTrackButtons);
-    audio.addEventListener("pause", updateTrackButtons);
-    audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("play", updateTrackButtons, listenerOptions);
+    audio.addEventListener("pause", updateTrackButtons, listenerOptions);
+    audio.addEventListener("timeupdate", updateProgress, listenerOptions);
     audio.addEventListener("loadedmetadata", () => {
       if (Number.isFinite(audio.duration)) {
         durationTime.textContent = formatTime(audio.duration);
       }
       updateProgress();
-    });
-    audio.addEventListener("ended", () => playAdjacent(1));
+    }, listenerOptions);
+    audio.addEventListener("ended", () => playAdjacent(1), listenerOptions);
 
     seek.addEventListener("input", () => {
       isScrubbing = true;
@@ -194,13 +219,14 @@ function initMediaWavePlayers() {
       }
 
       updateProgress();
-    });
+    }, listenerOptions);
 
     seek.addEventListener("change", () => {
       isScrubbing = false;
       updateProgress();
-    });
+    }, listenerOptions);
 
     loadTrack(activeIndex, false);
-  });
 }
+})();
+

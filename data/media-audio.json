@@ -1,0 +1,58 @@
+{
+  "tracks": [
+    {
+      "id": "audio-01",
+      "src": "assets/MP3/Ostinato_Studio_1.mp3",
+      "title": "Ostinato",
+      "subtitle": "Studio Version",
+      "duration": "1:52",
+      "seed": 1.15,
+      "managedUpload": false
+    },
+    {
+      "id": "audio-02",
+      "src": "assets/MP3/Eurology_Live_2.mp3",
+      "title": "Eurology",
+      "subtitle": "Live",
+      "duration": "3:21",
+      "seed": 2.4,
+      "managedUpload": false
+    },
+    {
+      "id": "audio-03",
+      "src": "assets/MP3/higherSky_Live_3.mp3",
+      "title": "Higher Sky",
+      "subtitle": "Live",
+      "duration": "3:47",
+      "seed": 3.1,
+      "managedUpload": false
+    },
+    {
+      "id": "audio-04",
+      "src": "assets/MP3/Oblivion_Live.mp3",
+      "title": "Oblivion",
+      "subtitle": "LiveRecord · Mélange Quartett Projekt",
+      "duration": "4:28",
+      "seed": 4.2,
+      "managedUpload": false
+    },
+    {
+      "id": "audio-05",
+      "src": "assets/MP3/Gabriels_Oboe.mp3",
+      "title": "Gabriel’s Oboe",
+      "subtitle": "Mélange à Deux & Amis",
+      "duration": "1:53",
+      "seed": 5.05,
+      "managedUpload": false
+    },
+    {
+      "id": "audio-06",
+      "src": "assets/MP3/Skyfall_Live.mp3",
+      "title": "Skyfall",
+      "subtitle": "Liverecord · Mélange Quartett Projekt",
+      "duration": "4:48",
+      "seed": 6.15,
+      "managedUpload": false
+    }
+  ]
+}

@@ -32,6 +32,7 @@
   <link rel="stylesheet" href="css/subpages/booking/hero.css" />
   <link rel="stylesheet" href="css/subpages/booking/videos.css" />
   <link rel="stylesheet" href="css/subpages/booking/references.css" />
+  <link rel="stylesheet" href="css/subpages/booking/structure.css" />
   <script src="./JS/booking-form.js" defer></script>
 </head>
 
@@ -46,7 +47,6 @@
 
       <div class="nav-wrap">
         <input type="checkbox" id="nav-toggle" class="nav-checkbox" />
-
         <label for="nav-toggle" class="nav-toggle">
           <span class="nav-toggle__icon" aria-hidden="true">☰</span>
           <span class="sr-only">Menü öffnen</span>
@@ -79,70 +79,75 @@
       </div>
     </section>
 
-    <div class="booking-divider hero-divider" aria-hidden="true">
-      <span></span>
-    </div>
+    <div class="booking-divider hero-divider" aria-hidden="true"><span></span></div>
 
-    <section class="section booking-options">
-      <div class="container">
+    <section class="section booking-options" aria-labelledby="booking-options-title">
+      <div class="container booking-options__inner">
+        <header class="booking-section-heading" data-aos="fade-up">
+          <p class="booking-kicker">Buchbare Formate</p>
+          <h2 id="booking-options-title">Was Sie buchen können</h2>
+          <p>Musikalische Programme für Kulturveranstaltungen, besondere Anlässe und unterschiedliche Publikumsgrößen.</p>
+        </header>
+
         <div class="booking-card-grid" role="list" aria-label="Buchbare Veranstaltungsformate">
           <article class="booking-card" role="listitem" data-aos="fade-up">
             <span class="booking-card__number" aria-hidden="true">01</span>
             <h3>Konzerte</h3>
             <p>Konzertabende und atmosphärische Vortragsformate für Bühnen, Kirchen und Säle.</p>
           </article>
-
           <article class="booking-card" role="listitem" data-aos="fade-up">
             <span class="booking-card__number" aria-hidden="true">02</span>
             <h3>Festivals &amp; Kulturveranstaltungen</h3>
             <p>Programme für Festivals, Kulturreihen, kommunale Veranstaltungen und kuratierte Musikformate.</p>
           </article>
-
           <article class="booking-card" role="listitem" data-aos="fade-up">
             <span class="booking-card__number" aria-hidden="true">03</span>
             <h3>Private und geschäftliche Veranstaltungen</h3>
             <p>Elegante musikalische Gestaltung für Empfänge, Feiern, besondere Momente und exklusive Anlässe.</p>
           </article>
-
           <article class="booking-card" role="listitem" data-aos="fade-up">
             <span class="booking-card__number" aria-hidden="true">04</span>
             <h3>Kinderprogramme</h3>
             <p>Kinderprogramme und thematische Sonderkonzepte nach Absprache.</p>
           </article>
         </div>
+      </div>
+    </section>
 
-        <section class="section booking-videos" aria-labelledby="booking-videos-title">
-          <div class="container booking-videos__inner" data-aos="fade-up">
-            <div class="booking-videos__copy">
-              <p class="booking-kicker">Einblicke</p>
-              <h2 id="booking-videos-title">Videos</h2>
-              <p>
-                Hören und sehen Sie zwei kurze Eindrücke aus dem Repertoire von Mélange à Deux &amp; Amis.
-              </p>
-            </div>
+    <section class="section booking-videos" aria-labelledby="booking-videos-title">
+      <div class="container booking-videos__inner" data-aos="fade-up">
+        <div class="booking-videos__copy">
+          <p class="booking-kicker">Einblicke</p>
+          <h2 id="booking-videos-title">Video-Einblicke</h2>
+          <p>Hören und sehen Sie zwei kurze Eindrücke aus dem Repertoire von Mélange à Deux &amp; Amis.</p>
+        </div>
 
-            <div class="booking-videos__grid">
-              <div class="booking-video">
-                <iframe src="https://www.youtube-nocookie.com/embed/ePEIErvA09c"
-                  title="Video von Mélange à Deux &amp; Amis" loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-
-              <div class="booking-video">
-                <iframe src="https://www.youtube-nocookie.com/embed/DjFIRKjzVMg"
-                  title="Weiteres Video von Mélange à Deux &amp; Amis" loading="lazy"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-              </div>
-            </div>
+        <div class="booking-videos__grid">
+          <div class="booking-video">
+            <iframe src="https://www.youtube-nocookie.com/embed/64y1hf6zq1g"
+              title="Mélange à Deux &amp; Amis – Video 1" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
-        </section>
+          <div class="booking-video">
+            <iframe src="https://www.youtube-nocookie.com/embed/FXFr5nbusVI"
+              title="Mélange à Deux &amp; Amis – Video 2" loading="lazy"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section class="section booking-materials" aria-labelledby="booking-materials-title">
+      <div class="container booking-materials__inner">
+        <header class="booking-section-heading" data-aos="fade-up">
+          <p class="booking-kicker">Für Veranstalter</p>
+          <h2 id="booking-materials-title">Material für Veranstalter</h2>
+          <p>Pressetexte, Fotos, Biografien, Repertoire-Auszug und technische Informationen für Ihre Planung.</p>
+        </header>
 
-
-        <section class="booking-downloads" aria-labelledby="booking-downloads-title" data-aos="fade-up">
-          <h2 class="sr-only" id="booking-downloads-title">Downloads</h2>
+        <section class="booking-downloads" aria-label="Downloads für Veranstalter" data-aos="fade-up">
           <!-- Download-Dateien später unter assets/downloads/booking/ ablegen oder die hrefs anpassen. -->
           <nav class="booking-downloads__links booking-downloads__links--left" aria-label="Presse-Downloads">
             <a href="assets/downloads/booking/pressetext-lang.pdf" download>Download<br />Pressetext lang</a>
@@ -151,10 +156,9 @@
           </nav>
 
           <figure class="booking-downloads__media">
-            <div class="booking-downloads__image-placeholder" aria-label="Bild folgt">
-              <img src="assets/IMG/booking/02.webp" alt="Mélange à Deux & Amis live auf der Bühne" loading="lazy" />
+            <div class="booking-downloads__image-placeholder">
+              <img src="assets/IMG/booking/02.webp" alt="Mélange à Deux &amp; Amis live auf der Bühne" loading="lazy" />
             </div>
-
           </figure>
 
           <nav class="booking-downloads__links booking-downloads__links--right" aria-label="Material-Downloads">
@@ -167,10 +171,14 @@
       </div>
     </section>
 
-    <section class="section booking-references" aria-labelledby="booking-references-title">
-      <div class="container booking-references__inner" data-aos="fade-up">
-        <h2 class="booking-references__title" id="booking-references-title">Referenzen:</h2>
-        <div class="booking-references__grid">
+    <section class="section booking-proof" aria-labelledby="booking-proof-title">
+      <div class="container booking-proof__inner">
+        <header class="booking-section-heading" data-aos="fade-up">
+          <p class="booking-kicker">Erfahrung &amp; Resonanz</p>
+          <h2 id="booking-proof-title">Referenzen &amp; Pressestimmen</h2>
+        </header>
+
+        <div class="booking-references__grid" data-aos="fade-up">
           <ul class="booking-references__list">
             <li>Von Busch Hof Freinsheim</li>
             <li>Alte Post (Euroclassics) Pirmasens</li>
@@ -188,7 +196,6 @@
             <li>Filmfestival Germersheim</li>
             <li>Fototage Heimatlichter</li>
           </ul>
-
           <ul class="booking-references__list">
             <li>Haus Catoir, Bad Dürkheim</li>
             <li>Inner Circle Landau-Edenkoben</li>
@@ -206,45 +213,38 @@
             <li>Kultursommer Rhld.-Pf.</li>
           </ul>
         </div>
-      </div>
-    </section>
 
-    <section class="section booking-press-quotes" aria-label="Pressestimmen">
-      <div class="container">
         <div class="booking-press-quotes__card" data-aos="fade-up">
           <figure class="booking-press-quote">
             <figcaption class="booking-press-quote__source">Rheinpfalz, Matthias Haag:</figcaption>
             <blockquote>
               <p>“Die Musiker beherrschen eine wunderbare Verführungskunst. Der Alltag ist sofort weggeblasen.”</p>
               <p>“So mancher wird sich in den Klang der Oboe verliebt haben.”</p>
-              <p>“Die Musiker beeindruckten durch ihre Vielseitigkeit und ihre Fähigkeit, verschiedene Welten zu
-                vereinen.”</p>
+              <p>“Die Musiker beeindruckten durch ihre Vielseitigkeit und ihre Fähigkeit, verschiedene Welten zu vereinen.”</p>
             </blockquote>
           </figure>
-
           <figure class="booking-press-quote">
             <figcaption class="booking-press-quote__source">Odenwälder Zeitung, Fritz Kopetzky:</figcaption>
             <blockquote>
-              <p>“Die Musiker spielen sensibel und mit wechselnden Rhythmen, die das Publikum in ihren Bann ziehen, die
-                Besetzung ist einzigartig und die Musik ist eine großartige Mischung aus Tradition und Innovation.”</p>
+              <p>“Die Musiker spielen sensibel und mit wechselnden Rhythmen, die das Publikum in ihren Bann ziehen, die Besetzung ist einzigartig und die Musik ist eine großartige Mischung aus Tradition und Innovation.”</p>
             </blockquote>
           </figure>
         </div>
       </div>
     </section>
 
-    <section class="section booking-contact" aria-labelledby="booking-contact-title">
+    <section class="section booking-contact" id="booking-request" aria-labelledby="booking-contact-title">
       <div class="container">
         <div class="booking-contact__card" data-aos="fade-up">
-          <div>
-            <p class="booking-kicker">Direkter Kontakt</p>
-            <h2 id="booking-contact-title">Sie möchten lieber direkt schreiben?</h2>
-            <p>
-              Senden Sie Ihre Buchungsanfrage mit Datum, Ort, Anlass und ersten Rahmeninformationen direkt per E-Mail.
-              Wir melden uns persönlich zurück.
-            </p>
+          <div class="booking-contact__copy">
+            <p class="booking-kicker">Ihre Anfrage</p>
+            <h2 id="booking-contact-title">Interesse an einem Konzert oder einer Veranstaltung?</h2>
+            <p>Senden Sie uns Datum, Ort, Anlass und erste Rahmeninformationen. Wir melden uns persönlich bei Ihnen zurück.</p>
           </div>
-          <a class="btn" href="mailto:info@melangea2.com">info@melangea2.com</a>
+          <div class="booking-contact__actions">
+            <button class="btn" type="button" data-booking-open>Buchungsanfrage senden</button>
+            <a class="btn btn-ghost" href="mailto:info@melangea2.com">Direkt per E-Mail</a>
+          </div>
         </div>
       </div>
     </section>
@@ -256,16 +256,12 @@
         <div class="strong footer-brand">Mélange à Deux</div>
         <p class="muted small">&#169; 2026. Alle Rechte Vorbehalten</p>
       </div>
-
       <div class="footer-col">
         <h3 class="footer-heading">Kontakt</h3>
-        <a href="#newsletter-overlay" data-newsletter-open>
-          Newsletter abonnieren
-        </a>
+        <a href="#newsletter-overlay" data-newsletter-open>Newsletter abonnieren</a>
         <a href="mailto:info@melangea2.com">info@melangea2.com</a>
         <a href="tel:+4915750674559">+49 157 50674559</a>
       </div>
-
       <div class="footer-col">
         <h3 class="footer-heading">Rechtliches</h3>
         <div class="footer-links">
@@ -273,27 +269,20 @@
           <a href="./datenschutz.html">Datenschutz</a>
         </div>
       </div>
-
       <div class="footer-col footer-col--booking">
         <h3 class="footer-heading">Booking</h3>
         <p class="muted small">Konzerte, Veranstaltungen und besondere Anlässe.</p>
-        <a class="btn btn-small footer-booking-btn" href="./booking.html#booking-request" data-booking-open>Booking
-          anfragen</a>
+        <a class="btn btn-small footer-booking-btn" href="./booking.html#booking-request" data-booking-open>Booking anfragen</a>
       </div>
     </div>
   </footer>
 
   <!-- Booking Overlay -->
-
   <div class="booking-overlay" id="booking-overlay" aria-hidden="true">
     <div class="booking-overlay__backdrop" data-booking-close></div>
-
     <div class="booking-modal" role="dialog" aria-modal="true" aria-labelledby="bookingOverlayTitle"
       aria-describedby="bookingOverlayDescription">
-      <button class="booking-modal__close" type="button" aria-label="Schließen" data-booking-close>
-        ✕
-      </button>
-
+      <button class="booking-modal__close" type="button" aria-label="Schließen" data-booking-close>✕</button>
       <div class="booking-modal__content">
         <div class="booking-modal__intro">
           <p class="booking-kicker">Ihre Anfrage</p>
@@ -310,7 +299,6 @@
             Ihre Angaben werden sicher an Mélange à Deux übermittelt. Alternativ schreiben Sie direkt an
             <a href="mailto:info@melangea2.com">info@melangea2.com</a>.
           </p>
-
           <p class="booking-form__required-note muted small">
             Mit <span aria-hidden="true">*</span> gekennzeichnete Felder sind Pflichtfelder.
           </p>
@@ -320,28 +308,23 @@
               <label for="booking-overlay-first-name">Vorname <span aria-hidden="true">*</span></label>
               <input id="booking-overlay-first-name" name="first-name" type="text" autocomplete="given-name" required />
             </div>
-
             <div class="booking-field">
               <label for="booking-overlay-last-name">Nachname <span aria-hidden="true">*</span></label>
               <input id="booking-overlay-last-name" name="last-name" type="text" autocomplete="family-name" required />
             </div>
-
             <div class="booking-field">
               <label for="booking-overlay-email">E-Mail <span aria-hidden="true">*</span></label>
               <input id="booking-overlay-email" name="email" type="email" autocomplete="email" required />
             </div>
-
             <div class="booking-field">
               <label for="booking-overlay-phone">Telefon <span class="booking-optional">freiwillig</span></label>
               <input id="booking-overlay-phone" name="phone" type="tel" autocomplete="tel" />
             </div>
-
             <div class="booking-field">
               <label for="booking-overlay-organization">Organisation / Veranstaltungsort
                 <span class="booking-optional">freiwillig</span></label>
               <input id="booking-overlay-organization" name="organization" type="text" autocomplete="organization" />
             </div>
-
             <div class="booking-field">
               <label for="booking-overlay-event-type">Art der Veranstaltung <span aria-hidden="true">*</span></label>
               <select id="booking-overlay-event-type" name="event-type" required>
@@ -353,21 +336,18 @@
                 <option value="other">Anderer Anlass</option>
               </select>
             </div>
-
             <div class="booking-field">
               <label for="booking-overlay-location">Ort / Stadt <span aria-hidden="true">*</span></label>
               <input id="booking-overlay-location" name="location" type="text" autocomplete="address-level2" required />
             </div>
-
             <div class="booking-field">
-              <label for="booking-overlay-audience">Geschätzte Publikumsgröße <span
-                  class="booking-optional">freiwillig</span></label>
+              <label for="booking-overlay-audience">Geschätzte Publikumsgröße
+                <span class="booking-optional">freiwillig</span></label>
               <input id="booking-overlay-audience" name="audience-size" type="number" min="1" inputmode="numeric" />
             </div>
-
             <div class="booking-field">
-              <label for="booking-overlay-performance-date">Gewünschter Veranstaltungstermin <span
-                  aria-hidden="true">*</span></label>
+              <label for="booking-overlay-performance-date">Gewünschter Veranstaltungstermin
+                <span aria-hidden="true">*</span></label>
               <input id="booking-overlay-performance-date" name="performance_date" type="date" lang="de"
                 aria-required="true" aria-describedby="booking-overlay-performance-date-error" />
               <p id="booking-overlay-performance-date-error" class="form-field__error"
@@ -376,8 +356,7 @@
           </div>
 
           <div class="booking-field booking-field--full">
-            <label for="booking-overlay-message">Nachricht / Angaben zur Buchung <span
-                aria-hidden="true">*</span></label>
+            <label for="booking-overlay-message">Nachricht / Angaben zur Buchung <span aria-hidden="true">*</span></label>
             <textarea id="booking-overlay-message" name="message" rows="7"
               placeholder="Bitte nennen Sie Anlass, gewünschtes Programm, Zeitrahmen, technische Informationen oder weitere Details."
               required></textarea>
@@ -387,14 +366,11 @@
             <input id="booking-overlay-consent" name="contact-consent" type="checkbox" required />
             <span>Ich bin damit einverstanden, zur Bearbeitung meiner Buchungsanfrage kontaktiert zu werden.</span>
           </label>
-
           <div class="booking-honeypot" aria-hidden="true">
             <label for="booking-overlay-company">Firma</label>
             <input id="booking-overlay-company" name="company" type="text" tabindex="-1" autocomplete="off" />
           </div>
-
           <p class="booking-form__status" data-booking-status role="status" aria-live="polite" hidden></p>
-
           <button class="btn booking-submit" type="submit">Jetzt anfragen</button>
         </form>
       </div>
@@ -403,91 +379,60 @@
 
   <div class="newsletter-overlay" id="newsletter-overlay" aria-hidden="true">
     <div class="newsletter-overlay__backdrop" data-newsletter-close></div>
-
     <div class="newsletter-modal" role="dialog" aria-modal="true" aria-labelledby="newsletterTitle"
       aria-describedby="newsletterDescription">
-      <button class="newsletter-modal__close" type="button" aria-label="Schließen" data-newsletter-close>
-        ✕
-      </button>
-
+      <button class="newsletter-modal__close" type="button" aria-label="Schließen" data-newsletter-close>✕</button>
       <div class="newsletter-modal__content">
         <p class="newsletter-kicker">Newsletter</p>
-        <h2 class="newsletter-modal__title" id="newsletterTitle">
-          Newsletter abonnieren
-        </h2>
+        <h2 class="newsletter-modal__title" id="newsletterTitle">Newsletter abonnieren</h2>
         <p class="newsletter-modal__text" id="newsletterDescription">
-          Hier erfahren Sie aktuelle Neuigkeiten und Konzerttermine rund um
-          Mélange à Deux & Amis
+          Hier erfahren Sie aktuelle Neuigkeiten und Konzerttermine rund um Mélange à Deux &amp; Amis
         </p>
 
         <form class="newsletter-form" action="#" method="post" novalidate>
           <div class="newsletter-form__grid">
             <div class="newsletter-field">
-              <label for="newsletter-first-name">
-                Vorname
-                <span class="newsletter-required" aria-hidden="true">*</span>
-              </label>
+              <label for="newsletter-first-name">Vorname <span class="newsletter-required" aria-hidden="true">*</span></label>
               <input id="newsletter-first-name" name="first-name" type="text" placeholder="Ihr Vorname"
                 autocomplete="given-name" required />
             </div>
-
             <div class="newsletter-field">
-              <label for="newsletter-last-name">
-                Nachname
-                <span class="newsletter-required" aria-hidden="true">*</span>
-              </label>
+              <label for="newsletter-last-name">Nachname <span class="newsletter-required" aria-hidden="true">*</span></label>
               <input id="newsletter-last-name" name="last-name" type="text" placeholder="Ihr Nachname"
                 autocomplete="family-name" required />
             </div>
           </div>
-
           <div class="newsletter-field">
-            <label for="newsletter-email">
-              E-Mail
-              <span class="newsletter-required" aria-hidden="true">*</span>
-            </label>
+            <label for="newsletter-email">E-Mail <span class="newsletter-required" aria-hidden="true">*</span></label>
             <input id="newsletter-email" name="email" type="email" placeholder="ihre@email.de" autocomplete="email"
               pattern="^[^\s@]+@[^\s@]+\.[^\s@]{2,}$" required />
           </div>
-
           <div class="newsletter-field">
             <label for="newsletter-postal-code">PLZ</label>
             <input id="newsletter-postal-code" name="postal-code" type="text" placeholder="z. B. 67061"
               autocomplete="postal-code" inputmode="numeric" pattern="[0-9]{5}" />
           </div>
-
           <div class="newsletter-field">
             <label for="newsletter-message">Nachricht</label>
             <textarea id="newsletter-message" name="message" rows="4" placeholder="Optional: Ihre Nachricht"></textarea>
           </div>
-
           <label class="newsletter-consent">
             <input type="checkbox" name="consent" required />
-            <span>
-              Ich stimme der Verarbeitung meiner Daten zum Erhalt des
-              Newsletters zu.
-            </span>
+            <span>Ich stimme der Verarbeitung meiner Daten zum Erhalt des Newsletters zu.</span>
           </label>
-
           <p class="newsletter-required-note">
-            Mit <span aria-hidden="true">*</span> gekennzeichnete Felder sind
-            Pflichtfelder.
+            Mit <span aria-hidden="true">*</span> gekennzeichnete Felder sind Pflichtfelder.
           </p>
-
           <div class="newsletter-actions">
             <button type="submit" class="btn">Jetzt abonnieren</button>
-            <button type="button" class="btn btn-ghost" data-newsletter-close>
-              Abbrechen
-            </button>
+            <button type="button" class="btn btn-ghost" data-newsletter-close>Abbrechen</button>
           </div>
         </form>
       </div>
     </div>
   </div>
 
-  <button class="scroll-top" id="scrollTopBtn" type="button" aria-label="Nach oben scrollen">
-    ↑
-  </button>
+  <button class="scroll-top" id="scrollTopBtn" type="button" aria-label="Nach oben scrollen">↑</button>
 
   <script type="module" src="./JS/firebase-config.js"></script>
   <script src="./JS/objects.js"></script>

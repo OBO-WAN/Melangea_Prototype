@@ -401,3 +401,33 @@ body.admin-page {
   color: var(--admin-accent);
   font-weight: 700;
 }
+
+.media-admin-grid {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr);
+  gap: 18px;
+}
+
+.media-admin-thumb {
+  width: 160px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  background: var(--admin-field-bg);
+}
+
+.admin-page input[readonly] {
+  color: var(--admin-muted);
+}
+
+.admin-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+@media (max-width: 760px) {
+  .media-admin-grid {
+    grid-template-columns: 1fr;
+  }
+}

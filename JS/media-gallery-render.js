@@ -123,6 +123,10 @@
         container.replaceChildren(fragment);
       });
 
+      if (window.AOS && typeof window.AOS.refreshHard === 'function') {
+        window.AOS.refreshHard();
+      }
+
       document.dispatchEvent(new CustomEvent('media-gallery:rendered'));
     })
     .catch((error) => {

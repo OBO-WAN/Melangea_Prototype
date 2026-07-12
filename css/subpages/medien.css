@@ -98,6 +98,11 @@
   backdrop-filter: blur(10px);
 }
 
+/* Hide visible captions while preserving image alt/lightbox metadata. */
+.media-collage-item figcaption {
+  display: none;
+}
+
 /* Photo wall */
 
 .media-photo-section {

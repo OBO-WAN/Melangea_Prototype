@@ -129,7 +129,7 @@
   margin: 0;
   font-family: "Raleway", sans-serif;
   font-size: clamp(2.8rem, 7vw, 4.8rem);
-  font-weight: 200;
+  font-weight: 300;
   letter-spacing: clamp(0.1em, 1vw, 0.28em);
   line-height: 0.98;
   text-transform: uppercase;

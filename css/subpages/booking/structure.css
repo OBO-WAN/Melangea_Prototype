@@ -1,6 +1,5 @@
 .booking-options__inner,
-.booking-materials__inner,
-.booking-proof__inner {
+.booking-materials__inner {
   display: grid;
   gap: clamp(1.5rem, 4vw, 2.75rem);
 }
@@ -32,21 +31,6 @@
 
 .booking-materials .booking-downloads {
   margin-top: 0;
-}
-
-.booking-proof__inner {
-  justify-items: center;
-  text-align: center;
-}
-
-.booking-proof .booking-references__grid,
-.booking-proof .booking-press-quotes__card {
-  width: min(1100px, 100%);
-}
-
-.booking-proof .booking-press-quotes__card {
-  margin-top: clamp(0.5rem, 2vw, 1rem);
-  text-align: left;
 }
 
 #booking-request {

@@ -56,26 +56,94 @@ body.admin-page {
   color: var(--admin-accent);
 }
 
-.admin-header,
-.admin-main,
 .admin-login {
   width: min(1120px, calc(100% - 32px));
   margin: 0 auto;
 }
 
-.admin-header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 24px;
-  padding: 36px 0 20px;
+.admin-utility-bar {
+  border-bottom: 1px solid var(--admin-border);
+  background: var(--admin-card);
 }
 
-.admin-header h1,
+.admin-utility-bar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  width: min(1280px, calc(100% - 32px));
+  min-height: 72px;
+  margin: 0 auto;
+}
+
+.admin-brand {
+  margin: 0;
+  color: var(--admin-text);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.admin-content-header h1,
 .admin-login h1 {
   margin: 0 0 8px;
   font-size: clamp(1.8rem, 4vw, 2.7rem);
   line-height: 1.15;
+}
+
+.admin-shell {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 56px);
+  width: min(1280px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 32px 0;
+}
+
+.admin-sidebar {
+  align-self: start;
+  position: sticky;
+  top: 24px;
+}
+
+.admin-sidebar__nav {
+  display: grid;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  background: var(--admin-card);
+  box-shadow: 0 12px 35px var(--admin-shadow);
+}
+
+.admin-sidebar__link {
+  display: block;
+  border-radius: 10px;
+  color: var(--admin-text);
+  font-weight: 750;
+  padding: 10px 12px;
+  text-decoration: none;
+}
+
+.admin-sidebar__link:hover,
+.admin-sidebar__link:focus-visible {
+  background: var(--admin-secondary-hover);
+  color: var(--admin-accent-dark);
+  outline: 3px solid var(--admin-focus);
+  outline-offset: 1px;
+}
+
+.admin-sidebar__link[aria-current="page"] {
+  background: var(--admin-accent);
+  color: #fff;
+}
+
+.admin-sidebar__link[aria-current="page"]:focus-visible {
+  background: var(--admin-accent-dark);
+  color: #fff;
+}
+
+.admin-content-header {
+  margin: 0 0 28px;
 }
 
 .admin-kicker {
@@ -95,7 +163,7 @@ body.admin-page {
   font-weight: 700;
 }
 
-.admin-header__actions,
+.admin-utility-bar__actions,
 .admin-login__theme {
   display: flex;
   align-items: center;
@@ -369,14 +437,31 @@ body.admin-page {
 }
 
 @media (max-width: 760px) {
-  .admin-header {
-    flex-direction: column;
-    padding-top: 24px;
+  .admin-utility-bar__inner {
+    min-height: 64px;
   }
 
-  .admin-header__actions {
-    align-items: flex-start;
-    flex-direction: column;
+  .admin-shell {
+    display: block;
+    padding-top: 20px;
+  }
+
+  .admin-sidebar {
+    position: static;
+    margin-bottom: 24px;
+  }
+
+  .admin-sidebar__nav {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding: 10px;
+  }
+
+  .admin-sidebar__link {
+    flex: 0 0 auto;
+    white-space: nowrap;
   }
 
   .concert-grid {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/auth.php';
 require_authentication();
+require __DIR__ . '/layout.php';
 
 const MEDIA_SECTIONS = ['collage' => 'Collage oben', 'photoWall' => 'Fotowand'];
 const MEDIA_JSON_RELATIVE = 'data/media-gallery.json';
@@ -236,8 +237,8 @@ $audioTracks = media_load_audio($audioPath, $audioLoadError);
 <html lang="de">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Medienverwaltung | Mélange à Deux &amp; Amis</title><script src="admin-theme.js"></script><link rel="stylesheet" href="admin.css"></head>
 <body class="admin-page">
-<header class="admin-header"><div><p class="admin-kicker">Mélange à Deux &amp; Amis</p><h1>Medien verwalten</h1><p class="admin-muted">Verwaltet Foto-Galerien aus <code><?= MEDIA_JSON_RELATIVE ?></code>, YouTube-Videos aus <code><?= MEDIA_VIDEOS_JSON_RELATIVE ?></code> und Audio aus <code><?= MEDIA_AUDIO_JSON_RELATIVE ?></code>.</p></div><div class="admin-header__actions"><button type="button" class="admin-theme-toggle" data-theme-toggle aria-pressed="false" aria-label="Dunkelmodus aktivieren"><span class="admin-theme-toggle__icon admin-theme-toggle__icon--moon" aria-hidden="true">◐</span><span class="admin-theme-toggle__icon admin-theme-toggle__icon--sun" aria-hidden="true">☀</span></button><a class="admin-link" href="index.php">Konzerte</a><a class="admin-link" href="logout.php">Ausloggen</a></div></header>
-<main class="admin-main">
+<?php render_admin_layout_open('media'); ?>
+<header class="admin-content-header"><p class="admin-kicker">Medien</p><h1>Medien verwalten</h1><p class="admin-muted">Verwaltet Foto-Galerien aus <code><?= MEDIA_JSON_RELATIVE ?></code>, YouTube-Videos aus <code><?= MEDIA_VIDEOS_JSON_RELATIVE ?></code> und Audio aus <code><?= MEDIA_AUDIO_JSON_RELATIVE ?></code>.</p></header>
 <?php if (isset($_GET['saved'])): ?><p class="admin-message admin-message--success">Die Mediengalerie wurde gespeichert.</p><?php endif; ?>
 <?php if (isset($_GET['videos_saved'])): ?><p class="admin-message admin-message--success">Die Videos wurden gespeichert.</p><?php endif; ?>
 <?php if (isset($_GET['audio_saved'])): ?><p class="admin-message admin-message--success">Die Audio-Playlist wurde gespeichert.</p><?php endif; ?>
@@ -296,4 +297,4 @@ $audioTracks = media_load_audio($audioPath, $audioLoadError);
 <div class="admin-actions"><button type="submit" class="admin-button" <?= $audioTracks === null ? 'disabled' : '' ?>>Audio-Playlist speichern</button></div>
 </form>
 
-</main></body></html>
+<?php render_admin_layout_close(); ?></body></html>

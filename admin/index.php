@@ -173,6 +173,7 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
         </span>
       </button>
       <a class="admin-link" href="media.php">Medien</a>
+      <a class="admin-link" href="booking-downloads.php">Booking-Material</a>
       <a class="admin-link" href="logout.php">Ausloggen</a>
     </div>
   </header>

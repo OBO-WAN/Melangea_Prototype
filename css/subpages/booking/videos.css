@@ -5,6 +5,13 @@
 .booking-videos__inner {
   display: grid;
   gap: clamp(1.25rem, 3vw, 2rem);
+  padding: clamp(1.5rem, 4vw, 3rem);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.025);
+  box-shadow:
+    0 18px 40px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.035);
 }
 
 .booking-videos__copy {
@@ -58,6 +65,11 @@
 }
 
 @media (max-width: 820px) {
+  .booking-videos__inner {
+    padding: 1rem;
+    border-radius: 14px;
+  }
+
   .booking-videos__grid {
     grid-template-columns: 1fr;
   }

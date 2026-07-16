@@ -122,6 +122,150 @@
   filter: saturate(1.03) contrast(1.02);
 }
 
+.references-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1300;
+  display: grid;
+  place-items: center;
+  padding: clamp(0.75rem, 3vw, 2rem);
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition:
+    opacity 0.22s ease,
+    visibility 0s linear 0.22s;
+}
+
+.references-overlay.is-open {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+
+.references-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.78);
+  backdrop-filter: blur(10px);
+}
+
+.references-modal {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1040px);
+  max-height: min(90vh, 880px);
+  max-height: min(90dvh, 880px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: clamp(24px, 3vw, 36px);
+  background:
+    radial-gradient(760px 340px at 8% 0%, rgba(244, 231, 186, 0.09), transparent 62%),
+    radial-gradient(620px 320px at 100% 100%, rgba(46, 229, 157, 0.07), transparent 66%),
+    linear-gradient(155deg, rgba(14, 25, 69, 0.99), rgba(12, 18, 43, 0.99));
+  box-shadow:
+    0 34px 90px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transform: translateY(18px) scale(0.985);
+  transition: transform 0.22s ease;
+}
+
+.references-overlay.is-open .references-modal {
+  transform: translateY(0) scale(1);
+}
+
+.references-modal::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: clamp(2rem, 8vw, 7rem);
+  left: clamp(2rem, 8vw, 7rem);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 231, 186, 0.72), transparent);
+}
+
+.references-modal__close {
+  position: sticky;
+  top: 1rem;
+  left: calc(100% - 3.5rem);
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  width: 2.55rem;
+  height: 2.55rem;
+  margin: 1rem 1rem -3.55rem auto;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(5, 10, 25, 0.82);
+  color: var(--text);
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.22),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+.references-modal__close:hover,
+.references-modal__close:focus-visible {
+  border-color: rgba(244, 231, 186, 0.55);
+  color: #f4e7ba;
+  outline: 0;
+  box-shadow:
+    0 0 0 3px rgba(244, 231, 186, 0.12),
+    0 10px 24px rgba(0, 0, 0, 0.22);
+}
+
+.references-modal__header {
+  display: grid;
+  justify-items: center;
+  padding: clamp(2.25rem, 5vw, 4rem) clamp(1.25rem, 5vw, 4rem) clamp(1.25rem, 3vw, 2rem);
+  text-align: center;
+}
+
+.references-modal__header h2 {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 280;
+  line-height: 1.05;
+  letter-spacing: 0.05em;
+}
+
+.references-modal__list {
+  column-count: 3;
+  column-gap: clamp(1.75rem, 4vw, 3.5rem);
+  column-rule: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 0;
+  padding: 0 clamp(1.25rem, 5vw, 4rem) clamp(2rem, 5vw, 4rem);
+  list-style: none;
+}
+
+.references-modal__list li {
+  position: relative;
+  break-inside: avoid;
+  margin: 0;
+  padding: 0.55rem 0.25rem 0.55rem 1.15rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+  line-height: 1.45;
+}
+
+.references-modal__list li::before {
+  content: "";
+  position: absolute;
+  top: 1.08rem;
+  left: 0.12rem;
+  width: 0.34rem;
+  height: 0.34rem;
+  border-radius: 50%;
+  background: #f4e7ba;
+  box-shadow: 0 0 0 4px rgba(244, 231, 186, 0.08);
+}
+
 @media (max-width: 1080px) {
   .booking-downloads {
     grid-template-columns: 1fr;
@@ -151,6 +295,12 @@
   }
 }
 
+@media (max-width: 880px) {
+  .references-modal__list {
+    column-count: 2;
+  }
+}
+
 @media (max-width: 700px) {
   .booking-downloads {
     padding: 1.2rem;
@@ -164,5 +314,38 @@
   .booking-downloads__links a {
     min-height: 4rem;
     font-size: clamp(1rem, 5.4vw, 1.18rem);
+  }
+}
+
+@media (max-width: 620px) {
+  .references-overlay {
+    padding: 0.55rem;
+  }
+
+  .references-modal {
+    border-radius: 22px;
+  }
+
+  .references-modal__close {
+    top: 0.75rem;
+    margin-top: 0.75rem;
+    margin-right: 0.75rem;
+  }
+
+  .references-modal__header {
+    padding-top: 2.4rem;
+  }
+
+  .references-modal__list {
+    column-count: 1;
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .references-overlay,
+  .references-modal {
+    transition: none;
   }
 }

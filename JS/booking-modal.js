@@ -79,7 +79,7 @@ if (bookingOverlay && bookingOpenButtons.length) {
 }
 
 (() => {
-  const referencesTrigger = document.querySelector('a[href="assets/downloads/booking/referenzen.pdf"]');
+  const referencesTrigger = document.querySelector('[data-references-open]');
   if (!referencesTrigger) return;
 
   const references = [
@@ -141,11 +141,6 @@ if (bookingOverlay && bookingOpenButtons.length) {
     'Wine Street Art Festival Gönnheim',
     'Women Business Club, Mannheim',
   ];
-
-  referencesTrigger.removeAttribute('download');
-  referencesTrigger.setAttribute('href', '#references-overlay');
-  referencesTrigger.setAttribute('aria-haspopup', 'dialog');
-  referencesTrigger.setAttribute('aria-controls', 'references-overlay');
 
   const overlay = document.createElement('div');
   overlay.className = 'references-overlay';

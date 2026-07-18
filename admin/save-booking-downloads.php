@@ -1,15 +1,222 @@
 <?php
+
 declare(strict_types=1);
-require __DIR__ . '/auth.php'; require_authentication();
-const BOOKING_JSON = 'data/booking-downloads.json'; const BOOKING_MANAGED = 'assets/downloads/booking/managed';
-function bd_error(string $message, ?string $upload = null): void { global $bdCreatedUploads; foreach ($bdCreatedUploads ?? [] as $created) @unlink($created); if ($upload) @unlink($upload); http_response_code(400); echo '<!doctype html><meta charset="utf-8"><link rel="stylesheet" href="admin.css"><main class="admin-login"><h1>Speichern nicht möglich</h1><p class="admin-message admin-message--error">' . escape_html($message) . '</p><p><a class="admin-link" href="booking-downloads.php">Zurück zum Booking-Material</a></p></main>'; exit; }
-function bd_text($value, int $limit = 160): string { $text = trim(is_scalar($value) ? (string) $value : ''); $text = strip_tags($text); $text = preg_replace('/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/u', '', $text) ?? ''; if (function_exists('mb_substr')) return mb_substr($text, 0, $limit, 'UTF-8'); if (preg_match_all('/./us', $text, $characters) === 1) return implode('', array_slice($characters[0], 0, $limit)); return substr($text, 0, $limit); }
-function bd_path(string $path): bool { return preg_match('#^assets/downloads/booking/(?:managed/)?[A-Za-z0-9._-]+\.(pdf|zip)$#i', $path) === 1; }
-function bd_backup(string $dir): string { return $dir . '/booking-downloads-' . date('Ymd-His') . '-' . bin2hex(random_bytes(3)) . '.json'; }
-function bd_upload(array $file, string $root): ?array { global $bdCreatedUploads; if (($file['error'] ?? UPLOAD_ERR_NO_FILE) === UPLOAD_ERR_NO_FILE) return null; if (($file['error'] ?? 1) !== UPLOAD_ERR_OK || !is_uploaded_file((string) ($file['tmp_name'] ?? ''))) bd_error('Die hochgeladene Datei ist ungültig.'); if (($file['size'] ?? 0) > 20 * 1024 * 1024) bd_error('Die Datei ist größer als 20 MB.'); $name = (string) ($file['name'] ?? ''); $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION)); if (!in_array($ext, ['pdf', 'zip'], true)) bd_error('Erlaubt sind nur PDF- und ZIP-Dateien.'); $mime = (new finfo(FILEINFO_MIME_TYPE))->file((string) $file['tmp_name']); $head = (string) file_get_contents((string) $file['tmp_name'], false, null, 0, 8); if (($ext === 'pdf' && ($mime !== 'application/pdf' || !str_starts_with($head, '%PDF-'))) || ($ext === 'zip' && (!in_array($mime, ['application/zip', 'application/x-zip-compressed'], true) || !str_starts_with($head, "PK\x03\x04")))) bd_error('Dateiendung, MIME-Typ oder Dateisignatur stimmen nicht überein.'); $dir = $root . '/' . BOOKING_MANAGED; if (!is_dir($dir) && !mkdir($dir, 0755, true)) bd_error('Der Upload-Ordner konnte nicht erstellt werden.'); if (!is_writable($dir)) bd_error('Der Upload-Ordner ist nicht beschreibbar.'); do { $filename = 'booking-' . date('YmdHis') . '-' . bin2hex(random_bytes(6)) . '.' . $ext; $dest = $dir . '/' . $filename; } while (file_exists($dest)); if (!move_uploaded_file((string) $file['tmp_name'], $dest)) bd_error('Die Datei konnte nicht sicher gespeichert werden.'); chmod($dest, 0644); $bdCreatedUploads[] = $dest; return ['path' => BOOKING_MANAGED . '/' . $filename, 'type' => $ext, 'file' => $dest]; }
-if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !verify_csrf_token(isset($_POST['csrf_token']) ? (string) $_POST['csrf_token'] : null)) bd_error('Die Sicherheitsprüfung ist fehlgeschlagen. Bitte laden Sie die Seite neu.');
-$bdCreatedUploads = []; $root = dirname(__DIR__); $jsonPath = $root . '/' . BOOKING_JSON; $lock = fopen($jsonPath, 'c+'); if (!$lock || !flock($lock, LOCK_EX)) bd_error('Die Download-Daten konnten nicht gesperrt werden.'); $old = json_decode((string) file_get_contents($jsonPath), true); if (!is_array($old)) bd_error('Die bestehenden Download-Daten sind ungültig.'); $oldById = []; foreach ($old as $entry) if (is_array($entry) && isset($entry['id'])) $oldById[(string)$entry['id']] = $entry;
-$items = $_POST['items'] ?? []; if (!is_array($items)) bd_error('Die übermittelten Daten sind ungültig.'); $newFiles = []; $result = []; $seen = [];
-foreach ($items as $row) { if (!is_array($row) || !empty($row['remove'])) continue; $id = bd_text($row['id'] ?? '', 64); $label = bd_text($row['label'] ?? ''); $column = bd_text($row['column'] ?? '', 8); $order = filter_var($row['order'] ?? null, FILTER_VALIDATE_INT, ['options'=>['min_range'=>1]]); $path = bd_text($row['path'] ?? '', 255); if (!isset($oldById[$id]) || !preg_match('/^[a-z0-9][a-z0-9_-]{0,63}$/i',$id) || isset($seen[$id]) || $label === '' || !in_array($column,['left','right'],true) || $order === false || !bd_path($path)) bd_error('Bitte prüfen Sie Bezeichnung, Spalte und Reihenfolge aller Materialien.'); $upload = bd_upload($_FILES['replace_' . $id] ?? [], $root); if ($upload) { $newFiles[] = $upload['file']; $path = $upload['path']; } $seen[$id]=true; $result[]=['id'=>$id,'label'=>$label,'path'=>$path,'fileType'=>strtolower(pathinfo($path,PATHINFO_EXTENSION)),'column'=>$column,'order'=>$order,'managedUpload'=>str_starts_with($path, BOOKING_MANAGED . '/')]; }
-$upload = bd_upload($_FILES['new_upload'] ?? [], $root); if ($upload) { $label=bd_text($_POST['new_label']??''); $column=bd_text($_POST['new_column']??'',8); $order=filter_var($_POST['new_order']??null,FILTER_VALIDATE_INT,['options'=>['min_range'=>1]]); if ($label==='' || !in_array($column,['left','right'],true) || $order===false) bd_error('Für neues Material sind Bezeichnung, Spalte und Reihenfolge erforderlich.', $upload['file']); do {$id='booking-'.bin2hex(random_bytes(5));} while(isset($seen[$id])); $result[]=['id'=>$id,'label'=>$label,'path'=>$upload['path'],'fileType'=>$upload['type'],'column'=>$column,'order'=>$order,'managedUpload'=>true]; $newFiles[]=$upload['file']; }
-usort($result, fn($a,$b)=>[$a['column'],$a['order'],$a['id']] <=> [$b['column'],$b['order'],$b['id']]); $encoded=json_encode($result,JSON_PRETTY_PRINT|JSON_UNESCAPED_UNICODE|JSON_UNESCAPED_SLASHES); $backupDir=$root.'/data/backups'; if (!is_string($encoded)||(!is_dir($backupDir)&&!mkdir($backupDir,0755,true))||!is_writable($backupDir)||!copy($jsonPath,bd_backup($backupDir))) bd_error('Sicherungskopie konnte nicht erstellt werden.', $newFiles[0]??null); $tmp=$jsonPath.'.tmp-'.bin2hex(random_bytes(4)); if (file_put_contents($tmp,$encoded.PHP_EOL,LOCK_EX)===false||!rename($tmp,$jsonPath)){@unlink($tmp);bd_error('Die Download-Daten konnten nicht atomar gespeichert werden.', $newFiles[0]??null);} foreach($oldById as $oldItem){$oldPath=(string)($oldItem['path']??''); if(!empty($oldItem['managedUpload'])&&!in_array($oldPath,array_column($result,'path'),true)&&str_starts_with($oldPath,BOOKING_MANAGED.'/')){@unlink($root.'/'.$oldPath);}} flock($lock,LOCK_UN); fclose($lock); header('Location: booking-downloads.php?saved=1');
+
+require __DIR__ . '/auth.php';
+require_authentication();
+
+const BOOKING_JSON = 'data/booking-downloads.json';
+const BOOKING_MANAGED = 'assets/downloads/booking/managed';
+const BOOKING_DOWNLOAD_SLOTS = [
+    'pressetext-lang' => ['label' => 'Pressetext lang', 'fileType' => 'pdf', 'column' => 'left', 'order' => 1],
+    'pressetext-kurz' => ['label' => 'Pressetext kurz', 'fileType' => 'pdf', 'column' => 'left', 'order' => 2],
+    'kurzbeschreibung' => ['label' => 'Kurzbeschreibung', 'fileType' => 'pdf', 'column' => 'left', 'order' => 3],
+    'fotos' => ['label' => 'Fotos', 'fileType' => 'zip', 'column' => 'right', 'order' => 1],
+    'biographien-der-musiker' => ['label' => 'Biographien der Musiker', 'fileType' => 'pdf', 'column' => 'right', 'order' => 2],
+    'repertoire-auszug' => ['label' => 'Repertoire-Auszug', 'fileType' => 'pdf', 'column' => 'right', 'order' => 3],
+    'techrider' => ['label' => 'Techrider', 'fileType' => 'pdf', 'column' => 'right', 'order' => 4],
+];
+
+$bdCreatedUploads = [];
+
+function bd_error(string $message): void
+{
+    global $bdCreatedUploads;
+
+    foreach ($bdCreatedUploads as $created) {
+        @unlink($created);
+    }
+
+    http_response_code(400);
+    echo '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="admin.css"><title>Speichern nicht möglich</title></head><body class="admin-page"><main class="admin-login"><h1>Speichern nicht möglich</h1><p class="admin-message admin-message--error">' . escape_html($message) . '</p><p><a class="admin-link" href="booking-downloads.php">Zurück zum Booking-Material</a></p></main></body></html>';
+    exit;
+}
+
+function bd_valid_path($value): ?string
+{
+    if (!is_string($value) || $value === '' || str_contains($value, '..') || str_contains($value, '\\')) {
+        return null;
+    }
+
+    return preg_match('#^assets/downloads/booking/(?:managed/)?[A-Za-z0-9._-]+\.(?:pdf|zip)$#i', $value) === 1
+        ? $value
+        : null;
+}
+
+function bd_backup_path(string $directory): string
+{
+    return $directory . '/booking-downloads-' . date('Ymd-His') . '-' . bin2hex(random_bytes(3)) . '.json';
+}
+
+function bd_upload(array $file, string $root, string $expectedType): ?array
+{
+    global $bdCreatedUploads;
+
+    $error = $file['error'] ?? UPLOAD_ERR_NO_FILE;
+    if ($error === UPLOAD_ERR_NO_FILE) {
+        return null;
+    }
+
+    $temporaryPath = is_string($file['tmp_name'] ?? null) ? $file['tmp_name'] : '';
+    if ($error !== UPLOAD_ERR_OK || $temporaryPath === '' || !is_uploaded_file($temporaryPath)) {
+        bd_error('Die hochgeladene Datei ist ungültig.');
+    }
+
+    $size = is_numeric($file['size'] ?? null) ? (int) $file['size'] : 0;
+    if ($size <= 0 || $size > 20 * 1024 * 1024) {
+        bd_error('Die Datei muss zwischen 1 Byte und 20 MB groß sein.');
+    }
+
+    $originalName = is_string($file['name'] ?? null) ? $file['name'] : '';
+    $extension = strtolower(pathinfo($originalName, PATHINFO_EXTENSION));
+    if ($extension !== $expectedType) {
+        bd_error('Für dieses Material ist nur eine ' . strtoupper($expectedType) . '-Datei erlaubt.');
+    }
+
+    $mime = (new finfo(FILEINFO_MIME_TYPE))->file($temporaryPath);
+    $signature = (string) file_get_contents($temporaryPath, false, null, 0, 8);
+
+    $validPdf = $expectedType === 'pdf'
+        && $mime === 'application/pdf'
+        && str_starts_with($signature, '%PDF-');
+
+    $validZipSignature = str_starts_with($signature, "PK\x03\x04")
+        || str_starts_with($signature, "PK\x05\x06")
+        || str_starts_with($signature, "PK\x07\x08");
+    $validZip = $expectedType === 'zip'
+        && in_array($mime, ['application/zip', 'application/x-zip-compressed'], true)
+        && $validZipSignature;
+
+    if (!$validPdf && !$validZip) {
+        bd_error('Dateiendung, MIME-Typ oder Dateisignatur stimmen nicht überein.');
+    }
+
+    $uploadDirectory = $root . '/' . BOOKING_MANAGED;
+    if (!is_dir($uploadDirectory) && !mkdir($uploadDirectory, 0755, true)) {
+        bd_error('Der Upload-Ordner konnte nicht erstellt werden.');
+    }
+    if (!is_writable($uploadDirectory)) {
+        bd_error('Der Upload-Ordner ist nicht beschreibbar.');
+    }
+
+    do {
+        $filename = 'booking-' . date('YmdHis') . '-' . bin2hex(random_bytes(6)) . '.' . $expectedType;
+        $destination = $uploadDirectory . '/' . $filename;
+    } while (file_exists($destination));
+
+    if (!move_uploaded_file($temporaryPath, $destination)) {
+        bd_error('Die Datei konnte nicht sicher gespeichert werden.');
+    }
+
+    chmod($destination, 0644);
+    $bdCreatedUploads[] = $destination;
+
+    return [
+        'path' => BOOKING_MANAGED . '/' . $filename,
+        'file' => $destination,
+    ];
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST'
+    || !verify_csrf_token(isset($_POST['csrf_token']) ? (string) $_POST['csrf_token'] : null)) {
+    bd_error('Die Sicherheitsprüfung ist fehlgeschlagen. Bitte laden Sie die Seite neu.');
+}
+
+$root = dirname(__DIR__);
+$jsonPath = $root . '/' . BOOKING_JSON;
+$lock = fopen($jsonPath, 'c+');
+if ($lock === false || !flock($lock, LOCK_EX)) {
+    bd_error('Die Download-Daten konnten nicht gesperrt werden.');
+}
+
+$oldData = json_decode((string) file_get_contents($jsonPath), true);
+if (!is_array($oldData)) {
+    bd_error('Die bestehenden Download-Daten sind ungültig.');
+}
+
+$oldById = [];
+foreach ($oldData as $oldItem) {
+    if (is_array($oldItem) && isset($oldItem['id']) && is_string($oldItem['id'])) {
+        $oldById[$oldItem['id']] = $oldItem;
+    }
+}
+
+$submittedSlots = $_POST['slots'] ?? [];
+if (!is_array($submittedSlots)) {
+    bd_error('Die übermittelten Daten sind ungültig.');
+}
+
+$result = [];
+foreach (BOOKING_DOWNLOAD_SLOTS as $id => $slot) {
+    $oldItem = $oldById[$id] ?? [];
+    $oldPath = bd_valid_path($oldItem['path'] ?? null);
+    $oldManaged = $oldPath !== null
+        && !empty($oldItem['managedUpload'])
+        && str_starts_with($oldPath, BOOKING_MANAGED . '/');
+
+    $submittedSlot = is_array($submittedSlots[$id] ?? null) ? $submittedSlots[$id] : [];
+    $remove = !empty($submittedSlot['remove']);
+    $upload = bd_upload($_FILES['replace_' . $id] ?? [], $root, $slot['fileType']);
+
+    if ($upload !== null) {
+        $path = $upload['path'];
+        $managedUpload = true;
+    } elseif ($remove) {
+        $path = null;
+        $managedUpload = false;
+    } else {
+        $path = $oldPath;
+        $managedUpload = $oldManaged;
+    }
+
+    $result[] = [
+        'id' => $id,
+        'label' => $slot['label'],
+        'path' => $path,
+        'fileType' => $slot['fileType'],
+        'column' => $slot['column'],
+        'order' => $slot['order'],
+        'managedUpload' => $managedUpload,
+    ];
+}
+
+$encoded = json_encode($result, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+if (!is_string($encoded)) {
+    bd_error('Die Download-Daten konnten nicht kodiert werden.');
+}
+
+$backupDirectory = $root . '/data/backups';
+if (!is_dir($backupDirectory) && !mkdir($backupDirectory, 0755, true)) {
+    bd_error('Der Backup-Ordner konnte nicht erstellt werden.');
+}
+if (!is_writable($backupDirectory) || !copy($jsonPath, bd_backup_path($backupDirectory))) {
+    bd_error('Sicherungskopie konnte nicht erstellt werden.');
+}
+
+$temporaryJson = $jsonPath . '.tmp-' . bin2hex(random_bytes(4));
+if (file_put_contents($temporaryJson, $encoded . PHP_EOL, LOCK_EX) === false
+    || !rename($temporaryJson, $jsonPath)) {
+    @unlink($temporaryJson);
+    bd_error('Die Download-Daten konnten nicht atomar gespeichert werden.');
+}
+
+$activePaths = array_values(array_filter(array_column($result, 'path'), 'is_string'));
+foreach ($oldData as $oldItem) {
+    if (!is_array($oldItem) || empty($oldItem['managedUpload'])) {
+        continue;
+    }
+
+    $oldPath = bd_valid_path($oldItem['path'] ?? null);
+    if ($oldPath !== null
+        && str_starts_with($oldPath, BOOKING_MANAGED . '/')
+        && !in_array($oldPath, $activePaths, true)) {
+        @unlink($root . '/' . $oldPath);
+    }
+}
+
+$bdCreatedUploads = [];
+flock($lock, LOCK_UN);
+fclose($lock);
+
+header('Location: booking-downloads.php?saved=1');
+exit;

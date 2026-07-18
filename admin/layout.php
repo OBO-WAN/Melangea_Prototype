@@ -13,7 +13,6 @@ function render_admin_layout_open(string $activeSection): void
     $sections = [
         'concerts' => ['label' => 'Konzerte', 'href' => 'index.php'],
         'media' => ['label' => 'Medien', 'href' => 'media.php'],
-        'presse' => ['label' => 'News', 'href' => 'presse.php'],
     ];
 
     if (admin_booking_target_exists()) {
@@ -21,6 +20,7 @@ function render_admin_layout_open(string $activeSection): void
     }
 
     $sections['booking-material'] = ['label' => 'Booking-Material', 'href' => 'booking-downloads.php'];
+    $sections['presse'] = ['label' => 'News', 'href' => 'presse.php'];
     ?>
     <header class="admin-utility-bar">
       <div class="admin-utility-bar__inner">

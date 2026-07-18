@@ -21,12 +21,36 @@
   border-radius: 50%;
   pointer-events: none;
   background:
-    radial-gradient(circle at 29% 24%, rgba(255, 255, 255, 0.42) 0 5%, transparent 13%),
-    radial-gradient(ellipse at 45% 19%, rgba(255, 255, 255, 0.2) 0 4%, transparent 12%),
-    radial-gradient(circle at 71% 72%, rgba(105, 245, 215, 0.145) 0 8%, transparent 24%),
-    radial-gradient(circle at 36% 77%, rgba(194, 145, 255, 0.13) 0 7%, transparent 22%),
-    radial-gradient(circle at 75% 32%, rgba(255, 185, 220, 0.115) 0 8%, transparent 23%),
-    radial-gradient(ellipse at 22% 61%, rgba(255, 220, 145, 0.095) 0 7%, transparent 21%),
+    radial-gradient(
+      circle at 29% 24%,
+      rgba(255, 255, 255, 0.42) 0 5%,
+      transparent 13%
+    ),
+    radial-gradient(
+      ellipse at 45% 19%,
+      rgba(255, 255, 255, 0.2) 0 4%,
+      transparent 12%
+    ),
+    radial-gradient(
+      circle at 71% 72%,
+      rgba(105, 245, 215, 0.145) 0 8%,
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 36% 77%,
+      rgba(194, 145, 255, 0.13) 0 7%,
+      transparent 22%
+    ),
+    radial-gradient(
+      circle at 75% 32%,
+      rgba(255, 185, 220, 0.115) 0 8%,
+      transparent 23%
+    ),
+    radial-gradient(
+      ellipse at 22% 61%,
+      rgba(255, 220, 145, 0.095) 0 7%,
+      transparent 21%
+    ),
     conic-gradient(
       from 134deg,
       rgba(255, 255, 255, 0.035),
@@ -113,8 +137,17 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-lg);
   background:
-    radial-gradient(720px 320px at 84% 0%, rgba(46, 229, 157, 0.1), transparent 62%),
-    linear-gradient(135deg, rgba(12, 9, 30, 0.76), rgba(70, 18, 168, 0.66));
+    radial-gradient(
+      560px 260px at 4% 0%,
+      rgba(244, 231, 186, 0.07),
+      transparent 58%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.052),
+      rgba(255, 255, 255, 0.02)
+    );
+
   box-shadow:
     0 20px 46px rgba(0, 0, 0, 0.24),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
@@ -195,7 +228,11 @@
   letter-spacing: 0.08em;
   text-transform: uppercase;
   background:
-    radial-gradient(320px 160px at 28% 18%, rgba(244, 231, 186, 0.08), transparent 65%),
+    radial-gradient(
+      320px 160px at 28% 18%,
+      rgba(244, 231, 186, 0.08),
+      transparent 65%
+    ),
     rgba(255, 255, 255, 0.045);
 }
 
@@ -246,8 +283,16 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: var(--radius-lg);
   background:
-    radial-gradient(620px 260px at 8% 0%, rgba(244, 231, 186, 0.08), transparent 58%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.058), rgba(255, 255, 255, 0.022));
+    radial-gradient(
+      620px 260px at 8% 0%,
+      rgba(244, 231, 186, 0.08),
+      transparent 58%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.058),
+      rgba(255, 255, 255, 0.022)
+    );
   box-shadow:
     0 18px 40px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.045);

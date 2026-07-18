@@ -13,6 +13,7 @@ function render_admin_layout_open(string $activeSection): void
     $sections = [
         'concerts' => ['label' => 'Konzerte', 'href' => 'index.php'],
         'media' => ['label' => 'Medien', 'href' => 'media.php'],
+        'presse' => ['label' => 'News', 'href' => 'presse.php'],
     ];
 
     if (admin_booking_target_exists()) {

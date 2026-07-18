@@ -102,6 +102,8 @@ $items = booking_downloads_load($root . '/data/booking-downloads.json');
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex, nofollow">
   <title>Booking-Material | Mélange à Deux &amp; Amis</title>
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+  <link rel="icon" href="../assets/favicon.svg" sizes="any">
   <script src="admin-theme.js"></script>
   <link rel="stylesheet" href="admin.css">
 </head>

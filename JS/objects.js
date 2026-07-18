@@ -45,3 +45,10 @@ Sein Spiel ist geprägt von technischer Souveränität, rhythmischer Präzision 
     `,
   },
 };
+
+if (document.body.classList.contains("page-presse") && !document.querySelector('script[data-presse-renderer]')) {
+  const presseRenderer = document.createElement("script");
+  presseRenderer.src = "./JS/presse-render.js";
+  presseRenderer.dataset.presseRenderer = "true";
+  document.head.append(presseRenderer);
+}

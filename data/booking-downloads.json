@@ -1,9 +1,65 @@
 [
-    {"id":"pressetext-lang","label":"Pressetext lang","path":"assets/downloads/booking/pressetext-lang.pdf","fileType":"pdf","column":"left","order":1,"managedUpload":false},
-    {"id":"pressetext-kurz","label":"Pressetext kurz","path":"assets/downloads/booking/pressetext-kurz.pdf","fileType":"pdf","column":"left","order":2,"managedUpload":false},
-    {"id":"kurzbeschreibung","label":"Kurzbeschreibung","path":"assets/downloads/booking/kurzbeschreibung.pdf","fileType":"pdf","column":"left","order":3,"managedUpload":false},
-    {"id":"fotos","label":"Fotos","path":"assets/downloads/booking/fotos.zip","fileType":"zip","column":"right","order":1,"managedUpload":false},
-    {"id":"biographien-der-musiker","label":"Biographien der Musiker","path":"assets/downloads/booking/biographien-der-musiker.pdf","fileType":"pdf","column":"right","order":2,"managedUpload":false},
-    {"id":"repertoire-auszug","label":"Repertoire-Auszug","path":"assets/downloads/booking/repertoire-auszug.pdf","fileType":"pdf","column":"right","order":3,"managedUpload":false},
-    {"id":"techrider","label":"Techrider","path":"assets/downloads/booking/techrider.pdf","fileType":"pdf","column":"right","order":4,"managedUpload":false}
+    {
+        "id": "pressetext-lang",
+        "label": "Pressetext lang",
+        "path": null,
+        "fileType": "pdf",
+        "column": "left",
+        "order": 1,
+        "managedUpload": false
+    },
+    {
+        "id": "pressetext-kurz",
+        "label": "Pressetext kurz",
+        "path": null,
+        "fileType": "pdf",
+        "column": "left",
+        "order": 2,
+        "managedUpload": false
+    },
+    {
+        "id": "kurzbeschreibung",
+        "label": "Kurzbeschreibung",
+        "path": null,
+        "fileType": "pdf",
+        "column": "left",
+        "order": 3,
+        "managedUpload": false
+    },
+    {
+        "id": "fotos",
+        "label": "Fotos",
+        "path": null,
+        "fileType": "zip",
+        "column": "right",
+        "order": 1,
+        "managedUpload": false
+    },
+    {
+        "id": "biographien-der-musiker",
+        "label": "Biographien der Musiker",
+        "path": null,
+        "fileType": "pdf",
+        "column": "right",
+        "order": 2,
+        "managedUpload": false
+    },
+    {
+        "id": "repertoire-auszug",
+        "label": "Repertoire-Auszug",
+        "path": null,
+        "fileType": "pdf",
+        "column": "right",
+        "order": 3,
+        "managedUpload": false
+    },
+    {
+        "id": "techrider",
+        "label": "Techrider",
+        "path": null,
+        "fileType": "pdf",
+        "column": "right",
+        "order": 4,
+        "managedUpload": false
+    }
 ]

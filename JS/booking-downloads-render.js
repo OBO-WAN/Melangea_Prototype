@@ -2,18 +2,52 @@
   'use strict';
 
   const pathPattern = /^assets\/downloads\/booking\/(?:managed\/)?[A-Za-z0-9._-]+\.(pdf|zip)$/i;
-  const idPattern = /^[a-z0-9][a-z0-9_-]{0,63}$/i;
   const stylesheetHref = 'css/subpages/booking/download-links.css';
   const svgNamespace = 'http://www.w3.org/2000/svg';
-
-  function validItem(item) {
-    return item && typeof item === 'object' && idPattern.test(item.id) &&
-      typeof item.label === 'string' && item.label.trim() !== '' && item.label.length <= 160 &&
-      pathPattern.test(item.path) && ['pdf', 'zip'].includes(item.fileType) &&
-      item.path.toLowerCase().endsWith('.' + item.fileType) &&
-      ['left', 'right'].includes(item.column) && Number.isInteger(item.order) && item.order > 0 &&
-      typeof item.managedUpload === 'boolean';
-  }
+  const slots = [
+    {
+      id: 'pressetext-lang',
+      label: 'Pressetext lang',
+      fileType: 'pdf',
+      selector: 'a[href="assets/downloads/booking/pressetext-lang.pdf"]',
+    },
+    {
+      id: 'pressetext-kurz',
+      label: 'Pressetext kurz',
+      fileType: 'pdf',
+      selector: 'a[href="assets/downloads/booking/pressetext-kurz.pdf"]',
+    },
+    {
+      id: 'kurzbeschreibung',
+      label: 'Kurzbeschreibung',
+      fileType: 'pdf',
+      selector: 'a[href="assets/downloads/booking/kurzbeschreibung.pdf"]',
+    },
+    {
+      id: 'fotos',
+      label: 'Fotos',
+      fileType: 'zip',
+      selector: 'a[href="assets/downloads/booking/fotos.zip"]',
+    },
+    {
+      id: 'biographien-der-musiker',
+      label: 'Biographien der Musiker',
+      fileType: 'pdf',
+      selector: 'a[href="assets/downloads/booking/biographien-der-musiker.pdf"]',
+    },
+    {
+      id: 'repertoire-auszug',
+      label: 'Repertoire-Auszug',
+      fileType: 'pdf',
+      selector: 'a[href="assets/downloads/booking/repertoire-auszug.pdf"]',
+    },
+    {
+      id: 'techrider',
+      label: 'Techrider',
+      fileType: 'pdf',
+      selector: 'a[href="assets/downloads/booking/techrider.pdf"]',
+    },
+  ];
 
   function ensureStylesheet() {
     if (document.querySelector('link[href="' + stylesheetHref + '"]')) return;
@@ -66,53 +100,89 @@
   }
 
   function decorateLink(link, label, type) {
-    const cleanLabel = label.replace(/\s+/g, ' ').trim();
     const labelElement = document.createElement('span');
     labelElement.className = 'booking-download-link__label';
-    labelElement.textContent = cleanLabel;
+    labelElement.textContent = label;
 
     link.dataset.bookingLinkType = type;
-    link.setAttribute('aria-label', type === 'references' ? cleanLabel + ' anzeigen' : cleanLabel + ' herunterladen');
     link.replaceChildren(labelElement, createIcon(type));
   }
 
-  function decorateFallbackLinks() {
-    document.querySelectorAll('[data-booking-downloads] a[download]').forEach((link) => {
-      const label = link.textContent.replace(/^\s*Download\s*/i, '');
-      decorateLink(link, label, 'download');
-    });
+  function validItem(item, slot) {
+    if (!item || typeof item !== 'object' || item.id !== slot.id || item.fileType !== slot.fileType) {
+      return false;
+    }
 
-    const references = document.querySelector('[data-references-open]');
-    if (references) decorateLink(references, references.textContent, 'references');
+    if (item.path === null) {
+      return typeof item.managedUpload === 'boolean';
+    }
+
+    return typeof item.path === 'string'
+      && pathPattern.test(item.path)
+      && item.path.toLowerCase().endsWith('.' + slot.fileType)
+      && typeof item.managedUpload === 'boolean';
+  }
+
+  function setAvailable(link, slot, path) {
+    link.href = path;
+    link.download = '';
+    link.removeAttribute('aria-disabled');
+    link.removeAttribute('title');
+    delete link.dataset.bookingLinkUnavailable;
+    link.setAttribute('aria-label', slot.label + ' herunterladen');
+  }
+
+  function setUnavailable(link, slot) {
+    link.removeAttribute('href');
+    link.removeAttribute('download');
+    link.dataset.bookingLinkUnavailable = 'true';
+    link.setAttribute('aria-disabled', 'true');
+    link.setAttribute('aria-label', slot.label + ' derzeit nicht verfügbar');
+    link.title = 'Derzeit nicht verfügbar';
   }
 
   ensureStylesheet();
-  decorateFallbackLinks();
+
+  const fixedLinks = new Map();
+  slots.forEach((slot) => {
+    const link = document.querySelector(slot.selector);
+    if (!link) return;
+
+    fixedLinks.set(slot.id, link);
+    decorateLink(link, slot.label, 'download');
+    link.setAttribute('aria-label', slot.label + ' herunterladen');
+  });
+
+  const references = document.querySelector('[data-references-open]');
+  if (references) {
+    decorateLink(references, 'Referenzen', 'references');
+    references.setAttribute('aria-label', 'Referenzen anzeigen');
+  }
 
   fetch('data/booking-downloads.json', { credentials: 'same-origin' })
     .then((response) => response.ok ? response.json() : Promise.reject(new Error('Daten nicht verfügbar')))
     .then((items) => {
-      if (!Array.isArray(items) || !items.every(validItem) || new Set(items.map((item) => item.id)).size !== items.length) throw new Error('Ungültige Daten');
-      ['left', 'right'].forEach((column) => {
-        const target = document.querySelector('[data-booking-downloads="' + column + '"]');
-        if (!target) return;
-        const references = column === 'left' ? target.querySelector('[data-references-open]') : null;
-        target.replaceChildren();
-        items.filter((item) => item.column === column).sort((a, b) => a.order - b.order || a.id.localeCompare(b.id, 'de'))
-          .forEach((item) => {
-            const link = document.createElement('a');
-            link.href = item.path;
-            link.download = '';
-            decorateLink(link, item.label, 'download');
-            target.append(link);
-          });
-        if (references) target.append(references);
+      if (!Array.isArray(items)) throw new Error('Ungültige Daten');
+
+      const itemsById = new Map();
+      items.forEach((item) => {
+        if (item && typeof item.id === 'string') itemsById.set(item.id, item);
       });
-      if (window.AOS && typeof window.AOS.refreshHard === 'function') {
-        window.AOS.refreshHard();
-      } else if (window.AOS && typeof window.AOS.refresh === 'function') {
-        window.AOS.refresh();
-      }
+
+      slots.forEach((slot) => {
+        const link = fixedLinks.get(slot.id);
+        if (!link) return;
+
+        const item = itemsById.get(slot.id);
+        if (!validItem(item, slot) || item.path === null) {
+          setUnavailable(link, slot);
+          return;
+        }
+
+        setAvailable(link, slot, item.path);
+      });
     })
-    .catch(() => { /* The decorated static fallback links remain available. */ });
+    .catch(() => {
+      // Static fallback links stay available when the data file cannot be loaded.
+    });
 }());

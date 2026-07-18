@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /php/
+Disallow: /data/
+
+Sitemap: https://melangea2.com/sitemap.xml

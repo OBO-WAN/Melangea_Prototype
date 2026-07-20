@@ -17,7 +17,7 @@
     credit.className = 'footer-credit';
 
     const label = document.createElement('span');
-    label.textContent = 'Created by';
+    label.textContent = 'Developed by';
 
     const link = document.createElement('a');
     link.href = 'https://naranjo.io';

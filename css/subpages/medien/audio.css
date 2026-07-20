@@ -347,7 +347,7 @@
     box-shadow 180ms ease;
 }
 
-#shop .cta.card::before {
+/* #shop .cta.card::before {
   content: "";
   position: absolute;
   inset: 0 auto 0 0;
@@ -358,7 +358,7 @@
     rgba(46, 229, 157, 0.82),
     rgba(190, 145, 255, 0.76)
   );
-}
+} */
 
 #shop .cta h2 {
   margin: 0;

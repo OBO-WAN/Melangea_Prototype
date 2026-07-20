@@ -98,44 +98,20 @@
   gap: clamp(0.65rem, 1.4vw, 0.9rem);
   width: 100%;
   margin: 0;
-  counter-reset: ensemble-member;
 }
 
 .booking-ensemble__list > div {
-  position: relative;
   display: grid;
   gap: 0.18rem;
   min-width: 0;
-  padding: 0.85rem 0.9rem 0.85rem 3.25rem;
+  padding: 0.9rem 1rem;
   border: 1px solid rgba(255, 255, 255, 0.085);
   border-radius: 12px;
   background: linear-gradient(135deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025));
   box-shadow:
     0 9px 18px rgba(0, 0, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.065);
-  text-align: left;
-  counter-increment: ensemble-member;
-}
-
-.booking-ensemble__list > div::before {
-  content: counter(ensemble-member, decimal-leading-zero);
-  position: absolute;
-  top: 50%;
-  left: 0.9rem;
-  display: grid;
-  place-items: center;
-  width: 1.75rem;
-  height: 1.75rem;
-  border: 1px solid rgba(244, 231, 186, 0.42);
-  border-radius: 50%;
-  color: rgba(244, 231, 186, 0.88);
-  font-size: 0.62rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  transform: translateY(-50%);
-  box-shadow:
-    0 5px 12px rgba(0, 0, 0, 0.18),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  text-align: center;
 }
 
 .booking-ensemble__list dt {
@@ -187,11 +163,7 @@
   }
 
   .booking-ensemble__list > div {
-    padding: 0.8rem 0.75rem 0.8rem 3rem;
-  }
-
-  .booking-ensemble__list > div::before {
-    left: 0.75rem;
+    padding: 0.85rem 0.8rem;
   }
 
   .booking-ensemble__group,

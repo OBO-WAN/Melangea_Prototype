@@ -12,6 +12,24 @@
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   const isGitHubPages = window.location.hostname.endsWith('github.io');
 
+  const updateEventTypeOptions = (bookingForm) => {
+    const select = bookingForm.elements['event-type'];
+    if (!(select instanceof HTMLSelectElement)) return;
+
+    const legacyOption = select.querySelector('option[value="educational-special-program"]');
+    if (!legacyOption) return;
+
+    const businessOption = document.createElement('option');
+    businessOption.value = 'business-event';
+    businessOption.textContent = 'Geschäftl. Veranstaltung';
+
+    const childrenOption = document.createElement('option');
+    childrenOption.value = 'children-program';
+    childrenOption.textContent = 'Kinderprogramm';
+
+    legacyOption.replaceWith(businessOption, childrenOption);
+  };
+
   const readJsonResponse = async (response) => {
     const contentType = response.headers.get('content-type') || '';
     if (!contentType.toLowerCase().includes('application/json')) {
@@ -22,6 +40,7 @@
   };
 
   bookingForms.forEach((bookingForm) => {
+    updateEventTypeOptions(bookingForm);
     bookingForm.setAttribute('novalidate', '');
     const statusElement = bookingForm.querySelector('[data-booking-status]');
     const submitButton = bookingForm.querySelector('button[type="submit"]');

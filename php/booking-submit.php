@@ -168,7 +168,15 @@ if ($emailRaw === null || is_array($emailRaw) || $email === '' || has_header_inj
     $errors['email'] = 'Bitte geben Sie eine gültige E-Mail-Adresse an.';
 }
 
-$allowedEventTypes = ['concert-recital', 'festival-cultural-event', 'private-event', 'educational-special-program', 'other'];
+$allowedEventTypes = [
+    'concert-recital',
+    'festival-cultural-event',
+    'private-event',
+    'business-event',
+    'children-program',
+    'educational-special-program',
+    'other',
+];
 if ($eventType === '' || !in_array($eventType, $allowedEventTypes, true)) {
     $errors['event-type'] = 'Bitte wählen Sie eine gültige Veranstaltungsart aus.';
 }
@@ -215,6 +223,8 @@ $eventTypeLabels = [
     'concert-recital' => 'Konzert / Vortragsabend',
     'festival-cultural-event' => 'Festival / Kulturveranstaltung',
     'private-event' => 'Private Veranstaltung',
+    'business-event' => 'Geschäftl. Veranstaltung',
+    'children-program' => 'Kinderprogramm',
     'educational-special-program' => 'Vermittlungsformat / Sonderprogramm',
     'other' => 'Anderer Anlass',
 ];

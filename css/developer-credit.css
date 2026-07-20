@@ -1,5 +1,6 @@
 .site-footer {
   position: relative;
+  padding-bottom: 6rem;
 }
 
 .footer-credit {
@@ -52,7 +53,17 @@
   opacity: 1;
 }
 
+@media (min-width: 641px) and (max-width: 900px) {
+  .site-footer {
+    padding-bottom: 5.75rem;
+  }
+}
+
 @media (max-width: 640px) {
+  .site-footer {
+    padding-bottom: 5.5rem;
+  }
+
   .footer-credit {
     min-height: 2.8rem;
     padding-block: 0.82rem 0.76rem;

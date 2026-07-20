@@ -1,12 +1,26 @@
 .news-feature__title-block,
 .news-feature__title,
-.news-feature__title > span {
+.news-feature__title > span,
+.news-feature__title > small {
   min-width: 0;
   max-width: 100%;
 }
 
-.news-feature__title > span {
+.news-feature__title {
+  width: 100%;
+}
+
+.news-feature__title > span,
+.news-feature__title > small {
   overflow-wrap: anywhere;
   hyphens: auto;
   word-break: normal;
+}
+
+.news-feature__title > span {
+  text-wrap: balance;
+}
+
+.news-feature__title > small {
+  text-wrap: pretty;
 }

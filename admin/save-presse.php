@@ -49,6 +49,26 @@ function presse_clean_text($value, int $limit): string
     return presse_truncate(trim($text), $limit);
 }
 
+function presse_single_line($value, int $limit): string
+{
+    $text = presse_clean_text($value, $limit);
+    return trim((string) preg_replace('/\s+/u', ' ', $text));
+}
+
+function presse_title_fields($titleValue, $subtitleValue): array
+{
+    $rawTitle = presse_clean_text($titleValue, 480);
+    $subtitle = presse_single_line($subtitleValue, 240);
+    $lines = preg_split('/\n+/u', $rawTitle, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    $title = presse_single_line(array_shift($lines) ?? '', 240);
+
+    if ($subtitle === '' && $lines) {
+        $subtitle = presse_single_line(implode(' ', $lines), 240);
+    }
+
+    return [$title, $subtitle];
+}
+
 function presse_valid_id(string $id): bool
 {
     return preg_match('/^[a-z0-9][a-z0-9_-]{0,79}$/i', $id) === 1;
@@ -88,10 +108,10 @@ function presse_load_existing(string $path): array
             presse_error('Ein bestehender News-Beitrag ist ungültig.');
         }
 
-        $id = presse_clean_text($item['id'] ?? '', 80);
-        $date = presse_clean_text($item['date'] ?? '', 10);
-        $title = presse_clean_text($item['title'] ?? '', 240);
-        $image = presse_clean_text($item['image'] ?? '', 255);
+        $id = presse_single_line($item['id'] ?? '', 80);
+        $date = presse_single_line($item['date'] ?? '', 10);
+        [$title, $subtitle] = presse_title_fields($item['title'] ?? '', $item['subtitle'] ?? '');
+        $image = presse_single_line($item['image'] ?? '', 255);
         $text = presse_clean_text($item['text'] ?? '', 20000);
 
         if (!presse_valid_id($id)
@@ -107,6 +127,7 @@ function presse_load_existing(string $path): array
             'id' => $id,
             'date' => $date,
             'title' => $title,
+            'subtitle' => $subtitle,
             'image' => $image,
             'text' => $text,
             'managedUpload' => !empty($item['managedUpload']),
@@ -220,7 +241,7 @@ foreach ($oldById as $id => $oldArticle) {
         presse_error('Ein bestehender News-Beitrag fehlt in den Formulardaten.');
     }
 
-    $postedId = presse_clean_text($row['id'] ?? '', 80);
+    $postedId = presse_single_line($row['id'] ?? '', 80);
     if ($postedId !== $id || isset($seen[$id])) {
         presse_error('Eine News-ID wurde ungültig verändert oder doppelt übermittelt.');
     }
@@ -230,10 +251,11 @@ foreach ($oldById as $id => $oldArticle) {
         continue;
     }
 
-    $date = presse_clean_text($row['date'] ?? '', 10);
-    $title = presse_clean_text($row['title'] ?? '', 240);
+    $date = presse_single_line($row['date'] ?? '', 10);
+    $title = presse_single_line($row['title'] ?? '', 240);
+    $subtitle = presse_single_line($row['subtitle'] ?? '', 240);
     $text = presse_clean_text($row['text'] ?? '', 20000);
-    $image = presse_clean_text($row['image'] ?? '', 255);
+    $image = presse_single_line($row['image'] ?? '', 255);
 
     if (!presse_valid_date($date) || $title === '' || $text === '' || $image !== $oldArticle['image']) {
         presse_error('Bitte prüfen Sie Datum, Titel, Bild und Text aller Beiträge.');
@@ -251,22 +273,24 @@ foreach ($oldById as $id => $oldArticle) {
         'id' => $id,
         'date' => $date,
         'title' => $title,
+        'subtitle' => $subtitle,
         'image' => $image,
         'text' => $text,
         'managedUpload' => $managedUpload,
     ];
 }
 
-$newDate = presse_clean_text($_POST['new_date'] ?? '', 10);
-$newTitle = presse_clean_text($_POST['new_title'] ?? '', 240);
+$newDate = presse_single_line($_POST['new_date'] ?? '', 10);
+$newTitle = presse_single_line($_POST['new_title'] ?? '', 240);
+$newSubtitle = presse_single_line($_POST['new_subtitle'] ?? '', 240);
 $newText = presse_clean_text($_POST['new_text'] ?? '', 20000);
 $newFile = $_FILES['new_image'] ?? [];
 $newFileSelected = is_array($newFile) && ($newFile['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE;
-$newRequested = $newDate !== '' || $newTitle !== '' || $newText !== '' || $newFileSelected;
+$newRequested = $newDate !== '' || $newTitle !== '' || $newSubtitle !== '' || $newText !== '' || $newFileSelected;
 
 if ($newRequested) {
     if (!presse_valid_date($newDate) || $newTitle === '' || $newText === '' || !$newFileSelected) {
-        presse_error('Für einen neuen Beitrag sind Titel, Bild und Text erforderlich. Das Datum darf leer bleiben.');
+        presse_error('Für einen neuen Beitrag sind Titel, Bild und Text erforderlich. Datum und Untertitel dürfen leer bleiben.');
     }
 
     $upload = presse_upload(is_array($newFile) ? $newFile : [], $root);
@@ -282,6 +306,7 @@ if ($newRequested) {
         'id' => $newId,
         'date' => $newDate,
         'title' => $newTitle,
+        'subtitle' => $newSubtitle,
         'image' => $upload['image'],
         'text' => $newText,
         'managedUpload' => true,

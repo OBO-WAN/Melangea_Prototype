@@ -52,10 +52,3 @@ if (document.body.classList.contains("page-presse") && !document.querySelector('
   presseRenderer.dataset.presseRenderer = "true";
   document.head.append(presseRenderer);
 }
-
-if (!document.querySelector('script[data-developer-credit]')) {
-  const developerCredit = document.createElement("script");
-  developerCredit.src = "./JS/developer-credit.js";
-  developerCredit.dataset.developerCredit = "true";
-  document.head.append(developerCredit);
-}

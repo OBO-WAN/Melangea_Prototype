@@ -282,7 +282,7 @@
 
 @media (max-width: 560px) {
   .media-audio__head {
-    text-align: left;
+    text-align: center;
   }
 
   .media-wave-player {

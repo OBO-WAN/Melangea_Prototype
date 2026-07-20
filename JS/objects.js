@@ -57,6 +57,14 @@ function addDeveloperCredit() {
   const footer = document.querySelector(".site-footer");
   if (!footer || footer.querySelector(".footer-credit")) return;
 
+  const stylesheetHref = "css/developer-credit.css";
+  if (!document.querySelector(`link[href="${stylesheetHref}"]`)) {
+    const stylesheet = document.createElement("link");
+    stylesheet.rel = "stylesheet";
+    stylesheet.href = stylesheetHref;
+    document.head.append(stylesheet);
+  }
+
   const credit = document.createElement("div");
   credit.className = "footer-credit";
 

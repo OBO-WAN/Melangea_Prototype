@@ -25,6 +25,26 @@ function presse_clean_text($value, int $limit): string
     return substr($text, 0, $limit);
 }
 
+function presse_single_line($value, int $limit): string
+{
+    $text = trim(presse_clean_text($value, $limit));
+    return trim((string) preg_replace('/\s+/u', ' ', $text));
+}
+
+function presse_title_fields($titleValue, $subtitleValue): array
+{
+    $rawTitle = trim(presse_clean_text($titleValue, 480));
+    $subtitle = presse_single_line($subtitleValue, 240);
+    $lines = preg_split('/\n+/u', $rawTitle, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+    $title = presse_single_line(array_shift($lines) ?? '', 240);
+
+    if ($subtitle === '' && $lines) {
+        $subtitle = presse_single_line(implode(' ', $lines), 240);
+    }
+
+    return [$title, $subtitle];
+}
+
 function presse_valid_date(string $date): bool
 {
     if ($date === '') {
@@ -63,10 +83,10 @@ function presse_load(string $path, ?string &$error): ?array
             return null;
         }
 
-        $id = trim(presse_clean_text($item['id'] ?? '', 80));
-        $date = trim(presse_clean_text($item['date'] ?? '', 10));
-        $title = trim(presse_clean_text($item['title'] ?? '', 240));
-        $image = trim(presse_clean_text($item['image'] ?? '', 255));
+        $id = presse_single_line($item['id'] ?? '', 80);
+        $date = presse_single_line($item['date'] ?? '', 10);
+        [$title, $subtitle] = presse_title_fields($item['title'] ?? '', $item['subtitle'] ?? '');
+        $image = presse_single_line($item['image'] ?? '', 255);
         $text = trim(presse_clean_text($item['text'] ?? '', 20000));
 
         if (!preg_match('/^[a-z0-9][a-z0-9_-]{0,79}$/i', $id)
@@ -84,6 +104,7 @@ function presse_load(string $path, ?string &$error): ?array
             'id' => $id,
             'date' => $date,
             'title' => $title,
+            'subtitle' => $subtitle,
             'image' => $image,
             'text' => $text,
             'managedUpload' => !empty($item['managedUpload']),
@@ -102,6 +123,7 @@ function render_presse_article(array $article, string $root): void
 {
     $prefix = 'articles[' . escape_html($article['id']) . ']';
     $imageExists = is_file($root . '/' . $article['image']);
+    $imageAlt = trim($article['title'] . ' ' . $article['subtitle']);
     ?>
     <section class="concert-row">
       <div class="concert-row__head">
@@ -115,7 +137,7 @@ function render_presse_article(array $article, string $root): void
       <div class="media-admin-grid">
         <div>
           <img class="media-admin-thumb" src="../<?= escape_html($article['image']) ?>"
-            alt="<?= escape_html(presse_heading($article['title'])) ?>">
+            alt="<?= escape_html($imageAlt) ?>">
           <?php if (!$imageExists): ?>
             <small class="field-help">Das hinterlegte Bild wurde im Dateisystem nicht gefunden.</small>
           <?php endif; ?>
@@ -137,8 +159,13 @@ function render_presse_article(array $article, string $root): void
 
           <label class="field field--wide">
             <span>Titel</span>
-            <textarea name="<?= $prefix ?>[title]" rows="2" maxlength="240" required><?= escape_html($article['title']) ?></textarea>
-            <small class="field-help">Eine zweite Zeile wird auf der News-Seite kleiner dargestellt.</small>
+            <input type="text" name="<?= $prefix ?>[title]" value="<?= escape_html($article['title']) ?>" maxlength="240" required>
+          </label>
+
+          <label class="field field--wide">
+            <span>Untertitel (optional)</span>
+            <input type="text" name="<?= $prefix ?>[subtitle]" value="<?= escape_html($article['subtitle']) ?>" maxlength="240">
+            <small class="field-help">Wird auf der News-Seite kleiner unter dem Titel dargestellt.</small>
           </label>
 
           <label class="field field--wide">
@@ -179,7 +206,7 @@ $articles = presse_load($root . '/' . PRESSE_JSON_RELATIVE, $loadError);
   <header class="admin-content-header">
     <p class="admin-kicker">News</p>
     <h1>News-Beiträge verwalten</h1>
-    <p class="admin-muted">Beiträge auf <code>presse.html</code> hinzufügen, bearbeiten oder löschen. Das Datum darf leer bleiben.</p>
+    <p class="admin-muted">Beiträge auf <code>presse.html</code> hinzufügen, bearbeiten oder löschen. Datum und Untertitel dürfen leer bleiben.</p>
   </header>
 
   <?php if (isset($_GET['saved'])): ?>
@@ -214,14 +241,19 @@ $articles = presse_load($root . '/' . PRESSE_JSON_RELATIVE, $loadError);
 
           <label class="field field--wide">
             <span>Titel</span>
-            <textarea name="new_title" rows="2" maxlength="240"></textarea>
-            <small class="field-help">Eine zweite Zeile wird kleiner dargestellt.</small>
+            <input type="text" name="new_title" maxlength="240">
+          </label>
+
+          <label class="field field--wide">
+            <span>Untertitel (optional)</span>
+            <input type="text" name="new_subtitle" maxlength="240">
+            <small class="field-help">Wird auf der News-Seite kleiner unter dem Titel dargestellt.</small>
           </label>
 
           <label class="field field--wide">
             <span>Text</span>
             <textarea name="new_text" rows="12" maxlength="20000"></textarea>
-            <small class="field-help">Für einen neuen Beitrag sind Titel, Bild und Text erforderlich. Das Datum ist freiwillig.</small>
+            <small class="field-help">Für einen neuen Beitrag sind Titel, Bild und Text erforderlich. Datum und Untertitel sind freiwillig.</small>
           </label>
         </div>
       </section>

@@ -441,7 +441,6 @@ def draw_header(c: canvas.Canvas, article: dict[str, object]) -> None:
     c.setStrokeColor(COLORS["header_line"])
     c.setLineWidth(1)
     c.circle(PAGE_W - 26, PAGE_H - 18, 62, stroke=1, fill=0)
-    c.circle(45, PAGE_H - header_h + 5, 27, stroke=1, fill=0)
 
     c.setFillColor(HexColor("#FFFFFF"))
     c.setFont(FONTS["bold"], 10.5)

@@ -24,6 +24,7 @@
       && typeof article.id === 'string' && idPattern.test(article.id)
       && typeof article.date === 'string' && (article.date === '' || /^\d{4}-\d{2}-\d{2}$/.test(article.date))
       && typeof article.title === 'string' && article.title.trim() !== '' && article.title.length <= 240
+      && typeof article.subtitle === 'string' && article.subtitle.length <= 240
       && typeof article.image === 'string' && imagePattern.test(article.image)
       && typeof article.text === 'string' && article.text.trim() !== '' && article.text.length <= 20000
       && typeof article.managedUpload === 'boolean';
@@ -33,19 +34,16 @@
     const title = document.createElement('h2');
     title.className = 'news-feature__title';
     title.id = titleId;
-
-    const lines = article.title
-      .split(/\n+/)
-      .map((line) => line.trim())
-      .filter(Boolean);
+    title.lang = document.documentElement.lang || 'de';
 
     const mainLine = document.createElement('span');
-    mainLine.textContent = lines.shift() || article.title.trim();
+    mainLine.textContent = article.title.trim();
     title.append(mainLine);
 
-    if (lines.length) {
+    const subtitle = article.subtitle.trim();
+    if (subtitle !== '') {
       const detail = document.createElement('small');
-      detail.textContent = lines.join(' ');
+      detail.textContent = subtitle;
       title.append(detail);
     }
 
@@ -89,7 +87,7 @@
 
     const image = document.createElement('img');
     image.src = article.image;
-    image.alt = article.title.replace(/\s+/g, ' ').trim();
+    image.alt = [article.title, article.subtitle].filter((part) => part.trim() !== '').join(' ');
     image.loading = index === 0 ? 'eager' : 'lazy';
     image.decoding = 'async';
     imageWrap.append(image);

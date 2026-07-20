@@ -1,0 +1,12 @@
+.news-feature__title-block,
+.news-feature__title,
+.news-feature__title > span {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.news-feature__title > span {
+  overflow-wrap: anywhere;
+  hyphens: auto;
+  word-break: normal;
+}

@@ -1,0 +1,43 @@
+.site-footer {
+  position: relative;
+}
+
+.footer-credit {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35em;
+  min-height: 2.5rem;
+  padding: 0.65rem 1rem 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.055);
+  color: rgba(229, 234, 245, 0.38);
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.footer-credit a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  opacity: 0.88;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.footer-credit a:hover,
+.footer-credit a:focus-visible {
+  color: rgba(244, 231, 186, 0.72);
+  opacity: 1;
+}
+
+@media (max-width: 640px) {
+  .footer-credit {
+    font-size: 0.62rem;
+    letter-spacing: 0.07em;
+  }
+}

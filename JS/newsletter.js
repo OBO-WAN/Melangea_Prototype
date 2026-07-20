@@ -41,3 +41,12 @@ if (newsletterOverlay && newsletterOpenButtons.length) {
     }
   });
 }
+
+(() => {
+  if (document.querySelector('script[data-developer-credit]')) return;
+
+  const developerCredit = document.createElement("script");
+  developerCredit.src = "./JS/developer-credit.js";
+  developerCredit.dataset.developerCredit = "true";
+  document.head.append(developerCredit);
+})();

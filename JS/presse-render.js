@@ -6,8 +6,18 @@
 
   const staticSections = Array.from(newsMain.querySelectorAll('.news-feature-section'));
   const contactSection = newsMain.querySelector('.press-cta-section');
+  const stylesheetHref = 'css/subpages/presse-dynamic.css';
   const idPattern = /^[a-z0-9][a-z0-9_-]{0,79}$/i;
   const imagePattern = /^assets\/IMG\/news\/(?:managed\/)?[A-Za-z0-9._-]+\.(?:webp|jpe?g|png)$/i;
+
+  function ensureStylesheet() {
+    if (document.querySelector('link[href="' + stylesheetHref + '"]')) return;
+
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = stylesheetHref;
+    document.head.append(stylesheet);
+  }
 
   function validArticle(article) {
     return article && typeof article === 'object'
@@ -104,6 +114,8 @@
     section.append(container);
     return section;
   }
+
+  ensureStylesheet();
 
   fetch('data/presse.json', { credentials: 'same-origin', cache: 'no-store' })
     .then((response) => response.ok ? response.json() : Promise.reject(new Error('News-Daten nicht verfügbar')))

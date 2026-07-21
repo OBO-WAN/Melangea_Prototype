@@ -13,6 +13,7 @@ const PRESSE_MIME_EXTENSIONS = [
     'image/jpeg' => 'jpg',
     'image/png' => 'png',
 ];
+const PRESSE_TITLE_THEMES = ['magenta', 'red', 'cyan', 'blue', 'orange', 'neutral'];
 
 $createdUploads = [];
 
@@ -91,6 +92,11 @@ function presse_valid_image(string $image): bool
         && !str_contains($image, '\\');
 }
 
+function presse_valid_theme(string $theme): bool
+{
+    return in_array($theme, PRESSE_TITLE_THEMES, true);
+}
+
 function presse_load_existing(string $path): array
 {
     if (!is_file($path) || !is_readable($path)) {
@@ -103,7 +109,7 @@ function presse_load_existing(string $path): array
     }
 
     $articles = [];
-    foreach ($decoded as $item) {
+    foreach ($decoded as $index => $item) {
         if (!is_array($item)) {
             presse_error('Ein bestehender News-Beitrag ist ungültig.');
         }
@@ -111,6 +117,8 @@ function presse_load_existing(string $path): array
         $id = presse_single_line($item['id'] ?? '', 80);
         $date = presse_single_line($item['date'] ?? '', 10);
         [$title, $subtitle] = presse_title_fields($item['title'] ?? '', $item['subtitle'] ?? '');
+        $legacyTheme = ((int) $index % 2 === 1) ? 'red' : 'magenta';
+        $theme = presse_single_line($item['theme'] ?? $legacyTheme, 20);
         $image = presse_single_line($item['image'] ?? '', 255);
         $text = presse_clean_text($item['text'] ?? '', 20000);
 
@@ -118,6 +126,7 @@ function presse_load_existing(string $path): array
             || isset($articles[$id])
             || !presse_valid_date($date)
             || $title === ''
+            || !presse_valid_theme($theme)
             || !presse_valid_image($image)
             || $text === '') {
             presse_error('Ein bestehender News-Beitrag enthält ungültige Daten.');
@@ -128,6 +137,7 @@ function presse_load_existing(string $path): array
             'date' => $date,
             'title' => $title,
             'subtitle' => $subtitle,
+            'theme' => $theme,
             'image' => $image,
             'text' => $text,
             'managedUpload' => !empty($item['managedUpload']),
@@ -254,11 +264,16 @@ foreach ($oldById as $id => $oldArticle) {
     $date = presse_single_line($row['date'] ?? '', 10);
     $title = presse_single_line($row['title'] ?? '', 240);
     $subtitle = presse_single_line($row['subtitle'] ?? '', 240);
+    $theme = presse_single_line($row['theme'] ?? '', 20);
     $text = presse_clean_text($row['text'] ?? '', 20000);
     $image = presse_single_line($row['image'] ?? '', 255);
 
-    if (!presse_valid_date($date) || $title === '' || $text === '' || $image !== $oldArticle['image']) {
-        presse_error('Bitte prüfen Sie Datum, Titel, Bild und Text aller Beiträge.');
+    if (!presse_valid_date($date)
+        || $title === ''
+        || !presse_valid_theme($theme)
+        || $text === ''
+        || $image !== $oldArticle['image']) {
+        presse_error('Bitte prüfen Sie Datum, Titelstil, Titel, Bild und Text aller Beiträge.');
     }
 
     $upload = presse_upload($_FILES['replace_' . $id] ?? [], $root);
@@ -274,6 +289,7 @@ foreach ($oldById as $id => $oldArticle) {
         'date' => $date,
         'title' => $title,
         'subtitle' => $subtitle,
+        'theme' => $theme,
         'image' => $image,
         'text' => $text,
         'managedUpload' => $managedUpload,
@@ -283,14 +299,19 @@ foreach ($oldById as $id => $oldArticle) {
 $newDate = presse_single_line($_POST['new_date'] ?? '', 10);
 $newTitle = presse_single_line($_POST['new_title'] ?? '', 240);
 $newSubtitle = presse_single_line($_POST['new_subtitle'] ?? '', 240);
+$newTheme = presse_single_line($_POST['new_theme'] ?? 'magenta', 20);
 $newText = presse_clean_text($_POST['new_text'] ?? '', 20000);
 $newFile = $_FILES['new_image'] ?? [];
 $newFileSelected = is_array($newFile) && ($newFile['error'] ?? UPLOAD_ERR_NO_FILE) !== UPLOAD_ERR_NO_FILE;
 $newRequested = $newDate !== '' || $newTitle !== '' || $newSubtitle !== '' || $newText !== '' || $newFileSelected;
 
 if ($newRequested) {
-    if (!presse_valid_date($newDate) || $newTitle === '' || $newText === '' || !$newFileSelected) {
-        presse_error('Für einen neuen Beitrag sind Titel, Bild und Text erforderlich. Datum und Untertitel dürfen leer bleiben.');
+    if (!presse_valid_date($newDate)
+        || $newTitle === ''
+        || !presse_valid_theme($newTheme)
+        || $newText === ''
+        || !$newFileSelected) {
+        presse_error('Für einen neuen Beitrag sind Titelstil, Titel, Bild und Text erforderlich. Datum und Untertitel dürfen leer bleiben.');
     }
 
     $upload = presse_upload(is_array($newFile) ? $newFile : [], $root);
@@ -307,6 +328,7 @@ if ($newRequested) {
         'date' => $newDate,
         'title' => $newTitle,
         'subtitle' => $newSubtitle,
+        'theme' => $newTheme,
         'image' => $upload['image'],
         'text' => $newText,
         'managedUpload' => true,

@@ -8,6 +8,14 @@ require __DIR__ . '/layout.php';
 
 const PRESSE_JSON_RELATIVE = 'data/presse.json';
 const PRESSE_IMAGE_PATTERN = '#^assets/IMG/news/(?:managed/)?[A-Za-z0-9._-]+\.(?:webp|jpe?g|png)$#i';
+const PRESSE_TITLE_THEMES = [
+    'magenta' => 'Magenta – grafisch',
+    'red' => 'Rot – grafisch',
+    'cyan' => 'Türkis – grafisch',
+    'blue' => 'Blau – grafisch',
+    'orange' => 'Orange – grafisch',
+    'neutral' => 'Dezent – redaktionell',
+];
 
 function presse_clean_text($value, int $limit): string
 {
@@ -62,6 +70,11 @@ function presse_valid_image(string $image): bool
         && !str_contains($image, '\\');
 }
 
+function presse_valid_theme(string $theme): bool
+{
+    return array_key_exists($theme, PRESSE_TITLE_THEMES);
+}
+
 function presse_load(string $path, ?string &$error): ?array
 {
     if (!is_file($path) || !is_readable($path)) {
@@ -77,7 +90,7 @@ function presse_load(string $path, ?string &$error): ?array
 
     $ids = [];
     $articles = [];
-    foreach ($decoded as $item) {
+    foreach ($decoded as $index => $item) {
         if (!is_array($item)) {
             $error = 'Ein News-Beitrag ist ungültig.';
             return null;
@@ -86,6 +99,8 @@ function presse_load(string $path, ?string &$error): ?array
         $id = presse_single_line($item['id'] ?? '', 80);
         $date = presse_single_line($item['date'] ?? '', 10);
         [$title, $subtitle] = presse_title_fields($item['title'] ?? '', $item['subtitle'] ?? '');
+        $legacyTheme = ((int) $index % 2 === 1) ? 'red' : 'magenta';
+        $theme = presse_single_line($item['theme'] ?? $legacyTheme, 20);
         $image = presse_single_line($item['image'] ?? '', 255);
         $text = trim(presse_clean_text($item['text'] ?? '', 20000));
 
@@ -93,9 +108,10 @@ function presse_load(string $path, ?string &$error): ?array
             || isset($ids[$id])
             || !presse_valid_date($date)
             || $title === ''
+            || !presse_valid_theme($theme)
             || !presse_valid_image($image)
             || $text === '') {
-            $error = 'Eine News-ID, ein Datum, ein Bildpfad oder ein Textinhalt ist ungültig.';
+            $error = 'Eine News-ID, ein Datum, ein Titelstil, ein Bildpfad oder ein Textinhalt ist ungültig.';
             return null;
         }
 
@@ -105,6 +121,7 @@ function presse_load(string $path, ?string &$error): ?array
             'date' => $date,
             'title' => $title,
             'subtitle' => $subtitle,
+            'theme' => $theme,
             'image' => $image,
             'text' => $text,
             'managedUpload' => !empty($item['managedUpload']),
@@ -117,6 +134,15 @@ function presse_load(string $path, ?string &$error): ?array
 function presse_heading(string $title): string
 {
     return trim((string) preg_replace('/\s+/u', ' ', $title));
+}
+
+function render_presse_theme_options(string $selected): void
+{
+    foreach (PRESSE_TITLE_THEMES as $value => $label) {
+        ?>
+        <option value="<?= escape_html($value) ?>"<?= $value === $selected ? ' selected' : '' ?>><?= escape_html($label) ?></option>
+        <?php
+    }
 }
 
 function render_presse_article(array $article, string $root): void
@@ -153,6 +179,14 @@ function render_presse_article(array $article, string $root): void
           </label>
 
           <label class="field">
+            <span>Titelstil</span>
+            <select name="<?= $prefix ?>[theme]" required>
+              <?php render_presse_theme_options($article['theme']); ?>
+            </select>
+            <small class="field-help">„Grafisch“ verwendet die plakative Schrift; „Dezent“ eine ruhigere redaktionelle Darstellung.</small>
+          </label>
+
+          <label class="field field--wide">
             <span>Gespeicherter Bildpfad</span>
             <input type="text" value="<?= escape_html($article['image']) ?>" readonly>
           </label>
@@ -206,7 +240,7 @@ $articles = presse_load($root . '/' . PRESSE_JSON_RELATIVE, $loadError);
   <header class="admin-content-header">
     <p class="admin-kicker">News</p>
     <h1>News-Beiträge verwalten</h1>
-    <p class="admin-muted">Beiträge auf <code>presse.html</code> hinzufügen, bearbeiten oder löschen. Datum und Untertitel dürfen leer bleiben.</p>
+    <p class="admin-muted">Beiträge auf <code>presse.html</code> hinzufügen, bearbeiten oder löschen. Datum und Untertitel dürfen leer bleiben; der Titelstil wird pro Beitrag festgelegt.</p>
   </header>
 
   <?php if (isset($_GET['saved'])): ?>
@@ -235,6 +269,14 @@ $articles = presse_load($root . '/' . PRESSE_JSON_RELATIVE, $loadError);
           </label>
 
           <label class="field">
+            <span>Titelstil</span>
+            <select name="new_theme" required>
+              <?php render_presse_theme_options('magenta'); ?>
+            </select>
+            <small class="field-help">Der Stil bleibt dauerhaft mit diesem Beitrag verbunden.</small>
+          </label>
+
+          <label class="field field--wide">
             <span>Bild</span>
             <input type="file" name="new_image" accept=".webp,.jpg,.jpeg,.png,image/webp,image/jpeg,image/png">
           </label>

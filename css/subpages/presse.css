@@ -171,7 +171,7 @@
 
 .news-feature__title {
   display: grid;
-  gap: 0.18rem;
+  gap: 1.21rem;
   margin: 0;
   color: #f022ee;
   font-family: "Raleway", sans-serif;
@@ -201,7 +201,7 @@
   font-weight: 400;
   letter-spacing: 0.55em;
   line-height: 1.2;
-  text-align: center;
+  text-align: left;
   text-shadow: none;
 }
 

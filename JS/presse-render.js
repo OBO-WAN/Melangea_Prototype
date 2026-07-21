@@ -9,6 +9,7 @@
   const stylesheetHref = 'css/subpages/presse-dynamic.css';
   const idPattern = /^[a-z0-9][a-z0-9_-]{0,79}$/i;
   const imagePattern = /^assets\/IMG\/news\/(?:managed\/)?[A-Za-z0-9._-]+\.(?:webp|jpe?g|png)$/i;
+  const titleThemes = new Set(['magenta', 'red', 'cyan', 'blue', 'orange', 'neutral']);
 
   function ensureStylesheet() {
     if (document.querySelector('link[href="' + stylesheetHref + '"]')) return;
@@ -25,6 +26,7 @@
       && typeof article.date === 'string' && (article.date === '' || /^\d{4}-\d{2}-\d{2}$/.test(article.date))
       && typeof article.title === 'string' && article.title.trim() !== '' && article.title.length <= 240
       && typeof article.subtitle === 'string' && article.subtitle.length <= 240
+      && typeof article.theme === 'string' && titleThemes.has(article.theme)
       && typeof article.image === 'string' && imagePattern.test(article.image)
       && typeof article.text === 'string' && article.text.trim() !== '' && article.text.length <= 20000
       && typeof article.managedUpload === 'boolean';
@@ -60,8 +62,9 @@
     container.className = 'container';
 
     const articleElement = document.createElement('article');
-    articleElement.className = 'news-feature' + (index % 2 === 1 ? ' news-feature--red' : '');
+    articleElement.className = 'news-feature news-feature--themed news-feature--theme-' + article.theme;
     articleElement.dataset.aos = 'fade-up';
+    articleElement.dataset.titleTheme = article.theme;
 
     const header = document.createElement('div');
     header.className = 'news-feature__header';

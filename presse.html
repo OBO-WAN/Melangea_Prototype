@@ -7,11 +7,6 @@
   <title>News — Mélange à Deux</title>
   <meta name="description" content="Aktuelles, Konzertankündigungen und Neuigkeiten rund um Mélange à Deux & Amis." />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet" />
-
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="icon" href="assets/favicon.svg" sizes="any" />
 
@@ -243,6 +238,9 @@
         <div class="footer-links">
           <a href="./impressum.html">Impressum</a>
           <a href="./datenschutz.html">Datenschutz</a>
+          <button class="footer-consent-link" type="button" data-consent-settings aria-haspopup="dialog">
+            Cookie-Einstellungen
+          </button>
         </div>
       </div>
 
@@ -459,7 +457,8 @@
     ↑
   </button>
 
-  <script type="module" src="./JS/firebase-config.js"></script>
+  <script src="./JS/analytics-config.js"></script>
+  <script src="./JS/consent.js"></script>
   <script src="./JS/objects.js"></script>
   <script src="./JS/audio.js"></script>
   <script src="./JS/newsletter.js"></script>

@@ -1,6 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js";
-import { getFirestore } from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
-
 const firebaseConfig = {
   apiKey: "AIzaSyDukA-CZ3eJneTOajslMoDx-E8rWbFkrxw",
   authDomain: "newsletter-35ff2.firebaseapp.com",
@@ -8,11 +5,26 @@ const firebaseConfig = {
   storageBucket: "newsletter-35ff2.firebasestorage.app",
   messagingSenderId: "649210069998",
   appId: "1:649210069998:web:e63de8aa2e76b60ffe84ff",
-  measurementId: "G-HVTSZPG0MM",
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+let servicesPromise;
 
-window.firebaseApp = app;
-window.firestoreDb = db;
+export function getFirestoreServices() {
+  if (!servicesPromise) {
+    servicesPromise = Promise.all([
+      import("https://www.gstatic.com/firebasejs/12.12.1/firebase-app.js"),
+      import("https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js"),
+    ]).then(([firebaseApp, firestore]) => {
+      const app = firebaseApp.initializeApp(firebaseConfig);
+
+      return {
+        db: firestore.getFirestore(app),
+        addDoc: firestore.addDoc,
+        collection: firestore.collection,
+        serverTimestamp: firestore.serverTimestamp,
+      };
+    });
+  }
+
+  return servicesPromise;
+}

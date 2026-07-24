@@ -47,7 +47,7 @@
     frame.className = 'media-video-frame';
 
     const iframe = document.createElement('iframe');
-    iframe.src = `https://www.youtube-nocookie.com/embed/${video.youtubeId}`;
+    iframe.dataset.consentSrc = `https://www.youtube-nocookie.com/embed/${video.youtubeId}`;
     iframe.title = video.title;
     iframe.loading = 'lazy';
     iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
@@ -73,6 +73,7 @@
       const fragment = document.createDocumentFragment();
       videos.forEach((video, index) => fragment.append(createVideoCard(video, index)));
       container.replaceChildren(fragment);
+      window.melangeConsent?.refreshExternalMedia();
 
       if (window.AOS && typeof window.AOS.refreshHard === 'function') {
         window.AOS.refreshHard();

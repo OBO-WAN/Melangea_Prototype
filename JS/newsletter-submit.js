@@ -1,8 +1,4 @@
-import {
-  collection,
-  addDoc,
-  serverTimestamp,
-} from "https://www.gstatic.com/firebasejs/12.12.1/firebase-firestore.js";
+import { getFirestoreServices } from "./firebase-config.js";
 
 const newsletterForm = document.querySelector(
   "#newsletter-overlay .newsletter-form"
@@ -34,13 +30,6 @@ if (newsletterForm) {
       return;
     }
 
-    const db = window.firestoreDb;
-
-    if (!db) {
-      alert("Firestore ist nicht initialisiert.");
-      return;
-    }
-
     const firstName = firstNameInput?.value.trim() || "";
     const lastName = lastNameInput?.value.trim() || "";
     const email = emailInput?.value.trim() || "";
@@ -56,6 +45,9 @@ if (newsletterForm) {
         submitButton.disabled = true;
         submitButton.textContent = "Wird gesendet...";
       }
+
+      const { db, addDoc, collection, serverTimestamp } =
+        await getFirestoreServices();
 
       await addDoc(collection(db, "newsletter_signups"), {
         firstName,

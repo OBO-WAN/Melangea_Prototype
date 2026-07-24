@@ -8,11 +8,6 @@
   <meta name="description"
     content="Buchungsanfrage für Konzerte, private Veranstaltungen, Festivals und Kulturprogramme von Mélange à Deux & Amis." />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
-    rel="stylesheet" />
-
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="icon" href="assets/favicon.svg" sizes="any" />
 
@@ -126,13 +121,13 @@
 
         <div class="booking-videos__grid">
           <div class="booking-video">
-            <iframe src="https://www.youtube-nocookie.com/embed/64y1hf6zq1g" title="Mélange à Deux &amp; Amis – Video 1"
+            <iframe data-consent-src="https://www.youtube-nocookie.com/embed/64y1hf6zq1g" title="Mélange à Deux &amp; Amis – Video 1"
               loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
           </div>
           <div class="booking-video">
-            <iframe src="https://www.youtube-nocookie.com/embed/FXFr5nbusVI" title="Mélange à Deux &amp; Amis – Video 2"
+            <iframe data-consent-src="https://www.youtube-nocookie.com/embed/FXFr5nbusVI" title="Mélange à Deux &amp; Amis – Video 2"
               loading="lazy"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
@@ -253,6 +248,9 @@
         <div class="footer-links">
           <a href="./impressum.html">Impressum</a>
           <a href="./datenschutz.html">Datenschutz</a>
+          <button class="footer-consent-link" type="button" data-consent-settings aria-haspopup="dialog">
+            Cookie-Einstellungen
+          </button>
         </div>
       </div>
       <div class="footer-col footer-col--booking">
@@ -423,7 +421,8 @@
 
   <button class="scroll-top" id="scrollTopBtn" type="button" aria-label="Nach oben scrollen">↑</button>
 
-  <script type="module" src="./JS/firebase-config.js"></script>
+  <script src="./JS/analytics-config.js"></script>
+  <script src="./JS/consent.js"></script>
   <script src="./JS/objects.js"></script>
   <script src="./JS/audio.js"></script>
   <script src="./JS/newsletter.js"></script>

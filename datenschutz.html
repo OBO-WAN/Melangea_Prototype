@@ -228,18 +228,33 @@
         <h2 id="newsletter-title">Newsletter</h2>
         <p>
           Falls Sie sich für unseren kostenlosen Newsletter anmelden, werden die von Ihnen hierzu abgefragten Daten, also
-          Ihre E-Mail-Adresse sowie – optional – Ihr Name und Ihre Anschrift, an uns übermittelt. Gleichzeitig speichern
-          wir die IP-Adresse des Internetanschlusses von dem aus Sie auf unseren Internetauftritt zugreifen sowie Datum
-          und Uhrzeit Ihrer Anmeldung. Im Rahmen des weiteren Anmeldevorgangs werden wir Ihre Einwilligung in die
-          Übersendung des Newsletters einholen, den Inhalt konkret beschreiben und auf diese Datenschutzerklärung
-          verwiesen. Die dabei erhobenen Daten verwenden wir ausschließlich für den Newsletter-Versand – sie werden
-          deshalb insbesondere auch nicht an Dritte weitergegeben.
+          Ihre E-Mail-Adresse, Ihr Vor- und Nachname sowie – soweit freiwillig angegeben – Ihre Postleitzahl und eine
+          Nachricht, an uns übermittelt. Im Rahmen des Anmeldevorgangs holen wir Ihre Einwilligung in die Übersendung des
+          Newsletters ein und verweisen auf diese Datenschutzerklärung. Die dabei erhobenen Daten verwenden wir
+          ausschließlich zur Verwaltung und Durchführung des Newsletter-Versands.
         </p>
         <p>Rechtsgrundlage hierbei ist Art. 6 Abs. 1 lit. a) DSGVO.</p>
+        <p>
+          Zur Speicherung und technischen Verarbeitung der Newsletter-Anmeldungen nutzen wir Firebase Firestore, einen
+          Dienst der Google Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Die Verbindung zu Firebase
+          wird erst hergestellt, wenn Sie das Newsletter-Formular absenden. Dabei können die von Ihnen im Formular
+          angegebenen Daten sowie technische Verbindungsdaten verarbeitet werden. Google handelt insoweit als unser
+          Auftragsverarbeiter.
+        </p>
+        <p>
+          Eine Verarbeitung durch Google LLC und weitere Google-Unternehmen in Drittländern, insbesondere den USA, kann
+          nicht ausgeschlossen werden. Google LLC ist nach dem EU-US Data Privacy Framework zertifiziert. Soweit dessen
+          Voraussetzungen nicht vorliegen, stützt Google Datenübermittlungen nach eigenen Angaben außerdem auf die von der
+          Europäischen Kommission genehmigten Standardvertragsklauseln.
+        </p>
         <p>
           Die Einwilligung in den Newsletter-Versand können Sie gemäß Art. 7 Abs. 3 DSGVO jederzeit mit Wirkung für die
           Zukunft widerrufen. Hierzu müssen Sie uns lediglich über Ihren Widerruf in Kenntnis setzen oder den in jedem
           Newsletter enthaltenen Abmeldelink betätigen.
+        </p>
+        <p>
+          Die Anmeldedaten werden grundsätzlich bis zum Widerruf Ihrer Einwilligung gespeichert und anschließend gelöscht,
+          sofern keine gesetzlichen Aufbewahrungspflichten entgegenstehen.
         </p>
       </section>
 
@@ -445,6 +460,23 @@
 
       <section class="legal-card" aria-labelledby="youtube-title">
         <h2 id="youtube-title">YouTube</h2>
+        <p>
+          Auf einzelnen Seiten betten wir Videos von YouTube im erweiterten Datenschutzmodus ein. Anbieter ist die Google
+          Ireland Limited, Gordon House, Barrow Street, Dublin 4, Irland. Die eingebetteten Videos werden zunächst
+          blockiert. Eine Verbindung zu YouTube wird erst hergestellt, nachdem Sie in den Cookie-Einstellungen der
+          Kategorie „Externe Medien“ zugestimmt haben. Dabei können insbesondere Ihre IP-Adresse, technische
+          Geräteinformationen, die aufgerufene Seite und Informationen über die Videonutzung an Google übermittelt
+          werden.
+        </p>
+        <p>
+          Rechtsgrundlagen sind Ihre Einwilligung gemäß Art. 6 Abs. 1 lit. a DSGVO sowie, soweit Informationen auf Ihrem
+          Endgerät gespeichert oder daraus ausgelesen werden, § 25 Abs. 1 TDDDG. Sie können Ihre Einwilligung jederzeit
+          über die
+          <button class="footer-consent-link" type="button" data-consent-settings aria-haspopup="dialog">
+            Cookie-Einstellungen
+          </button>
+          mit Wirkung für die Zukunft widerrufen.
+        </p>
         <p>
           Wir unterhalten bei YouTube eine Onlinepräsenz um unser Unternehmen sowie unsere Leistungen zu präsentieren und
           mit Kunden/Interessenten zu kommunizieren. YouTube ist ein Service der Google Ireland Limited, Gordon House,
@@ -828,7 +860,8 @@
     ↑
   </button>
 
-  <script type="module" src="./JS/firebase-config.js"></script>
+  <script src="./JS/analytics-config.js"></script>
+  <script src="./JS/consent.js"></script>
   <script src="./JS/objects.js"></script>
   <script src="./JS/audio.js"></script>
   <script src="./JS/newsletter.js"></script>

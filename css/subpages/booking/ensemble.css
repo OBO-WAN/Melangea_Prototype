@@ -19,10 +19,22 @@
 
 .booking-ensemble__group,
 .booking-ensemble__portrait {
+  position: relative;
+  min-width: 0;
   overflow: hidden;
   aspect-ratio: 1 / 1;
   margin: 0;
-  border-radius: 4px;
+  padding: clamp(0.65rem, 1.5vw, 0.9rem);
+  border: 1px solid rgba(244, 231, 186, 0.18);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(39, 131, 203, 0.12), transparent 60%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.022));
+  box-shadow:
+    0 22px 44px rgba(0, 0, 0, 0.2),
+    0 7px 16px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.18);
 }
 
 .booking-ensemble__group img,
@@ -30,7 +42,9 @@
   display: block;
   width: 100%;
   height: 100%;
+  border-radius: 11px;
   object-fit: cover;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
 }
 
 .booking-ensemble__photo-placeholder {
@@ -170,5 +184,12 @@
   .booking-ensemble__portrait {
     width: min(100%, 30rem);
     margin: 0 auto;
+    padding: 0.65rem;
+    border-radius: 15px;
+  }
+
+  .booking-ensemble__group img,
+  .booking-ensemble__portrait img {
+    border-radius: 9px;
   }
 }

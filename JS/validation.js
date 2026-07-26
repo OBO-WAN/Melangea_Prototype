@@ -58,7 +58,10 @@ function trimInput(input) {
   }
 }
 
-function validateNewsletterForm(form = newsletterForm, { focusInvalid = false } = {}) {
+function validateNewsletterForm(
+  form = newsletterForm,
+  { focusInvalid = false, trimValues = focusInvalid } = {},
+) {
   if (!form) return true;
 
   const firstNameInput = form.querySelector("#newsletter-first-name");
@@ -70,7 +73,10 @@ function validateNewsletterForm(form = newsletterForm, { focusInvalid = false } 
   const errors = [];
 
   [firstNameInput, lastNameInput, emailInput, postalCodeInput, messageInput, consentInput].forEach(clearInlineError);
-  [firstNameInput, lastNameInput, emailInput, postalCodeInput, messageInput].forEach(trimInput);
+
+  if (trimValues) {
+    [firstNameInput, lastNameInput, emailInput, postalCodeInput, messageInput].forEach(trimInput);
+  }
 
   if (!firstNameInput?.value) {
     errors.push([firstNameInput, "Bitte geben Sie Ihren Vornamen ein."]);

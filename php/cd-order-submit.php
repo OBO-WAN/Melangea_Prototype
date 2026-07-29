@@ -200,10 +200,6 @@ if (!$consent) {
 
 $recipientEmail = clean_header_value((string) ($config['recipient_email'] ?? 'info@melangea2.com'));
 $fromEmail = clean_header_value((string) ($config['from_email'] ?? 'info@melangea2.com'));
-$bankAccountName = clean_text((string) ($config['bank_account_name'] ?? 'Uwe Hanewald'));
-$bankIban = clean_text((string) ($config['bank_iban'] ?? 'IBAN_HIER_EINTRAGEN'));
-$cdPrice = clean_text((string) ($config['cd_price_eur'] ?? '15'));
-$shipping = clean_text((string) ($config['shipping_eur'] ?? '3'));
 
 if (!filter_var($recipientEmail, FILTER_VALIDATE_EMAIL) || !filter_var($fromEmail, FILTER_VALIDATE_EMAIL)) {
     $errors[] = CD_ORDER_GENERIC_ERROR;
@@ -259,18 +255,15 @@ $notificationBody = implode("\n", [
 
 if ($format === 'Digitaler Download') {
     $confirmationMiddle = implode("\n", [
-        'Wir melden uns zeitnah mit weiteren Informationen zur Zahlung und zum digitalen Download.',
+        'Wir melden uns persönlich mit weiteren Informationen zur Zahlung und zum digitalen Download.',
         '',
-        'Bitte überweisen Sie den Betrag erst nach unserer weiteren Rückmeldung.',
+        'Bitte überweisen Sie noch nichts, bis Sie unsere persönliche Rückmeldung erhalten haben.',
     ]);
 } else {
     $confirmationMiddle = implode("\n", [
-        'Bitte überweisen Sie pro CD ' . $cdPrice . ' Euro zzgl. einmalig ' . $shipping . ' Euro Versandkosten an:',
+        'Wir melden uns persönlich mit weiteren Informationen zur Zahlung sowie zu Abholung oder Versand.',
         '',
-        $bankAccountName,
-        'IBAN: ' . $bankIban,
-        '',
-        'Nach Gutschrift werden wir Ihnen die gewünschte CD bzw. die gewünschten CDs umgehend zusenden.',
+        'Bitte überweisen Sie noch nichts, bis Sie unsere persönliche Rückmeldung erhalten haben.',
     ]);
 }
 

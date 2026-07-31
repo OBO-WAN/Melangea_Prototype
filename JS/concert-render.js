@@ -78,10 +78,19 @@
     }
   };
 
+  const limitEvents = (container, events) => {
+    const limit = Number.parseInt(container.dataset.concertLimit || "", 10);
+
+    return Number.isInteger(limit) && limit > 0
+      ? events.slice(0, limit)
+      : events;
+  };
+
   const renderCompactList = (events) => {
     document.querySelectorAll("[data-concert-render='compact']").forEach((list) => {
       const upcomingEvents = events.filter((event) => event.status !== "past");
-      list.replaceChildren(...upcomingEvents.map(createCompactEvent));
+      const visibleEvents = limitEvents(list, upcomingEvents);
+      list.replaceChildren(...visibleEvents.map(createCompactEvent));
 
       if (upcomingEvents.length === 0) {
         const emptyItem = document.createElement("li");
@@ -137,7 +146,8 @@
     document.querySelectorAll("[data-concert-render='cards']").forEach((grid) => {
       const status = grid.dataset.concertStatus;
       const matchingEvents = events.filter((event) => event.status === status);
-      grid.replaceChildren(...matchingEvents.map(createConcertCard));
+      const visibleEvents = limitEvents(grid, matchingEvents);
+      grid.replaceChildren(...visibleEvents.map(createConcertCard));
 
       if (matchingEvents.length === 0) {
         const emptyCard = document.createElement("article");

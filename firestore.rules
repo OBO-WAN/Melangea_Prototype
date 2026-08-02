@@ -1,0 +1,51 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /newsletter_signups/{signupId} {
+      allow create: if
+        request.resource.data.keys().hasOnly([
+          "firstName",
+          "lastName",
+          "email",
+          "postalCode",
+          "message",
+          "consent",
+          "createdAt"
+        ])
+
+        && request.resource.data.firstName is string
+        && request.resource.data.firstName.size() <= 80
+
+        && request.resource.data.lastName is string
+        && request.resource.data.lastName.size() <= 80
+
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.email.matches(
+          '^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$'
+        )
+
+        && request.resource.data.postalCode is string
+        && request.resource.data.postalCode.size() <= 20
+
+        && request.resource.data.message is string
+        && request.resource.data.message.size() <= 1000
+
+        && request.resource.data.consent == true
+
+        && request.resource.data.createdAt == request.time;
+
+      allow read, update, delete: if false;
+    }
+
+    match /mail/{mailId} {
+      allow read, write: if false;
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

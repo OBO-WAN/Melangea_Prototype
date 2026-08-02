@@ -2,6 +2,12 @@
 
 Official website for the music ensemble **Mélange à Deux & Amis**.
 
+The project combines a responsive public website, JSON-driven concert listings,
+PHP-backed contact and order forms, a production concert administration area,
+and a browser-only admin demo for static hosting.
+
+![Homepage hero section](docs/screenshots/hero-section.png)
+
 ## Features
 
 - Responsive multi-page website for the ensemble and its projects.
@@ -15,6 +21,42 @@ Official website for the music ensemble **Mélange à Deux & Amis**.
 - Accessible overlays for musician bios, newsletter signup, CD orders and image lightboxes.
 - Custom German form validation in JavaScript with independent PHP server-side validation for PHP forms.
 - Separate GitHub Pages demo/static behavior and PHP-hosting production behavior.
+
+## Screenshots
+
+### Newsletter signup
+
+The newsletter flow uses a responsive modal with consent messaging and custom
+German validation feedback.
+
+![Newsletter signup modal](docs/screenshots/newsletter.png)
+
+### Concert administration demo
+
+The repository includes a public-safe static demonstration of the concert
+administration workflow. Demo changes stay in the visitor's browser and do not
+modify production data.
+
+![Concert administration demo](docs/screenshots/admin-demo.png)
+
+## Architecture
+
+```mermaid
+flowchart TD
+    Visitor["Website visitor"] --> Pages["HTML pages"]
+    Pages --> Frontend["CSS and JavaScript modules"]
+    Frontend --> Concerts["data/concerts.json"]
+    Frontend --> Firebase["Firebase Firestore newsletter"]
+    Frontend --> PHP["PHP booking and order endpoints"]
+    Admin["PHP concert admin"] --> Concerts
+    Demo["Static admin demo"] --> Browser["Browser storage only"]
+```
+
+The public frontend is static HTML, CSS and vanilla JavaScript. Concert data is
+read from `data/concerts.json`; the production PHP admin updates that same data
+source. Booking and CD/music-order requests are validated in the browser and
+again by PHP. Newsletter subscriptions are handled separately through Firebase
+Firestore. The static admin demo uses only browser storage.
 
 ## Technology
 

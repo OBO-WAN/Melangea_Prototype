@@ -144,10 +144,20 @@ foreach ($posted as $postedId => $item) {
     $order = filter_var($item['order'] ?? 0, FILTER_VALIDATE_INT, ['options' => ['min_range' => 1]]) ?: 9999;
     $sortable[$section][] = ['order' => $order, 'entry' => ['id' => $id, 'src' => $src, 'alt' => clean_media_text($item['alt'] ?? ''), 'caption' => clean_media_text($item['caption'] ?? ''), 'managedUpload' => (bool) $oldById[$id]['managedUpload']]];
 }
+
 foreach (MEDIA_SECTIONS as $section) {
-    usort($sortable[$section] ?? [], fn($a, $b) => $a['order'] <=> $b['order']);
-    foreach ($sortable[$section] ?? [] as $row) $newGallery[$section][] = $row['entry'];
+    $sectionRows = $sortable[$section] ?? [];
+
+    usort(
+        $sectionRows,
+        static fn(array $a, array $b): int => $a['order'] <=> $b['order']
+    );
+
+    foreach ($sectionRows as $row) {
+        $newGallery[$section][] = $row['entry'];
+    }
 }
+
 handle_upload($newGallery, $oldById, $root);
 
 $backupDir = $root . '/data/backups';

@@ -54,16 +54,14 @@ body.page-ueber-uns .site-footer {
     radial-gradient(circle at 35% 76%, rgba(194, 145, 255, 0.16) 0 7%, transparent 22%),
     radial-gradient(circle at 74% 31%, rgba(255, 185, 220, 0.14) 0 8%, transparent 23%),
     radial-gradient(ellipse at 21% 62%, rgba(255, 220, 145, 0.11) 0 7%, transparent 21%),
-    conic-gradient(
-      from 128deg,
+    conic-gradient(from 128deg,
       rgba(255, 255, 255, 0.04),
       rgba(105, 245, 215, 0.16),
       rgba(194, 145, 255, 0.14),
       rgba(255, 220, 145, 0.13),
       rgba(255, 185, 220, 0.12),
       rgba(165, 255, 205, 0.10),
-      rgba(255, 255, 255, 0.04)
-    );
+      rgba(255, 255, 255, 0.04));
   box-shadow:
     inset 8px 10px 20px rgba(255, 255, 255, 0.08),
     inset -12px -14px 24px rgba(105, 245, 215, 0.05),
@@ -174,8 +172,8 @@ body.page-ueber-uns .site-footer {
   text-align: justify;
 }
 
-.about-copy p + p,
-.about-history p + p {
+.about-copy p+p,
+.about-history p+p {
   margin-top: 1rem;
 }
 
@@ -387,6 +385,7 @@ body.page-ueber-uns .site-footer {
 }
 
 @media (max-width: 1080px) {
+
   .about-grid--intro,
   .about-grid--music,
   .about-grid--work,
@@ -466,6 +465,12 @@ body.page-ueber-uns .site-footer {
   .about-vision p,
   .about-history p {
     text-align: left;
+  }
+
+  .about-history .about-action-panel__text {
+    max-width: 28ch;
+    margin-inline: auto;
+    text-align: center;
   }
 
   .about-history__header h2 {

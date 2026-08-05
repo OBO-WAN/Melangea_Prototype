@@ -2,6 +2,8 @@
 
 Official website for the music ensemble **Mélange à Deux & Amis**.
 
+**Live website:** [melangea2.com](https://melangea2.com) — launched on 5 August 2026.
+
 The project combines a responsive public website, JSON-driven concert listings,
 PHP-backed contact and order forms, a production concert administration area,
 and a browser-only admin demo for static hosting.

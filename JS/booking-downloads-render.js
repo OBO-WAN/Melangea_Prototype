@@ -31,7 +31,7 @@
     },
     {
       id: 'biographien-der-musiker',
-      label: 'Biographien der Musiker',
+      label: 'Biographien',
       fileType: 'pdf',
       selector: 'a[href="assets/downloads/booking/biographien-der-musiker.pdf"]',
     },

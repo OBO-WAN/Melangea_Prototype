@@ -170,8 +170,6 @@ function initAudioPlaylist() {
     renderWaveform(index);
     updateTrackButtons();
 
-    waveAudio.load();
-
     if (autoplay) {
       try {
         await waveAudio.play();
@@ -310,5 +308,10 @@ function initAudioPlaylist() {
 
   updateTrackCount();
   renderTracks();
-  loadTrack(activeIndex, false);
+
+  // Initialize the player UI without assigning an audio source.
+  // The selected MP3 is requested only after a user presses Play.
+  updatePlayerMeta(activeIndex);
+  renderWaveform(activeIndex);
+  updateTrackButtons();
 }

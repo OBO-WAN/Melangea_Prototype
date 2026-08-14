@@ -116,6 +116,119 @@
   text-underline-offset: 0.18em;
 }
 
+/* First-visit consent banner: non-modal so page content remains visible. */
+.consent-banner {
+  position: fixed;
+  inset-inline: 0.75rem;
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  z-index: 130;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem 1.5rem;
+  align-items: center;
+  width: min(76rem, calc(100% - 1.5rem));
+  max-height: min(46dvh, 24rem);
+  margin-inline: auto;
+  padding: 1rem 1.15rem;
+  overflow: auto;
+  border: 1px solid rgb(255 255 255 / 16%);
+  border-radius: 18px;
+  background: #111a2f;
+  color: var(--text);
+  box-shadow: 0 14px 44px rgb(0 0 0 / 52%);
+  contain: layout paint;
+}
+
+.consent-banner[hidden] {
+  display: none;
+}
+
+.consent-banner__copy {
+  min-width: 0;
+}
+
+.consent-banner__eyebrow {
+  margin-bottom: 0.2rem;
+  color: #f4e7ba;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.consent-banner__title {
+  margin-bottom: 0.2rem;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+}
+
+.consent-banner__description {
+  max-width: 52rem;
+  margin: 0;
+  color: #d7dcea;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.consent-banner__description a {
+  color: #e5eaf5;
+  text-decoration: underline;
+  text-underline-offset: 0.16em;
+}
+
+.consent-banner__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.55rem;
+}
+
+.consent-banner__actions .btn {
+  min-height: 42px;
+  padding: 0.6rem 0.9rem;
+  white-space: nowrap;
+}
+
+.consent-banner__status {
+  grid-column: 1 / -1;
+  min-height: 0;
+  margin: 0;
+  color: var(--accent2);
+  font-size: 0.85rem;
+}
+
+.consent-banner__status:empty {
+  display: none;
+}
+
+@media (max-width: 760px) {
+  .consent-banner {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+    max-height: min(55dvh, 28rem);
+    padding: 0.9rem;
+    border-radius: 16px;
+  }
+
+  .consent-banner__description {
+    font-size: 0.84rem;
+  }
+
+  .consent-banner__actions {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .consent-banner__actions .btn {
+    width: 100%;
+    white-space: normal;
+  }
+
+  .consent-banner__actions [data-consent-settings] {
+    grid-column: 1 / -1;
+    grid-row: 2;
+  }
+}
+
 .consent-dialog {
   width: min(42rem, calc(100% - 2rem));
   max-height: min(44rem, calc(100dvh - 2rem));
@@ -226,10 +339,6 @@
   background: rgb(255 255 255 / 5%);
   color: var(--text);
   cursor: pointer;
-}
-
-.consent-dialog[data-first-visit="true"] .consent-dialog__close {
-  display: none;
 }
 
 .consent-status {

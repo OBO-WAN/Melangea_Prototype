@@ -6,6 +6,8 @@
   const MAX_AGE_MS = 180 * 24 * 60 * 60 * 1000;
   const GA_COOKIE_PREFIXES = ["_ga"];
 
+  let banner;
+  let bannerStatus;
   let dialog;
   let analyticsCheckbox;
   let externalMediaCheckbox;
@@ -203,15 +205,14 @@
     });
   }
 
-  function closeDialog() {
-    if (!dialog) return;
-    dialog.close();
-    document.body.style.overflow = "";
+  function closeBanner() {
+    if (!banner) return;
+    banner.hidden = true;
+  }
 
-    if (lastTrigger) {
-      lastTrigger.focus();
-      lastTrigger = null;
-    }
+  function closeDialog() {
+    if (!dialog?.open) return;
+    dialog.close();
   }
 
   function applyConsent(
@@ -244,11 +245,58 @@
       return;
     }
 
-    statusMessage.textContent =
+    const message =
       analytics || externalMedia
         ? "Ihre Auswahl wurde gespeichert."
         : "Nur erforderliche Technologien sind aktiv.";
-    window.setTimeout(closeDialog, 250);
+
+    if (dialog?.open) {
+      statusMessage.textContent = message;
+      window.setTimeout(closeDialog, 250);
+    }
+
+    if (banner && !banner.hidden) {
+      bannerStatus.textContent = message;
+      window.setTimeout(closeBanner, 250);
+    }
+  }
+
+  function createBanner() {
+    banner = document.createElement("aside");
+    banner.className = "consent-banner";
+    banner.setAttribute("aria-labelledby", "consent-banner-title");
+    banner.setAttribute("aria-describedby", "consent-banner-description");
+    banner.innerHTML = `
+      <div class="consent-banner__copy">
+        <p class="consent-banner__eyebrow">Datenschutz</p>
+        <h2 class="consent-banner__title" id="consent-banner-title">Ihre Privatsphäre</h2>
+        <p class="consent-banner__description" id="consent-banner-description">
+          Erforderliche Technologien sichern den Betrieb der Website.
+          Statistik und YouTube werden nur mit Ihrer Einwilligung geladen.
+          <a href="./datenschutz.html#analytics-title">Mehr erfahren</a>
+        </p>
+      </div>
+      <div class="consent-banner__actions">
+        <button class="btn btn-ghost" type="button" data-consent-necessary>Nur erforderliche</button>
+        <button class="btn btn-ghost" type="button" data-consent-settings>Einstellungen</button>
+        <button class="btn" type="button" data-consent-all>Alle akzeptieren</button>
+      </div>
+      <p class="consent-banner__status" role="status" aria-live="polite" data-consent-banner-status></p>
+    `;
+
+    document.body.append(banner);
+    bannerStatus = banner.querySelector("[data-consent-banner-status]");
+
+    banner
+      .querySelector("[data-consent-necessary]")
+      .addEventListener("click", () =>
+        applyConsent({ analytics: false, externalMedia: false }),
+      );
+    banner
+      .querySelector("[data-consent-all]")
+      .addEventListener("click", () =>
+        applyConsent({ analytics: true, externalMedia: true }),
+      );
   }
 
   function createDialog() {
@@ -342,22 +390,25 @@
         applyConsent({ analytics: true, externalMedia: true }),
       );
 
-    dialog.addEventListener("cancel", (event) => {
-      if (!readConsent()) {
-        event.preventDefault();
-      } else {
-        document.body.style.overflow = "";
+    dialog.addEventListener("cancel", () => {
+      document.body.style.overflow = "";
+    });
+    dialog.addEventListener("close", () => {
+      document.body.style.overflow = "";
+
+      if (lastTrigger) {
+        lastTrigger.focus();
+        lastTrigger = null;
       }
     });
   }
 
-  function openDialog(trigger, firstVisit = false) {
+  function openDialog(trigger) {
     const consent = readConsent();
     lastTrigger = trigger || null;
     analyticsCheckbox.checked = consent?.analytics === true;
     externalMediaCheckbox.checked = consent?.externalMedia === true;
     statusMessage.textContent = "";
-    dialog.dataset.firstVisit = String(firstVisit);
     dialog.showModal();
     document.body.style.overflow = "hidden";
   }
@@ -377,7 +428,7 @@
     const consent = readConsent();
 
     if (!consent) {
-      openDialog(null, true);
+      createBanner();
     } else {
       if (consent.analytics) activateAnalytics();
       if (consent.externalMedia) activateExternalMedia();

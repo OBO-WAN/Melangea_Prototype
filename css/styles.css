@@ -131,12 +131,10 @@
 }
 
 .hero-subtitle {
-  opacity: 0;
-  animation-name: heroSubtitleReveal;
-  animation-duration: 1.2s;
-  animation-delay: 0.95s;
-  animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 1;
+  animation: none;
+  filter: none;
+  transform: none;
 }
 
 .hero-actions {
@@ -149,20 +147,6 @@
 @media (max-width: 680px) {
   .hero-actions {
     justify-content: center;
-  }
-}
-
-@keyframes heroSubtitleReveal {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-    filter: blur(4px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-    filter: blur(0);
   }
 }
 

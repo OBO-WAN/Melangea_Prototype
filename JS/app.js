@@ -240,8 +240,12 @@ function initHeroSlider() {
     slide.classList.contains("is-active"),
   );
   let sliderTimer = null;
+  let initialRenderComplete = false;
 
   if (current < 0) current = 0;
+
+  const initialSlide = slides[current];
+  initialSlide.classList.add("is-initial");
 
   function showSlide(index) {
     slides.forEach((slide, i) => {
@@ -252,6 +256,7 @@ function initHeroSlider() {
   }
 
   function nextSlide() {
+    initialSlide.classList.remove("is-initial");
     current = (current + 1) % slides.length;
     showSlide(current);
   }
@@ -263,12 +268,37 @@ function initHeroSlider() {
   }
 
   function startSlider() {
-    if (reducedMotion.matches || sliderTimer) return;
+    if (
+      !initialRenderComplete ||
+      document.hidden ||
+      reducedMotion.matches ||
+      sliderTimer
+    ) {
+      return;
+    }
+
     sliderTimer = window.setInterval(nextSlide, intervalMs);
   }
 
+  function startSliderAfterInitialRender() {
+    const markInitialRenderComplete = () => {
+      window.requestAnimationFrame(() => {
+        window.requestAnimationFrame(() => {
+          initialRenderComplete = true;
+          startSlider();
+        });
+      });
+    };
+
+    if (document.readyState === "complete") {
+      markInitialRenderComplete();
+    } else {
+      window.addEventListener("load", markInitialRenderComplete, { once: true });
+    }
+  }
+
   showSlide(current);
-  startSlider();
+  startSliderAfterInitialRender();
 
   document.addEventListener("visibilitychange", () => {
     if (document.hidden) {

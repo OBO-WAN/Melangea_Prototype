@@ -70,17 +70,6 @@
   transform: scale(1.06);
 }
 
-/* Keep the first hero image stable during the initial render. */
-.hero-slide.is-initial {
-  transition: none;
-}
-
-.hero-slide.is-initial img,
-.hero-slide.is-initial.is-active img {
-  transform: scale(1);
-  transition: none;
-}
-
 .hero-copy {
   width: min(1240px, calc(100% - 2rem));
   display: grid;
@@ -122,19 +111,35 @@
       rgba(244, 231, 186, 0));
 } */
 
-/* Keep the H1 immediately paintable for a stable LCP candidate. */
+/* ===== Hero text animation ===== */
+.hero-title span,
+.hero-subtitle {
+  opacity: 0;
+  animation-fill-mode: forwards;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
 .hero-title span {
-  opacity: 1;
-  animation: none;
-  filter: none;
-  transform: none;
+  animation-name: heroLineReveal;
+  animation-duration: 1.05s;
+}
+
+.hero-title span:nth-child(1) {
+  animation-delay: 0.18s;
+}
+
+.hero-title span:nth-child(2) {
+  animation-delay: 0.42s;
+}
+
+.hero-title span:nth-child(3) {
+  animation-delay: 0.68s;
 }
 
 .hero-subtitle {
-  opacity: 1;
-  animation: none;
-  filter: none;
-  transform: none;
+  animation-name: heroSubtitleReveal;
+  animation-duration: 1.2s;
+  animation-delay: 0.95s;
 }
 
 .hero-actions {
@@ -147,6 +152,34 @@
 @media (max-width: 680px) {
   .hero-actions {
     justify-content: center;
+  }
+}
+
+@keyframes heroLineReveal {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+    filter: blur(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes heroSubtitleReveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+    filter: blur(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
   }
 }
 
@@ -627,6 +660,14 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-title span,
+  .hero-subtitle {
+    opacity: 1;
+    animation: none;
+    filter: none;
+    transform: none;
+  }
+
   .social-fab__toggle,
   .social-fab__link {
     transition: none;

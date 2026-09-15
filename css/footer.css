@@ -178,10 +178,34 @@
 }
 
 .consent-banner__revisit {
-  display: block;
-  margin-top: 0.35rem;
-  color: var(--muted);
-  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 0.65rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid rgb(124 224 220 / 45%);
+  border-radius: 10px;
+  background: rgb(61 182 220 / 13%);
+  color: #f4e7ba;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.consent-banner__revisit::before {
+  content: "↻";
+  display: grid;
+  flex: 0 0 1.65rem;
+  width: 1.65rem;
+  height: 1.65rem;
+  place-items: center;
+  border-radius: 50%;
+  background: rgb(124 224 220 / 16%);
+  color: #7ce0dc;
+  font-size: 1.05rem;
+  line-height: 1;
 }
 
 .consent-banner__actions {

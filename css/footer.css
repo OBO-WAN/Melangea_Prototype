@@ -88,13 +88,15 @@
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-  color: #e5eaf5;
+  color: #f4e7ba;
   font: inherit;
   font-weight: 600;
   line-height: inherit;
   letter-spacing: 0.01em;
   text-align: left;
-  text-decoration: none;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
   cursor: pointer;
   transition: opacity 0.2s ease;
 }
@@ -173,6 +175,13 @@
   color: #e5eaf5;
   text-decoration: underline;
   text-underline-offset: 0.16em;
+}
+
+.consent-banner__revisit {
+  display: block;
+  margin-top: 0.35rem;
+  color: var(--muted);
+  font-size: 0.82rem;
 }
 
 .consent-banner__actions {

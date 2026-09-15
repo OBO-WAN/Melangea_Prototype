@@ -274,6 +274,9 @@
           Erforderliche Technologien sichern den Betrieb der Website.
           Statistik und YouTube werden nur mit Ihrer Einwilligung geladen.
           <a href="./datenschutz.html#analytics-title">Mehr erfahren</a>
+          <span class="consent-banner__revisit">
+            Sie können Ihre Auswahl jederzeit über „Cookie-Auswahl ändern“ im Seitenfuß anpassen.
+          </span>
         </p>
       </div>
       <div class="consent-banner__actions">
@@ -413,9 +416,18 @@
     document.body.style.overflow = "hidden";
   }
 
+  function labelConsentSettingsLinks() {
+    document
+      .querySelectorAll(".footer-consent-link[data-consent-settings]")
+      .forEach((control) => {
+        control.textContent = "Cookie-Auswahl ändern";
+      });
+  }
+
   function init() {
     createDialog();
     prepareExternalMedia();
+    labelConsentSettingsLinks();
 
     document.addEventListener("click", (event) => {
       const trigger = event.target.closest("[data-consent-settings]");

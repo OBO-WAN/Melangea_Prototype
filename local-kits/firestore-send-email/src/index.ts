@@ -101,6 +101,8 @@ setGlobalOptions({
 });
 
 requiresRole("roles/datastore.user");
+requiresRole("roles/eventarc.eventReceiver");
+requiresRole("roles/run.invoker");
 
 if (process.env.EVENTARC_CHANNEL) {
   requiresRole("roles/eventarc.publisher");

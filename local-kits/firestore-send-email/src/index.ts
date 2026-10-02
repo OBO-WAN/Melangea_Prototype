@@ -24,22 +24,20 @@ import {
   getFirestore,
 } from "firebase-admin/firestore";
 import { onDocumentWritten } from "firebase-functions/v2/firestore";
+import { requiresRole } from "firebase-functions";
 import * as functions from "firebase-functions";
 import * as nodemailer from "nodemailer";
 
 import * as logs from "./logs";
 import config, {
+  applyRuntimeParams,
   databaseParam,
   databaseRegionParam,
   mailCollectionParam,
-  smtpConnectionUriParam,
   smtpPasswordParam,
-  defaultFromParam,
-  authTypeParam,
 } from "./config";
 import Templates from "./templates";
 import {
-  AuthenticatonType,
   Delivery,
   QueuePayload,
   ExtendedSendMailOptions,
@@ -49,7 +47,7 @@ import * as events from "./events";
 import { SendGridTransport } from "./nodemailer-sendgrid";
 import { preparePayload, setDependencies } from "./prepare-payload";
 
-logs.init();
+requiresRole("roles/datastore.user");
 
 let db: Firestore;
 let transport: nodemailer.Transporter;
@@ -72,14 +70,8 @@ async function initialize() {
   if (initialized === true) return;
   initialized = true;
 
-  config.database = databaseParam.value();
-  config.databaseRegion = databaseRegionParam.value();
-  config.mailCollection = mailCollectionParam.value();
-  config.smtpConnectionUri = smtpConnectionUriParam.value();
-  config.smtpPassword = smtpPasswordParam.value();
-  config.defaultFrom = defaultFromParam.value();
-  config.authenticationType =
-    authTypeParam.value() as AuthenticatonType;
+  applyRuntimeParams();
+  logs.init();
 
   initializeApp();
   db = getFirestore(config.database);
@@ -381,6 +373,7 @@ export const processQueue = onDocumentWritten(
     database: databaseParam,
     region: databaseRegionParam,
     secrets: [smtpPasswordParam],
+    timeoutSeconds: 120,
   },
   async (event) => {
     await initialize();

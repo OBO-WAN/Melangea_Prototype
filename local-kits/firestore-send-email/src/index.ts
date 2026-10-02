@@ -24,7 +24,7 @@ import {
   getFirestore,
 } from "firebase-admin/firestore";
 import { onDocumentWritten } from "firebase-functions/v2/firestore";
-import { requiresRole, setGlobalOptions } from "firebase-functions";
+import { requiresAPI, requiresRole, setGlobalOptions } from "firebase-functions";
 import {
   IngressSetting,
   MemoryOption,
@@ -101,6 +101,14 @@ setGlobalOptions({
 });
 
 requiresRole("roles/datastore.user");
+
+if (process.env.EVENTARC_CHANNEL) {
+  requiresRole("roles/eventarc.publisher");
+  requiresAPI(
+    "eventarcpublishing.googleapis.com",
+    "Publishes optional Trigger Email lifecycle events to Eventarc.",
+  );
+}
 
 let db: Firestore;
 let transport: nodemailer.Transporter;

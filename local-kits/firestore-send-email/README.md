@@ -16,6 +16,7 @@ service is decommissioned.
 - Binds `SMTP_PASSWORD` as a Cloud Functions secret.
 - Preserves the extension's 120-second timeout.
 - Declares `roles/datastore.user` in code for the kit runtime service account.
+- If an exported `EVENTARC_CHANNEL` is present, also declares the Eventarc publisher role and publishing API required by the original optional lifecycle-event feature.
 - Keeps the original parameter names so exported extension configuration can be
   reused during migration.
 
@@ -30,6 +31,14 @@ The original extension also offered optional OAuth2 secret parameters
 not declared as Functions secrets here because optional Extension secrets become
 required when converted to Functions secrets. If this project is changed to
 OAuth2 later, migrate and bind those secrets before selecting OAuth2.
+
+## Optional Eventarc events
+
+The original extension can publish lifecycle events when events are enabled. This
+project currently does not rely on those events. If a migrated configuration
+contains `EVENTARC_CHANNEL`, the kit conditionally requests
+`roles/eventarc.publisher` and the Eventarc Publishing API so the behavior is
+preserved.
 
 ## Secrets and local configuration
 

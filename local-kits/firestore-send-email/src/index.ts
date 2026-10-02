@@ -24,7 +24,13 @@ import {
   getFirestore,
 } from "firebase-admin/firestore";
 import { onDocumentWritten } from "firebase-functions/v2/firestore";
-import { requiresRole } from "firebase-functions";
+import { requiresRole, setGlobalOptions } from "firebase-functions";
+import {
+  IngressSetting,
+  MemoryOption,
+  VpcEgressSetting,
+} from "firebase-functions/v2/options";
+import { defineString } from "firebase-functions/params";
 import * as functions from "firebase-functions";
 import * as nodemailer from "nodemailer";
 
@@ -46,6 +52,53 @@ import { isSendGrid, setSmtpCredentials } from "./helpers";
 import * as events from "./events";
 import { SendGridTransport } from "./nodemailer-sendgrid";
 import { preparePayload, setDependencies } from "./prepare-payload";
+
+export const regionParam = defineString("FUNCTION_DEFAULT_REGION", {
+  input: { text: { nonEmpty: true } },
+  description:
+    "Global default region where functions should be deployed. " +
+    "Can be overridden per-function.",
+});
+
+setGlobalOptions({
+  region: regionParam,
+  memory: (process.env.EXT_MIGRATED_SYSTEM_MEMORY as MemoryOption) ?? undefined,
+  timeoutSeconds: process.env.EXT_MIGRATED_SYSTEM_TIMEOUTSECONDS
+    ? Number(process.env.EXT_MIGRATED_SYSTEM_TIMEOUTSECONDS)
+    : undefined,
+  vpcConnectorEgressSettings:
+    process.env.EXT_MIGRATED_SYSTEM_VPCCONNECTOREGRESSSETTINGS &&
+    process.env.EXT_MIGRATED_SYSTEM_VPCCONNECTOREGRESSSETTINGS !==
+      "VPC_CONNECTOR_EGRESS_SETTINGS_UNSPECIFIED"
+      ? (process.env
+          .EXT_MIGRATED_SYSTEM_VPCCONNECTOREGRESSSETTINGS as VpcEgressSetting)
+      : undefined,
+  vpcConnector: process.env.EXT_MIGRATED_SYSTEM_VPCCONNECTOR ?? undefined,
+  maxInstances: process.env.EXT_MIGRATED_SYSTEM_MAXINSTANCES
+    ? Number(process.env.EXT_MIGRATED_SYSTEM_MAXINSTANCES)
+    : undefined,
+  minInstances: process.env.EXT_MIGRATED_SYSTEM_MININSTANCES
+    ? Number(process.env.EXT_MIGRATED_SYSTEM_MININSTANCES)
+    : undefined,
+  ingressSettings:
+    (process.env.EXT_MIGRATED_SYSTEM_INGRESSSETTINGS as IngressSetting) ??
+    undefined,
+  labels: process.env.EXT_MIGRATED_SYSTEM_LABELS
+    ? process.env.EXT_MIGRATED_SYSTEM_LABELS.split(",").reduce<
+        Record<string, string> | undefined
+      >((acc, current) => {
+        const [key, value] = current.split(":");
+        const trimmedKey = key?.trim();
+        const trimmedValue = value?.trim();
+        if (!trimmedKey || !trimmedValue) {
+          return acc;
+        }
+        acc = acc ?? {};
+        acc[trimmedKey] = trimmedValue;
+        return acc;
+      }, undefined)
+    : undefined,
+});
 
 requiresRole("roles/datastore.user");
 

@@ -30,7 +30,7 @@ import {
   MemoryOption,
   VpcEgressSetting,
 } from "firebase-functions/v2/options";
-import { defineString } from "firebase-functions/params";
+import { defineString, expr } from "firebase-functions/params";
 import * as functions from "firebase-functions";
 import * as nodemailer from "nodemailer";
 
@@ -432,7 +432,7 @@ async function processWrite(
 
 export const processQueue = onDocumentWritten(
   {
-    document: `${mailCollectionParam}/{documentId}`,
+    document: expr`${mailCollectionParam}/{documentId}`,
     database: databaseParam,
     region: databaseRegionParam,
     secrets: [smtpPasswordParam],

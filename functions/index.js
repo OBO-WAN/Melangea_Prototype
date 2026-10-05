@@ -7,7 +7,7 @@ const {getFirestore} = require("firebase-admin/firestore");
 const logger = require("firebase-functions/logger");
 
 const ADMIN_EMAIL = "info@melangea2.com";
-const MAIL_COLLECTION = "mail";
+const MAIL_COLLECTION = "mail_v2";
 
 setGlobalOptions({
   region: "europe-west3",

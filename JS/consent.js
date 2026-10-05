@@ -148,10 +148,12 @@
   }
 
   function createExternalMediaPrompt(iframe) {
-    const container = iframe.closest(".video-embed");
+    const container = iframe.parentElement;
     if (!container || container.querySelector("[data-external-media-settings]")) {
       return;
     }
+
+    container.classList.add("consent-media-container");
 
     const prompt = document.createElement("button");
     prompt.type = "button";
@@ -175,10 +177,11 @@
   }
 
   function removeExternalMediaPrompt(iframe) {
-    const container = iframe.closest(".video-embed");
+    const container = iframe.parentElement;
     container
       ?.querySelector("[data-external-media-settings]")
       ?.remove();
+    container?.classList.remove("consent-media-container");
     iframe.removeAttribute("aria-hidden");
     iframe.removeAttribute("tabindex");
   }

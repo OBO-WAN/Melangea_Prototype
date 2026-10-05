@@ -234,7 +234,7 @@
 }
 
 /* Blocked YouTube embeds become an obvious, accessible consent entry point. */
-.video-embed {
+.consent-media-container {
   position: relative;
 }
 

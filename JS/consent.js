@@ -147,13 +147,56 @@
     `;
   }
 
+  function createExternalMediaPrompt(iframe) {
+    const container = iframe.parentElement;
+    if (!container || container.querySelector("[data-external-media-settings]")) {
+      return;
+    }
+
+    container.classList.add("consent-media-container");
+
+    const prompt = document.createElement("button");
+    prompt.type = "button";
+    prompt.className = "video-consent-prompt";
+    prompt.dataset.consentSettings = "";
+    prompt.dataset.externalMediaSettings = "";
+    prompt.setAttribute(
+      "aria-label",
+      "Cookie-Einstellungen öffnen, um dieses YouTube-Video zu laden",
+    );
+    prompt.innerHTML = `
+      <span class="video-consent-prompt__copy">
+        <span>Dieses YouTube-Video wird erst geladen, wenn Sie „Externe Medien“ erlauben.</span>
+        <strong class="video-consent-prompt__action">Cookie-Einstellungen öffnen</strong>
+      </span>
+    `;
+
+    iframe.setAttribute("aria-hidden", "true");
+    iframe.setAttribute("tabindex", "-1");
+    container.append(prompt);
+  }
+
+  function removeExternalMediaPrompt(iframe) {
+    const container = iframe.parentElement;
+    container
+      ?.querySelector("[data-external-media-settings]")
+      ?.remove();
+    container?.classList.remove("consent-media-container");
+    iframe.removeAttribute("aria-hidden");
+    iframe.removeAttribute("tabindex");
+  }
+
   function activateExternalMedia() {
     document.querySelectorAll("iframe[data-consent-src]").forEach((iframe) => {
       const source = iframe.dataset.consentSrc;
-      if (!source || iframe.src === source) return;
+      if (!source) return;
 
+      removeExternalMediaPrompt(iframe);
       iframe.removeAttribute("srcdoc");
-      iframe.src = source;
+
+      if (iframe.src !== source) {
+        iframe.src = source;
+      }
     });
   }
 
@@ -162,11 +205,13 @@
 
     document.querySelectorAll("iframe[data-consent-src]").forEach((iframe) => {
       if (consent?.externalMedia === true) {
+        removeExternalMediaPrompt(iframe);
         iframe.removeAttribute("srcdoc");
         iframe.src = iframe.dataset.consentSrc;
       } else {
         iframe.removeAttribute("src");
         setExternalMediaPlaceholder(iframe);
+        createExternalMediaPrompt(iframe);
       }
     });
   }

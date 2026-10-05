@@ -97,3 +97,6 @@ php/cd-order-config.local.php
 
 # Local booking mail configuration
 php/booking-config.local.php
+
+# Generated local Firebase kit build output
+local-kits/**/lib/

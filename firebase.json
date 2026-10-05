@@ -25,6 +25,16 @@
       "predeploy": [
         "npm --prefix \"$RESOURCE_DIR\" run lint"
       ]
+    },
+    {
+      "kit": "firestore-send-email",
+      "source": "local-kits/firestore-send-email",
+      "instances": {
+        "firestore-send-email": "function-kits/firestore-send-email/config-firestore-send-email"
+      },
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run build"
+      ]
     }
   ]
 }

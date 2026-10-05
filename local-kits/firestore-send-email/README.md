@@ -4,9 +4,20 @@ This directory contains the local replacement for the deprecated
 `firebase/firestore-send-email` Firebase Extension used by the
 `newsletter-35ff2` project.
 
-It is based on Trigger Email from Firestore 0.2.10 and is being migrated to
-standard Cloud Functions for Firebase (2nd gen) before the Firebase Extensions
-service is decommissioned.
+It is based on Trigger Email from Firestore 0.2.10 and now runs as a standard
+Cloud Functions for Firebase (2nd gen) Function Kit.
+
+## Production status
+
+The migration is complete.
+
+- Production queue: `mail_v2`
+- Production validation: the admin notification and subscriber confirmation
+  were both delivered successfully.
+- The legacy `firebase/firestore-send-email` Extension instance has been
+  uninstalled.
+- The temporary `mail_migration_test` Firestore collection was used only for
+  migration testing and can be deleted from Firestore.
 
 ## Current behavior
 
@@ -15,10 +26,13 @@ service is decommissioned.
 - Preserves the existing Firestore database and database-region parameters.
 - Binds `SMTP_PASSWORD` as a Cloud Functions secret.
 - Preserves the extension's 120-second timeout.
-- Declares `roles/datastore.user` in code for the kit runtime service account.
-- If an exported `EVENTARC_CHANNEL` is present, also declares the Eventarc publisher role and publishing API required by the original optional lifecycle-event feature.
-- Keeps the original parameter names so exported extension configuration can be
-  reused during migration.
+- Declares the required Firestore, Eventarc, and Cloud Run runtime roles for the
+  kit service account.
+- If an exported `EVENTARC_CHANNEL` is present, also declares the Eventarc
+  publisher role and publishing API required by the original optional
+  lifecycle-event feature.
+- Keeps the original parameter names so the migrated configuration remains
+  compatible.
 
 ## Authentication scope
 
@@ -34,30 +48,26 @@ OAuth2 later, migrate and bind those secrets before selecting OAuth2.
 
 ## Optional Eventarc events
 
-The original extension can publish lifecycle events when events are enabled. This
-project currently does not rely on those events. If a migrated configuration
-contains `EVENTARC_CHANNEL`, the kit conditionally requests
+The original extension can publish lifecycle events when events are enabled.
+This project currently does not rely on those events. If a migrated
+configuration contains `EVENTARC_CHANNEL`, the kit conditionally requests
 `roles/eventarc.publisher` and the Eventarc Publishing API so the behavior is
 preserved.
 
 ## Secrets and local configuration
 
-Do not commit any `.env`, `.env.<project-id>`, or secret values. The repository
-root `.gitignore` excludes them.
+Do not commit any `.env`, `.env.<project-id>`, or secret values. The
+repository root `.gitignore` excludes them.
 
-The existing extension remains the production mail sender until the replacement
-kit has been installed, configured from the exported extension configuration,
-deployed, and verified end-to-end.
+The local `.env.<project-id>` file supplies the production queue and SMTP
+parameters. It is intentionally ignored by Git and must not be committed.
 
-## Migration sequence
+## Completed migration sequence
 
-1. Install this directory as a local function kit with `--no-configure`.
-2. Export the existing `firestore-send-email` extension configuration into the
-   new kit instance.
-3. Deploy only the new kit instance.
-4. Verify mail delivery and Firestore delivery-state updates.
-5. Only after successful verification, uninstall the old Extension instance.
+The project was migrated by installing this local kit, exporting the old
+Extension configuration, validating the new function first on the isolated
+`mail_migration_test` queue, moving production newsletter mail to `mail_v2`,
+and only then uninstalling the old Extension instance.
 
-Never deploy the replacement and old extension against the same live mail
-collection for an uncontrolled period, because both can react to the same
-documents.
+Do not point another mail processor at `mail_v2` while this Function Kit is
+active, otherwise the same queued message could be processed more than once.

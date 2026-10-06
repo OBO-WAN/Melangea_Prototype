@@ -128,12 +128,20 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
               </div>
               <small class="field-help">Stunde und Viertelstunde direkt auswählen.</small>
             </div>
+          <?php elseif ($key === 'description'): ?>
+            <div class="field field--wide" data-description-editor>
+              <label for="concert-description-<?= escape_html((string) $index) ?>"><?= escape_html($label) ?></label>
+              <textarea id="concert-description-<?= escape_html((string) $index) ?>" class="concert-description-input" name="<?= escape_html($namePrefix) ?>[description]" rows="6" aria-describedby="concert-description-help-<?= escape_html((string) $index) ?>" data-concert-description<?= $disabledAttribute ?>><?= escape_html(concert_value($concert, $key)) ?></textarea>
+              <small class="field-help" id="concert-description-help-<?= escape_html((string) $index) ?>">Enter: Zeilenumbruch. Eine Leerzeile (zweimal Enter): neuer Absatz. Die Absatzaufteilung wird auf der Website übernommen.</small>
+              <details class="concert-description-preview" hidden>
+                <summary>Absatzvorschau</summary>
+                <div class="concert-description-preview__text" data-description-preview></div>
+              </details>
+            </div>
           <?php else: ?>
-            <label class="field field--<?= $key === 'description' ? 'wide' : 'normal' ?>">
+            <label class="field field--normal">
               <span><?= escape_html($label) ?></span>
-              <?php if ($key === 'description'): ?>
-                <textarea name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" rows="3"<?= $disabledAttribute ?>><?= escape_html(concert_value($concert, $key)) ?></textarea>
-              <?php elseif ($key === 'date'): ?>
+              <?php if ($key === 'date'): ?>
                 <input type="date" name="<?= escape_html($namePrefix) ?>[<?= escape_html($key) ?>]" value="<?= escape_html(german_date_to_input_date(concert_value($concert, $key))) ?>"<?= $disabledAttribute ?>>
                 <small class="field-help">Datum über den Kalender auswählen.</small>
               <?php else: ?>
@@ -213,6 +221,32 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
 
       setRowFieldsDisabled(template, true);
 
+      const updateDescriptionEditor = (textarea) => {
+        // Grow existing and newly added descriptions without an inner scrollbar.
+        textarea.style.height = 'auto';
+        textarea.style.height = `${textarea.scrollHeight + textarea.offsetHeight - textarea.clientHeight}px`;
+
+        const editor = textarea.closest('[data-description-editor]');
+        const preview = editor.querySelector('[data-description-preview]');
+        const text = textarea.value.replace(/\r\n?/g, '\n').trim();
+        const paragraphs = text ? text.split(/\n[\t ]*\n(?:[\t ]*\n)*/) : [];
+        preview.replaceChildren(...paragraphs.map((text) => {
+          const paragraph = document.createElement('p');
+          paragraph.textContent = text.trim();
+          return paragraph;
+        }));
+        if (!text) preview.textContent = 'Noch keine Beschreibung.';
+        editor.querySelector('details').hidden = false;
+      };
+
+      rows.querySelectorAll('[data-concert-description]').forEach(updateDescriptionEditor);
+      rows.addEventListener('input', (event) => {
+        if (event.target.matches('[data-concert-description]')) updateDescriptionEditor(event.target);
+      });
+      window.addEventListener('resize', () => {
+        rows.querySelectorAll('[data-concert-description]').forEach(updateDescriptionEditor);
+      });
+
       const updateRowState = (row) => {
         const checkbox = row.querySelector('[data-remove-toggle]');
         if (!checkbox) return;
@@ -238,6 +272,7 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
         setRowFieldsDisabled(clone, false);
         clone.querySelector('h2').textContent = 'Neuer Konzerttermin';
         rows.append(clone);
+        updateDescriptionEditor(clone.querySelector('[data-concert-description]'));
         nextIndex += 1;
         clone.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
@@ -245,3 +280,4 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
   </script>
 </body>
 </html>
+

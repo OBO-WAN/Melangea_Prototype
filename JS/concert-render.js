@@ -244,11 +244,19 @@
     title.className = "concerts-card__title";
     title.textContent = event.title || "Konzert";
 
-    const description = document.createElement("p");
+    const description = document.createElement("div");
     description.className = "concerts-card__description";
-    description.textContent = event.description || "";
+    const descriptionText = String(event.description || "").replace(/\r\n?/g, "\n").trim();
+    if (descriptionText) {
+      descriptionText.split(/\n[\t ]*\n(?:[\t ]*\n)*/).forEach((text) => {
+        const paragraph = document.createElement("p");
+        paragraph.textContent = text.trim();
+        description.append(paragraph);
+      });
+    }
 
-    programme.append(title, description);
+    programme.append(title);
+    if (description.childElementCount) programme.append(description);
     card.append(date, details, programme);
 
     return card;

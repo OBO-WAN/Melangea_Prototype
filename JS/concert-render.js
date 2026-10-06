@@ -49,6 +49,55 @@
     return new Date(year, month - 1, day);
   };
 
+  // Compare calendar dates and clock times in the concert venue's time zone,
+  // regardless of the visitor's time zone or daylight saving offset.
+  const berlinClock = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Europe/Berlin",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  });
+
+  const getBerlinTimeKey = () => {
+    const parts = Object.fromEntries(
+      berlinClock.formatToParts(new Date()).map(({ type, value }) => [type, value])
+    );
+    return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+  };
+
+  const getHideTimeKey = (event) => {
+    const [day, month, year] = String(event.date || "")
+      .split(".")
+      .map((value) => Number.parseInt(value, 10));
+    const date = new Date(Date.UTC(year, month - 1, day));
+
+    if (
+      !Number.isInteger(day) || !Number.isInteger(month) || !Number.isInteger(year) ||
+      Number.isNaN(date.getTime()) ||
+      date.getUTCDate() !== day || date.getUTCMonth() !== month - 1 ||
+      date.getUTCFullYear() !== year
+    ) {
+      return "";
+    }
+
+    date.setUTCDate(date.getUTCDate() + 1);
+    const hideAfter = typeof event.hideAfter === "string" &&
+      /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(event.hideAfter)
+      ? event.hideAfter
+      : "00:00"; // Existing records default to midnight until saved in the admin.
+    return `${date.toISOString().slice(0, 10)}T${hideAfter}`;
+  };
+
+  const isVisible = (event, berlinNow) => {
+    // Preserve the visibility of existing data while the old status field is phased out.
+    if (event.status === "past" || event.status === "cancelled") return false;
+    const hideTime = getHideTimeKey(event);
+    return hideTime !== "" && berlinNow < hideTime;
+  };
+
   const getDateParts = (date) => {
     const [day = "", month = ""] = String(date || "").split(".");
     const monthIndex = Number.parseInt(month, 10) - 1;
@@ -88,11 +137,10 @@
 
   const renderCompactList = (events) => {
     document.querySelectorAll("[data-concert-render='compact']").forEach((list) => {
-      const upcomingEvents = events.filter((event) => event.status !== "past");
-      const visibleEvents = limitEvents(list, upcomingEvents);
+      const visibleEvents = limitEvents(list, events);
       list.replaceChildren(...visibleEvents.map(createCompactEvent));
 
-      if (upcomingEvents.length === 0) {
+      if (events.length === 0) {
         const emptyItem = document.createElement("li");
         emptyItem.className = "event";
         emptyItem.textContent = "Aktuell sind keine Konzerttermine eingetragen.";
@@ -144,21 +192,15 @@
 
   const renderConcertCards = (events) => {
     document.querySelectorAll("[data-concert-render='cards']").forEach((grid) => {
-      const status = grid.dataset.concertStatus;
-      const matchingEvents = events.filter((event) => event.status === status);
-      const visibleEvents = limitEvents(grid, matchingEvents);
+      const visibleEvents = limitEvents(grid, events);
       grid.replaceChildren(...visibleEvents.map(createConcertCard));
 
-      if (matchingEvents.length === 0) {
+      if (events.length === 0) {
         const emptyCard = document.createElement("article");
-        emptyCard.className = status === "past"
-          ? "card concerts-card concerts-card--past"
-          : "card concerts-card";
+        emptyCard.className = "card concerts-card";
         emptyCard.setAttribute("role", "listitem");
         emptyCard.setAttribute("data-aos", "fade-up");
-        emptyCard.textContent = status === "past"
-          ? "Aktuell sind keine vergangenen Konzerte eingetragen."
-          : "Aktuell sind keine Konzerttermine eingetragen.";
+        emptyCard.textContent = "Aktuell sind keine Konzerttermine eingetragen.";
         grid.append(emptyCard);
       }
     });
@@ -166,9 +208,7 @@
 
   const createConcertCard = (event) => {
     const card = document.createElement("article");
-    card.className = event.status === "past"
-      ? "card concerts-card concerts-card--past"
-      : "card concerts-card";
+    card.className = "card concerts-card";
     card.setAttribute("data-aos", "fade-up");
     card.setAttribute("role", "listitem");
 
@@ -189,15 +229,13 @@
 
     details.append(location, meta);
 
-    if (event.status !== "past") {
-      const actions = document.createElement("div");
-      actions.className = "concerts-card__actions";
-      actions.append(
-        createLink("btn btn-small btn-ghost", event.detailsUrl, "Details"),
-        createLink("btn btn-small", event.ticketsUrl, "Tickets")
-      );
-      details.append(actions);
-    }
+    const actions = document.createElement("div");
+    actions.className = "concerts-card__actions";
+    actions.append(
+      createLink("btn btn-small btn-ghost", event.detailsUrl, "Details"),
+      createLink("btn btn-small", event.ticketsUrl, "Tickets")
+    );
+    details.append(actions);
 
     const programme = document.createElement("div");
     programme.className = "concerts-card__programme";
@@ -218,8 +256,29 @@
 
   document.addEventListener("DOMContentLoaded", async () => {
     const events = await loadEvents();
-    renderCompactList(events);
-    renderConcertCards(events);
-    refreshAnimations();
+    let lastVisibleKey = null;
+
+    const renderIfChanged = () => {
+      const berlinNow = getBerlinTimeKey();
+      const visibleIndexes = events
+        .map((event, index) => isVisible(event, berlinNow) ? index : -1)
+        .filter((index) => index !== -1);
+      const visibleKey = visibleIndexes.join(",");
+      if (visibleKey === lastVisibleKey) return;
+
+      lastVisibleKey = visibleKey;
+      const visibleEvents = visibleIndexes.map((index) => events[index]);
+      renderCompactList(visibleEvents);
+      renderConcertCards(visibleEvents);
+      refreshAnimations();
+    };
+
+    renderIfChanged();
+    // Recheck at each clock minute; refresh immediately when a sleeping tab wakes.
+    setTimeout(() => {
+      renderIfChanged();
+      setInterval(renderIfChanged, 60_000);
+    }, 60_000 - (Date.now() % 60_000) + 100);
+    document.addEventListener("visibilitychange", renderIfChanged);
   });
 })();

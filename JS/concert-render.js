@@ -87,7 +87,7 @@
     const hideAfter = typeof event.hideAfter === "string" &&
       /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(event.hideAfter)
       ? event.hideAfter
-      : "00:00"; // Existing records default to midnight until saved in the admin.
+      : "03:00"; // Existing records use the admin default until saved again.
     return `${date.toISOString().slice(0, 10)}T${hideAfter}`;
   };
 

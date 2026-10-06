@@ -186,7 +186,7 @@
     const message = document.getElementById('demo-editor-message');
     const addButton = document.getElementById('demo-add-concert');
     const logoutButton = document.getElementById('demo-logout');
-    const hideAfterSelect = document.querySelector('#demo-concert-template [name="hideAfter"]');
+    const hideAfterSelect = document.getElementById('demo-concert-template').content.querySelector('[name="hideAfter"]');
     for (let hour = 0; hour < 24; hour += 1) {
       for (const minute of ['00', '15', '30', '45']) {
         const option = document.createElement('option');

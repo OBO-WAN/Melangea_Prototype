@@ -6,7 +6,7 @@
   const STORAGE_KEY = 'melange_admin_demo_concerts';
   const DATE_PATTERN = /^\d{2}\.\d{2}\.\d{4}$/;
   const TIME_PATTERN = /^\d{2}:\d{2} Uhr$/;
-  const HIDE_TIME_PATTERN = /^(?:[01]\d|2[0-3]):(?:00|15|30|45)$/;
+  const HIDE_TIME_PATTERN = /^0[0-6]:00$/;
   const FIELDS = ['date', 'time', 'title', 'venue', 'city', 'description', 'detailsUrl', 'ticketsUrl', 'hideAfter'];
 
   const isLoggedIn = () => sessionStorage.getItem(SESSION_KEY) === 'true';
@@ -89,7 +89,7 @@
     description: '',
     detailsUrl: '#',
     ticketsUrl: '#',
-    hideAfter: '00:00',
+    hideAfter: '03:00',
   });
 
   const fillRow = (row, concert, index) => {
@@ -100,7 +100,7 @@
       if (!input) return;
       input.value = typeof concert[field] === 'string' && (field !== 'hideAfter' || HIDE_TIME_PATTERN.test(concert[field]))
         ? concert[field]
-        : field === 'hideAfter' ? '00:00' : '';
+        : field === 'hideAfter' ? '03:00' : '';
     });
   };
 
@@ -187,13 +187,11 @@
     const addButton = document.getElementById('demo-add-concert');
     const logoutButton = document.getElementById('demo-logout');
     const hideAfterSelect = document.getElementById('demo-concert-template').content.querySelector('[name="hideAfter"]');
-    for (let hour = 0; hour < 24; hour += 1) {
-      for (const minute of ['00', '15', '30', '45']) {
-        const option = document.createElement('option');
-        option.value = `${String(hour).padStart(2, '0')}:${minute}`;
-        option.textContent = `${option.value} Uhr`;
-        hideAfterSelect.append(option);
-      }
+    for (let hour = 0; hour <= 6; hour += 1) {
+      const option = document.createElement('option');
+      option.value = `${String(hour).padStart(2, '0')}:00`;
+      option.textContent = `${option.value} Uhr`;
+      hideAfterSelect.append(option);
     }
 
     try {

@@ -43,7 +43,7 @@ $emptyConcert = [
     'description' => '',
     'detailsUrl' => '#',
     'ticketsUrl' => '#',
-    'status' => 'upcoming',
+    'hideAfter' => '00:00',
 ];
 
 function concert_value(array $concert, string $key): string
@@ -67,6 +67,15 @@ function split_german_time(string $time): array
     }
 
     return ['19', '30'];
+}
+
+function split_hide_after_time(string $time): array
+{
+    if (preg_match('/^([01]\d|2[0-3]):(00|15|30|45)$/', $time, $matches)) {
+        return [$matches[1], $matches[2]];
+    }
+
+    return ['00', '00'];
 }
 
 function render_concert_row(array $concert, $index, array $fields, bool $isTemplate = false): void
@@ -128,15 +137,32 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
           <?php endif; ?>
         <?php endforeach; ?>
 
-        <label class="field">
-          <span>Status</span>
-          <?php $status = concert_value($concert, 'status') ?: 'upcoming'; ?>
-          <select name="<?= escape_html($namePrefix) ?>[status]"<?= $disabledAttribute ?>>
-            <option value="upcoming" <?= $status === 'upcoming' ? 'selected' : '' ?>>upcoming</option>
-            <option value="past" <?= $status === 'past' ? 'selected' : '' ?>>past</option>
-            <option value="cancelled" <?= $status === 'cancelled' ? 'selected' : '' ?>>cancelled</option>
-          </select>
-        </label>
+        <?php [$hideHour, $hideMinute] = split_hide_after_time(concert_value($concert, 'hideAfter')); ?>
+        <div class="field field--normal">
+          <span>Automatisch ausblenden am Folgetag</span>
+          <div class="time-select" role="group" aria-label="Uhrzeit zum Ausblenden am Folgetag">
+            <label class="time-select__field">
+              <span class="sr-only">Stunde</span>
+              <select name="<?= escape_html($namePrefix) ?>[hideHour]"<?= $disabledAttribute ?>>
+                <?php for ($hour = 0; $hour <= 23; $hour++): ?>
+                  <?php $hourValue = str_pad((string) $hour, 2, '0', STR_PAD_LEFT); ?>
+                  <option value="<?= escape_html($hourValue) ?>" <?= $hideHour === $hourValue ? 'selected' : '' ?>><?= escape_html($hourValue) ?></option>
+                <?php endfor; ?>
+              </select>
+            </label>
+            <span class="time-select__separator" aria-hidden="true">:</span>
+            <label class="time-select__field">
+              <span class="sr-only">Minute</span>
+              <select name="<?= escape_html($namePrefix) ?>[hideMinute]"<?= $disabledAttribute ?>>
+                <?php foreach (['00', '15', '30', '45'] as $minuteValue): ?>
+                  <option value="<?= escape_html($minuteValue) ?>" <?= $hideMinute === $minuteValue ? 'selected' : '' ?>><?= escape_html($minuteValue) ?></option>
+                <?php endforeach; ?>
+              </select>
+            </label>
+            <span class="time-select__suffix">Uhr</span>
+          </div>
+          <small class="field-help">Der Termin verschwindet dann automatisch von der Website (Zeitzone Berlin), bleibt aber hier gespeichert.</small>
+        </div>
       </div>
     </section>
     <?php

@@ -4,11 +4,20 @@ declare(strict_types=1);
 
 require __DIR__ . '/auth.php';
 require_authentication();
+require __DIR__ . '/concert-storage.php';
 require __DIR__ . '/layout.php';
 
-$concertsPath = dirname(__DIR__) . '/data/concerts.json';
+$concertsPath = concert_data_path();
 $concerts = [];
 $loadError = '';
+
+try {
+    // Also remove overdue entries when an admin visits between scheduled runs.
+    concert_prune_storage();
+} catch (Throwable $exception) {
+    error_log('Concert cleanup failed: ' . $exception->getMessage());
+    $loadError = 'Abgelaufene Konzerttermine konnten nicht gelöscht werden. Bitte prüfen Sie den Server-Cronjob und die Dateiberechtigungen.';
+}
 
 if (is_file($concertsPath)) {
     $json = file_get_contents($concertsPath);
@@ -136,14 +145,14 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
 
         <?php $hideAfter = concert_hide_after_time($concert); ?>
         <label class="field field--normal">
-          <span>Automatisch ausblenden am Folgetag</span>
+          <span>Automatisch löschen am Folgetag</span>
           <select name="<?= escape_html($namePrefix) ?>[hideAfter]"<?= $disabledAttribute ?>>
             <?php for ($hour = 0; $hour <= 6; $hour++): ?>
               <?php $time = str_pad((string) $hour, 2, '0', STR_PAD_LEFT) . ':00'; ?>
               <option value="<?= escape_html($time) ?>" <?= $hideAfter === $time ? 'selected' : '' ?>><?= escape_html($time) ?> Uhr</option>
             <?php endfor; ?>
           </select>
-          <small class="field-help">Der Termin verschwindet dann automatisch von der Website (Zeitzone Berlin), bleibt aber hier gespeichert.</small>
+          <small class="field-help">Der Termin wird zu dieser Uhrzeit (Zeitzone Berlin) dauerhaft aus den Konzertdaten und der Verwaltung gelöscht.</small>
         </label>
       </div>
     </section>

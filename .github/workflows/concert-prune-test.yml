@@ -1,0 +1,29 @@
+name: Concert pruning
+
+on:
+  pull_request:
+    paths:
+      - 'admin/**'
+      - 'tests/concert-prune.php'
+      - '.github/workflows/concert-prune-test.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'admin/**'
+      - 'tests/concert-prune.php'
+      - '.github/workflows/concert-prune-test.yml'
+
+jobs:
+  php:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: PHP syntax
+        run: |
+          php -l admin/concert-storage.php
+          php -l admin/prune-concerts.php
+          php -l admin/index.php
+          php -l admin/save-concerts.php
+          php -l tests/concert-prune.php
+      - name: Expiry and storage behavior
+        run: php tests/concert-prune.php

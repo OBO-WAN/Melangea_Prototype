@@ -5,7 +5,6 @@ declare(strict_types=1);
 require __DIR__ . '/auth.php';
 require_authentication();
 
-const ALLOWED_STATUSES = ['upcoming', 'past', 'cancelled'];
 const ALLOWED_MINUTES = ['00', '15', '30', '45'];
 
 function show_error(string $message): void
@@ -174,7 +173,8 @@ foreach ($postedConcerts as $postedIndex => $concert) {
     $description = clean_text($concert['description'] ?? '');
     $detailsUrl = clean_text($concert['detailsUrl'] ?? '');
     $ticketsUrl = clean_text($concert['ticketsUrl'] ?? '');
-    $status = clean_text($concert['status'] ?? '');
+    $hideHour = clean_text($concert['hideHour'] ?? '');
+    $hideMinute = clean_text($concert['hideMinute'] ?? '');
 
     $normalizedDate = normalize_german_date($date);
 
@@ -192,8 +192,8 @@ foreach ($postedConcerts as $postedIndex => $concert) {
         show_error('Bitte prüfen Sie die Uhrzeit in Zeile ' . $rowNumber . '. Erwartetes Format: HH:MM Uhr.');
     }
 
-    if (!in_array($status, ALLOWED_STATUSES, true)) {
-        show_error('Bitte wählen Sie in Zeile ' . $rowNumber . ' einen gültigen Status.');
+    if (!preg_match('/^([01]\d|2[0-3])$/', $hideHour) || !in_array($hideMinute, ALLOWED_MINUTES, true)) {
+        show_error('Bitte wählen Sie in Zeile ' . $rowNumber . ' eine gültige Uhrzeit zum Ausblenden am Folgetag.');
     }
 
     if (!is_valid_admin_url($detailsUrl)) {
@@ -213,7 +213,7 @@ foreach ($postedConcerts as $postedIndex => $concert) {
         'description' => $description,
         'detailsUrl' => $detailsUrl,
         'ticketsUrl' => $ticketsUrl,
-        'status' => $status,
+        'hideAfter' => $hideHour . ':' . $hideMinute,
     ];
 }
 

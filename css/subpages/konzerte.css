@@ -156,7 +156,7 @@
   display: grid;
   gap: 0.45rem;
   min-width: 0;
-  text-align: right;
+  text-align: left;
   overflow-wrap: anywhere;
 }
 

@@ -8,7 +8,7 @@
     "description": "Öffentlicher Beispieltermin für die statische Demo der Konzertverwaltung.",
     "detailsUrl": "#",
     "ticketsUrl": "#",
-    "status": "upcoming"
+    "hideAfter": "00:00"
   },
   {
     "date": "20.09.2026",
@@ -19,7 +19,7 @@
     "description": "Fiktiver Termin mit sicheren Demo-Daten ohne private Informationen.",
     "detailsUrl": "#",
     "ticketsUrl": "#",
-    "status": "upcoming"
+    "hideAfter": "03:00"
   },
   {
     "date": "05.04.2025",
@@ -27,9 +27,9 @@
     "title": "Vergangenes Demo-Konzert",
     "venue": "Archiv-Bühne",
     "city": "Demodorf",
-    "description": "Beispieldatensatz für einen vergangenen Konzertstatus.",
+    "description": "Beispieldatensatz für einen vergangenen Konzerttermin.",
     "detailsUrl": "#",
     "ticketsUrl": "#",
-    "status": "past"
+    "hideAfter": "00:00"
   }
 ]

@@ -143,7 +143,7 @@
       if (events.length === 0) {
         const emptyItem = document.createElement("li");
         emptyItem.className = "event";
-        emptyItem.textContent = "Aktuell sind keine Konzerttermine eingetragen.";
+        emptyItem.textContent = "Aktuell sind keine Konzerttermine angekündigt.";
         list.append(emptyItem);
       }
     });
@@ -200,7 +200,7 @@
         emptyCard.className = "card concerts-card";
         emptyCard.setAttribute("role", "listitem");
         emptyCard.setAttribute("data-aos", "fade-up");
-        emptyCard.textContent = "Aktuell sind keine Konzerttermine eingetragen.";
+        emptyCard.textContent = "Aktuell sind keine Konzerttermine angekündigt.";
         grid.append(emptyCard);
       }
     });

@@ -89,7 +89,7 @@ Firestore. The static admin demo uses only browser storage.
 
 Public concert listings are loaded from `data/concerts.json` by the frontend JavaScript. The production admin area in `admin/` reads and updates the same concert data through PHP.
 
-For each concert, the admin chooses when it disappears from the public lists on the following day (hour and quarter-hour, Europe/Berlin time). The default is 00:00. The concert stays in the admin data for later editing; no scheduled server job is needed. Existing records without a cutoff use 00:00 until they are saved again. Legacy records marked `past` or `cancelled` remain hidden until they are edited and saved with the new field.
+For each concert, the admin chooses when it disappears from the public lists on the following day (hourly from 00:00 to 06:00, Europe/Berlin time). The default is 03:00. The concert stays in the admin data for later editing; no scheduled server job is needed. Existing records without a cutoff use 03:00 until they are saved again. Legacy records marked `past` or `cancelled` remain hidden until they are edited and saved with the new field.
 
 Local/private admin configuration is not committed. Create local configuration from the provided example file when deploying the PHP admin area, and keep secrets out of version control.
 

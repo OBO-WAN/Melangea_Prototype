@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/auth.php';
 require_authentication();
+require __DIR__ . '/concert-storage.php';
 
 const ALLOWED_MINUTES = ['00', '15', '30', '45'];
 
@@ -216,37 +217,35 @@ foreach ($postedConcerts as $postedIndex => $concert) {
     ];
 }
 
-$concertsPath = dirname(__DIR__) . '/data/concerts.json';
-$backupDirectory = dirname(__DIR__) . '/data/backups';
+try {
+    concert_with_lock(static function () use ($validatedConcerts): void {
+        $concertsPath = concert_data_path();
+        if (!is_file($concertsPath) || !is_readable($concertsPath)) {
+            throw new RuntimeException('Die bestehende Datei data/concerts.json konnte nicht gelesen werden.');
+        }
+        if (!is_writable($concertsPath)) {
+            throw new RuntimeException('Die Datei data/concerts.json ist nicht beschreibbar. Bitte prüfen Sie die Server-Berechtigungen.');
+        }
 
-if (!is_file($concertsPath) || !is_readable($concertsPath)) {
-    show_error('Die bestehende Datei data/concerts.json konnte nicht gelesen werden.');
-}
+        $backupDirectory = concert_backup_directory();
+        if (!is_writable($backupDirectory)) {
+            throw new RuntimeException('Der Backup-Ordner data/backups ist nicht beschreibbar.');
+        }
 
-if (!is_writable($concertsPath)) {
-    show_error('Die Datei data/concerts.json ist nicht beschreibbar. Bitte prüfen Sie die Server-Berechtigungen.');
-}
+        $now = concert_now();
+        // Do not let a form left open overnight restore an expired concert.
+        $current = concert_without_expired(concert_read_json($concertsPath), $now);
+        $submitted = concert_without_expired($validatedConcerts, $now);
 
-if (!is_dir($backupDirectory) && !mkdir($backupDirectory, 0755, true)) {
-    show_error('Der Backup-Ordner data/backups konnte nicht erstellt werden.');
-}
-
-if (!is_writable($backupDirectory)) {
-    show_error('Der Backup-Ordner data/backups ist nicht beschreibbar. Bitte prüfen Sie die Server-Berechtigungen.');
-}
-
-$backupPath = $backupDirectory . '/concerts-' . date('Ymd-His') . '.json';
-if (!copy($concertsPath, $backupPath)) {
-    show_error('Vor dem Speichern konnte keine Sicherungskopie erstellt werden.');
-}
-
-$json = json_encode($validatedConcerts, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-if (!is_string($json)) {
-    show_error('Die Konzertdaten konnten nicht als JSON vorbereitet werden.');
-}
-
-if (file_put_contents($concertsPath, $json . PHP_EOL, LOCK_EX) === false) {
-    show_error('Die Konzertdaten konnten nicht gespeichert werden.');
+        concert_prune_backups_unlocked($now);
+        $backupPath = $backupDirectory . '/concerts-' . date('Ymd-His')
+            . '-' . bin2hex(random_bytes(4)) . '.json';
+        concert_write_json($backupPath, $current);
+        concert_write_json($concertsPath, $submitted);
+    });
+} catch (Throwable $exception) {
+    error_log('Concert save failed: ' . $exception->getMessage());
+    show_error($exception->getMessage());
 }
 
 header('Location: index.php?saved=1');

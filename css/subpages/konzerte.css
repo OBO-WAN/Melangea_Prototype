@@ -187,6 +187,17 @@
 
 .concerts-card__description {
   color: var(--muted);
+  text-align: left;
+  line-height: 1.65;
+}
+
+.concerts-card__description p {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.concerts-card__description p + p {
+  margin-top: 0.85em;
 }
 
 .concerts-card a {

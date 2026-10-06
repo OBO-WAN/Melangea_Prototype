@@ -372,6 +372,41 @@ body.admin-page {
   resize: vertical;
 }
 
+.admin-page .concert-description-input {
+  min-height: 10rem;
+  line-height: 1.65;
+}
+
+.concert-description-preview {
+  border: 1px solid var(--admin-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: var(--admin-field-bg);
+  font-weight: 400;
+}
+
+.concert-description-preview summary {
+  color: var(--admin-accent);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.concert-description-preview__text {
+  margin-top: 12px;
+  color: var(--admin-muted);
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.concert-description-preview__text p {
+  margin: 0;
+  white-space: pre-line;
+}
+
+.concert-description-preview__text p + p {
+  margin-top: 0.85em;
+}
+
 .field-help {
   color: var(--admin-muted);
   font-size: 0.85rem;

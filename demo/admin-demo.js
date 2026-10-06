@@ -6,8 +6,8 @@
   const STORAGE_KEY = 'melange_admin_demo_concerts';
   const DATE_PATTERN = /^\d{2}\.\d{2}\.\d{4}$/;
   const TIME_PATTERN = /^\d{2}:\d{2} Uhr$/;
-  const STATUSES = ['upcoming', 'past', 'cancelled'];
-  const FIELDS = ['date', 'time', 'title', 'venue', 'city', 'description', 'detailsUrl', 'ticketsUrl', 'status'];
+  const HIDE_TIME_PATTERN = /^0[0-6]:00$/;
+  const FIELDS = ['date', 'time', 'title', 'venue', 'city', 'description', 'detailsUrl', 'ticketsUrl', 'hideAfter'];
 
   const isLoggedIn = () => sessionStorage.getItem(SESSION_KEY) === 'true';
 
@@ -89,7 +89,7 @@
     description: '',
     detailsUrl: '#',
     ticketsUrl: '#',
-    status: 'upcoming',
+    hideAfter: '03:00',
   });
 
   const fillRow = (row, concert, index) => {
@@ -98,7 +98,9 @@
     FIELDS.forEach((field) => {
       const input = row.querySelector(`[name="${field}"]`);
       if (!input) return;
-      input.value = typeof concert[field] === 'string' ? concert[field] : '';
+      input.value = typeof concert[field] === 'string' && (field !== 'hideAfter' || HIDE_TIME_PATTERN.test(concert[field]))
+        ? concert[field]
+        : field === 'hideAfter' ? '03:00' : '';
     });
   };
 
@@ -140,7 +142,7 @@
     document.querySelectorAll('[data-concert-row]').forEach((row, index) => {
       const dateInput = row.querySelector('[name="date"]');
       const timeInput = row.querySelector('[name="time"]');
-      const statusInput = row.querySelector('[name="status"]');
+      const hideAfterInput = row.querySelector('[name="hideAfter"]');
       const rowLabel = `Konzert ${index + 1}`;
 
       if (!DATE_PATTERN.test(dateInput.value.trim())) {
@@ -153,9 +155,9 @@
         errors.push(`${rowLabel}: Uhrzeit muss HH:MM Uhr sein.`);
       }
 
-      if (!STATUSES.includes(statusInput.value)) {
-        statusInput.classList.add('is-invalid');
-        errors.push(`${rowLabel}: Status muss upcoming, past oder cancelled sein.`);
+      if (!HIDE_TIME_PATTERN.test(hideAfterInput.value)) {
+        hideAfterInput.classList.add('is-invalid');
+        errors.push(`${rowLabel}: Bitte eine Uhrzeit zum Ausblenden am Folgetag wählen.`);
       }
     });
 
@@ -184,6 +186,13 @@
     const message = document.getElementById('demo-editor-message');
     const addButton = document.getElementById('demo-add-concert');
     const logoutButton = document.getElementById('demo-logout');
+    const hideAfterSelect = document.getElementById('demo-concert-template').content.querySelector('[name="hideAfter"]');
+    for (let hour = 0; hour <= 6; hour += 1) {
+      const option = document.createElement('option');
+      option.value = `${String(hour).padStart(2, '0')}:00`;
+      option.textContent = `${option.value} Uhr`;
+      hideAfterSelect.append(option);
+    }
 
     try {
       const concerts = await loadConcerts();

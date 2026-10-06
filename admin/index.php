@@ -43,7 +43,7 @@ $emptyConcert = [
     'description' => '',
     'detailsUrl' => '#',
     'ticketsUrl' => '#',
-    'status' => 'upcoming',
+    'hideAfter' => '03:00',
 ];
 
 function concert_value(array $concert, string $key): string
@@ -67,6 +67,12 @@ function split_german_time(string $time): array
     }
 
     return ['19', '30'];
+}
+
+function concert_hide_after_time(array $concert): string
+{
+    $time = concert_value($concert, 'hideAfter');
+    return preg_match('/^0[0-6]:00$/', $time) ? $time : '03:00';
 }
 
 function render_concert_row(array $concert, $index, array $fields, bool $isTemplate = false): void
@@ -128,14 +134,16 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
           <?php endif; ?>
         <?php endforeach; ?>
 
-        <label class="field">
-          <span>Status</span>
-          <?php $status = concert_value($concert, 'status') ?: 'upcoming'; ?>
-          <select name="<?= escape_html($namePrefix) ?>[status]"<?= $disabledAttribute ?>>
-            <option value="upcoming" <?= $status === 'upcoming' ? 'selected' : '' ?>>upcoming</option>
-            <option value="past" <?= $status === 'past' ? 'selected' : '' ?>>past</option>
-            <option value="cancelled" <?= $status === 'cancelled' ? 'selected' : '' ?>>cancelled</option>
+        <?php $hideAfter = concert_hide_after_time($concert); ?>
+        <label class="field field--normal">
+          <span>Automatisch ausblenden am Folgetag</span>
+          <select name="<?= escape_html($namePrefix) ?>[hideAfter]"<?= $disabledAttribute ?>>
+            <?php for ($hour = 0; $hour <= 6; $hour++): ?>
+              <?php $time = str_pad((string) $hour, 2, '0', STR_PAD_LEFT) . ':00'; ?>
+              <option value="<?= escape_html($time) ?>" <?= $hideAfter === $time ? 'selected' : '' ?>><?= escape_html($time) ?> Uhr</option>
+            <?php endfor; ?>
           </select>
+          <small class="field-help">Der Termin verschwindet dann automatisch von der Website (Zeitzone Berlin), bleibt aber hier gespeichert.</small>
         </label>
       </div>
     </section>

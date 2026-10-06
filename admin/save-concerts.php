@@ -173,8 +173,7 @@ foreach ($postedConcerts as $postedIndex => $concert) {
     $description = clean_text($concert['description'] ?? '');
     $detailsUrl = clean_text($concert['detailsUrl'] ?? '');
     $ticketsUrl = clean_text($concert['ticketsUrl'] ?? '');
-    $hideHour = clean_text($concert['hideHour'] ?? '');
-    $hideMinute = clean_text($concert['hideMinute'] ?? '');
+    $hideAfter = clean_text($concert['hideAfter'] ?? '');
 
     $normalizedDate = normalize_german_date($date);
 
@@ -192,7 +191,7 @@ foreach ($postedConcerts as $postedIndex => $concert) {
         show_error('Bitte prüfen Sie die Uhrzeit in Zeile ' . $rowNumber . '. Erwartetes Format: HH:MM Uhr.');
     }
 
-    if (!preg_match('/^([01]\d|2[0-3])$/', $hideHour) || !in_array($hideMinute, ALLOWED_MINUTES, true)) {
+    if (!preg_match('/^0[0-6]:00$/', $hideAfter)) {
         show_error('Bitte wählen Sie in Zeile ' . $rowNumber . ' eine gültige Uhrzeit zum Ausblenden am Folgetag.');
     }
 
@@ -213,7 +212,7 @@ foreach ($postedConcerts as $postedIndex => $concert) {
         'description' => $description,
         'detailsUrl' => $detailsUrl,
         'ticketsUrl' => $ticketsUrl,
-        'hideAfter' => $hideHour . ':' . $hideMinute,
+        'hideAfter' => $hideAfter,
     ];
 }
 

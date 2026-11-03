@@ -18,7 +18,7 @@
 
   const loadEvents = async () => {
     try {
-      const response = await fetch(CONCERTS_DATA_URL);
+      const response = await fetch(CONCERTS_DATA_URL, { cache: "no-store" });
 
       if (!response.ok) {
         throw new Error(
@@ -28,14 +28,14 @@
 
       const events = await response.json();
 
-      if (!Array.isArray(events)) return [];
+      if (!Array.isArray(events)) throw new Error("Invalid concert data.");
 
       return events
         .map((event) => ({ ...event, sortDate: parseGermanDate(event.date) }))
         .sort((eventA, eventB) => eventA.sortDate - eventB.sortDate);
     } catch (error) {
       console.error("Unable to load concert data.", error);
-      return [];
+      return null; // Preserve the last successful listing on a transient failure.
     }
   };
 
@@ -92,10 +92,29 @@
   };
 
   const isVisible = (event, berlinNow) => {
-    // Preserve the visibility of existing data while the old status field is phased out.
-    if (event.status === "past" || event.status === "cancelled") return false;
+    if (event.status === "past") return false;
     const hideTime = getHideTimeKey(event);
     return hideTime !== "" && berlinNow < hideTime;
+  };
+
+  const isCancelled = (event) => event.cancelled === true || event.status === "cancelled";
+
+  const createCancellationNotice = (event) => {
+    const notice = document.createElement("div");
+    notice.className = "concert-cancellation";
+    const label = document.createElement("strong");
+    label.className = "concert-cancellation__label";
+    label.textContent = "ABGESAGT";
+    notice.append(label);
+
+    const reason = typeof event.cancellationReason === "string" ? event.cancellationReason.trim() : "";
+    if (reason) {
+      const message = document.createElement("p");
+      message.className = "concert-cancellation__reason";
+      message.textContent = reason;
+      notice.append(message);
+    }
+    return notice;
   };
 
   const getDateParts = (date) => {
@@ -150,9 +169,10 @@
   };
 
   const createCompactEvent = (event) => {
+    const cancelled = isCancelled(event);
     const dateParts = getDateParts(event.date);
     const item = document.createElement("li");
-    item.className = "event";
+    item.className = cancelled ? "event event--cancelled" : "event";
 
     const date = document.createElement("div");
     date.className = "event-date";
@@ -178,12 +198,11 @@
 
     const actions = document.createElement("div");
     actions.className = "event-actions";
-    actions.append(
-      createLink("btn btn-small btn-ghost", event.detailsUrl, "Details"),
-      createLink("btn btn-small", event.ticketsUrl, "Tickets")
-    );
+    actions.append(createLink("btn btn-small btn-ghost", event.detailsUrl, "Details"));
+    if (!cancelled) actions.append(createLink("btn btn-small", event.ticketsUrl, "Tickets"));
 
     date.append(day, month);
+    if (cancelled) body.append(createCancellationNotice(event));
     body.append(title, meta);
     item.append(date, body, actions);
 
@@ -207,8 +226,9 @@
   };
 
   const createConcertCard = (event) => {
+    const cancelled = isCancelled(event);
     const card = document.createElement("article");
-    card.className = "card concerts-card";
+    card.className = cancelled ? "card concerts-card concerts-card--cancelled" : "card concerts-card";
     card.setAttribute("data-aos", "fade-up");
     card.setAttribute("role", "listitem");
 
@@ -227,14 +247,13 @@
     meta.className = "concerts-card__meta";
     meta.textContent = [event.venue, event.time].filter(Boolean).join(" · ");
 
+    if (cancelled) details.append(createCancellationNotice(event));
     details.append(location, meta);
 
     const actions = document.createElement("div");
     actions.className = "concerts-card__actions";
-    actions.append(
-      createLink("btn btn-small btn-ghost", event.detailsUrl, "Details"),
-      createLink("btn btn-small", event.ticketsUrl, "Tickets")
-    );
+    actions.append(createLink("btn btn-small btn-ghost", event.detailsUrl, "Details"));
+    if (!cancelled) actions.append(createLink("btn btn-small", event.ticketsUrl, "Tickets"));
     details.append(actions);
 
     const programme = document.createElement("div");
@@ -263,30 +282,43 @@
   };
 
   document.addEventListener("DOMContentLoaded", async () => {
-    const events = await loadEvents();
+    let events = await loadEvents() || [];
+    let refreshing = false;
     let lastVisibleKey = null;
 
     const renderIfChanged = () => {
       const berlinNow = getBerlinTimeKey();
-      const visibleIndexes = events
-        .map((event, index) => isVisible(event, berlinNow) ? index : -1)
-        .filter((index) => index !== -1);
-      const visibleKey = visibleIndexes.join(",");
+      const visibleEvents = events.filter((event) => isVisible(event, berlinNow));
+      const visibleKey = JSON.stringify(visibleEvents);
       if (visibleKey === lastVisibleKey) return;
 
       lastVisibleKey = visibleKey;
-      const visibleEvents = visibleIndexes.map((index) => events[index]);
       renderCompactList(visibleEvents);
       renderConcertCards(visibleEvents);
       refreshAnimations();
     };
 
     renderIfChanged();
-    // Recheck at each clock minute; refresh immediately when a sleeping tab wakes.
-    setTimeout(() => {
+    const refreshEvents = async () => {
       renderIfChanged();
-      setInterval(renderIfChanged, 60_000);
+      if (refreshing || document.hidden) return;
+      refreshing = true;
+      try {
+        const updated = await loadEvents();
+        if (updated !== null) {
+          events = updated;
+          renderIfChanged();
+        }
+      } finally {
+        refreshing = false;
+      }
+    };
+
+    // Update cancellations on open pages and recheck each Berlin clock minute.
+    setTimeout(() => {
+      refreshEvents();
+      setInterval(refreshEvents, 60_000);
     }, 60_000 - (Date.now() % 60_000) + 100);
-    document.addEventListener("visibilitychange", renderIfChanged);
+    document.addEventListener("visibilitychange", refreshEvents);
   });
 })();

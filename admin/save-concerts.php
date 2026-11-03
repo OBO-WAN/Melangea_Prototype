@@ -87,6 +87,8 @@ function is_empty_concert_row(array $concert): bool
         'description',
         'detailsUrl',
         'ticketsUrl',
+        'cancelled',
+        'cancellationReason',
     ];
 
     foreach ($fieldsToCheck as $field) {
@@ -175,6 +177,12 @@ foreach ($postedConcerts as $postedIndex => $concert) {
     $detailsUrl = clean_text($concert['detailsUrl'] ?? '');
     $ticketsUrl = clean_text($concert['ticketsUrl'] ?? '');
     $hideAfter = clean_text($concert['hideAfter'] ?? '');
+    $cancelled = ($concert['cancelled'] ?? '') === '1';
+    $cancellationReason = clean_text($concert['cancellationReason'] ?? '');
+
+    if (!preg_match('/\A.{0,500}\z/us', $cancellationReason)) {
+        show_error('Der Hinweis zur Absage in Zeile ' . $rowNumber . ' darf höchstens 500 Zeichen enthalten.');
+    }
 
     $normalizedDate = normalize_german_date($date);
 
@@ -214,6 +222,8 @@ foreach ($postedConcerts as $postedIndex => $concert) {
         'detailsUrl' => $detailsUrl,
         'ticketsUrl' => $ticketsUrl,
         'hideAfter' => $hideAfter,
+        'cancelled' => $cancelled,
+        'cancellationReason' => $cancellationReason,
     ];
 }
 

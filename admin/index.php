@@ -53,6 +53,8 @@ $emptyConcert = [
     'detailsUrl' => '#',
     'ticketsUrl' => '#',
     'hideAfter' => '03:00',
+    'cancelled' => false,
+    'cancellationReason' => '',
 ];
 
 function concert_value(array $concert, string $key): string
@@ -150,6 +152,20 @@ function render_concert_row(array $concert, $index, array $fields, bool $isTempl
             </label>
           <?php endif; ?>
         <?php endforeach; ?>
+
+        <fieldset class="concert-cancellation-editor field--wide">
+          <legend>Absage</legend>
+          <label class="cancel-toggle">
+            <input type="checkbox" name="<?= escape_html($namePrefix) ?>[cancelled]" value="1" <?= (($concert['cancelled'] ?? false) === true || ($concert['status'] ?? '') === 'cancelled') ? 'checked' : '' ?><?= $disabledAttribute ?>>
+            <span>Konzert abgesagt</span>
+          </label>
+          <p class="field-help">Der Termin bleibt auf der Startseite und der Konzertseite mit „ABGESAGT“ sichtbar. Der Tickets-Button entfällt. Die automatische Löschung erfolgt weiterhin zur gewählten Uhrzeit am Folgetag.</p>
+          <label class="field">
+            <span>Hinweis zur Absage (optional)</span>
+            <textarea name="<?= escape_html($namePrefix) ?>[cancellationReason]" rows="2" maxlength="500" placeholder="Zum Beispiel: Wegen Unwetter abgesagt."<?= $disabledAttribute ?>><?= escape_html(concert_value($concert, 'cancellationReason')) ?></textarea>
+            <small class="field-help">Wird nur bei aktivierter Absage auf der Website angezeigt. Zum Aufheben der Absage das Häkchen entfernen und speichern.</small>
+          </label>
+        </fieldset>
 
         <?php $hideAfter = concert_hide_after_time($concert); ?>
         <label class="field field--normal">

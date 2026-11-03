@@ -31,7 +31,7 @@ if (!mkdir($directory, 0700, true)) {
 $path = $root . '/concerts.json';
 $backup = $directory . '/concerts-old.json';
 try {
-    $expired = ['date' => '06.10.2026', 'hideAfter' => '03:00', 'title' => 'Expired'];
+    $expired = ['date' => '06.10.2026', 'hideAfter' => '03:00', 'title' => 'Expired', 'cancelled' => true, 'cancellationReason' => 'Unwetter'];
     $future = ['date' => '08.10.2026', 'hideAfter' => '00:00', 'title' => 'Future'];
     concert_write_json($path, [$expired, $future]);
     concert_write_json($backup, [$expired, $future]);

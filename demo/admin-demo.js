@@ -7,7 +7,7 @@
   const DATE_PATTERN = /^\d{2}\.\d{2}\.\d{4}$/;
   const TIME_PATTERN = /^\d{2}:\d{2} Uhr$/;
   const HIDE_TIME_PATTERN = /^0[0-6]:00$/;
-  const FIELDS = ['date', 'time', 'title', 'venue', 'city', 'description', 'detailsUrl', 'ticketsUrl', 'hideAfter'];
+  const FIELDS = ['date', 'time', 'title', 'venue', 'city', 'description', 'detailsUrl', 'ticketsUrl', 'hideAfter', 'cancelled', 'cancellationReason'];
 
   const isLoggedIn = () => sessionStorage.getItem(SESSION_KEY) === 'true';
 
@@ -90,6 +90,8 @@
     detailsUrl: '#',
     ticketsUrl: '#',
     hideAfter: '03:00',
+    cancelled: false,
+    cancellationReason: '',
   });
 
   const fillRow = (row, concert, index) => {
@@ -98,6 +100,10 @@
     FIELDS.forEach((field) => {
       const input = row.querySelector(`[name="${field}"]`);
       if (!input) return;
+      if (input.type === 'checkbox') {
+        input.checked = concert.cancelled === true || concert.status === 'cancelled';
+        return;
+      }
       input.value = typeof concert[field] === 'string' && (field !== 'hideAfter' || HIDE_TIME_PATTERN.test(concert[field]))
         ? concert[field]
         : field === 'hideAfter' ? '03:00' : '';
@@ -127,7 +133,7 @@
     const concert = {};
     FIELDS.forEach((field) => {
       const input = row.querySelector(`[name="${field}"]`);
-      concert[field] = input ? input.value.trim() : '';
+      concert[field] = input?.type === 'checkbox' ? input.checked : input ? input.value.trim() : '';
     });
     return concert;
   });

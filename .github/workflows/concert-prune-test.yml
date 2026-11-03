@@ -1,21 +1,31 @@
-name: Concert pruning
+name: Concert management
 
 on:
   pull_request:
     paths:
       - 'admin/**'
-      - 'tests/concert-prune.php'
+      - 'JS/concert-render.js'
+      - 'css/layout.css'
+      - 'demo/admin-demo*'
+      - 'tests/concert-*'
       - '.github/workflows/concert-prune-test.yml'
   push:
     branches: [main]
     paths:
       - 'admin/**'
-      - 'tests/concert-prune.php'
+      - 'JS/concert-render.js'
+      - 'css/layout.css'
+      - 'demo/admin-demo*'
+      - 'tests/concert-*'
       - '.github/workflows/concert-prune-test.yml'
 
 jobs:
   php:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php: ['8.3', '8.5']
+    container: php:${{ matrix.php }}-cli
     steps:
       - uses: actions/checkout@v4
       - name: PHP syntax
@@ -25,5 +35,19 @@ jobs:
           php -l admin/index.php
           php -l admin/save-concerts.php
           php -l tests/concert-prune.php
+          php -l tests/concert-cancellation.php
       - name: Expiry and storage behavior
         run: php tests/concert-prune.php
+      - name: Cancellation save and reload
+        run: php tests/concert-cancellation.php
+
+  javascript:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: JavaScript syntax
+        run: |
+          node --check JS/concert-render.js
+          node --check demo/admin-demo.js
+      - name: Public cancellation behavior
+        run: node --test tests/concert-cancellation.test.cjs

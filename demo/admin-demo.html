@@ -71,6 +71,13 @@
           <span>Tickets-Link</span>
           <input type="text" name="ticketsUrl">
         </label>
+        <div class="demo-field demo-field--wide">
+          <label><input type="checkbox" name="cancelled"> Konzert abgesagt</label>
+          <label class="demo-field">
+            <span>Hinweis zur Absage (optional)</span>
+            <textarea name="cancellationReason" rows="2" maxlength="500" placeholder="Zum Beispiel: Wegen Unwetter abgesagt."></textarea>
+          </label>
+        </div>
         <label class="demo-field">
           <span>Automatisch ausblenden am Folgetag (Berlin)</span>
           <select name="hideAfter" required></select>

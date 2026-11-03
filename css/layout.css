@@ -289,6 +289,42 @@
   flex-wrap: wrap;
 }
 
+.event.event--cancelled,
+.concerts-card.concerts-card--cancelled {
+  border-color: #e5837b;
+  border-inline-start: 4px solid #e5837b;
+}
+
+.concert-cancellation {
+  display: grid;
+  justify-items: start;
+  gap: 0.5rem;
+  margin: 0 0 0.65rem;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #f3ada6;
+  border-radius: 12px;
+  background: #fff1f0;
+  color: #7a1711;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.concert-cancellation__label {
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  background: #981f1f;
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+}
+
+.concert-cancellation__reason {
+  margin: 0;
+  white-space: pre-line;
+}
+
 .card-footer {
   margin-top: 1rem;
   padding-top: 1rem;

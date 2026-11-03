@@ -169,6 +169,18 @@ h2 {
   grid-column: 1 / -1;
 }
 
+.demo-cancel-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.demo-field input[type="checkbox"] {
+  width: auto;
+  padding: 0;
+  accent-color: var(--demo-accent);
+}
+
 .demo-field input,
 .demo-field textarea,
 .demo-field select {

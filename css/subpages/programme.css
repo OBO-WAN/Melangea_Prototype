@@ -229,6 +229,11 @@
   font-size: 0.98rem !important;
 }
 
+.programmes-programme__video {
+  width: min(100%, 48rem);
+  margin-top: 1.25rem;
+}
+
 .programmes-children {
   display: grid;
   gap: 1rem;

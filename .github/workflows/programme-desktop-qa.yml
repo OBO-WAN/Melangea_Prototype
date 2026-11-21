@@ -1,0 +1,37 @@
+name: Programme desktop layout QA
+
+on:
+  push:
+    branches:
+      - codex/qa-programme-desktop-151
+
+permissions:
+  contents: read
+
+jobs:
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser test library
+        run: npm install --prefix "$RUNNER_TEMP/programme-qa" --no-save --no-package-lock playwright@1.62.1
+      - name: Inspect programme cards at desktop and mobile sizes
+        env:
+          QA_NODE_MODULES: ${{ runner.temp }}/programme-qa/node_modules
+          QA_OUTPUT: ${{ runner.temp }}/programme-layout-artifacts
+          QA_CHROME: /usr/bin/google-chrome
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > "$RUNNER_TEMP/programme-server.log" 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" || true' EXIT
+          node .github/qa/programme-desktop.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: programme-desktop-151
+          path: ${{ runner.temp }}/programme-layout-artifacts
+          retention-days: 7

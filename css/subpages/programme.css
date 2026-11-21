@@ -234,6 +234,54 @@
   margin-top: 1.25rem;
 }
 
+.programmes-programme--expandable {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  min-width: 0;
+  align-items: start;
+  border-color: rgba(244, 231, 186, 0.28);
+}
+
+.programmes-programme--expandable .programmes-programme__content {
+  text-align: left;
+  overflow-wrap: anywhere;
+}
+
+.programmes-programme--expandable .programmes-programme__content > p,
+.programmes-programme__description-text {
+  max-width: 68ch;
+}
+
+.programmes-programme__description {
+  margin-top: 1rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(244, 231, 186, 0.2);
+}
+
+.programmes-programme__description summary {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 44px;
+  padding: 0.4rem 0;
+  color: #85d9ff;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.programmes-programme__description-text {
+  padding-top: 0.85rem;
+}
+
+.programmes-programme__less,
+.programmes-programme__description[open] .programmes-programme__more {
+  display: none;
+}
+
+.programmes-programme__description[open] .programmes-programme__less {
+  display: inline;
+}
+
 .programmes-children {
   display: grid;
   gap: 1rem;

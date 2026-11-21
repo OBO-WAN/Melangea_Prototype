@@ -44,6 +44,19 @@ fs.mkdirSync(output, { recursive: true });
   assert.equal(await cards.locator('[data-external-media-settings]').count(), 4);
   assert.equal(external.filter(url => url.includes('youtube')).length, 0);
 
+  async function captureCard(card, fileName) {
+    const viewport = page.viewportSize();
+    // A tall capture viewport keeps the fixed navigation outside the card image.
+    await page.setViewportSize({ width: viewport.width, height: 2600 });
+    await card.evaluate(element => {
+      const offset = document.querySelector('.site-header').getBoundingClientRect().height + 24;
+      window.scrollTo(0, element.getBoundingClientRect().top + scrollY - offset);
+    });
+    await page.waitForTimeout(100);
+    await card.screenshot({ path: path.join(output, fileName) });
+    await page.setViewportSize(viewport);
+  }
+
   async function inspect(width, state) {
     const measurements = await cards.evaluateAll(elements => elements.map((card, index) => {
       const rect = card.getBoundingClientRect();
@@ -81,7 +94,7 @@ fs.mkdirSync(output, { recursive: true });
       const card = cards.nth(index);
       const summary = card.locator('summary');
       assert((await summary.boundingBox()).height >= 44, `Small summary target at ${width}`);
-      if ([1280, 1440, 1920, 390].includes(width)) await card.screenshot({ path: path.join(output, `programme-${index + 1}-${width}-closed.png`) });
+      if ([1280, 1440, 1920, 390].includes(width)) await captureCard(card, `programme-${index + 1}-${width}-closed.png`);
       await summary.focus();
       await page.keyboard.press('Enter');
       assert(await card.locator('details').evaluate(element => element.open), `Keyboard expansion failed at ${width}`);
@@ -90,7 +103,7 @@ fs.mkdirSync(output, { recursive: true });
     const opened = await inspect(width, 'open');
     for (const index of [0, 1]) {
       assert(opened[index].height > closed[index].height, `Frame did not grow for ${width}/card ${index + 1}`);
-      if ([1280, 1440, 390].includes(width)) await cards.nth(index).screenshot({ path: path.join(output, `programme-${index + 1}-${width}-open.png`) });
+      if ([1280, 1440, 390].includes(width)) await captureCard(cards.nth(index), `programme-${index + 1}-${width}-open.png`);
       await cards.nth(index).locator('summary').click();
       assert.equal(await cards.nth(index).locator('details').evaluate(element => element.open), false);
     }
@@ -102,7 +115,7 @@ fs.mkdirSync(output, { recursive: true });
   await page.locator('[data-consent-save]').click();
   for (let index = 0; index < 4; index++) assert.equal(await cards.nth(index).locator('iframe').getAttribute('src'), 'https://www.youtube-nocookie.com/embed/' + videoIds[index]);
   await inspect(1440, 'media-enabled');
-  await cards.nth(0).screenshot({ path: path.join(output, 'programme-1-1440-media-enabled.png') });
+  await captureCard(cards.nth(0), 'programme-1-1440-media-enabled.png');
   assert.equal(failedLocal.length, 0, `Missing local resources: ${JSON.stringify(failedLocal)}`);
   assert.equal(errors.length, 0, `Browser errors: ${JSON.stringify(errors)}`);
   const report = { result: 'PASS', browser: await browser.version(), fonts, viewports: [1024, 1280, 1440, 1920, 390], states: ['closed', 'open'], keyboardToggle: 'PASS', consentFlow: 'PASS', note: 'External video requests were stubbed. Playback is outside this layout check.', errors, failedLocal, results };

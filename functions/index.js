@@ -111,9 +111,7 @@ function buildAdminMessage(signup) {
  * @return {{subject: string, text: string, html: string}} Mail message.
  */
 function buildConfirmationMessage(signup) {
-  const greeting = signup.firstName ?
-    `Guten Tag ${signup.firstName},` :
-    "Guten Tag,";
+  const greeting = "Guten Tag,";
 
   const html = [
     `<p>${escapeHtml(greeting)}</p>`,

@@ -229,8 +229,12 @@
   font-size: 0.98rem !important;
 }
 
+.programmes-programme__video,
+.programmes-video__embed {
+  width: min(100%, 36rem);
+}
+
 .programmes-programme__video {
-  width: min(100%, 48rem);
   margin-top: 1.25rem;
 }
 
@@ -386,7 +390,6 @@
 }
 
 .programmes-video__embed {
-  width: min(960px, 100%);
   margin: 0 auto;
 }
 

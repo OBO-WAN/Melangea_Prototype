@@ -37,6 +37,13 @@ fs.mkdirSync(output, { recursive: true });
   async function inspect(label, width) {
     const pageGeometry = await page.evaluate(() => ({ viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth }));
     results[`${label}-${width}-page`] = pageGeometry;
+    if (pageGeometry.scrollWidth > width) {
+      const offenders = await page.evaluate(() => [...document.querySelectorAll('body *')].map(element => {
+        const rect = element.getBoundingClientRect();
+        return { tag: element.tagName, class: element.className, right: rect.right, left: rect.left, width: rect.width, position: getComputedStyle(element).position };
+      }).filter(item => item.right > innerWidth + 1 || item.left < -1));
+      fs.writeFileSync(path.join(output, `${label}-${width}-overflow.json`), JSON.stringify({ pageGeometry, offenders }, null, 2));
+    }
     if (label !== 'before') assert(pageGeometry.scrollWidth <= Math.max(width, results[`before-${width}-page`]?.scrollWidth || width), `Additional page overflow at ${label}/${width}`);
     if (label !== 'before') {
       const paragraphAlignment = await page.locator('.programmes-programme--expandable p').evaluateAll(elements => elements.map(element => getComputedStyle(element).textAlign));
@@ -95,6 +102,7 @@ fs.mkdirSync(output, { recursive: true });
     await page.waitForTimeout(100);
     await locator.screenshot({ path: path.join(output, filename) });
     await page.setViewportSize(viewport);
+    await page.waitForTimeout(250);
   }
 
   for (const mode of ['before', 'after']) {
@@ -104,6 +112,7 @@ fs.mkdirSync(output, { recursive: true });
     assert.equal(await frames.locator('[data-external-media-settings]').count(), 6);
     for (const width of [1440, 1920, 1024, 768, 568, 390, 320]) {
       await page.setViewportSize({ width, height: 1000 });
+      await page.waitForTimeout(250);
       const measured = await inspect(mode, width);
       if (mode === 'after') {
         for (let index = 0; index < 6; index++) {
@@ -126,6 +135,7 @@ fs.mkdirSync(output, { recursive: true });
   assert.equal(external.filter(url => url.includes('youtube')).length, 0, 'Videos loaded before consent');
 
   await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.waitForTimeout(250);
   for (const card of await cards.all()) {
     const summary = card.locator('summary');
     if (await summary.count()) {

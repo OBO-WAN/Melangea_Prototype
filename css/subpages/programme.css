@@ -232,6 +232,7 @@
 .programmes-programme__video,
 .programmes-video__embed {
   width: min(100%, 36rem);
+  margin-inline: auto;
 }
 
 .programmes-programme__video {

@@ -38,6 +38,10 @@ fs.mkdirSync(output, { recursive: true });
     const pageGeometry = await page.evaluate(() => ({ viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth }));
     results[`${label}-${width}-page`] = pageGeometry;
     if (label !== 'before') assert(pageGeometry.scrollWidth <= Math.max(width, results[`before-${width}-page`]?.scrollWidth || width), `Additional page overflow at ${label}/${width}`);
+    if (label !== 'before') {
+      const paragraphAlignment = await page.locator('.programmes-programme--expandable p').evaluateAll(elements => elements.map(element => getComputedStyle(element).textAlign));
+      assert(paragraphAlignment.every(alignment => alignment === 'justify'), 'Jazz/Voyage paragraphs are not justified');
+    }
     const measured = await frames.evaluateAll(elements => elements.map(element => {
       const rect = element.getBoundingClientRect();
       const parent = element.parentElement.getBoundingClientRect();
@@ -77,6 +81,7 @@ fs.mkdirSync(output, { recursive: true });
       }
     }
     results[`${label}-${width}`] = measured;
+    fs.writeFileSync(path.join(output, 'partial-report.json'), JSON.stringify(results, null, 2));
     return measured;
   }
 
@@ -103,7 +108,7 @@ fs.mkdirSync(output, { recursive: true });
       if (mode === 'after') {
         for (let index = 0; index < 6; index++) {
           const previous = results[`before-${width}`][index];
-          if (width <= 568) assert(Math.abs(measured[index].width - previous.width) < 0.1, `Mobile width changed at ${width}`);
+          if (width <= 568) assert(Math.abs(measured[index].width - measured[index].parentWidth) < 0.1, `Mobile video does not fill its content area at ${width}`);
           if (width >= 768) assert(measured[index].width < previous.width, `Desktop video did not shrink at ${width}`);
         }
       }
@@ -145,7 +150,7 @@ fs.mkdirSync(output, { recursive: true });
 
   assert.equal(errors.length, 0, `Browser errors: ${JSON.stringify(errors)}`);
   assert.equal(missing.length, 0, `Missing local assets: ${JSON.stringify(missing)}`);
-  const report = { result: 'PASS', browser: await browser.version(), frameCount: 6, viewports: [320, 390, 568, 768, 1024, 1440, 1920], desktopSize: '576 x 324', mobileWidthsUnchanged: true, consentFlow: 'PASS', errors, missing, note: 'External player requests were stubbed for layout checks; playback was not tested.', measurements: results };
+  const report = { result: 'PASS', browser: await browser.version(), frameCount: 6, viewports: [320, 390, 568, 768, 1024, 1440, 1920], desktopSize: '576 x 324', mobileFitsAvailableWidth: true, justifiedDescriptions: true, consentFlow: 'PASS', errors, missing, note: 'External player requests were stubbed for layout checks; playback was not tested.', measurements: results };
   fs.writeFileSync(path.join(output, 'report.json'), JSON.stringify(report, null, 2));
   console.log(JSON.stringify({ ...report, measurements: undefined }));
   await browser.close();

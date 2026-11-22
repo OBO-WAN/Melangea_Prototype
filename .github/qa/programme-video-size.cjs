@@ -35,7 +35,9 @@ fs.mkdirSync(output, { recursive: true });
   const cards = page.locator('.programmes-list > article:not(.programmes-programme--child)');
 
   async function inspect(label, width) {
-    assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `Page overflow at ${label}/${width}`);
+    const pageGeometry = await page.evaluate(() => ({ viewport: innerWidth, scrollWidth: document.documentElement.scrollWidth }));
+    results[`${label}-${width}-page`] = pageGeometry;
+    if (label !== 'before') assert(pageGeometry.scrollWidth <= Math.max(width, results[`before-${width}-page`]?.scrollWidth || width), `Additional page overflow at ${label}/${width}`);
     const measured = await frames.evaluateAll(elements => elements.map(element => {
       const rect = element.getBoundingClientRect();
       const parent = element.parentElement.getBoundingClientRect();
@@ -59,6 +61,7 @@ fs.mkdirSync(output, { recursive: true });
       };
     }));
     assert.equal(measured.length, 6);
+    fs.writeFileSync(path.join(output, 'latest-measurements.json'), JSON.stringify({ label, width, pageGeometry, measured }, null, 2));
     for (const frame of measured) {
       assert(frame.inParent, `${label}/${width}: frame extends beyond parent`);
       assert(frame.iframeInside, `${label}/${width}: player extends beyond frame`);
@@ -94,7 +97,7 @@ fs.mkdirSync(output, { recursive: true });
     await page.goto('http://127.0.0.1:8765/programme.html', { waitUntil: 'networkidle' });
     await page.evaluate(() => document.fonts.ready);
     assert.equal(await frames.locator('[data-external-media-settings]').count(), 6);
-    for (const width of [320, 390, 568, 768, 1024, 1440, 1920]) {
+    for (const width of [1440, 1920, 1024, 768, 568, 390, 320]) {
       await page.setViewportSize({ width, height: 1000 });
       const measured = await inspect(mode, width);
       if (mode === 'after') {

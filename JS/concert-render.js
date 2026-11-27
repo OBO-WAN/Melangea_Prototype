@@ -16,6 +16,21 @@
 
   const CONCERTS_DATA_URL = "./data/concerts.json";
 
+  const getConcertAnchorId = (event, occurrences) => {
+    const slug = [event.date, event.time, event.city, event.venue, event.title]
+      .filter(Boolean)
+      .join("-")
+      .normalize("NFKD")
+      .toLowerCase()
+      .replace(/\p{M}/gu, "")
+      .replace(/ß/g, "ss")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-|-$/g, "");
+    const count = (occurrences.get(slug) || 0) + 1;
+    occurrences.set(slug, count);
+    return count === 1 ? `konzert-${slug}` : `konzert-${slug}--${count}`;
+  };
+
   const loadEvents = async () => {
     try {
       const response = await fetch(CONCERTS_DATA_URL, { cache: "no-store" });
@@ -30,8 +45,14 @@
 
       if (!Array.isArray(events)) throw new Error("Invalid concert data.");
 
+      // Assign IDs from the full feed before either page filters or limits it.
+      const occurrences = new Map();
       return events
-        .map((event) => ({ ...event, sortDate: parseGermanDate(event.date) }))
+        .map((event) => ({
+          ...event,
+          anchorId: getConcertAnchorId(event, occurrences),
+          sortDate: parseGermanDate(event.date),
+        }))
         .sort((eventA, eventB) => eventA.sortDate - eventB.sortDate);
     } catch (error) {
       console.error("Unable to load concert data.", error);
@@ -188,13 +209,16 @@
     const body = document.createElement("div");
     body.className = "event-body";
 
-    const title = document.createElement("div");
-    title.className = "strong";
-    title.textContent = event.title || "Konzert";
+    const title = createLink(
+      "strong event-link", `./konzerte.html#${event.anchorId}`, event.title || "Konzert"
+    );
 
     const meta = document.createElement("div");
     meta.className = "muted small";
     meta.textContent = getCompactMeta(event);
+    title.setAttribute("aria-label", [
+      title.textContent, event.date, meta.textContent, "Zur Konzertbeschreibung",
+    ].filter(Boolean).join(" – "));
 
     const actions = document.createElement("div");
     actions.className = "event-actions";
@@ -229,7 +253,10 @@
     const cancelled = isCancelled(event);
     const card = document.createElement("article");
     card.className = cancelled ? "card concerts-card concerts-card--cancelled" : "card concerts-card";
-    card.setAttribute("data-aos", "fade-up");
+    // Keep the linked description in place while the other cards fade in.
+    if (window.location.hash !== `#${event.anchorId}`) {
+      card.setAttribute("data-aos", "fade-up");
+    }
     card.setAttribute("role", "listitem");
 
     const date = document.createElement("p");
@@ -261,6 +288,8 @@
 
     const title = document.createElement("h4");
     title.className = "concerts-card__title";
+    title.id = event.anchorId;
+    title.tabIndex = -1;
     title.textContent = event.title || "Konzert";
 
     const description = document.createElement("div");
@@ -282,6 +311,7 @@
   };
 
   document.addEventListener("DOMContentLoaded", async () => {
+    let pendingConcertHash = window.location.hash;
     let events = await loadEvents() || [];
     let refreshing = false;
     let lastVisibleKey = null;
@@ -296,6 +326,16 @@
       renderCompactList(visibleEvents);
       renderConcertCards(visibleEvents);
       refreshAnimations();
+
+      // The browser may resolve the fragment before the cards finish loading.
+      if (pendingConcertHash.startsWith("#konzert-") && window.location.hash === pendingConcertHash) {
+        const heading = document.getElementById(pendingConcertHash.slice(1));
+        if (heading) {
+          pendingConcertHash = "";
+          heading.focus({ preventScroll: true });
+          heading.scrollIntoView({ behavior: "instant", block: "start" });
+        }
+      }
     };
 
     renderIfChanged();

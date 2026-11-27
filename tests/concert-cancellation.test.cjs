@@ -20,6 +20,8 @@ class Element {
   append(...children) { this.children.push(...children); }
   replaceChildren(...children) { this.children = children; }
   setAttribute(name, value) { this.attributes[name] = value; }
+  focus() { this.focused = true; }
+  scrollIntoView() { this.scrolled = true; }
 }
 
 const descendants = node => [node, ...node.children.flatMap(descendants)];
@@ -28,7 +30,7 @@ const withClass = (node, name) => descendants(node).filter(child => hasClass(chi
 const links = node => descendants(node).filter(child => child.tagName === 'a');
 const future = (extra = {}) => ({date: '04.11.2026', title: 'Konzert', city: 'Neustadt', venue: 'Park', time: '20:00 Uhr', detailsUrl: '/details', ticketsUrl: '/tickets', hideAfter: '03:00', ...extra});
 
-async function renderer(initialEvents, now = '2026-11-03T12:00:00Z') {
+async function renderer(initialEvents, now = '2026-11-03T12:00:00Z', hash = '') {
   const compact = new Element('ul');
   const cards = new Element('div');
   const listeners = {};
@@ -41,6 +43,7 @@ async function renderer(initialEvents, now = '2026-11-03T12:00:00Z') {
     hidden: false,
     createElement: tag => new Element(tag),
     querySelectorAll: selector => selector.includes('compact') ? [compact] : [cards],
+    getElementById: id => descendants(cards).find(node => node.id === id),
     addEventListener: (name, listener) => { listeners[name] = listener; },
   };
   class ClockDate extends Date {
@@ -48,7 +51,7 @@ async function renderer(initialEvents, now = '2026-11-03T12:00:00Z') {
     static now() { return clock; }
   }
   const context = vm.createContext({
-    document, window: {}, Intl, Date: ClockDate,
+    document, window: {location: {hash}}, Intl, Date: ClockDate,
     console: {error() {}},
     setTimeout: callback => { timers.timeout = callback; },
     setInterval: callback => { timers.interval = callback; },
@@ -88,7 +91,8 @@ test('both listings keep cancellations visible, explain them, and remove only ti
     const message = withClass(cancelled, 'concert-cancellation__reason')[0];
     assert.equal(message.textContent, reason);
     assert.equal(message.children.length, 0);
-    assert.deepEqual(links(cancelled).map(link => link.textContent), ['Details']);
+    const actionClass = listing === page.compact ? 'event-actions' : 'concerts-card__actions';
+    assert.deepEqual(links(withClass(cancelled, actionClass)[0]).map(link => link.textContent), ['Details']);
     assert.equal(withClass(legacy, 'concert-cancellation__label').length, 1);
     assert.equal(withClass(legacy, 'concert-cancellation__reason').length, 0);
     assert(links(falseString).some(link => link.textContent === 'Tickets'));
@@ -108,6 +112,37 @@ test('cancellation and reinstatement reach open pages at the minute refresh', as
     assert.equal(withClass(listing, 'concert-cancellation').length, 0);
     assert(links(listing).some(link => link.textContent === 'Tickets'));
   }
+});
+
+test('each homepage row links to its own description, including two shows in the same slot', async () => {
+  const shows = [
+    future({title: 'Chansons & Café', description: 'Erste Vorstellung'}),
+    future({title: 'Chansons & Café', description: 'Zweite Vorstellung', cancelled: true}),
+  ];
+  const {compact, cards} = await renderer(shows);
+  const headings = withClass(cards, 'concerts-card__title');
+  assert.notEqual(headings[0].id, headings[1].id);
+  for (const [i, row] of compact.children.entries()) {
+    const link = withClass(row, 'event-link')[0];
+    assert.equal(link.tagName, 'a');
+    assert.equal(link.href, './konzerte.html#' + headings[i].id);
+    assert.equal(withClass(cards.children[i], 'concerts-card__description')[0].textContent, shows[i].description);
+    const actions = links(withClass(row, 'event-actions')[0]);
+    assert.deepEqual(actions.map(action => action.href), i === 0 ? ['/details', '/tickets'] : ['/details']);
+  }
+
+  const hash = '#' + headings[1].id;
+  const destination = await renderer([], undefined, hash);
+  destination.setEvents(shows);
+  await destination.refresh();
+  const [first, second] = withClass(destination.cards, 'concerts-card__title');
+  assert.equal(first.scrolled, undefined);
+  assert.equal(second.scrolled, true);
+  assert.equal(second.focused, true);
+
+  destination.setEvents([...shows, future({date: '05.11.2026'})]);
+  await destination.refresh();
+  assert.equal(withClass(destination.cards, 'concerts-card__title')[1].scrolled, undefined);
 });
 
 test('a failed refresh keeps the cancellation, while a successful empty response removes it', async () => {

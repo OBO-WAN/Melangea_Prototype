@@ -15,6 +15,7 @@
   ];
 
   const CONCERTS_DATA_URL = "./data/concerts.json";
+  const DEMO_DATA_URL = "./demo/public-concerts.json";
 
   const getConcertAnchorId = (event, occurrences) => {
     const slug = [event.date, event.time, event.city, event.venue, event.title]
@@ -29,35 +30,6 @@
     const count = (occurrences.get(slug) || 0) + 1;
     occurrences.set(slug, count);
     return count === 1 ? `konzert-${slug}` : `konzert-${slug}--${count}`;
-  };
-
-  const loadEvents = async () => {
-    try {
-      const response = await fetch(CONCERTS_DATA_URL, { cache: "no-store" });
-
-      if (!response.ok) {
-        throw new Error(
-          `Concert data request failed with status ${response.status}`
-        );
-      }
-
-      const events = await response.json();
-
-      if (!Array.isArray(events)) throw new Error("Invalid concert data.");
-
-      // Assign IDs from the full feed before either page filters or limits it.
-      const occurrences = new Map();
-      return events
-        .map((event) => ({
-          ...event,
-          anchorId: getConcertAnchorId(event, occurrences),
-          sortDate: parseGermanDate(event.date),
-        }))
-        .sort((eventA, eventB) => eventA.sortDate - eventB.sortDate);
-    } catch (error) {
-      console.error("Unable to load concert data.", error);
-      return null; // Preserve the last successful listing on a transient failure.
-    }
   };
 
   const parseGermanDate = (date) => {
@@ -116,6 +88,57 @@
     if (event.status === "past") return false;
     const hideTime = getHideTimeKey(event);
     return hideTime !== "" && berlinNow < hideTime;
+  };
+
+  const readConcerts = async (url) => {
+    const response = await fetch(url, { cache: "no-store" });
+    if (!response.ok) throw new Error(`Concert data request failed with status ${response.status}`);
+    const events = await response.json();
+    if (!Array.isArray(events)) throw new Error("Invalid concert data.");
+    return events;
+  };
+
+  const getListing = async () => {
+    const { hostname, pathname, hash } = window.location;
+    const pagesDemo = hostname === "obo-wan.github.io" &&
+      (pathname === "/Melangea_Prototype" || pathname.startsWith("/Melangea_Prototype/"));
+    const local = ["localhost", "127.0.0.1", "[::1]"].includes(hostname);
+    const berlinNow = getBerlinTimeKey();
+
+    if (!pagesDemo && !(local && hash.startsWith("#konzert-demo-"))) {
+      const events = await readConcerts(CONCERTS_DATA_URL);
+      if (!local || events.some((event) => isVisible(event, berlinNow))) {
+        // Assign IDs before either page filters or limits the full feed.
+        const occurrences = new Map();
+        return events.map((event) => ({ ...event, anchorId: getConcertAnchorId(event, occurrences) }));
+      }
+    }
+
+    const examples = await readConcerts(DEMO_DATA_URL);
+    return examples.map(({ id, daysAhead, ...event }) => {
+      const date = new Date(berlinNow.slice(0, 10) + "T00:00:00Z");
+      date.setUTCDate(date.getUTCDate() + daysAhead);
+      const preview = `./demo/konzertprobe.html?konzert=${encodeURIComponent(id)}`;
+      return {
+        ...event,
+        date: date.toISOString().slice(0, 10).split("-").reverse().join("."),
+        anchorId: `konzert-demo-${id}`,
+        detailsUrl: `${preview}#details`,
+        ticketsUrl: `${preview}#tickets`,
+      };
+    });
+  };
+
+  const loadEvents = async () => {
+    try {
+      const events = await getListing();
+      return events
+        .map((event) => ({ ...event, sortDate: parseGermanDate(event.date) }))
+        .sort((eventA, eventB) => eventA.sortDate - eventB.sortDate);
+    } catch (error) {
+      console.error("Unable to load concert data.", error);
+      return null; // Preserve the last successful listing on a transient failure.
+    }
   };
 
   const isCancelled = (event) => event.cancelled === true || event.status === "cancelled";

@@ -120,6 +120,7 @@ Before production changes, verify Firestore security rules, mail-processing conf
 - Static frontend/demo environment.
 - PHP submissions are not executed.
 - Demo or fallback messages are shown for PHP-backed functionality.
+- [Nächste Konzerte on the prototype](https://obo-wan.github.io/Melangea_Prototype/#shows) shows three fictional concerts with rolling dates. Each row opens its concert description. The Details and Tickets buttons open separate previews.
 - The static concert admin demo is available under `demo/` and stores demo changes only in the browser.
 
 ### Alfahosting
@@ -133,6 +134,8 @@ Before production changes, verify Firestore security rules, mail-processing conf
 ## Local development
 
 Because JavaScript modules are used (`type="module"`), run the site through a local web server rather than opening files with `file://`.
+
+On localhost, the public concert lists show the same examples when `data/concerts.json` has no visible concerts. Alfahosting always reads the regular concert data.
 
 For static frontend work, for example:
 

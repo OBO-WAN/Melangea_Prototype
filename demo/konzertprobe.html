@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>Konzertvorschau · Mélange à Deux &amp; Amis</title>
+  <link rel="stylesheet" href="../css/base.css">
+  <style>
+    main { max-width: 40rem; margin: 8vh auto; padding: 1.5rem; }
+    section { margin-block: 2rem; }
+    main:has(section:target) section:not(:target) { display: none; }
+  </style>
+</head>
+<body>
+  <main>
+    <p>Mélange à Deux &amp; Amis</p>
+    <h1 id="concert-title">Demokonzert</h1>
+    <section id="details">
+      <h2>Veranstaltungsdetails</h2>
+      <p id="venue"></p>
+      <p>Dieses Konzert ist ein Beispiel für die Vorschau.</p>
+    </section>
+    <section id="tickets">
+      <h2>Ticketvorschau</h2>
+      <p>Bei einem echten Konzert führt der Ticketlink zum Vorverkauf. Hier können Sie den Link mit einem Demokonzert testen.</p>
+    </section>
+    <a id="concert-link" class="btn btn-ghost" href="../konzerte.html">Zur Konzertübersicht</a>
+    <a class="btn btn-ghost" href="../index.html#shows">Zur Startseite</a>
+  </main>
+  <script type="module">
+    async function showConcert() {
+      const id = new URLSearchParams(location.search).get("konzert");
+      if (!id) return;
+      const response = await fetch("./public-concerts.json");
+      if (!response.ok) return;
+      const events = await response.json();
+      const event = events.find((entry) => entry.id === id);
+      if (!event) return;
+      document.getElementById("concert-title").textContent = event.title;
+      document.getElementById("venue").textContent = [event.venue, event.city, event.time].join(" · ");
+      const link = document.getElementById("concert-link");
+      link.hash = "konzert-demo-" + event.id;
+      link.textContent = "Zur Konzertbeschreibung";
+    }
+    showConcert().catch((error) => console.error("Unable to load concert preview.", error));
+  </script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+[
+  {
+    "id": "chansons-im-salon",
+    "daysAhead": 7,
+    "title": "Demo – Chansons im Salon",
+    "city": "Neustadt an der Weinstraße",
+    "venue": "Musiksalon",
+    "time": "17:00 Uhr",
+    "description": "Oboe und Akkordeon eröffnen den Nachmittag mit französischen Chansons. Zwischen den Liedern erzählen die Musiker, wie die Stücke ihren Weg ins Programm gefunden haben."
+  },
+  {
+    "id": "jazz-im-hof",
+    "daysAhead": 7,
+    "title": "Demo – Jazz im Hof",
+    "city": "Speyer",
+    "venue": "Innenhof",
+    "time": "20:00 Uhr",
+    "description": "Im Innenhof trifft ein Musette-Walzer auf Swing. Erst stellt das Akkordeon die Melodie vor, dann greifen Oboe und Kontrabass sie auf und improvisieren darüber."
+  },
+  {
+    "id": "matinee-im-foyer",
+    "daysAhead": 14,
+    "title": "Demo – Matinee im Foyer",
+    "city": "Landau in der Pfalz",
+    "venue": "Theaterfoyer",
+    "time": "11:00 Uhr",
+    "description": "Für die Sonntagsmatinee war ein Kammermusikprogramm mit Oboe und Akkordeon vorgesehen.",
+    "cancelled": true,
+    "cancellationReason": "Das Foyer wird renoviert."
+  }
+]

@@ -29,8 +29,10 @@ const hasClass = (node, name) => node.className.split(' ').includes(name);
 const withClass = (node, name) => descendants(node).filter(child => hasClass(child, name));
 const links = node => descendants(node).filter(child => child.tagName === 'a');
 const future = (extra = {}) => ({date: '04.11.2026', title: 'Konzert', city: 'Neustadt', venue: 'Park', time: '20:00 Uhr', detailsUrl: '/details', ticketsUrl: '/tickets', hideAfter: '03:00', ...extra});
+const demoFeed = './demo/public-concerts.json';
+const pagesHome = 'https://obo-wan.github.io/Melangea_Prototype/';
 
-async function renderer(initialEvents, now = '2026-11-03T12:00:00Z', hash = '') {
+async function renderer(initialEvents, now = '2026-11-03T12:00:00Z', hash = '', site = 'https://melangea2.com/') {
   const compact = new Element('ul');
   const cards = new Element('div');
   const listeners = {};
@@ -38,6 +40,8 @@ async function renderer(initialEvents, now = '2026-11-03T12:00:00Z', hash = '') 
   let clock = Date.parse(now);
   let currentEvents = initialEvents;
   let failing = false;
+  const location = new URL(site);
+  if (hash) location.hash = hash;
   const requests = [];
   const document = {
     hidden: false,
@@ -51,13 +55,17 @@ async function renderer(initialEvents, now = '2026-11-03T12:00:00Z', hash = '') 
     static now() { return clock; }
   }
   const context = vm.createContext({
-    document, window: {location: {hash}}, Intl, Date: ClockDate,
+    document, window: {location}, Intl, Date: ClockDate,
     console: {error() {}},
     setTimeout: callback => { timers.timeout = callback; },
     setInterval: callback => { timers.interval = callback; },
     fetch: async (url, options) => {
       requests.push({url, options});
       if (failing) throw new Error('Temporary network failure');
+      if (url === demoFeed) {
+        return {ok: true, json: async () => JSON.parse(fs.readFileSync(path.join(__dirname, '..', demoFeed), 'utf8'))};
+      }
+      assert.equal(url, './data/concerts.json');
       return {ok: true, json: async () => currentEvents};
     },
   });
@@ -165,4 +173,63 @@ test('cancellation follows the same Berlin cutoff even when offline or hidden', 
   await page.refresh();
   assert.equal(withClass(page.cards, 'concert-cancellation__label').length, 0);
   assert.equal(page.requests.length, 1);
+});
+
+test('the Pages homepage and shared description links agree as the demo dates roll over', async () => {
+  const page = await renderer([future({date: '31.12.2026'})], '2026-12-27T23:30:00Z', '', pagesHome);
+  assert.deepEqual(page.requests.map(req => req.url), [demoFeed]);
+  assert.deepEqual(withClass(page.cards, 'concerts-card__date').map(el => el.textContent),
+    ['04.01.2027', '04.01.2027', '11.01.2027']);
+  assert.equal(page.compact.children.length, 3);
+  assert.deepEqual(withClass(page.compact, 'event-link').map(el => el.textContent),
+    ['Demo – Chansons im Salon', 'Demo – Jazz im Hof', 'Demo – Matinee im Foyer']);
+  const cancelled = page.compact.children[2];
+  assert.equal(withClass(cancelled, 'concert-cancellation__label')[0].textContent, 'ABGESAGT');
+  assert.deepEqual(links(withClass(cancelled, 'event-actions')[0]).map(el => el.textContent), ['Details']);
+
+  const jazz = page.compact.children[1];
+  const destination = new URL(withClass(jazz, 'event-link')[0].href, pagesHome);
+  assert.equal(destination.href, pagesHome + 'konzerte.html#konzert-demo-jazz-im-hof');
+  const nextDay = await renderer([], '2026-12-28T23:30:00Z', '', destination);
+  const card = nextDay.cards.children[1];
+  assert.equal(withClass(card, 'concerts-card__date')[0].textContent, '05.01.2027');
+  const heading = withClass(card, 'concerts-card__title')[0];
+  assert.equal(heading.id, destination.hash.slice(1));
+  assert.equal(heading.focused, true);
+  assert.equal(heading.scrolled, true);
+  assert.match(withClass(card, 'concerts-card__description')[0].textContent, /Musette-Walzer/);
+
+  const preview = fs.readFileSync(path.join(__dirname, '../demo/konzertprobe.html'), 'utf8');
+  const actions = links(withClass(jazz, 'event-actions')[0]);
+  assert.deepEqual(actions.map(el => new URL(el.href, pagesHome).href), [
+    pagesHome + 'demo/konzertprobe.html?konzert=jazz-im-hof#details',
+    pagesHome + 'demo/konzertprobe.html?konzert=jazz-im-hof#tickets',
+  ]);
+  for (const action of actions) {
+    assert.ok(preview.includes('id="' + new URL(action.href, pagesHome).hash.slice(1) + '"'));
+  }
+});
+
+test('localhost fills an empty listing, follows real listings on refresh, and can open shared demo links', async () => {
+  const local = 'http://localhost:5500/';
+  const page = await renderer([future({status: 'past'})], undefined, '', local);
+  assert.deepEqual(page.requests.map(req => req.url), ['./data/concerts.json', demoFeed]);
+  assert.equal(page.compact.children.length, 3);
+  page.setEvents([future({title: 'Lokal eingetragen'})]);
+  await page.refresh();
+  assert.equal(page.compact.children.length, 1);
+  assert.equal(withClass(page.compact, 'event-link')[0].textContent, 'Lokal eingetragen');
+  const link = local + 'konzerte.html#konzert-demo-jazz-im-hof';
+  const destination = await renderer([future()], undefined, '', link);
+  assert.equal(destination.document.getElementById('konzert-demo-jazz-im-hof').focused, true);
+});
+
+test('production and other Pages projects always use their real concert feed, including for a demo hash', async () => {
+  for (const site of ['https://www.melangea2.com/', 'https://melangea2.com/', 'https://obo-wan.github.io/',
+    'https://obo-wan.github.io/Melangea_Prototype-other/', 'https://example.github.io/Melangea_Prototype/']) {
+    const page = await renderer([], undefined, '#konzert-demo-jazz-im-hof', site);
+    assert.deepEqual(page.requests.map(req => req.url), ['./data/concerts.json']);
+    assert.match(page.compact.textContent, /keine Konzerttermine/);
+    assert.match(page.cards.textContent, /keine Konzerttermine/);
+  }
 });

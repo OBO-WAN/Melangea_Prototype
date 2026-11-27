@@ -176,7 +176,8 @@
   text-align: center;
 }
 
-.section[id] {
+.section[id],
+.concerts-card__title[id] {
   scroll-margin-top: 9rem;
 }
 
@@ -264,6 +265,7 @@
 }
 
 .event {
+  position: relative;
   display: grid;
   grid-template-columns: 70px 1fr auto;
   gap: 1rem;
@@ -272,6 +274,22 @@
   border-radius: 18px;
   border: 1px solid var(--border);
   background: rgba(11, 13, 18, 0.25);
+}
+
+.event-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.event-link:hover,
+.event-link:focus-visible {
+  text-decoration: underline;
+}
+
+.event-actions a {
+  position: relative;
+  z-index: 1;
 }
 
 .event-date {
@@ -486,7 +504,8 @@
     margin: 36px 0 56px;
   }
 
-  .section[id] {
+  .section[id],
+  .concerts-card__title[id] {
     scroll-margin-top: 7rem;
   }
 
